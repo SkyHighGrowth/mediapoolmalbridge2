@@ -1,0 +1,12 @@
+$SalEndpointListKits = $SalUrl . "list_kits.json" . $SalLoginString;//done
+$SalEndpointListAssets = $SalUrl . "list_assets.json" . $SalLoginString . "&per_page=200";//done
+$SalEndpointUnavailableAssets = $SalUrl . "list_unavailable_assets.json" . $SalLoginString;//done
+$SalEndpointListProperties = $SalUrl . "list_properties.json" . $SalLoginString; //done
+$SalEndpointListAssetTypes = $SalUrl . "list_asset_types.json" . $SalLoginString; //done
+$SalEndpointListBrands = $SalUrl . "list_brands.json" . $SalLoginString; //done
+$SalEndpointListCollections = $SalUrl . "list_collections.json" . $SalLoginString;//done
+$SalEndpointListDestinations = $SalUrl . "list_destinations.json" . $SalLoginString;//done
+$SalEndpointListSubjects = $SalUrl . "list_subjects.json" . $SalLoginString;//done
+$SalEndpointListColors = $SalUrl . "list_colors.json" . $SalLoginString;//done
+$SalEndpointProperties = $SalUrl . "list_properties.json" . $SalLoginString . "&per_page=20000";//done
+$SalEndpointPropertyPhotos = $SalUrl . "list_available_property_photos.json" . $SalLoginString;
