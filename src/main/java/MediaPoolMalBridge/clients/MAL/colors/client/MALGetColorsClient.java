@@ -4,8 +4,9 @@ import MediaPoolMalBridge.clients.MAL.MALSingleResponseClient;
 import MediaPoolMalBridge.clients.MAL.colors.client.model.MALGetColorsResponse;
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import org.springframework.http.HttpMethod;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MALGetColorsClient extends MALSingleResponseClient<Object, MALGetColorsResponse> {
 
     private String urlSegmest = "list_colors.json";

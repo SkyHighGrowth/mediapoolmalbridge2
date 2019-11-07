@@ -1,4 +1,18 @@
 package MediaPoolMalBridge.clients.MAL.colors.client.model;
 
-public class MALGetColorsResponse {
+import MediaPoolMalBridge.clients.MAL.singleresponse.MALAbstractResponse;
+
+import java.util.List;
+
+public class MALGetColorsResponse extends MALAbstractResponse {
+
+    private List<Color> colors;
+
+    public List<Color> getColors() {
+        return colors;
+    }
+
+    public void setColors(List<Color> colors) {
+        this.colors = colors;
+    }
 }

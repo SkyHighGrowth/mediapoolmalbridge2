@@ -1,4 +1,4 @@
-package MediaPoolMalBridge.clients.MAL.model.response;
+package MediaPoolMalBridge.clients.MAL.multiresponse.model.response;
 
 public class ErrorResponse {
 

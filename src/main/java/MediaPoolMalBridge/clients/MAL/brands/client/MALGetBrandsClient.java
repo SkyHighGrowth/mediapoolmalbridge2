@@ -5,7 +5,6 @@ import MediaPoolMalBridge.clients.MAL.brands.client.model.MALGetBrandsResponse;
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 @Component
 public class MALGetBrandsClient extends MALSingleResponseClient<Object, MALGetBrandsResponse> {

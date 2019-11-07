@@ -5,7 +5,6 @@ import MediaPoolMalBridge.clients.MAL.destionations.client.model.MALGetDestinati
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 @Component
 public class MALGetDestinationsClient extends MALSingleResponseClient<Object, MALGetDestinationsResponse> {

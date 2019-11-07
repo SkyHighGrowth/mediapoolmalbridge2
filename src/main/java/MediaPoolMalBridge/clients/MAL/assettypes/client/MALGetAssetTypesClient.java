@@ -5,7 +5,6 @@ import MediaPoolMalBridge.clients.MAL.assettypes.client.model.MALGetAssetTypesRe
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 @Component
 public class MALGetAssetTypesClient extends MALSingleResponseClient<Object, MALGetAssetTypesResponse> {

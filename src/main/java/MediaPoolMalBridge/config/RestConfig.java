@@ -1,5 +1,6 @@
 package MediaPoolMalBridge.config;
 
+import MediaPoolMalBridge.clients.rest.RestResponse;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,19 @@ public class RestConfig {
 
     @Bean
     public RestTemplate restTemplate() {
+        HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory(
+                HttpClientBuilder.create()
+                        .setMaxConnTotal(MAX_CONN_TOTAL)
+                        .setMaxConnPerRoute(MAX_CONN_PER_ROUTE)
+                        .build());
+        clientHttpRequestFactory.setReadTimeout(READ_TIME_OUT_MS);
+        clientHttpRequestFactory.setConnectionRequestTimeout(CONNECTION_REQUEST_TIME_OUT);
+        clientHttpRequestFactory.setConnectTimeout(CONNECT_TIMEOUT);
+        return new RestTemplate(clientHttpRequestFactory);
+    }
+
+    @Bean( "DownloadRestTemplate" )
+    public RestTemplate downloadRestTemplate() {
         HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory(
                 HttpClientBuilder.create()
                         .setMaxConnTotal(MAX_CONN_TOTAL)

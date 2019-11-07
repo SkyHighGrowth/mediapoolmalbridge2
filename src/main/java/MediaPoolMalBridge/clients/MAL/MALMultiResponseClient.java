@@ -1,10 +1,12 @@
 package MediaPoolMalBridge.clients.MAL;
 
-import MediaPoolMalBridge.clients.MAL.transformer.ResponseTransformer;
+import MediaPoolMalBridge.clients.MAL.multiresponse.transformer.ResponseTransformer;
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,11 +22,14 @@ public abstract class MALMultiResponseClient<REQUEST, RESPONSE> {
 
     private static Logger logger = LoggerFactory.getLogger(MALMultiResponseClient.class);
 
-    private String hostName = "http://api.starwoodassetlibrary.com/";
+    @Value( "${mal.hostName:http://api.starwoodassetlibrary.com/}" )
+    private String hostName;
 
-    private String malLogin = "BrandMaker";
+    @Value( "${mal.login:BrandMaker}")
+    private String malLogin;
 
-    private String malAPIKey = "d3466104e06febcb4b706a1909aa6da6";
+    @Value( "${mal.apiKey:d3466104e06febcb4b706a1909aa6da6")
+    private String malAPIKey;
 
     private RestTemplate restTemplate;
 

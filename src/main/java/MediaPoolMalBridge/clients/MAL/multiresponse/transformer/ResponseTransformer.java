@@ -1,6 +1,6 @@
-package MediaPoolMalBridge.clients.MAL.transformer;
+package MediaPoolMalBridge.clients.MAL.multiresponse.transformer;
 
-import MediaPoolMalBridge.clients.MAL.model.response.ErrorResponse;
+import MediaPoolMalBridge.clients.MAL.multiresponse.model.response.ErrorResponse;
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;

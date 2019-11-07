@@ -1,6 +1,6 @@
 package MediaPoolMalBridge.clients.rest;
 
-import MediaPoolMalBridge.clients.MAL.model.response.ErrorResponse;
+import MediaPoolMalBridge.clients.MAL.multiresponse.model.response.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 

@@ -1,13 +1,24 @@
 package MediaPoolMalBridge.clients.MAL.properties.client.model;
 
+import MediaPoolMalBridge.clients.MAL.singleresponse.MALAbstractResponse;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MALGetPropertiesResponse {
+public class MALGetPropertiesResponse extends MALAbstractResponse {
 
-    private String result;
+    private String page;
 
-    private String message;
+    @SerializedName( "per_page" )
+    private String perPage;
+
+    @SerializedName( "total_properties" )
+    private String totalProperties;
+
+    @SerializedName( "total_pages" )
+    private String totalPages;
+
 
     private List<MALProperty> properties;
 
@@ -16,25 +27,41 @@ public class MALGetPropertiesResponse {
     }
 
     public MALGetPropertiesResponse(final String result, final String message) {
-        this.result = result;
-        this.message = message;
+        setResult( result );
+        setMessage( message );
         this.properties = new ArrayList<>();
     }
 
-    public String getResult() {
-        return result;
+    public String getPage() {
+        return page;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setPage(String page) {
+        this.page = page;
     }
 
-    public String getMessage() {
-        return message;
+    public String getPerPage() {
+        return perPage;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setPerPage(String perPage) {
+        this.perPage = perPage;
+    }
+
+    public String getTotalProperties() {
+        return totalProperties;
+    }
+
+    public void setTotalProperties(String totalProperties) {
+        this.totalProperties = totalProperties;
+    }
+
+    public String getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(String totalPages) {
+        this.totalPages = totalPages;
     }
 
     public List<MALProperty> getProperties() {

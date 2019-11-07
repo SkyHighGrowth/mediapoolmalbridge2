@@ -5,7 +5,7 @@ import MediaPoolMalBridge.clients.MAL.collections.client.model.MALGetCollections
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+
 
 @Component
 public class MALGetCollectionsClient extends MALSingleResponseClient<Object, MALGetCollectionsResponse> {
