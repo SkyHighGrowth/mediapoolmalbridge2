@@ -2,7 +2,7 @@ package MediaPoolMalBridge.clients.BrandMaker.assetuploadmetadata.client;
 
 import MediaPoolMalBridge.clients.BrandMaker.BrandMakerSoapClient;
 import MediaPoolMalBridge.clients.BrandMaker.assetuploadmetadata.client.model.UploadMetadataStatus;
-import com.brandmaker.webservices.mediapool.UploadMetadataArgument;
+import MediaPoolMalBridge.clients.BrandMaker.model.BMAsset;
 import com.brandmaker.webservices.mediapool.UploadMetadataResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +17,13 @@ public class BMUploadMetadataClient extends BrandMakerSoapClient {
     public BMUploadMetadataClient() {
     }
 
-    public UploadMetadataStatus upload(final UploadMetadataArgument request, final boolean keepIfEmpty) {
+    public UploadMetadataStatus upload(final BMAsset bmAsset) {
         UploadMetadataStatus uploadMetadataStatus;
         try {
-            final UploadMetadataResult result = getMediaPoolPort().uploadMetaData(request);
+            final UploadMetadataResult result = getMediaPoolPort().uploadMetaData(bmAsset.getUploadMetadataArgument());
             uploadMetadataStatus = new UploadMetadataStatus(result);
         } catch (final Exception e) {
-            logger.error("Can not upload metada request {}", request, e);
+            logger.error("Can not upload metada for asset {}", bmAsset, e);
             uploadMetadataStatus = new UploadMetadataStatus(false, e.getMessage());
         }
         return uploadMetadataStatus;

@@ -5,15 +5,14 @@ import MediaPoolMalBridge.clients.MAL.subjects.client.model.MALGetSubjectsRespon
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 @Component
 public class MALGetSubjectsClient extends MALSingleResponseClient<Object, MALGetSubjectsResponse> {
 
-    private String urlSegmest = "list_subjects.json";
+    private final String urlSegmest = "list_subjects.json";
 
     public MALGetSubjectsClient() {
-
+        super(MALGetSubjectsResponse.class);
     }
 
     public RestResponse<MALGetSubjectsResponse> download() {

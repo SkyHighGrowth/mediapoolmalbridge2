@@ -12,17 +12,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
 @Component
-public class MALGetUnavailablePropertiesClient extends MALSingleResponseClient<Object, MALGetUnavailabelPropertiesResponse> {
+public class MALGetUnavailablePropertiesClient extends MALSingleResponseClient<MALGetUnavailablePropertiesRequest, MALGetUnavailabelPropertiesResponse> {
 
     private static Logger logger = LoggerFactory.getLogger(MALGetUnavailablePropertiesClient.class);
 
-    private String urlSegmest = "list_unavailable_properties.json";
+    private final String urlSegmest = "list_unavailable_properties.json";
 
-    public MALGetUnavailablePropertiesClient() { }
+    public MALGetUnavailablePropertiesClient() {
+        super(MALGetUnavailabelPropertiesResponse.class);
+    }
 
     public RestResponse<MALGetUnavailabelPropertiesResponse> download(final MALGetUnavailablePropertiesRequest request) {
         final MultiValueMap<String, String> params = request.transformToGetParams();
-        logger.error( "GET UNAVAILABLE PROPERTIES REQUEST {}", (new Gson()).toJson(params) );
-        return exchange(urlSegmest, null, HttpMethod.GET, params );
+        logger.debug("GET UNAVAILABLE PROPERTIES REQUEST {}", params);
+        return exchange(urlSegmest, null, HttpMethod.GET, params);
     }
 }

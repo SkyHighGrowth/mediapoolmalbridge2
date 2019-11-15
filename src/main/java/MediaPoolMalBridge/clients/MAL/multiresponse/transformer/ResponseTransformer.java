@@ -21,7 +21,7 @@ public class ResponseTransformer<RESPONSE> {
 
     public RestResponse<RESPONSE> transform(final ResponseEntity<String> response) {
         try {
-            final ErrorResponse errorResponse = (new Gson()).fromJson(response.getBody(), ErrorResponse.class);
+            final ErrorResponse errorResponse = GSON.fromJson(response.getBody(), ErrorResponse.class);
             return new RestResponse<>(response.getStatusCode(), response.getHeaders(), errorResponse);
         } catch (final JsonSyntaxException e) {
 

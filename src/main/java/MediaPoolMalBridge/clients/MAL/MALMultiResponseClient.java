@@ -5,7 +5,6 @@ import MediaPoolMalBridge.clients.rest.RestResponse;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,15 +19,17 @@ import java.net.URI;
 
 public abstract class MALMultiResponseClient<REQUEST, RESPONSE> {
 
+    private static final Gson GSON = new Gson();
+
     private static Logger logger = LoggerFactory.getLogger(MALMultiResponseClient.class);
 
-    @Value( "${mal.hostName:http://api.starwoodassetlibrary.com/}" )
+    @Value("${mal.hostName:http://api.starwoodassetlibrary.com/}")
     private String hostName;
 
-    @Value( "${mal.login:BrandMaker}")
+    @Value("${mal.login:BrandMaker}")
     private String malLogin;
 
-    @Value( "${mal.apiKey:d3466104e06febcb4b706a1909aa6da6")
+    @Value("${mal.apiKey:d3466104e06febcb4b706a1909aa6da6")
     private String malAPIKey;
 
     private RestTemplate restTemplate;
@@ -45,7 +46,7 @@ public abstract class MALMultiResponseClient<REQUEST, RESPONSE> {
         final HttpEntity<String> responseHttpEntity = new HttpEntity<>(serializeRequestBody(request), httpHeaders);
         try {
             final ResponseEntity<String> response = restTemplate.exchange(createURL(urlSegment), httpMetod, responseHttpEntity, String.class);
-            logger.error("REST RESPONSE {}", (new Gson()).toJson(response));
+            logger.debug("REST RESPONSE {}", response);
             return transformer.transform(response);
         } catch (final Exception e) {
             logger.error("Can perform rest request", e);
@@ -57,7 +58,7 @@ public abstract class MALMultiResponseClient<REQUEST, RESPONSE> {
         if (request == null) {
             return null;
         }
-        return (new Gson()).toJson(request);
+        return GSON.toJson(request);
     }
 
     private URI createURL(final String urlSegment) {

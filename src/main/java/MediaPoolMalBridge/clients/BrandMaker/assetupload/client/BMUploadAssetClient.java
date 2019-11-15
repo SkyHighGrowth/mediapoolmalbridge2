@@ -2,10 +2,11 @@ package MediaPoolMalBridge.clients.BrandMaker.assetupload.client;
 
 import MediaPoolMalBridge.AppConfig;
 import MediaPoolMalBridge.clients.BrandMaker.BrandMakerSoapClient;
-import MediaPoolMalBridge.clients.BrandMaker.assetupload.client.model.UploadStatus;
-import MediaPoolMalBridge.model.asset.Asset;
-import MediaPoolMalBridge.model.asset.AssetStatus;
-import com.brandmaker.webservices.mediapool.UploadMediaVersionResult;
+import MediaPoolMalBridge.clients.BrandMaker.assetuploadversion.client.model.UploadStatus;
+import MediaPoolMalBridge.clients.BrandMaker.model.BMAsset;
+import MediaPoolMalBridge.model.asset.TransferringBMConnectionAssetStatus;
+import MediaPoolMalBridge.persistence.entity.MALIdToBMIdEntity;
+import com.brandmaker.webservices.mediapool.UploadMediaResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -24,22 +25,31 @@ public class BMUploadAssetClient extends BrandMakerSoapClient {
         this.appConfig = appConfig;
     }
 
-    public UploadStatus upload(final Asset asset) {
+    public UploadStatus upload(final BMAsset bmAsset) {
 
         UploadStatus uploadStatus;
-        asset.setAssetStatus(AssetStatus.UPLOADING);
         try {
-            final String absoluteFilePath = appConfig.getTempDir() + asset.getFileName();
+            bmAsset.setTransferringBMConnectionAssetStatus(TransferringBMConnectionAssetStatus.CREATING);
+            final String absoluteFilePath = appConfig.getTempDir() + bmAsset.getFileName();
             final FileDataSource fileDataSource = new FileDataSource(absoluteFilePath);
             final DataHandler dataHandler = new DataHandler(fileDataSource);
-            final UploadMediaVersionResult result = getMediaPoolPort().uploadMediaVersionAsStream(asset.getAssetId(), "uploaded from MediaPoolSyncTool", asset.getFileName(), dataHandler);
+            final UploadMediaResult result = getMediaPoolPort().uploadMediaAsStream( bmAsset.getFileName(), dataHandler);
             if (result.isSuccess()) {
-                asset.setAssetStatus(AssetStatus.UPLOADED);
+                final MALIdToBMIdEntity malIdToBMIdEntity = new MALIdToBMIdEntity();
+                malIdToBMIdEntity.setBmId( result.getMediaGuid() );
+                malIdToBMIdEntity.setSalId( bmAsset.getUploadMetadataArgument().getFreeField1().get( 0 ).getDescription() );
+                bmAsset.setAssetId( result.getMediaGuid() );
+                bmAsset.setTransferringBMConnectionAssetStatus(TransferringBMConnectionAssetStatus.CREATED);
             }
-            uploadStatus = new UploadStatus(result, asset.getFileName());
+            else
+            {
+                bmAsset.setTransferringBMConnectionAssetStatus(TransferringBMConnectionAssetStatus.CREATING);
+            }
+            uploadStatus = new UploadStatus(result, bmAsset);
         } catch (final Exception e) {
-            logger.error("Error uploading asset {}", asset, e);
-            uploadStatus = new UploadStatus(false, e.getMessage(), asset.getFileName());
+            logger.error("Error uploading asset {}", bmAsset, e);
+            bmAsset.setTransferringBMConnectionAssetStatus(TransferringBMConnectionAssetStatus.CREATING);
+            uploadStatus = new UploadStatus(false, e.getMessage(), bmAsset);
         }
         return uploadStatus;
     }

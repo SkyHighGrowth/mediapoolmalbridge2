@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class FileType {
 
-    @SerializedName( "file_type_id" )
+    @SerializedName("file_type_id")
     private String fileTypeId;
 
     private String name;

@@ -10,13 +10,13 @@ public class MALGetPropertiesResponse extends MALAbstractResponse {
 
     private String page;
 
-    @SerializedName( "per_page" )
+    @SerializedName("per_page")
     private String perPage;
 
-    @SerializedName( "total_properties" )
+    @SerializedName("total_properties")
     private String totalProperties;
 
-    @SerializedName( "total_pages" )
+    @SerializedName("total_pages")
     private String totalPages;
 
 
@@ -27,8 +27,8 @@ public class MALGetPropertiesResponse extends MALAbstractResponse {
     }
 
     public MALGetPropertiesResponse(final String result, final String message) {
-        setResult( result );
-        setMessage( message );
+        setResult(result);
+        setMessage(message);
         this.properties = new ArrayList<>();
     }
 

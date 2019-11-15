@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class MALGetAssetsResponse extends MALAbstractResponse  {
+public class MALGetAssetsResponse extends MALAbstractResponse {
 
-    @SerializedName( "total_assets")
+    @SerializedName("total_assets")
     private String totalAssets;
 
-    @SerializedName( "total_pages" )
+    @SerializedName("total_pages")
     private String totalPages;
 
-    private List<Asset> assets;
+    private List<MALGetAsset> assets;
 
     public String getTotalAssets() {
         return totalAssets;
@@ -31,11 +31,11 @@ public class MALGetAssetsResponse extends MALAbstractResponse  {
         this.totalPages = totalPages;
     }
 
-    public List<Asset> getAssets() {
+    public List<MALGetAsset> getAssets() {
         return assets;
     }
 
-    public void setAssets(List<Asset> assets) {
+    public void setAssets(List<MALGetAsset> assets) {
         this.assets = assets;
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MALGetFileTypesResponse {
 
-    @SerializedName( "file_types" )
+    @SerializedName("file_types")
     private List<FileType> fileTypes;
 
     public List<FileType> getFileTypes() {

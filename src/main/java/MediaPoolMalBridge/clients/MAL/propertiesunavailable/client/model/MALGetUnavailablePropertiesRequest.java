@@ -16,12 +16,10 @@ public class MALGetUnavailablePropertiesRequest {
         this.unavailableSince = unavailableSince;
     }
 
-    public MultiValueMap<String, String> transformToGetParams()
-    {
+    public MultiValueMap<String, String> transformToGetParams() {
         final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        if(StringUtils.isNotBlank(unavailableSince) )
-        {
-            params.set( "unavailable_since", unavailableSince );
+        if (StringUtils.isNotBlank(unavailableSince)) {
+            params.set("unavailable_since", unavailableSince);
         }
         return params;
     }

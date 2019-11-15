@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class AssetType {
 
-    @SerializedName( "asset_type_id" )
+    @SerializedName("asset_type_id")
     private String assetTypeId;
 
     private String name;

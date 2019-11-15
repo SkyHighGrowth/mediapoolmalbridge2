@@ -7,7 +7,7 @@ import java.util.List;
 
 public class MALGetAssetTypesResponse extends MALAbstractResponse {
 
-    @SerializedName( "asset_types" )
+    @SerializedName("asset_types")
     private List<AssetType> assetTypes;
 
     public List<AssetType> getAssetTypes() {

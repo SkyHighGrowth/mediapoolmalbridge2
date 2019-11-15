@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Country {
 
-    @SerializedName( "country_id" )
+    @SerializedName("country_id")
     private String countryId;
 
-    @SerializedName( "division_id" )
+    @SerializedName("division_id")
     private String divisionId;
 
     private String name;

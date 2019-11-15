@@ -6,13 +6,13 @@ import java.util.List;
 
 public class MALGetModifiedPropertyPhotoResponse extends MALAbstractResponse {
 
-    private List<Asset> assets;
+    private List<MALModifiedPropertyPhotoAsset> assets;
 
-    public List<Asset> getAssets() {
+    public List<MALModifiedPropertyPhotoAsset> getAssets() {
         return assets;
     }
 
-    public void setAssets(List<Asset> assets) {
+    public void setAssets(List<MALModifiedPropertyPhotoAsset> assets) {
         this.assets = assets;
     }
 }

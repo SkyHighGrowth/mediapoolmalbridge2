@@ -3,11 +3,13 @@ package MediaPoolMalBridge.clients.BrandMaker.themecreate.client;
 import MediaPoolMalBridge.clients.BrandMaker.BrandMakerSoapClient;
 import MediaPoolMalBridge.clients.BrandMaker.themecreate.client.model.CreateThemeResponse;
 import MediaPoolMalBridge.clients.BrandMaker.themecreate.tranformer.request.BMThemeTransformer;
-import MediaPoolMalBridge.model.theme.Theme;
+import MediaPoolMalBridge.clients.BrandMaker.model.BMTheme;
 import com.brandmaker.webservices.theme.ThemeResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BMCreateThemeClient extends BrandMakerSoapClient {
 
     private final static Logger logger = LoggerFactory.getLogger(BMCreateThemeClient.class);
@@ -18,7 +20,7 @@ public class BMCreateThemeClient extends BrandMakerSoapClient {
         this.transformer = transformer;
     }
 
-    public CreateThemeResponse createTheme(final Theme theme) {
+    public CreateThemeResponse createTheme(final BMTheme theme) {
         try {
             final com.brandmaker.webservices.theme.Theme request = transformer.toBMTheme(theme);
             final ThemeResult response = getThemeWebServicePort().createTheme(request);

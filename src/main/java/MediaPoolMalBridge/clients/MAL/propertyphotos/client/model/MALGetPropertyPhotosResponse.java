@@ -7,7 +7,7 @@ import java.util.List;
 
 public class MALGetPropertyPhotosResponse extends MALAbstractResponse {
 
-    @SerializedName( "asset_ids" )
+    @SerializedName("asset_ids")
     private List<String> assetIds;
 
     public List<String> getAssetIds() {

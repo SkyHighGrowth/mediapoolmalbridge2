@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class State {
 
-    @SerializedName( "state_id" )
+    @SerializedName("state_id")
     private String stateId;
 
     private String name;

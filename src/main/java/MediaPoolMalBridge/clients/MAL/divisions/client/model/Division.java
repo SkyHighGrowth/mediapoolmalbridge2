@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Division {
 
-    @SerializedName( "division_id" )
+    @SerializedName("division_id")
     private String divisionId;
 
     private String name;

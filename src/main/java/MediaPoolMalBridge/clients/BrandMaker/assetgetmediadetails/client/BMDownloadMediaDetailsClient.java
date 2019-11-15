@@ -3,10 +3,9 @@ package MediaPoolMalBridge.clients.BrandMaker.assetgetmediadetails.client;
 import MediaPoolMalBridge.AppConfig;
 import MediaPoolMalBridge.clients.BrandMaker.BrandMakerSoapClient;
 import MediaPoolMalBridge.clients.BrandMaker.assetgetmediadetails.client.model.DownloadMediaDetailsResponse;
-import MediaPoolMalBridge.model.asset.Asset;
+import MediaPoolMalBridge.clients.BrandMaker.model.BMAsset;
 import com.brandmaker.webservices.mediapool.GetMediaDetailsArgument;
 import com.brandmaker.webservices.mediapool.GetMediaDetailsResult;
-import com.brandmaker.webservices.mediapool.MediaPoolWebServicePort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -22,14 +21,14 @@ public class BMDownloadMediaDetailsClient extends BrandMakerSoapClient {
         this.appConfig = appConfig;
     }
 
-    public DownloadMediaDetailsResponse download(final Asset asset) {
+    public DownloadMediaDetailsResponse download(final BMAsset bmAsset) {
         try {
             final GetMediaDetailsArgument request = new GetMediaDetailsArgument();
-            request.setMediaGuid(asset.getAssetId());
+            request.setMediaGuid(bmAsset.getAssetId());
             final GetMediaDetailsResult response = getMediaPoolPort().getMediaDetails(request);
             return new DownloadMediaDetailsResponse(response);
         } catch (final Exception e) {
-            logger.error("Error downloading asset {}", asset, e);
+            logger.error("Error downloading asset {}", bmAsset, e);
             return new DownloadMediaDetailsResponse(false, e.getMessage());
         }
     }

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class MALGetAssetTypesClient extends MALSingleResponseClient<Object, MALGetAssetTypesResponse> {
 
-    private String urlSegmest = "list_asset_types.json";
+    private final String urlSegmest = "list_asset_types.json";
 
     public MALGetAssetTypesClient() {
-
+        super( MALGetAssetTypesResponse.class );
     }
 
     public RestResponse<MALGetAssetTypesResponse> download() {

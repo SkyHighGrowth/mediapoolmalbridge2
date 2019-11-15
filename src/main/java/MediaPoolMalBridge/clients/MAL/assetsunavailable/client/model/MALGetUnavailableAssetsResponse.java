@@ -6,13 +6,13 @@ import java.util.List;
 
 public class MALGetUnavailableAssetsResponse extends MALAbstractResponse {
 
-    private List<Asset> assets;
+    private List<MALGetUnavailableAsset> assets;
 
-    public List<Asset> getAssets() {
+    public List<MALGetUnavailableAsset> getAssets() {
         return assets;
     }
 
-    public void setAssets(List<Asset> assets) {
+    public void setAssets(List<MALGetUnavailableAsset> assets) {
         this.assets = assets;
     }
 }

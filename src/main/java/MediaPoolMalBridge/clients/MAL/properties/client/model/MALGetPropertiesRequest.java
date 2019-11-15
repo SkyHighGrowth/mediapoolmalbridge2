@@ -132,41 +132,39 @@ public class MALGetPropertiesRequest {
         this.page = page;
     }
 
-    public MultiValueMap<String, String> transformToGetParams( )
-    {
+    public MultiValueMap<String, String> transformToGetParams() {
         final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        if( keywords != null ) {
+        if (keywords != null) {
             params.set("keywords", keywords);
         }
-        if( !propertyIds.isEmpty() ) {
-            params.set( "property_ids", transformToString( propertyIds ) );
+        if (!propertyIds.isEmpty()) {
+            params.set("property_ids", transformToString(propertyIds));
         }
-        if( !marshaCodes.isEmpty() ) {
-            params.set( "marsha_codes", transformToString( marshaCodes ) );
+        if (!marshaCodes.isEmpty()) {
+            params.set("marsha_codes", transformToString(marshaCodes));
         }
-        if( !brandIds.isEmpty() ) {
-            params.set( "brand_ids", transformToString( brandIds ) );
+        if (!brandIds.isEmpty()) {
+            params.set("brand_ids", transformToString(brandIds));
         }
-        if( !parentBrandIds.isEmpty() ) {
-            params.set( "parent_brand_ids", transformToString( parentBrandIds ) );
+        if (!parentBrandIds.isEmpty()) {
+            params.set("parent_brand_ids", transformToString(parentBrandIds));
         }
-        if( hasAssets ) {
-            params.set( "has_assets", "1" );
+        if (hasAssets) {
+            params.set("has_assets", "1");
         }
-        if( StringUtils.isNotBlank( locale ) ) {
-            params.set( "locale", locale );
+        if (StringUtils.isNotBlank(locale)) {
+            params.set("locale", locale);
         }
-        if( perPage != 0 ) {
-            params.set( "per_page", String.valueOf( perPage ) );
+        if (perPage != 0) {
+            params.set("per_page", String.valueOf(perPage));
         }
-        if( page != 0 ) {
-            params.set( "page", String.valueOf( page ) );
+        if (page != 0) {
+            params.set("page", String.valueOf(page));
         }
         return params;
     }
 
-    private String transformToString( final List<String> list )
-    {
-        return String.join( ",", list );
+    private String transformToString(final List<String> list) {
+        return String.join(",", list);
     }
 }

@@ -13,11 +13,13 @@ public class MALGetPropertiesWithRelatedAssetsClient extends MALSingleResponseCl
 
     private static Logger logger = LoggerFactory.getLogger(MALGetPropertiesWithRelatedAssetsClient.class);
 
-    private String urlSegmest = "list_properties_with_related_assets.json";
+    private final String urlSegmest = "list_properties_with_related_assets.json";
 
-    public MALGetPropertiesWithRelatedAssetsClient() { }
+    public MALGetPropertiesWithRelatedAssetsClient() {
+        super(MALGetPropertiesWithRelatedAssetsResponse.class);
+    }
 
     public RestResponse<MALGetPropertiesWithRelatedAssetsResponse> download() {
-        return exchange(urlSegmest, null, HttpMethod.GET );
+        return exchange(urlSegmest, null, HttpMethod.GET);
     }
 }

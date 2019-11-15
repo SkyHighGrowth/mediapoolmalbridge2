@@ -14,10 +14,10 @@ public class MALGetPropertyTypesClient extends MALSingleResponseClient<Object, M
 
     private static Logger logger = LoggerFactory.getLogger(MALGetModifiedPropertyPhotoClient.class);
 
-    private String urlSegmest = "list_property_types.json";
+    private final String urlSegmest = "list_property_types.json";
 
     public MALGetPropertyTypesClient() {
-
+        super(MALGetPropertyTypesResponse.class);
     }
 
     public RestResponse<MALGetPropertyTypesResponse> download() {

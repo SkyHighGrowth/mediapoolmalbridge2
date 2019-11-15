@@ -6,13 +6,13 @@ import java.util.List;
 
 public class MALGetKitsResponse extends MALAbstractResponse {
 
-    private List<Kit> kits;
+    private List<MALGetKit> kits;
 
-    public List<Kit> getKits() {
+    public List<MALGetKit> getKits() {
         return kits;
     }
 
-    public void setKits(List<Kit> kits) {
+    public void setKits(List<MALGetKit> kits) {
         this.kits = kits;
     }
 }

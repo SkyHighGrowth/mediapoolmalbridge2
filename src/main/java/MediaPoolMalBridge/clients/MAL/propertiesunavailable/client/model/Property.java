@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Property {
 
-    @SerializedName( "property_id" )
+    @SerializedName("property_id")
     private String propertyId;
 
-    @SerializedName( "unavailable_date" )
+    @SerializedName("unavailable_date")
     private String unavailableDate;
 
     public String getPropertyId() {

@@ -13,13 +13,13 @@ public class MALGetCountryClient extends MALSingleResponseClient<Object, MALGetC
 
     private static Logger logger = LoggerFactory.getLogger(MALGetCountryClient.class);
 
-    private String urlSegmest = "list_countries.json";
+    private final String urlSegmest = "list_countries.json";
 
     public MALGetCountryClient() {
-
+        super( MALGetCountryResponse.class );
     }
 
     public RestResponse<MALGetCountryResponse> download() {
-        return exchange(urlSegmest, null, HttpMethod.GET );
+        return exchange(urlSegmest, null, HttpMethod.GET);
     }
 }

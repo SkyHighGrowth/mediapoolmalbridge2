@@ -12,19 +12,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
 @Component
-public class MALGetPropertyPhotosClient extends MALSingleResponseClient<Object, MALGetPropertyPhotosResponse> {
+public class MALGetPropertyPhotosClient extends MALSingleResponseClient<MALGetPropertyPhotosRequest, MALGetPropertyPhotosResponse> {
 
     private static Logger logger = LoggerFactory.getLogger(MALGetPropertyPhotosClient.class);
 
-    private String urlSegmest = "list_available_property_photos.json";
+    private final String urlSegmest = "list_available_property_photos.json";
 
     public MALGetPropertyPhotosClient() {
-
+        super(MALGetPropertyPhotosResponse.class);
     }
 
     public RestResponse<MALGetPropertyPhotosResponse> download(final MALGetPropertyPhotosRequest request) {
         final MultiValueMap<String, String> params = request.transformToGetParams();
-        logger.error( "GET PROPERTY PHOTO REQUEST {}", (new Gson()).toJson( params ) );
+        logger.debug("GET PROPERTY PHOTO REQUEST {}", params);
         return exchange(urlSegmest, null, HttpMethod.GET, params);
     }
 }

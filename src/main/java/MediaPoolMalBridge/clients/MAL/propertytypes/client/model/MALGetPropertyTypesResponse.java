@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class MALGetPropertyTypesResponse extends MALAbstractResponse {
 
-    @SerializedName( "property_type_id" )
+    @SerializedName("property_type_id")
     private String propertyTypeId;
 
     private String name;

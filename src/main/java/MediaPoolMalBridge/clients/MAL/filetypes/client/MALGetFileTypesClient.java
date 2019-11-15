@@ -13,12 +13,14 @@ public class MALGetFileTypesClient extends MALSingleResponseClient<Object, MALGe
 
     private static Logger logger = LoggerFactory.getLogger(MALGetFileTypesClient.class);
 
-    private String urlSegmest = "list_file_types.json";
+    private final String urlSegmest = "list_file_types.json";
 
-    public MALGetFileTypesClient() { }
+    public MALGetFileTypesClient() {
+        super( MALGetFileTypesResponse.class );
+    }
 
     public RestResponse<MALGetFileTypesResponse> download() {
-        return exchange(urlSegmest, null, HttpMethod.GET );
+        return exchange(urlSegmest, null, HttpMethod.GET);
     }
 }
 

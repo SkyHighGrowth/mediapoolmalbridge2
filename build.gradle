@@ -9,7 +9,6 @@
 plugins {
     // Apply the java plugin to add support for Java
     id 'java'
-
     // Apply the application plugin to add support for building a CLI application
     id 'application'
 	id 'idea'
@@ -42,7 +41,10 @@ dependencies {
     implementation 'com.google.guava:guava:28.0-jre'
 
     implementation 'org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
 
     compile 'org.apache.httpcomponents:httpclient:4.5.3'
     compile 'org.apache.commons:commons-lang3:3.9'
@@ -58,7 +60,7 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
     compile group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '6.2'
 
-    //testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
@@ -70,13 +72,13 @@ application {
 }
 
 apply plugin: 'idea'
-//apply plugin: 'uk.co.boothen.gradle.wsimport'
+apply plugin: 'uk.co.boothen.gradle.wsimport'
 apply plugin: 'java'
 
-/*task wsimport(type: uk.co.boothen.gradle.wsimport.WsImport) {
+task wsimport(type: uk.co.boothen.gradle.wsimport.WsImport) {
 
     wsdlSourceRoot = "/src/main/resources/wsdl"
-    generatedSourceRoot = "/../generated-sources"
+    generatedSourceRoot = "/../generate-sources"
     generatedClassesRoot = ""
 
     keep = true
@@ -96,31 +98,10 @@ apply plugin: 'java'
     wsdl("Theme.wsdl") {
         xjcarg("-XautoNameResolution")
     }
-}*/
-
-def generatedSourcesDir = file('generated-sources')
-idea {
-    module {
-        sourceDirs += generatedSourcesDir
-        //generatedSourceDirs += generatedSourcesDir
-    }
 }
 
 sourceSets {
-    generated{
-        java.srcDir "${projectDir}/generated-sources/"
+    main {
+        java.srcDirs += "${projectDir}/generated-sources/"
     }
-}
-
-/*compileGeneratedJava{
-    //dependsOn(wsimport)
-    classpath = configurations.compile
-}*/
-compileJava{
-    //dependsOn(compileGeneratedJava)
-    source += sourceSets.generated.java
-}
-
-test {
-    useJUnit()
 }

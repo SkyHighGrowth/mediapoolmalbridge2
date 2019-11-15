@@ -13,10 +13,10 @@ public class MALGetDivisionsClient extends MALSingleResponseClient<Object, MALGe
 
     private static Logger logger = LoggerFactory.getLogger(MALGetDivisionsClient.class);
 
-    private String urlSegmest = "list_divisions.json";
+    private final String urlSegmest = "list_divisions.json";
 
     public MALGetDivisionsClient() {
-
+        super( MALGetDivisionsResponse.class );
     }
 
     public RestResponse<MALGetDivisionsResponse> download() {

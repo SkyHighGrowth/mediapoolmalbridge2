@@ -13,19 +13,19 @@ import org.springframework.util.MultiValueMap;
 
 
 @Component
-public class MALGetPropertiesClient extends MALSingleResponseClient<Object, MALGetPropertiesResponse> {
+public class MALGetPropertiesClient extends MALSingleResponseClient<MALGetPropertiesRequest, MALGetPropertiesResponse> {
 
     private static Logger logger = LoggerFactory.getLogger(MALGetPropertiesClient.class);
 
-    private String urlSegment = "list_properties.json";
+    private final String urlSegment = "list_properties.json";
 
     public MALGetPropertiesClient() {
-
+        super( MALGetPropertiesResponse.class );
     }
 
-    public RestResponse<MALGetPropertiesResponse> download( final MALGetPropertiesRequest request ) {
+    public RestResponse<MALGetPropertiesResponse> download(final MALGetPropertiesRequest request) {
         final MultiValueMap<String, String> queryParameters = request.transformToGetParams();
-        logger.error( "GET PROPERTIES REQUEST {}", (new Gson()).toJson( queryParameters ) );
+        logger.debug("GET PROPERTIES REQUEST {}", queryParameters);
         return exchange(urlSegment, null, HttpMethod.GET, queryParameters);
     }
 }

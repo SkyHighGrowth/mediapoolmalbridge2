@@ -4,25 +4,25 @@ import com.google.gson.annotations.SerializedName;
 
 public class Urls {
 
-    @SerializedName( "thumbnail_url" )
+    @SerializedName("thumbnail_url")
     private String thumbnailsUrl;
 
-    @SerializedName( "medium_url" )
+    @SerializedName("medium_url")
     private String mediumUrl;
 
-    @SerializedName( "large_url" )
+    @SerializedName("large_url")
     private String largeUrl;
 
-    @SerializedName( "high_url" )
+    @SerializedName("high_url")
     private String highUrl;
 
-    @SerializedName( "logo_jpg_url" )
+    @SerializedName("logo_jpg_url")
     private String logoJpgUrl;
 
-    @SerializedName( "logo_png_url" )
+    @SerializedName("logo_png_url")
     private String logoPngUrl;
 
-    @SerializedName( "xl_url" )
+    @SerializedName("xl_url")
     private String xlUrl;
 
     public String getThumbnailsUrl() {
