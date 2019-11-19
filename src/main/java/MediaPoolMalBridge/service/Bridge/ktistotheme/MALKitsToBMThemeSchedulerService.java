@@ -19,26 +19,22 @@ public class MALKitsToBMThemeSchedulerService extends AbstractSchedulerService {
 
     private BMUploadThemeService bmUploadThemeService;
 
-    private MALKitsToBMThemeSchedulerService( final MALGetKitsService malGetKitsService,
-                                              final BMDownloadThemeService bmDownloadThemeService,
-                                              final BMUploadThemeService bmUploadThemeService)
-    {
+    private MALKitsToBMThemeSchedulerService(final MALGetKitsService malGetKitsService,
+                                             final BMDownloadThemeService bmDownloadThemeService,
+                                             final BMUploadThemeService bmUploadThemeService) {
         this.malGetKitsService = malGetKitsService;
         this.bmDownloadThemeService = bmDownloadThemeService;
         this.bmUploadThemeService = bmUploadThemeService;
     }
 
     @PostConstruct
-    public void exchangeKitsToThemes()
-    {
-        if( isRunScheduler() )
-        {
-            taskSchedulerWrapper.getTaskScheduler().schedule( this::exchange, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION ) );
+    public void exchangeKitsToThemes() {
+        if (isRunScheduler()) {
+            taskSchedulerWrapper.getTaskScheduler().schedule(this::exchange, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
         }
     }
 
-    public void exchange()
-    {
+    public void exchange() {
         malGetKitsService.downloadKits();
         bmDownloadThemeService.download();
         bmUploadThemeService.uploadTheme();

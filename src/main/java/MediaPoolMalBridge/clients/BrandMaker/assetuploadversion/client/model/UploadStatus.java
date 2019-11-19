@@ -1,53 +1,39 @@
 package MediaPoolMalBridge.clients.BrandMaker.assetuploadversion.client.model;
 
-import MediaPoolMalBridge.clients.BrandMaker.model.BMAsset;
+import MediaPoolMalBridge.clients.BrandMaker.model.response.AbstractBMResponse;
 import com.brandmaker.webservices.mediapool.UploadMediaResult;
 import com.brandmaker.webservices.mediapool.UploadMediaVersionResult;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
-public class UploadStatus {
+public class UploadStatus extends AbstractBMResponse {
 
     private String fileName;
 
-    private BMAsset bmAsset;
+    private String bmAssetId;
 
-    private boolean status;
-
-    private String error;
-
-    private List<String> warnings;
-
-    public UploadStatus(final UploadMediaResult result, final BMAsset bmAsset ) {
-        this.bmAsset = bmAsset;
+    public UploadStatus(final UploadMediaResult result, final String bmAssetId) {
+        this.bmAssetId = bmAssetId;
         status = result.isSuccess();
-        error = result.getError();
+        errors = Collections.singletonList(result.getError());
         warnings = new ArrayList<>();
         result.getWarnings().forEach(warning -> warnings.add(warning.getWarning()));
     }
 
-    public UploadStatus(final UploadMediaVersionResult result, final BMAsset bmAsset) {
-        this.bmAsset = bmAsset;
+    public UploadStatus(final UploadMediaVersionResult result, final String bmAssetId) {
+        this.bmAssetId = bmAssetId;
         status = result.isSuccess();
-        error = result.getError();
+        errors = Collections.singletonList(result.getError());
         warnings = new ArrayList<>();
         result.getWarnings().forEach(warning -> warnings.add(warning.getWarning()));
     }
 
-    public UploadStatus(final boolean success, final String errorMessage, final BMAsset bmAsset ) {
+    public UploadStatus(final boolean success, final String errorMessage, final String bmAssetId) {
         status = success;
-        error = errorMessage;
+        errors = Collections.singletonList(errorMessage);
         warnings = new ArrayList<>();
-        this.bmAsset = bmAsset;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
+        this.bmAssetId = bmAssetId;
     }
 
     public String getFileName() {
@@ -58,28 +44,12 @@ public class UploadStatus {
         this.fileName = fileName;
     }
 
-    public String getError() {
-        return error;
+    public String getBmAsset() {
+        return bmAssetId;
     }
 
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public List<String> getWarnings() {
-        return warnings;
-    }
-
-    public void setWarnings(List<String> warnings) {
-        this.warnings = warnings;
-    }
-
-    public BMAsset getBmAsset() {
-        return bmAsset;
-    }
-
-    public void setBmAsset(BMAsset bmAsset) {
-        this.bmAsset = bmAsset;
+    public void setBmAsset(String bmAssetId) {
+        this.bmAssetId = bmAssetId;
     }
 }
 

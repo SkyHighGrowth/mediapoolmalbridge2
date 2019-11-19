@@ -1,48 +1,33 @@
 package MediaPoolMalBridge.service.BrandMaker.assets.create;
 
 import MediaPoolMalBridge.clients.BrandMaker.assetupload.client.BMUploadAssetClient;
-import MediaPoolMalBridge.clients.BrandMaker.model.BMAsset;
-import MediaPoolMalBridge.model.BrandMaker.BMAssetMap;
-import MediaPoolMalBridge.model.asset.TransferringAsset;
-import MediaPoolMalBridge.model.asset.TransferringAssetStatus;
-import MediaPoolMalBridge.model.asset.TransferringBMConnectionAssetStatus;
-import MediaPoolMalBridge.model.asset.TransferringMALConnectionAssetStatus;
-import MediaPoolMalBridge.service.AbstractService;
-import MediaPoolMalBridge.tasks.MAL.TaskExecutorWrapper;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringBMConnectionAssetStatus;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
+import MediaPoolMalBridge.persistence.entity.BM.BMAssetEntity;
+import MediaPoolMalBridge.service.BrandMaker.AbstractBMService;
+import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
-public class BMCreateAssetService extends AbstractService {
-
-    private final BMAssetMap bmAssetMap;
+public class BMCreateAssetService extends AbstractBMService {
 
     private final BMUploadAssetClient bmUploadAssetClient;
 
     private TaskExecutorWrapper taskExecutorWrapper;
 
-    public BMCreateAssetService(final BMAssetMap bmAssetMap,
-                                final BMUploadAssetClient bmUploadAssetClient,
-                                final TaskExecutorWrapper taskExecutorWrapper )
-    {
-        this.bmAssetMap = bmAssetMap;
+    public BMCreateAssetService(final BMUploadAssetClient bmUploadAssetClient,
+                                final TaskExecutorWrapper taskExecutorWrapper) {
         this.bmUploadAssetClient = bmUploadAssetClient;
         this.taskExecutorWrapper = taskExecutorWrapper;
     }
 
-    public void createAssets()
-    {
-        final Collection<TransferringAsset> bmAssets = bmAssetMap.values();
-        bmAssets.stream()
-                .filter( transferringAsset -> TransferringBMConnectionAssetStatus.CREATING.equals( transferringAsset.getTransferringBMConnectionAssetStatus()) ||
-                        ( TransferringAssetStatus.MAL_CREATED.equals( transferringAsset.getTransferringAssetStatus()) &&
-                        TransferringMALConnectionAssetStatus.DOWNLOADED.equals( transferringAsset.getTransferringMALConnectionAssetStatus() ) ) )
-                .forEach(transferringAsset -> {
-                    if( transferringAsset instanceof BMAsset)
-                    {
-                        final BMAsset bmAsset = (BMAsset) transferringAsset;
-                        taskExecutorWrapper.getTaskExecutor().execute( () -> bmUploadAssetClient.upload(bmAsset));
-                    } });
+    public void createAssets() {
+        final List<BMAssetEntity> bmAssetEntities = bmAssetRepository.findFileCreatingOrMalCreatedAndDownloaded(TransferringBMConnectionAssetStatus.FILE_CREATED,
+                TransferringAssetStatus.MAL_CREATED, TransferringMALConnectionAssetStatus.DOWNLOADED );
+        bmAssetEntities.forEach(bmAsset ->
+                taskExecutorWrapper.getTaskExecutor().execute(() -> bmUploadAssetClient.upload(bmAsset)));
     }
 }

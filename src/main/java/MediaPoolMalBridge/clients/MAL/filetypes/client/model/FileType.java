@@ -7,7 +7,7 @@ public class FileType {
     @SerializedName("file_type_id")
     private String fileTypeId;
 
-    private String name;
+    private String name = "";
 
     public String getFileTypeId() {
         return fileTypeId;

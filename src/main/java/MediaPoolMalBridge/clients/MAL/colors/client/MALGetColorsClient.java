@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class MALGetColorsClient extends MALSingleResponseClient<Object, MALGetColorsResponse> {
 
-    private final String urlSegmest = "list_colors.json";
+    private static final String urlSegment = "list_colors.json";
 
     public MALGetColorsClient() {
-        super( MALGetColorsResponse.class );
+        super(MALGetColorsResponse.class);
     }
 
     public RestResponse<MALGetColorsResponse> download() {
-        return exchange(urlSegmest, null, HttpMethod.GET);
+        return exchange(urlSegment, null, HttpMethod.GET);
     }
 }

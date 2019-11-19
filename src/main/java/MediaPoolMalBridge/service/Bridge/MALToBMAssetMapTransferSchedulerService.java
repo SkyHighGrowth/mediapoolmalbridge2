@@ -1,56 +1,51 @@
 package MediaPoolMalBridge.service.Bridge;
 
-import MediaPoolMalBridge.clients.BrandMaker.model.BMAsset;
-import MediaPoolMalBridge.clients.MAL.model.MALAsset;
 import MediaPoolMalBridge.constants.Constants;
-import MediaPoolMalBridge.model.BrandMaker.BMAssetMap;
-import MediaPoolMalBridge.model.MAL.MALAssetMap;
-import MediaPoolMalBridge.model.asset.TransferringMALConnectionAssetStatus;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
+import MediaPoolMalBridge.persistence.entity.BM.BMAssetEntity;
+import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
+import MediaPoolMalBridge.persistence.repository.BM.BMAssetRepository;
+import MediaPoolMalBridge.persistence.repository.MAL.MALAssetRepository;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Service
 public class MALToBMAssetMapTransferSchedulerService extends AbstractSchedulerService {
 
-    private final MALAssetMap malAssetMap;
+    private final BMAssetRepository bmAssetRepository;
 
-    private final BMAssetMap bmAssetMap;
+    private final MALAssetRepository malAssetRepository;
 
-    private final MALToBMTranslator malToBMTranslator;
+    private final MALToBMTransformer malToBMTransformer;
 
-    public MALToBMAssetMapTransferSchedulerService(final MALAssetMap malAssetMap,
-                                                   final BMAssetMap bmAssetMap,
-                                                   final MALToBMTranslator malToBMTranslator)
-    {
-        this.malAssetMap = malAssetMap;
-        this.bmAssetMap = bmAssetMap;
-        this.malToBMTranslator = malToBMTranslator;
+    public MALToBMAssetMapTransferSchedulerService(final BMAssetRepository bmAssetRepository,
+                                                   final MALAssetRepository malAssetRepository,
+                                                   final MALToBMTransformer malToBMTransformer) {
+        this.bmAssetRepository = bmAssetRepository;
+        this.malAssetRepository = malAssetRepository;
+        this.malToBMTransformer = malToBMTransformer;
     }
 
     @PostConstruct
-    public void scheduleTransfer()
-    {
-        if( isRunScheduler() ) {
+    public void scheduleTransfer() {
+        if (isRunScheduler()) {
             taskSchedulerWrapper.getTaskScheduler().schedule(this::transferAssets, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
         }
     }
 
-    public void transferAssets()
-    {
-        malAssetMap.values()
-                .stream()
-                .filter( transferringAsset -> TransferringMALConnectionAssetStatus.DOWNLOADED.equals(transferringAsset.getTransferringMALConnectionAssetStatus()))
-                .forEach( transferringAsset -> {
-                    if( transferringAsset instanceof MALAsset )
-                    {
-                        final MALAsset malAsset = (MALAsset) transferringAsset;
-                        final BMAsset bmAsset = malToBMTranslator.translate( malAsset );
-                        bmAssetMap.put( bmAsset.getAssetId(), bmAsset );
-                        malAssetMap.remove( malAsset.getMALAssetId() );
-                    }
-                });
+    public void transferAssets() {
+        final List<MALAssetEntity> malAssetEntities = malAssetRepository.findDownloadedOrMalDeleted( TransferringMALConnectionAssetStatus.DOWNLOADED, TransferringAssetStatus.MAL_DELETED );
+        logger.debug( GSON.toJson( malAssetEntities ) );
+        malAssetEntities.forEach(malAssetEntity -> {
+            final BMAssetEntity bmAsset = malToBMTransformer.translate(malAssetEntity);
+            malAssetEntity.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DONE);
+            bmAssetRepository.save(bmAsset);
+            malAssetRepository.save(malAssetEntity);
+        });
     }
 }

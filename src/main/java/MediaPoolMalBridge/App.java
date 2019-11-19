@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+//@EnableJpaRepositories("MediaPoolMalBridge.persistence.repository")
+//@EntityScan("MediaPoolMALBridge.persistence.entity")
 public class App {
 
     public static void main(String[] args) {

@@ -1,47 +1,31 @@
 package MediaPoolMalBridge.service.MAL.propertiesmodifiedphotos.download;
 
-import MediaPoolMalBridge.clients.MAL.model.MALAsset;
-import MediaPoolMalBridge.model.MAL.MALAssetMap;
-import MediaPoolMalBridge.model.asset.TransferringAsset;
-import MediaPoolMalBridge.model.asset.TransferringAssetStatus;
-import MediaPoolMalBridge.service.AbstractService;
-import MediaPoolMalBridge.tasks.MAL.TaskExecutorWrapper;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
+import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
+import MediaPoolMalBridge.service.MAL.AbstractMALService;
+import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Objects;
+import java.util.List;
 
 @Service
-public class MALFireDownloadPhotoService extends AbstractService {
+public class MALFireDownloadPhotoService extends AbstractMALService {
 
     private final TaskExecutorWrapper taskExecutorWrapper;
 
     private final MALDownloadPropertiesPhotoService malDownloadPropertiesPhotoService;
 
-    private final MALAssetMap malAssetMap;
-
     public MALFireDownloadPhotoService(final TaskExecutorWrapper taskExecutorWrapper,
-                                        final MALDownloadPropertiesPhotoService malDownloadPropertiesPhotoService,
-                                        final MALAssetMap malAssetMap )
-    {
+                                       final MALDownloadPropertiesPhotoService malDownloadPropertiesPhotoService) {
         this.taskExecutorWrapper = taskExecutorWrapper;
         this.malDownloadPropertiesPhotoService = malDownloadPropertiesPhotoService;
-        this.malAssetMap = malAssetMap;
     }
 
     public void downloadPhotos() {
 
-        final Collection<TransferringAsset> malAssets = malAssetMap.values();
-
-        malAssets.stream()
-                .filter( Objects::nonNull )
-                .filter( transferringAsset -> TransferringAssetStatus.MAL_PHOTO_UPDATED.equals( transferringAsset.getTransferringAssetStatus() ) )
-                .forEach( transferringAsset -> {
-                    if( transferringAsset instanceof MALAsset)
-                    {
-                        final MALAsset malAsset = (MALAsset) transferringAsset;
-                        taskExecutorWrapper.getTaskExecutor()
-                                .execute( () -> malDownloadPropertiesPhotoService.downloadMALAsset( malAsset ) );
-                    } } );
+        final List<MALAssetEntity> malAssetEntities = malAssetRepository.findByTransferringAssetStatus( TransferringAssetStatus.MAL_PHOTO_UPDATED);
+        malAssetEntities.forEach(malAssetEntity ->
+                taskExecutorWrapper.getTaskExecutor()
+                        .execute(() -> malDownloadPropertiesPhotoService.downloadMALAsset(malAssetEntity)));
     }
 }

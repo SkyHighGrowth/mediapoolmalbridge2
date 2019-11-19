@@ -24,6 +24,9 @@ public class MALProperty {
 
     private String url;
 
+    @SerializedName("vanity_url")
+    private String vanityUrl;
+
     private String telephone;
 
     private String brand;
@@ -34,6 +37,9 @@ public class MALProperty {
     private String latitude;
 
     private String longitude;
+
+    @SerializedName("primary_property_image")
+    private int primaryPropertyImage;
 
     @SerializedName("md5_checksum")
     private String md5Checksum;
@@ -113,6 +119,22 @@ public class MALProperty {
         this.url = url;
     }
 
+    public String getVanityUrl() {
+        return vanityUrl;
+    }
+
+    public void setVanityUrl(String vanityUrl) {
+        this.vanityUrl = vanityUrl;
+    }
+
+    public int getPrimaryPropertyImage() {
+        return primaryPropertyImage;
+    }
+
+    public void setPrimaryPropertyImage(int primaryPropertyImage) {
+        this.primaryPropertyImage = primaryPropertyImage;
+    }
+
     public String getTelephone() {
         return telephone;
     }
@@ -168,4 +190,6 @@ public class MALProperty {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
 }

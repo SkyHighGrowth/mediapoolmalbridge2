@@ -30,8 +30,7 @@ public class MALAssetsSchedulerService extends AbstractSchedulerService {
     public MALAssetsSchedulerService(final MALFireDownloadAssetsService malFireDownloadAssetsService,
                                      final MALCollectCreatedAssetsSinceService malCollectCreatedAssetsSinceService,
                                      final MALCollectModifiedAssetSinceService malCollectModifiedAssetSinceService,
-                                     final MALCollectDeletedAssetsSinceService malCollectDeletedAssetsSinceService)
-    {
+                                     final MALCollectDeletedAssetsSinceService malCollectDeletedAssetsSinceService) {
         this.malFireDownloadAssetsService = malFireDownloadAssetsService;
         this.malCollectCreatedAssetsSinceService = malCollectCreatedAssetsSinceService;
         this.malCollectModifiedAssetSinceService = malCollectModifiedAssetSinceService;
@@ -39,28 +38,25 @@ public class MALAssetsSchedulerService extends AbstractSchedulerService {
     }
 
     @PostConstruct
-    public void scheduleUpdates()
-    {
-        if( isRunScheduler() ) {
+    public void scheduleUpdates() {
+        if (isRunScheduler()) {
             taskSchedulerWrapper.getTaskScheduler().schedule(this::update, new CronTrigger(Constants.CRON_DAILY_TRIGGGER_EXPRESSION));
             taskSchedulerWrapper.getTaskScheduler().schedule(this::downloadAssets, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
         }
     }
 
-    public void update()
-    {
+    public void update() {
         final String since = Instant.ofEpochMilli(System.currentTimeMillis())
                 .atOffset(ZoneOffset.UTC)
                 .toLocalDateTime()
                 .format(DATE_TIME_FORMATTER);
-        logger.info( "Executing assets update task, modified since {} UTC", since);
-        malCollectCreatedAssetsSinceService.downloadCreatedAssets( since );
-        malCollectModifiedAssetSinceService.downloadModifiedAssets( since );
-        malCollectDeletedAssetsSinceService.downloadUnavailableAssets( since );
+        logger.info("Executing assets update task, modified since {} UTC", since);
+        malCollectCreatedAssetsSinceService.downloadCreatedAssets(since);
+        malCollectModifiedAssetSinceService.downloadModifiedAssets(since);
+        malCollectDeletedAssetsSinceService.downloadUnavailableAssets(since);
     }
 
-    public void downloadAssets()
-    {
+    public void downloadAssets() {
         malFireDownloadAssetsService.downloadAssets();
     }
 }

@@ -4,9 +4,6 @@ import MediaPoolMalBridge.clients.MAL.MALSingleResponseClient;
 import MediaPoolMalBridge.clients.MAL.propertyphotos.client.model.MALGetPropertyPhotosRequest;
 import MediaPoolMalBridge.clients.MAL.propertyphotos.client.model.MALGetPropertyPhotosResponse;
 import MediaPoolMalBridge.clients.rest.RestResponse;
-import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
@@ -14,9 +11,7 @@ import org.springframework.util.MultiValueMap;
 @Component
 public class MALGetPropertyPhotosClient extends MALSingleResponseClient<MALGetPropertyPhotosRequest, MALGetPropertyPhotosResponse> {
 
-    private static Logger logger = LoggerFactory.getLogger(MALGetPropertyPhotosClient.class);
-
-    private final String urlSegmest = "list_available_property_photos.json";
+    private static final String urlSegment = "list_available_property_photos.json";
 
     public MALGetPropertyPhotosClient() {
         super(MALGetPropertyPhotosResponse.class);
@@ -24,7 +19,6 @@ public class MALGetPropertyPhotosClient extends MALSingleResponseClient<MALGetPr
 
     public RestResponse<MALGetPropertyPhotosResponse> download(final MALGetPropertyPhotosRequest request) {
         final MultiValueMap<String, String> params = request.transformToGetParams();
-        logger.debug("GET PROPERTY PHOTO REQUEST {}", params);
-        return exchange(urlSegmest, null, HttpMethod.GET, params);
+        return exchange(urlSegment, null, HttpMethod.GET, params);
     }
 }

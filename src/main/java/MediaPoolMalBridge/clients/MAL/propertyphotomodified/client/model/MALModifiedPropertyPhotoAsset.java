@@ -68,8 +68,7 @@ public class MALModifiedPropertyPhotoAsset {
         this.subject = subject;
     }
 
-    public String getFilename()
-    {
+    public String getFilename() {
         //TODO what do to here
         return "what_now";
     }

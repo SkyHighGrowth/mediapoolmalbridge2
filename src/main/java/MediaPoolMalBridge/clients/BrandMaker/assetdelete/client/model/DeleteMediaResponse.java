@@ -1,17 +1,9 @@
 package MediaPoolMalBridge.clients.BrandMaker.assetdelete.client.model;
 
+import MediaPoolMalBridge.clients.BrandMaker.model.response.AbstractBMResponse;
 import com.brandmaker.webservices.mediapool.DeleteMediaResult;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class DeleteMediaResponse {
-
-    private boolean status;
-
-    private List<String> errors = new ArrayList<>();
-
-    private List<String> warnings = new ArrayList<>();
+public class DeleteMediaResponse extends AbstractBMResponse {
 
     private DeleteMediaResult deleteMediaResult;
 
@@ -27,30 +19,6 @@ public class DeleteMediaResponse {
     public DeleteMediaResponse(final boolean status, final String error) {
         this.status = status;
         errors.add(error);
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public List<String> getErrors() {
-        return errors;
-    }
-
-    public void setErrors(List<String> errors) {
-        this.errors = errors;
-    }
-
-    public List<String> getWarnings() {
-        return warnings;
-    }
-
-    public void setWarnings(List<String> warnings) {
-        this.warnings = warnings;
     }
 
     public DeleteMediaResult getDeleteMediaResult() {

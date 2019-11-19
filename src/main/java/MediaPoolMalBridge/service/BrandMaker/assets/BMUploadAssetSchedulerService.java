@@ -21,35 +21,35 @@ public class BMUploadAssetSchedulerService extends AbstractSchedulerService {
 
     public BMUploadAssetSchedulerService(final BMCreateAssetService bmCreateAssetService,
                                          final BMUploadAssetService bmUploadAssetService,
-                                         final BMDeleteAssetService bmDeleteAssetService)
-    {
+                                         final BMDeleteAssetService bmDeleteAssetService) {
         this.bmCreateAssetService = bmCreateAssetService;
         this.bmUploadAssetService = bmUploadAssetService;
         this.bmDeleteAssetService = bmDeleteAssetService;
     }
 
     @PostConstruct
-    public void initializeUpload()
-    {
-        if( isRunScheduler() ) {
+    public void initializeUpload() {
+        if (isRunScheduler()) {
             taskSchedulerWrapper.getTaskScheduler().schedule(this::doOnAssets, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
         }
     }
 
-    public void doOnAssets()
-    {
+    public void doOnAssets() {
         create();
         update();
         delete();
     }
 
-    private void create() { bmCreateAssetService.createAssets(); }
+    public void create() {
+        bmCreateAssetService.createAssets();
+    }
 
-    private void update()
-    {
+    public void update() {
         bmUploadAssetService.uploadAssets();
     }
 
-    private void delete() { bmDeleteAssetService.deleteAssets(); }
+    public void delete() {
+        bmDeleteAssetService.deleteAssets();
+    }
 
 }

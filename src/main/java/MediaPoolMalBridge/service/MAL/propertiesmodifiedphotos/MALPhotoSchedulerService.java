@@ -22,33 +22,29 @@ public class MALPhotoSchedulerService extends AbstractSchedulerService {
     private final MALCollectModifiedPropertiesPhotosService malCollectModifiedPropertiesPhotosService;
 
     public MALPhotoSchedulerService(final MALFireDownloadPhotoService malFireDownloadPhotoService,
-                                    final MALCollectModifiedPropertiesPhotosService malCollectModifiedPropertiesPhotosService)
-    {
+                                    final MALCollectModifiedPropertiesPhotosService malCollectModifiedPropertiesPhotosService) {
         this.malFireDownloadPhotoService = malFireDownloadPhotoService;
         this.malCollectModifiedPropertiesPhotosService = malCollectModifiedPropertiesPhotosService;
     }
 
     @PostConstruct
-    public void scheduleUpdates()
-    {
-        if( isRunScheduler() ) {
+    public void scheduleUpdates() {
+        if (isRunScheduler()) {
             taskSchedulerWrapper.getTaskScheduler().schedule(this::update, new CronTrigger(Constants.CRON_DAILY_TRIGGGER_EXPRESSION));
             taskSchedulerWrapper.getTaskScheduler().schedule(this::downloadPropertyPhotos, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
         }
     }
 
-    public void update()
-    {
+    public void update() {
         final String since = Instant.ofEpochMilli(System.currentTimeMillis())
                 .atOffset(ZoneOffset.UTC)
                 .toLocalDateTime()
                 .format(DATE_TIME_FORMATTER);
-        logger.info( "Executing property phot update task, modified since {} UTC", since);
-        malCollectModifiedPropertiesPhotosService.downloadModifiedPhotos( since );
+        logger.info("Executing property phot update task, modified since {} UTC", since);
+        malCollectModifiedPropertiesPhotosService.downloadModifiedPhotos(since);
     }
 
-    public void downloadPropertyPhotos()
-    {
+    public void downloadPropertyPhotos() {
         malFireDownloadPhotoService.downloadPhotos();
     }
 }

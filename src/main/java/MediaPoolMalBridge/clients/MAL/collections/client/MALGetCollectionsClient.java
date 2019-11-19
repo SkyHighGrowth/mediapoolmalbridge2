@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class MALGetCollectionsClient extends MALSingleResponseClient<Object, MALGetCollectionsResponse> {
 
-    private final String urlSegmest = "list_collections.json";
+    private static final String urlSegment = "list_collections.json";
 
     public MALGetCollectionsClient() {
-        super( MALGetCollectionsResponse.class );
+        super(MALGetCollectionsResponse.class);
     }
 
     public RestResponse<MALGetCollectionsResponse> download() {
-        return exchange(urlSegmest, null, HttpMethod.GET);
+        return exchange(urlSegment, null, HttpMethod.GET);
     }
 }

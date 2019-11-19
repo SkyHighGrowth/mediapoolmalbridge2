@@ -2,10 +2,10 @@ package MediaPoolMalBridge.service.MAL.propertiesmodifiedphotos.download;
 
 import MediaPoolMalBridge.clients.MAL.download.client.MALDownloadAssetClient;
 import MediaPoolMalBridge.clients.MAL.download.client.model.MALDownloadAssetResponse;
-import MediaPoolMalBridge.clients.MAL.model.MALAsset;
 import MediaPoolMalBridge.clients.MAL.propertyphotomodified.client.model.MALModifiedPropertyPhotoAsset;
 import MediaPoolMalBridge.constants.Constants;
-import MediaPoolMalBridge.model.asset.TransferringMALConnectionAssetStatus;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
+import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
 import MediaPoolMalBridge.service.AbstractService;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
@@ -30,10 +30,10 @@ public class MALDownloadPropertiesPhotoService extends AbstractService {
         this.malDownloadAssetClient = malDownloadAssetClient;
     }
 
-    public void downloadMALAsset(final MALAsset malAsset) {
+    public void downloadMALAsset(final MALAssetEntity malAsset) {
 
         malAsset.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING);
-        final MALModifiedPropertyPhotoAsset malModifiedPropertyPhotoAsset = malAsset.getMalModifiedPropertyPhotoAsset();
+        final MALModifiedPropertyPhotoAsset malModifiedPropertyPhotoAsset = malAsset.getMALModifiedPropertyPhotoAsset();
         final String fileName = malModifiedPropertyPhotoAsset.getFilename();
 
         if (StringUtils.isBlank(fileName)) {
@@ -46,14 +46,13 @@ public class MALDownloadPropertiesPhotoService extends AbstractService {
         try {
             if (StringUtils.isNotBlank(malModifiedPropertyPhotoAsset.getMediumDownloadUrl())) {
                 final String mediumFileName = Constants.MEDIUM_PHOTO_FILE_PREFIX + fileName;
-                response = fire(decode(malModifiedPropertyPhotoAsset.getMediumDownloadUrl()), mediumFileName );
-                if( response.isSuccess() )
-                {
-                    malAsset.setMediumPhotoFileName( mediumFileName );
+                response = fire(decode(malModifiedPropertyPhotoAsset.getMediumDownloadUrl()), mediumFileName);
+                if (response.isSuccess()) {
+                    malAsset.setMediumPhotoFileName(mediumFileName);
                 } else {
-                    logger.error( "Can not download medium file for property phot {}, with message {}",
-                            GSON.toJson( malModifiedPropertyPhotoAsset ),
-                            response.getMessage() );
+                    logger.error("Can not download medium file for property phot {}, with message {}",
+                            GSON.toJson(malModifiedPropertyPhotoAsset),
+                            response.getMessage());
                     downloaded = false;
                 }
             }
@@ -61,40 +60,33 @@ public class MALDownloadPropertiesPhotoService extends AbstractService {
             if (!downloaded && StringUtils.isNotBlank(malModifiedPropertyPhotoAsset.getJpgDownloadUrl())) {
                 final String jpgFileName = Constants.JPG_PHOTO_FILE_PREFIX + fileName;
                 response = fire(decode(malModifiedPropertyPhotoAsset.getJpgDownloadUrl()), jpgFileName);
-                if( response.isSuccess() )
-                {
-                    malAsset.setJpgPhotoFileName( jpgFileName );
+                if (response.isSuccess()) {
+                    malAsset.setJpgPhotoFileName(jpgFileName);
                 } else {
-                    logger.error( "Can not download JPG file for property photo {} with message {}",
-                            GSON.toJson( malModifiedPropertyPhotoAsset ),
-                            response.getMessage() );
+                    logger.error("Can not download JPG file for property photo {} with message {}",
+                            GSON.toJson(malModifiedPropertyPhotoAsset),
+                            response.getMessage());
                     downloaded = false;
                 }
             }
 
-            if( downloaded )
-            {
-                malAsset.setTransferringMALConnectionAssetStatus( TransferringMALConnectionAssetStatus.DOWNLOADED );
+            if (downloaded) {
+                malAsset.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADED);
+            } else {
+                malAsset.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING);
             }
-            else
-            {
-                malAsset.setTransferringMALConnectionAssetStatus( TransferringMALConnectionAssetStatus.DOWNLOADING );
-            }
-        }
-        catch ( final Exception e )
-        {
-            logger.error( "Can not create job for asset {}", (new Gson()).toJson(malModifiedPropertyPhotoAsset), e );
+        } catch (final Exception e) {
+            logger.error("Can not create job for asset {}", (new Gson()).toJson(malModifiedPropertyPhotoAsset), e);
         }
     }
 
     private MALDownloadAssetResponse fire(final String url, final String fileName) {
-        logger.info( "Firing fileName {}, url {}", fileName, url );
+        logger.info("Firing fileName {}, url {}", fileName, url);
         return malDownloadAssetClient.download(url, fileName);
     }
 
-    private String decode( final String encoded )
-            throws UnsupportedEncodingException
-    {
+    private String decode(final String encoded)
+            throws UnsupportedEncodingException {
         return URLDecoder.decode(encoded, StandardCharsets.UTF_8.toString());
     }
 }

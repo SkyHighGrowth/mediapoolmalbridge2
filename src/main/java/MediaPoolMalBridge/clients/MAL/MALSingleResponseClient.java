@@ -1,6 +1,9 @@
 package MediaPoolMalBridge.clients.MAL;
 
 import MediaPoolMalBridge.clients.rest.RestResponse;
+import MediaPoolMalBridge.persistence.entity.ReportsEntity;
+import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
+import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -14,11 +17,11 @@ import java.net.URI;
 
 public abstract class MALSingleResponseClient<REQUEST, RESPONSE> extends MALClient {
 
-    private static Logger logger = LoggerFactory.getLogger(MALSingleResponseClient.class);
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final Class<RESPONSE> responseType;
 
-    protected MALSingleResponseClient( final Class<RESPONSE> responseType) {
+    protected MALSingleResponseClient(final Class<RESPONSE> responseType) {
         this.responseType = responseType;
     }
 
@@ -36,10 +39,13 @@ public abstract class MALSingleResponseClient<REQUEST, RESPONSE> extends MALClie
         try {
             final ResponseEntity<String> response = restTemplate.exchange(url, httpMethod, requestEntity, String.class);
             logger.debug("REST RESPONSE {}", response);
-            final RESPONSE fromJson = GSON.fromJson( response.getBody(), responseType );
+            final RESPONSE fromJson = GSON.fromJson(response.getBody(), responseType);
             return new RestResponse<>(response.getStatusCode(), response.getHeaders(), fromJson);
         } catch (final Exception e) {
-            logger.error("Can not perform rest request", e);
+            final String message = String.format("While requesting from url [%s], with http method [%s], with http entity [%s], exception occured with message [%s]", httpMethod.name(), url.toString(), GSON.toJson(requestEntity), e.getMessage());
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, null, null, null );
+            reportsRepository.save( reportsEntity );
+            logger.error(message, e);
             return new RestResponse<>(e.getMessage());
         }
     }

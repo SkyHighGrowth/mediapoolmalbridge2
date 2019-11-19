@@ -23,13 +23,13 @@ public abstract class MALMultiResponseClient<REQUEST, RESPONSE> {
 
     private static Logger logger = LoggerFactory.getLogger(MALMultiResponseClient.class);
 
-    @Value("${mal.hostName:http://api.starwoodassetlibrary.com/}")
+    @Value("${mal.hostname}")
     private String hostName;
 
-    @Value("${mal.login:BrandMaker}")
+    @Value("${mal.login}")
     private String malLogin;
 
-    @Value("${mal.apiKey:d3466104e06febcb4b706a1909aa6da6")
+    @Value("${mal.apiKey}")
     private String malAPIKey;
 
     private RestTemplate restTemplate;

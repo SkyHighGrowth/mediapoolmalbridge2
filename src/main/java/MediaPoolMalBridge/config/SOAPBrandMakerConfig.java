@@ -4,8 +4,7 @@ import com.brandmaker.webservices.mediapool.MediaPoolService;
 import com.brandmaker.webservices.mediapool.MediaPoolWebServicePort;
 import com.brandmaker.webservices.theme.ThemeService;
 import com.brandmaker.webservices.theme.ThemeWebServicePort;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -16,57 +15,55 @@ import java.util.Map;
 @Configuration
 public class SOAPBrandMakerConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(SOAPBrandMakerConfig.class);
-
     @Bean
     @Profile("dev")
-    public MediaPoolWebServicePort mediaPoolWebServicePortDev() {
-        logger.error("DEV PROFILE");
-
+    public MediaPoolWebServicePort mediaPoolWebServicePortDev(@Value("${mediapool.username.test}") final String username,
+                                                              @Value("${mediapool.password.test}") final String password,
+                                                              @Value("${mediapool.url.test}") final String url) {
         final MediaPoolWebServicePort port = (new MediaPoolService()).getMediaPoolPort();
         Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-        reqContext.put(BindingProvider.USERNAME_PROPERTY, "tsupport.de");
-        reqContext.put(BindingProvider.PASSWORD_PROPERTY, "de!SuPPort$4");
-        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://qamarriott.brandmakerinc.com/webservices/MediaPool/");
+        reqContext.put(BindingProvider.USERNAME_PROPERTY, username);
+        reqContext.put(BindingProvider.PASSWORD_PROPERTY, password);
+        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, url);
         return port;
     }
 
     @Bean
     @Profile("production")
-    public MediaPoolWebServicePort mediaPoolWebServicePortProduction() {
-        logger.error("PRODUCTION PROFILE");
-
+    public MediaPoolWebServicePort mediaPoolWebServicePortProduction(@Value("${mediapool.username.live}") final String username,
+                                                                     @Value("${mediapool.password.live}") final String password,
+                                                                     @Value("${mediapool.url.live}") final String url) {
         final MediaPoolWebServicePort port = (new MediaPoolService()).getMediaPoolPort();
         Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-        reqContext.put(BindingProvider.USERNAME_PROPERTY, "${mediapool.username.prod}");
-        reqContext.put(BindingProvider.PASSWORD_PROPERTY, "${mediapool.password.prod}");
-        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://qamarriott.brandmakerinc.com/webservices/MediaPool/");
+        reqContext.put(BindingProvider.USERNAME_PROPERTY, username);
+        reqContext.put(BindingProvider.PASSWORD_PROPERTY, password);
+        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, url);
         return port;
     }
 
     @Bean
     @Profile("dev")
-    public ThemeWebServicePort themeWebServicePortDev() {
-        logger.error("DEV PROFILE");
-
+    public ThemeWebServicePort themeWebServicePortDev(@Value("${mediapool.username.test}") final String username,
+                                                      @Value("${mediapool.password.test}") final String password,
+                                                      @Value("${mediapool.url.test}") final String url) {
         final ThemeWebServicePort port = (new ThemeService()).getThemePort();
         Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-        reqContext.put(BindingProvider.USERNAME_PROPERTY, "tsupport.de");
-        reqContext.put(BindingProvider.PASSWORD_PROPERTY, "de!SuPPort$4");
-        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://qamarriott.brandmakerinc.com/webservices/Theme/");
+        reqContext.put(BindingProvider.USERNAME_PROPERTY, username);
+        reqContext.put(BindingProvider.PASSWORD_PROPERTY, password);
+        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, url);
         return port;
     }
 
     @Bean
     @Profile("production")
-    public ThemeWebServicePort themeWebServicePortProduction() {
-        logger.error("PRODUCTION PROFILE");
-
+    public ThemeWebServicePort themeWebServicePortProduction(@Value("${mediapool.username.test}") final String username,
+                                                             @Value("${mediapool.password.test}") final String password,
+                                                             @Value("${mediapool.url.test}") final String url) {
         final ThemeWebServicePort port = (new ThemeService()).getThemePort();
         Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-        reqContext.put(BindingProvider.USERNAME_PROPERTY, "${mediapool.username.prod}");
-        reqContext.put(BindingProvider.PASSWORD_PROPERTY, "${mediapool.password.prod}");
-        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://qamarriott.brandmakerinc.com/webservices/Theme/");
+        reqContext.put(BindingProvider.USERNAME_PROPERTY, username);
+        reqContext.put(BindingProvider.PASSWORD_PROPERTY, password);
+        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, url);
         return port;
     }
 }

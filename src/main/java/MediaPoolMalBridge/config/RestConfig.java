@@ -17,7 +17,7 @@ public class RestConfig {
 
     private static final int MAX_CONN_TOTAL = 500;
 
-    private static final int MAX_CONN_PER_ROUTE = 50;
+    private static final int MAX_CONN_PER_ROUTE = 100;
 
     @Bean
     public RestTemplate restTemplate() {

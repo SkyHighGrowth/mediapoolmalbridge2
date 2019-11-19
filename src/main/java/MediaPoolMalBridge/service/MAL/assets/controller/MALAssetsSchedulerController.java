@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Profile( "dev" )
+@Profile("dev")
 public class MALAssetsSchedulerController {
 
     private final MALAssetsSchedulerService malAssetsSchedulerService;
@@ -15,15 +15,19 @@ public class MALAssetsSchedulerController {
         this.malAssetsSchedulerService = malAssetsSchedulerService;
     }
 
-    @GetMapping("/mal/assetsScheduler/update")
-    public void getUpdates()
-    {
+    /**
+     * updates MALAssets structure for unavailable created and updated
+     */
+    @GetMapping("/service/mal/updateAssets")
+    public void getUpdates() {
         malAssetsSchedulerService.update();
     }
 
-    @GetMapping("/mal/assetsScheduler/downloadAssets")
-    public void getAssets()
-    {
+    /**
+     * triggers download of MALAssets
+     */
+    @GetMapping("/service/mal/downloadAssets")
+    public void getAssets() {
         malAssetsSchedulerService.downloadAssets();
     }
 }

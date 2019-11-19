@@ -6,25 +6,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Profile( "dev" )
+@Profile("dev")
 public class MALPhotoSchedulerController {
 
     private final MALPhotoSchedulerService malPhotoSchedulerService;
 
-    public MALPhotoSchedulerController( final MALPhotoSchedulerService malPhotoSchedulerService )
-    {
+    public MALPhotoSchedulerController(final MALPhotoSchedulerService malPhotoSchedulerService) {
         this.malPhotoSchedulerService = malPhotoSchedulerService;
     }
 
-    @GetMapping("/photoSchdulerService/update")
-    public void getUpdate()
-    {
+    @GetMapping("/service/mal/updateModifiedPhotos")
+    public void getUpdate() {
         malPhotoSchedulerService.update();
     }
 
-    @GetMapping("/photoSchdulerService/downloadPhotos")
-    public void downloadPhotos()
-    {
+    @GetMapping("/service/mal/downloadModifiedPhotos")
+    public void downloadPhotos() {
         malPhotoSchedulerService.downloadPropertyPhotos();
     }
 }

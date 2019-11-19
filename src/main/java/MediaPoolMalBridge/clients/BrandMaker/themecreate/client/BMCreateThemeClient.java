@@ -1,18 +1,14 @@
 package MediaPoolMalBridge.clients.BrandMaker.themecreate.client;
 
 import MediaPoolMalBridge.clients.BrandMaker.BrandMakerSoapClient;
+import MediaPoolMalBridge.clients.BrandMaker.model.BMTheme;
 import MediaPoolMalBridge.clients.BrandMaker.themecreate.client.model.CreateThemeResponse;
 import MediaPoolMalBridge.clients.BrandMaker.themecreate.tranformer.request.BMThemeTransformer;
-import MediaPoolMalBridge.clients.BrandMaker.model.BMTheme;
 import com.brandmaker.webservices.theme.ThemeResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BMCreateThemeClient extends BrandMakerSoapClient {
-
-    private final static Logger logger = LoggerFactory.getLogger(BMCreateThemeClient.class);
 
     private final BMThemeTransformer transformer;
 
@@ -23,10 +19,14 @@ public class BMCreateThemeClient extends BrandMakerSoapClient {
     public CreateThemeResponse createTheme(final BMTheme theme) {
         try {
             final com.brandmaker.webservices.theme.Theme request = transformer.toBMTheme(theme);
-            final ThemeResult response = getThemeWebServicePort().createTheme(request);
-            return new CreateThemeResponse(response);
+            final ThemeResult result = getThemeWebServicePort().createTheme(request);
+            final CreateThemeResponse response = new CreateThemeResponse(result);
+            if (!response.isStatus()) {
+                reportErrorOnResponse(String.valueOf(theme.getThemeId()), response);
+            }
+            return response;
         } catch (final Exception e) {
-            logger.error("Error creating theme {}", theme, e);
+            reportErrorOnException(String.valueOf(theme.getThemeId()), e);
             return new CreateThemeResponse(false, e.getMessage());
         }
     }

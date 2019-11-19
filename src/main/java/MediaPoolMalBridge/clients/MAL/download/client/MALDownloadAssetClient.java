@@ -2,6 +2,10 @@ package MediaPoolMalBridge.clients.MAL.download.client;
 
 import MediaPoolMalBridge.AppConfig;
 import MediaPoolMalBridge.clients.MAL.download.client.model.MALDownloadAssetResponse;
+import MediaPoolMalBridge.persistence.entity.ReportsEntity;
+import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
+import MediaPoolMalBridge.persistence.entity.enums.ReportType;
+import MediaPoolMalBridge.persistence.repository.ReportsRepository;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
@@ -28,11 +32,15 @@ public class MALDownloadAssetClient {
 
     private final RestTemplate restTemplate;
 
+    private final ReportsRepository reportsRepository;
+
     private final AppConfig appConfig;
 
     private MALDownloadAssetClient(@Qualifier("DownloadRestTemplate") final RestTemplate restTemplate,
+                                   final ReportsRepository reportsRepository,
                                    final AppConfig appConfig) {
         this.restTemplate = restTemplate;
+        this.reportsRepository = reportsRepository;
         this.appConfig = appConfig;
     }
 
@@ -41,17 +49,16 @@ public class MALDownloadAssetClient {
         try {
             restTemplate.execute(url, HttpMethod.GET,
                     clientHttpRequest -> {
-                        //clientHttpRequest.getHeaders().set( "Accept-Encoding", "gzip" );
+                        clientHttpRequest.getHeaders().set("Accept-Encoding", "gzip");
                     },
                     clientHttpResponse -> {
                         final HttpHeaders responseHeaders = clientHttpResponse.getHeaders();
-                        if( responseHeaders.getContentType() != null && MediaType.APPLICATION_JSON_UTF8.equals( responseHeaders.getContentType() ) )
-                        {
+                        if (responseHeaders.getContentType() != null && MediaType.APPLICATION_JSON_UTF8.equals(responseHeaders.getContentType())) {
                             String body = null;
                             try (final Reader reader = new InputStreamReader(clientHttpResponse.getBody())) {
                                 body = CharStreams.toString(reader);
                             }
-                            response.fromMALAbstractResposne( GSON.fromJson( body, MALDownloadAssetResponse.class ) );
+                            response.fromMALAbstractResposne(GSON.fromJson(body, MALDownloadAssetResponse.class));
                             return null;
                         }
                         final String absoluteTempFile = appConfig.getTempDir() + fileName;
@@ -61,23 +68,24 @@ public class MALDownloadAssetClient {
                             fileOutputStream = new FileOutputStream(file);
                             StreamUtils.copy(clientHttpResponse.getBody(), fileOutputStream);
                             fileOutputStream.close();
-                            response.setAbsoluteFilePath( absoluteTempFile );
-                        }
-                        catch ( final Exception e )
-                        {
-                            response.fromException( "error", e.getMessage() );
-                            if( fileOutputStream != null )
-                            {
+                            response.setAbsoluteFilePath(absoluteTempFile);
+                        } catch (final Exception e) {
+                            final String message = String.format("Can not download file with file name [%s] and url [%s], with exception message [%s]", fileName, url, e.getMessage());
+                            logger.error(message, e);
+                            response.fromException("error", e.getMessage());
+                            if (fileOutputStream != null) {
                                 fileOutputStream.close();
                             }
                         }
                         return null;
                     });
         } catch (final Exception e) {
-            logger.error("Can not download file with fileName {} and url {}", fileName, url, e);
-            response.fromException( "error", e.getMessage() );
+            final String message = String.format("Can not download file with fileName [%s] and url [%s] with exception message [%s]", fileName, url, e.getMessage());
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, null, null, null );
+            reportsRepository.save( reportsEntity );
+            logger.error(message, e);
+            response.fromException("error", e.getMessage());
         }
-        logger.debug( "Download fileName {} url {} result {}", fileName, url, (new Gson()).toJson(response));
         return response;
     }
 }

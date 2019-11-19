@@ -14,22 +14,19 @@ public class MALDownloadAssetResponse extends MALAbstractResponse {
         this.absoluteFilePath = absoluteFilePath;
     }
 
-    public boolean isSuccess()
-    {
+    public boolean isSuccess() {
         return getResult() == null;
     }
 
-    public void fromMALAbstractResposne(final MALAbstractResponse response )
-    {
-        this.setResult( response.getResult() );
-        this.setMessage( response.getMessage() );
+    public void fromMALAbstractResposne(final MALAbstractResponse response) {
+        this.setResult(response.getResult());
+        this.setMessage(response.getMessage());
         this.absoluteFilePath = null;
     }
 
-    public void fromException( final String result, final String message )
-    {
-        this.setResult( result );
-        this.setMessage( message );
+    public void fromException(final String result, final String message) {
+        this.setResult(result);
+        this.setMessage(message);
         this.absoluteFilePath = null;
     }
 }

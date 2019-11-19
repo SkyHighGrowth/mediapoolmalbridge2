@@ -1,5 +1,6 @@
 package MediaPoolMalBridge.clients.MAL;
 
+import MediaPoolMalBridge.persistence.repository.ReportsRepository;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +16,12 @@ public abstract class MALClient {
 
     protected static final Gson GSON = new Gson();
 
-    private static Logger logger = LoggerFactory.getLogger(MALClient.class);
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Value("${mal.hostName:https://api.starwoodassetlibrary.com/}")
+    @Autowired
+    protected ReportsRepository reportsRepository;
+
+    @Value("${mal.hostname:https://api.starwoodassetlibrary.com/}")
     private String hostName;
 
     @Value("${mal.login:robert.scholten@brandmaker.com}")
@@ -28,9 +32,6 @@ public abstract class MALClient {
 
     @Autowired
     protected RestTemplate restTemplate;
-
-    public MALClient() {
-    }
 
     protected <REQUEST> String serializeRequestBody(final REQUEST request) {
         if (request == null) {

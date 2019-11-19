@@ -5,7 +5,7 @@ import MediaPoolMalBridge.clients.BrandMaker.themecreate.client.BMCreateThemeCli
 import MediaPoolMalBridge.model.BrandMaker.theme.BMThemes;
 import MediaPoolMalBridge.model.MAL.kits.MALKits;
 import MediaPoolMalBridge.service.AbstractService;
-import MediaPoolMalBridge.tasks.MAL.TaskExecutorWrapper;
+import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,22 +22,20 @@ public class BMUploadThemeService extends AbstractService {
     public BMUploadThemeService(final BMCreateThemeClient bmCreateThemeClient,
                                 final TaskExecutorWrapper taskExecutorWrapper,
                                 final MALKits malKits,
-                                final BMThemes bmThemes )
-    {
+                                final BMThemes bmThemes) {
         this.bmCreateThemeClient = bmCreateThemeClient;
         this.taskExecutorWrapper = taskExecutorWrapper;
         this.malKits = malKits;
         this.bmThemes = bmThemes;
     }
 
-    public void uploadTheme()
-    {
-        bmThemes.keySet().forEach( malKits::remove );
-        malKits.keySet().forEach( malKit -> {
+    public void uploadTheme() {
+        bmThemes.keySet().forEach(malKits::remove);
+        malKits.keySet().forEach(malKit -> {
             final BMTheme bmTheme = new BMTheme();
-            bmTheme.setThemeId( 301 );
-            bmTheme.setThemePath( malKit );
-            taskExecutorWrapper.getTaskExecutor().execute( () -> bmCreateThemeClient.createTheme( bmTheme ) );
-        } );
+            bmTheme.setThemeId(301);
+            bmTheme.setThemePath(malKit);
+            taskExecutorWrapper.getTaskExecutor().execute(() -> bmCreateThemeClient.createTheme(bmTheme));
+        });
     }
 }

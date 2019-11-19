@@ -1,63 +1,77 @@
 package MediaPoolMalBridge.controller;
 
-import MediaPoolMalBridge.model.BrandMaker.BMAssetMap;
 import MediaPoolMalBridge.model.BrandMaker.theme.BMThemes;
-import MediaPoolMalBridge.model.MAL.filetype.MALFileTypes;
-import MediaPoolMalBridge.model.MAL.MALAssetMap;
+import MediaPoolMalBridge.model.MAL.MALAssetStructures;
 import MediaPoolMalBridge.model.MAL.kits.MALKits;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
-@Profile( "dev" )
+@Profile("dev")
 public class AppStatusController {
 
-    private static Logger logger = LoggerFactory.getLogger(AppStatusController.class);
-
-    private final BMAssetMap bmAssetMap;
-
-    private final MALAssetMap malAssetMap;
-
-    private final MALFileTypes malFileTypes;
-
     private final MALKits malKits;
-
     private final BMThemes bmThemes;
+    private final MALAssetStructures malAssetStructures;
 
-    public AppStatusController(final BMAssetMap bmAssetMap,
-                               final MALAssetMap malAssetMap,
-                               final MALFileTypes malFileTypes,
-                               final MALKits malKits,
-                               final BMThemes bmThemes )
-    {
-        this.malAssetMap = malAssetMap;
-        this.bmAssetMap = bmAssetMap;
-        this.malFileTypes = malFileTypes;
+    public AppStatusController(final MALKits malKits,
+                               final BMThemes bmThemes,
+                               final MALAssetStructures malAssetStructures ) {
         this.malKits = malKits;
         this.bmThemes = bmThemes;
+        this.malAssetStructures = malAssetStructures;
     }
 
-    @GetMapping("/appStatus/mal/assets")
-    public MALAssetMap getMalAssetMap()
-    {
-        return malAssetMap;
+    @GetMapping("/appStatus/mal/fileTypes")
+    public Map<String, String> getFileTypes() {
+        return malAssetStructures.getFileTypes();
     }
-
-    @GetMapping("/appStatus/bm/assets")
-    public BMAssetMap getBMAssetMap()
-    {
-        return bmAssetMap;
-    }
-
-    @GetMapping("/appStatus/mal/fileType")
-    public MALFileTypes getFileTypes() { return malFileTypes; }
 
     @GetMapping("/appStatus/mal/kits")
-    public MALKits getKits() { return malKits; }
+    public MALKits getKits() {
+        return malKits;
+    }
 
     @GetMapping("/appStatus/bm/themes")
-    public BMThemes getThemes() { return bmThemes; }
+    public BMThemes getThemes() {
+        return bmThemes;
+    }
+
+    @GetMapping("/appStatus/mal/brands")
+    public Map<String, String> getBrands() {
+        return malAssetStructures.getBrands();
+    }
+
+    @GetMapping("/appStatus/mal/collections")
+    public Map<String, String> getCollections() {
+        return malAssetStructures.getCollections();
+    }
+
+    @GetMapping("/appStatus/mal/colors")
+    public Map<String, String> getColors() {
+        return malAssetStructures.getColors();
+    }
+
+    @GetMapping("/appStatus/mal/destinations")
+    public Map<String, String> getMalDestinations() {
+        return malAssetStructures.getDestinations();
+    }
+
+    @GetMapping("/appStatus/mal/subjects")
+    public Map<String, String> getSubjects() {
+        return malAssetStructures.getSubjects();
+    }
+
+    @GetMapping("/appStatus/mal/assetTypes")
+    public Map<String, String> getMalAssetTypes() {
+        return malAssetStructures.getAssetTypes();
+    }
+
+    @GetMapping("/appStatus/app/propertyTypes")
+    public Map<String, String> getPropertyTypes() {
+        return malAssetStructures.getPropertyTypes();
+    }
 }

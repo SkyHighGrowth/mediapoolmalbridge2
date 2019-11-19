@@ -1,18 +1,12 @@
 package MediaPoolMalBridge.clients.BrandMaker.assetgetmediadetails.client.model;
 
+import MediaPoolMalBridge.clients.BrandMaker.model.response.AbstractBMResponse;
 import com.brandmaker.webservices.mediapool.GetMediaDetailsResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
-public class DownloadMediaDetailsResponse {
-
-    private boolean status;
-
-    private List<String> errors = new ArrayList<>();
-
-    private List<String> warnings = new ArrayList<>();
+public class DownloadMediaDetailsResponse extends AbstractBMResponse {
 
     private GetMediaDetailsResult getMediaDetailsResult;
 
@@ -31,30 +25,6 @@ public class DownloadMediaDetailsResponse {
             result.getWarnings().forEach(x -> warnings.add(x.getWarning()));
         }
         getMediaDetailsResult = result;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public List<String> getErrors() {
-        return errors;
-    }
-
-    public void setErrors(List<String> errors) {
-        this.errors = errors;
-    }
-
-    public List<String> getWarnings() {
-        return warnings;
-    }
-
-    public void setWarnings(List<String> warnings) {
-        this.warnings = warnings;
     }
 
     public GetMediaDetailsResult getGetMediaDetailsResult() {
