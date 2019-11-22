@@ -1,13 +1,16 @@
 package MediaPoolMalBridge.persistence.entity.BM;
 
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
+import MediaPoolMalBridge.persistence.AbstractEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringBMConnectionAssetStatus;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
-import MediaPoolMalBridge.persistence.AbstractEntity;
 import com.brandmaker.webservices.mediapool.UploadMetadataArgument;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class BMAssetEntity extends AbstractEntity {
@@ -67,6 +70,14 @@ public class BMAssetEntity extends AbstractEntity {
 
     @Column(name = "md5_hash")
     private String bmHash;
+
+    @CreationTimestamp
+    @Column( name = "created" )
+    private LocalDateTime created;
+
+    @UpdateTimestamp
+    @Column( name = "updated" )
+    private LocalDateTime updated;
 
     public long getId() {
         return id;
@@ -218,5 +229,21 @@ public class BMAssetEntity extends AbstractEntity {
 
     public void setBmHash(String bmHash) {
         this.bmHash = bmHash;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
     }
 }

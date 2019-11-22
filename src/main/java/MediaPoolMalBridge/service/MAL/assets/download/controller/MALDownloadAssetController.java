@@ -1,8 +1,8 @@
 package MediaPoolMalBridge.service.MAL.assets.download.controller;
 
 import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAssetsRequest;
-import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.repository.MAL.MALAssetRepository;
 import MediaPoolMalBridge.service.MAL.assets.download.MALDownloadAssetService;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;

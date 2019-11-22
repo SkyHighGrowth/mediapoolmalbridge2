@@ -33,4 +33,8 @@ public class AppConfig {
     public String getExcelDir() {
         return System.getProperty("user.home") + File.separator + "marriott_temp" + File.separator + "excel" + File.separator;
     }
+
+    public String getExcelDirWithoutSeparator() {
+        return System.getProperty("user.home") + File.separator + "marriott_temp" + File.separator + "excel";
+    }
 }

@@ -7,8 +7,11 @@ import MediaPoolMalBridge.clients.MAL.propertyphotomodified.client.model.MALModi
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
 import MediaPoolMalBridge.persistence.AbstractEntity;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(indexes = {@Index(columnList = "asset_id, asset_type")},
@@ -73,6 +76,14 @@ public class MALAssetEntity extends AbstractEntity {
     @Column(name = "transferring_mal_connection_status")
     @Enumerated(EnumType.STRING)
     private TransferringMALConnectionAssetStatus transferringMALConnectionAssetStatus = TransferringMALConnectionAssetStatus.INVALID;
+
+    @CreationTimestamp
+    @Column( name = "created" )
+    private LocalDateTime created;
+
+    @UpdateTimestamp
+    @Column( name = "updated" )
+    private LocalDateTime updated;
 
     public long getId() {
         return id;
@@ -200,6 +211,22 @@ public class MALAssetEntity extends AbstractEntity {
 
     public void setMalStatesRepetitions(int malStatesRepetitions) {
         this.malStatesRepetitions = malStatesRepetitions;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
     }
 
     public TransferringAssetStatus getTransferringAssetStatus() {
