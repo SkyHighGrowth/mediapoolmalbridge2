@@ -4,9 +4,10 @@ import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAsset;
 import MediaPoolMalBridge.clients.MAL.assetsunavailable.client.model.MALGetUnavailableAsset;
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
 import MediaPoolMalBridge.clients.MAL.propertyphotomodified.client.model.MALModifiedPropertyPhotoAsset;
+import MediaPoolMalBridge.persistence.AbstractEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
-import MediaPoolMalBridge.persistence.AbstractEntity;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,17 +15,24 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(indexes = {@Index(columnList = "asset_id, asset_type")},
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"asset_id", "asset_type"})})
+@Table( name = "mal_asset",
+        indexes = { @Index( columnList = "asset_id, asset_type" ),
+                    @Index( columnList = "transferring_asset_status"),
+                    @Index( columnList = "transferring_mal_connection_status, transferring_asset_status")},
+        uniqueConstraints = { @UniqueConstraint( columnNames = { "asset_id", "asset_type" } ) } )
 public class MALAssetEntity extends AbstractEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private long id;
 
     @Column(name = "asset_id")
     private String assetId;
+
+    @Column(name = "asset_type")
+    @Enumerated( EnumType.STRING )
+    private MALAssetType assetType;
 
     @Column(name = "bm_asset_id")
     private String bmAssetId;
@@ -36,45 +44,26 @@ public class MALAssetEntity extends AbstractEntity {
     private String malAssetTypeId;
 
     @Column( name = "color_id" )
-    private String malColorId;
+    private String colorId;
 
-    @Column(name = "asset_type")
-    @Enumerated(EnumType.STRING)
-    private MALAssetType assetType;
+    @Column( name = "file_name_on_disc" )
+    private String fileNameOnDisc;
 
-    @Column(name = "mal_modified_property_photo_json", columnDefinition="LONGTEXT")
-    private String malModifiedPropertyPhotoAssetJson;
+    @Column( name = "file_name_in_mal" )
+    private String fileNameInMal;
 
-    @Column(name = "mal_get_asset_json", columnDefinition="LONGTEXT")
-    private String malGetAssetJson;
+    @Column( name = "url" )
+    private String url;
 
-    @Column(name = "mal_get_unavailable_asset_json", columnDefinition="LONGTEXT")
-    private String malGetUnavailableAssetJson;
-
-    @Column(name = "medium_photo_file_name")
-    private String mediumPhotoFileName;
-
-    @Column(name = "jpg_photo_file_name")
-    private String jpgPhotoFileName;
-
-    @Column(name = "file_name")
-    private String fileName;
-
-    @Column(name = "logo_jpg_file_name")
-    private String logoJPGFileName;
-
-    @Column(name = "logo_png_file_name")
-    private String logoPNGFileName;
-
-    @Column(name = "mal_states_repetitions")
+    @Column( name = "mal_states_repetitions" )
     private int malStatesRepetitions = 0;
 
-    @Column(name = "transferring_asset_status")
-    @Enumerated(EnumType.STRING)
+    @Column( name = "transferring_asset_status" )
+    @Enumerated( EnumType.STRING )
     private TransferringAssetStatus transferringAssetStatus = TransferringAssetStatus.INVALID;
 
-    @Column(name = "transferring_mal_connection_status")
-    @Enumerated(EnumType.STRING)
+    @Column( name = "transferring_mal_connection_status" )
+    @Enumerated( EnumType.STRING )
     private TransferringMALConnectionAssetStatus transferringMALConnectionAssetStatus = TransferringMALConnectionAssetStatus.INVALID;
 
     @CreationTimestamp
@@ -84,6 +73,21 @@ public class MALAssetEntity extends AbstractEntity {
     @UpdateTimestamp
     @Column( name = "updated" )
     private LocalDateTime updated;
+
+    @Column( name = "mal_last_modified" )
+    private String malLastModified;
+
+    @Column( name = "mal_modified_property_photo_json", columnDefinition="LONGTEXT" )
+    private String malModifiedPropertyPhotoAssetJson;
+
+    @Column( name = "mal_get_asset_json", columnDefinition="LONGTEXT" )
+    private String malGetAssetJson;
+
+    @Column( name = "mal_get_unavailable_asset_json", columnDefinition="LONGTEXT" )
+    private String malGetUnavailableAssetJson;
+
+    @Column( name = "md5_hash" )
+    private String md5Hash;
 
     public long getId() {
         return id;
@@ -97,8 +101,24 @@ public class MALAssetEntity extends AbstractEntity {
         return assetId;
     }
 
+    public void setAssetId(String assetId) {
+        this.assetId = assetId;
+    }
+
+    public MALAssetType getAssetType() {
+        return assetType;
+    }
+
+    public void setAssetType(MALAssetType assetType) {
+        this.assetType = assetType;
+    }
+
     public String getBmAssetId() {
         return bmAssetId;
+    }
+
+    public void setBmAssetId(String bmAssetId) {
+        this.bmAssetId = bmAssetId;
     }
 
     public String getPropertyId() {
@@ -118,27 +138,43 @@ public class MALAssetEntity extends AbstractEntity {
     }
 
     public String getMalColorId() {
-        return malColorId;
+        return colorId;
     }
 
-    public void setMalColorId(String malColorId) {
-        this.malColorId = malColorId;
+    public void setMalColorId(String colorId) {
+        this.colorId = colorId;
     }
 
-    public void setBmAssetId(String bmAssetId) {
-        this.bmAssetId = bmAssetId;
+    public String getColorId() {
+        return colorId;
     }
 
-    public void setAssetId(String assetId) {
-        this.assetId = assetId;
+    public void setColorId(String colorId) {
+        this.colorId = colorId;
     }
 
-    public MALAssetType getAssetType() {
-        return assetType;
+    public String getFileNameOnDisc() {
+        return fileNameOnDisc;
     }
 
-    public void setAssetType(MALAssetType assetType) {
-        this.assetType = assetType;
+    public void setFileNameOnDisc(String fileNameOnDisc) {
+        this.fileNameOnDisc = fileNameOnDisc;
+    }
+
+    public String getFileNameInMal() {
+        return fileNameInMal;
+    }
+
+    public void setFileNameInMal(String fileNameInMal) {
+        this.fileNameInMal = fileNameInMal;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getMalModifiedPropertyPhotoAssetJson() {
@@ -165,46 +201,6 @@ public class MALAssetEntity extends AbstractEntity {
         this.malGetUnavailableAssetJson = malGetUnavailableAssetJson;
     }
 
-    public String getMediumPhotoFileName() {
-        return mediumPhotoFileName;
-    }
-
-    public void setMediumPhotoFileName(String mediumPhotoFileName) {
-        this.mediumPhotoFileName = mediumPhotoFileName;
-    }
-
-    public String getJpgPhotoFileName() {
-        return jpgPhotoFileName;
-    }
-
-    public void setJpgPhotoFileName(String jpgPhotoFileName) {
-        this.jpgPhotoFileName = jpgPhotoFileName;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getLogoJPGFileName() {
-        return logoJPGFileName;
-    }
-
-    public void setLogoJPGFileName(String logoJPGFileName) {
-        this.logoJPGFileName = logoJPGFileName;
-    }
-
-    public String getLogoPNGFileName() {
-        return logoPNGFileName;
-    }
-
-    public void setLogoPNGFileName(String logoPNGFileName) {
-        this.logoPNGFileName = logoPNGFileName;
-    }
-
     public int getMalStatesRepetitions() {
         return malStatesRepetitions;
     }
@@ -227,6 +223,14 @@ public class MALAssetEntity extends AbstractEntity {
 
     public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
+    }
+
+    public String getMalLastModified() {
+        return malLastModified;
+    }
+
+    public void setMalLastModified(String malLastModified) {
+        this.malLastModified = malLastModified;
     }
 
     public TransferringAssetStatus getTransferringAssetStatus() {
@@ -259,6 +263,7 @@ public class MALAssetEntity extends AbstractEntity {
 
     public void setMALModifiedPropertyPhotoAsset(final MALModifiedPropertyPhotoAsset malModifiedPropertyPhotoAsset) {
         this.malModifiedPropertyPhotoAssetJson = GSON.toJson(malModifiedPropertyPhotoAsset);
+        this.md5Hash = DigestUtils.md5Hex( malModifiedPropertyPhotoAssetJson );
     }
 
     public MALGetAsset getMALGetAsset() {
@@ -291,19 +296,19 @@ public class MALAssetEntity extends AbstractEntity {
         return malAsset;
     }
 
-    public static MALAssetEntity fromMALGetAsset(final MALGetAsset malGetAsset, final MALAssetType malAssetType) {
-        final MALAssetEntity malAsset = new MALAssetEntity();
-        malAsset.setAssetType(malAssetType);
-        malAsset.setAssetId(malGetAsset.getAssetId());
-        malAsset.setMALGetAsset(malGetAsset);
-        return malAsset;
-    }
-
-    public static MALAssetEntity fromMALGetUnavailableAsset(final MALGetUnavailableAsset malGetUnavailableAsset, final MALAssetType malAssetType) {
+    public MALAssetEntity fromMALGetUnavailableAsset(final MALGetUnavailableAsset malGetUnavailableAsset, final MALAssetType malAssetType) {
         final MALAssetEntity malAsset = new MALAssetEntity();
         malAsset.setAssetId(malGetUnavailableAsset.getAssetId());
         malAsset.setAssetType(malAssetType);
         malAsset.setMALGetUnavailableAsset(malGetUnavailableAsset);
         return malAsset;
+    }
+
+    public String getMd5Hash() {
+        return md5Hash;
+    }
+
+    public void setMd5Hash(String md5Hash) {
+        this.md5Hash = md5Hash;
     }
 }

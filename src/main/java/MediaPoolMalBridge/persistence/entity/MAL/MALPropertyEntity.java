@@ -6,12 +6,14 @@ import MediaPoolMalBridge.persistence.AbstractEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(indexes = {@Index(columnList = "property_id")},
+@Table( name = "mal_property",
+        indexes = { @Index(columnList = "property_id"),
+                    @Index( columnList = "brand" ) },
         uniqueConstraints = {@UniqueConstraint(columnNames = {"property_id"})})
 public class MALPropertyEntity extends AbstractEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private long id;
 

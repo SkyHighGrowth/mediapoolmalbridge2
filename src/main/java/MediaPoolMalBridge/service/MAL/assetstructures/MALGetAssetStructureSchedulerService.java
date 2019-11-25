@@ -46,21 +46,20 @@ public class MALGetAssetStructureSchedulerService extends AbstractSchedulerServi
     }
 
     @PostConstruct
-    public void assetStructuresJob() {
-        getAssetStructures();
-        if (isRunScheduler()) {
-            taskSchedulerWrapper.getTaskScheduler().schedule(this::getAssetStructures, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
-        }
+    public void init() {
+        scheduled();
+        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
     }
 
-    public void getAssetStructures() {
-        malGetAssetBrandService.download();
-        malGetAssetCollectionService.download();
-        malGetAssetColorService.download();
-        malGetAssetDestinationService.download();
-        malGetAssetFileTypesService.download();
-        malGetAssetSubjectService.download();
-        malGetAssetTypeService.download();
-        malGetPropertyTypesService.download();
+    @Override
+    public void scheduled() {
+        malGetAssetBrandService.start();
+        malGetAssetCollectionService.start();
+        malGetAssetColorService.start();
+        malGetAssetDestinationService.start();
+        malGetAssetFileTypesService.start();
+        malGetAssetSubjectService.start();
+        malGetAssetTypeService.start();
+        malGetPropertyTypesService.start();
     }
 }

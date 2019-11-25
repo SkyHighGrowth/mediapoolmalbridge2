@@ -5,21 +5,24 @@ import MediaPoolMalBridge.clients.MAL.propertiesunavailable.client.model.MALGetU
 import MediaPoolMalBridge.clients.MAL.propertiesunavailable.client.model.MALGetUnavailablePropertiesRequest;
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
-import MediaPoolMalBridge.service.MAL.AbstractMALService;
+import MediaPoolMalBridge.service.MAL.AbstractMALUniqueService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class MALGetPropertiesDeletedService extends AbstractMALService {
+public class MALGetPropertiesDeletedService extends AbstractMALUniqueService {
 
     private final MALGetUnavailablePropertiesClient getUnavailablePropertiesClient;
+
+    private String unavailableSince;
 
     public MALGetPropertiesDeletedService(final MALGetUnavailablePropertiesClient getUnavailablePropertiesClient) {
         this.getUnavailablePropertiesClient = getUnavailablePropertiesClient;
     }
 
-    public void download(final String unavailableSince) {
+    @Override
+    protected void run() {
         final MALGetUnavailablePropertiesRequest request = new MALGetUnavailablePropertiesRequest();
         request.setUnavailableSince(unavailableSince);
         final RestResponse<MALGetUnavailabelPropertiesResponse> response = getUnavailablePropertiesClient.download(request);
@@ -39,5 +42,13 @@ public class MALGetPropertiesDeletedService extends AbstractMALService {
             malPropertyEntity.setStatus(0);
             malPropertyRepository.save(malPropertyEntity);
         });
+    }
+
+    public String getUnavailableSince() {
+        return unavailableSince;
+    }
+
+    public void setUnavailableSince(String unavailableSince) {
+        this.unavailableSince = unavailableSince;
     }
 }

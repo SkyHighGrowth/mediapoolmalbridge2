@@ -17,6 +17,6 @@ public class MALFileTypesController {
 
     @GetMapping("/service/mal/downloadFileTypes")
     public void setFileType() {
-        getFileTypesSchedulerService.download();
+        getFileTypesSchedulerService.start();
     }
 }

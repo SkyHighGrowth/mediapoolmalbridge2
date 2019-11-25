@@ -14,7 +14,7 @@ public class UploadStatus extends AbstractBMResponse {
     private String bmAssetId;
 
     public UploadStatus(final UploadMediaResult result, final String bmAssetId) {
-        this.bmAssetId = bmAssetId;
+        this.bmAssetId = result.getMediaGuid();
         status = result.isSuccess();
         errors = Collections.singletonList(result.getError());
         warnings = new ArrayList<>();

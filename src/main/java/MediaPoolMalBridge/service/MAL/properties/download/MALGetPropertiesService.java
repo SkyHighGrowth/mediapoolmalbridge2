@@ -8,14 +8,14 @@ import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
 import MediaPoolMalBridge.persistence.entity.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
-import MediaPoolMalBridge.service.MAL.AbstractMALService;
+import MediaPoolMalBridge.service.MAL.AbstractMALUniqueService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class MALGetPropertiesService extends AbstractMALService {
+public class MALGetPropertiesService extends AbstractMALUniqueService {
 
     private final MALGetPropertiesClient getPropertiesClient;
 
@@ -23,7 +23,8 @@ public class MALGetPropertiesService extends AbstractMALService {
         this.getPropertiesClient = getPropertiesClient;
     }
 
-    public void downloadProperties() {
+    @Override
+    protected void run() {
         final MALGetPropertiesRequest request = new MALGetPropertiesRequest();
         request.setPerPage(200);
         request.setPage(1);
@@ -51,7 +52,7 @@ public class MALGetPropertiesService extends AbstractMALService {
         transformPagesIntoProperties(request, totalPages);
     }
 
-    public void transformPagesIntoProperties(final MALGetPropertiesRequest request, final int totalPages) {
+    private void transformPagesIntoProperties(final MALGetPropertiesRequest request, final int totalPages) {
         for (int page = 0; page < totalPages; ++page) {
             request.setPage(page + 1);
             final RestResponse<MALGetPropertiesResponse> response = getPropertiesClient.download(request);

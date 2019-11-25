@@ -1,7 +1,7 @@
 package MediaPoolMalBridge.service.BrandMaker.theme.controller;
 
 import MediaPoolMalBridge.service.BrandMaker.theme.download.BMDownloadThemeService;
-import MediaPoolMalBridge.service.BrandMaker.theme.upload.BMUploadThemeService;
+import MediaPoolMalBridge.service.BrandMaker.theme.upload.BMFireUploadThemeService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,21 +12,21 @@ public class BMThemeController {
 
     private BMDownloadThemeService bmDownloadThemeService;
 
-    private BMUploadThemeService bmUploadThemeService;
+    private BMFireUploadThemeService bmFireUploadThemeService;
 
     public BMThemeController(final BMDownloadThemeService bmDownloadThemeService,
-                             final BMUploadThemeService bmUploadThemeService) {
+                             final BMFireUploadThemeService bmFireUploadThemeService) {
         this.bmDownloadThemeService = bmDownloadThemeService;
-        this.bmUploadThemeService = bmUploadThemeService;
+        this.bmFireUploadThemeService = bmFireUploadThemeService;
     }
 
     @GetMapping("/service/bm/getThemes")
     public void getTheme() {
-        bmDownloadThemeService.download();
+        bmDownloadThemeService.start();
     }
 
     @GetMapping("/service/bm/uploadThemes")
     public void uploadTheme() {
-        bmUploadThemeService.uploadTheme();
+        bmFireUploadThemeService.start();
     }
 }

@@ -20,11 +20,7 @@ public class BMCreateThemeClient extends BrandMakerSoapClient {
         try {
             final com.brandmaker.webservices.theme.Theme request = transformer.toBMTheme(theme);
             final ThemeResult result = getThemeWebServicePort().createTheme(request);
-            final CreateThemeResponse response = new CreateThemeResponse(result);
-            if (!response.isStatus()) {
-                reportErrorOnResponse(String.valueOf(theme.getThemeId()), response);
-            }
-            return response;
+            return new CreateThemeResponse(result);
         } catch (final Exception e) {
             reportErrorOnException(String.valueOf(theme.getThemeId()), e);
             return new CreateThemeResponse(false, e.getMessage());

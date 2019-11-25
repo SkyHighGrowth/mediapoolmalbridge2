@@ -17,6 +17,6 @@ public class MALGetAssetDestiantionController {
 
     @GetMapping("/service/mal/getDestinations")
     public void getDestinations() {
-        getAssetDestinationService.download();
+        getAssetDestinationService.start();
     }
 }

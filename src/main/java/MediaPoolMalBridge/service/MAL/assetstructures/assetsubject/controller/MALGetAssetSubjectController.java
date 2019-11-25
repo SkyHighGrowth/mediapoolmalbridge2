@@ -17,6 +17,6 @@ public class MALGetAssetSubjectController {
 
     @GetMapping("/service/mal/getSubjects")
     public void download() {
-        getAssetSubjectService.download();
+        getAssetSubjectService.start();
     }
 }

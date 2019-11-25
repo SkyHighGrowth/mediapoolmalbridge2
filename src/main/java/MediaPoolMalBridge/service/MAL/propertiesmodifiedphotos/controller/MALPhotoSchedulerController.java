@@ -17,11 +17,11 @@ public class MALPhotoSchedulerController {
 
     @GetMapping("/service/mal/updateModifiedPhotos")
     public void getUpdate() {
-        malPhotoSchedulerService.update();
+        malPhotoSchedulerService.scheduled();
     }
 
     @GetMapping("/service/mal/downloadModifiedPhotos")
     public void downloadPhotos() {
-        malPhotoSchedulerService.downloadPropertyPhotos();
+        malPhotoSchedulerService.scheduled();
     }
 }

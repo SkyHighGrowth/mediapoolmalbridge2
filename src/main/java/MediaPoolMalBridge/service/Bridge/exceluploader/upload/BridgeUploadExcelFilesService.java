@@ -6,14 +6,13 @@ import MediaPoolMalBridge.persistence.entity.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.repository.ReportsRepository;
-import MediaPoolMalBridge.service.AbstractService;
-import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import MediaPoolMalBridge.service.AbstractUniqueService;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 
 @Service
-public class BridgeUploadExcelFilesService extends AbstractService {
+public class BridgeUploadExcelFilesService extends AbstractUniqueService {
 
     private final BridgeJScpClient bridgeJScpClient;
 
@@ -21,20 +20,17 @@ public class BridgeUploadExcelFilesService extends AbstractService {
 
     private final AppConfig appConfig;
 
-    private final TaskExecutorWrapper taskExecutorWrapper;
-
     public BridgeUploadExcelFilesService(final BridgeJScpClient bridgeJScpClient,
                                          final ReportsRepository reportsRepository,
-                                         final AppConfig appConfig,
-                                         final TaskExecutorWrapper taskExecutorWrapper)
+                                         final AppConfig appConfig)
     {
         this.bridgeJScpClient = bridgeJScpClient;
         this.reportsRepository = reportsRepository;
         this.appConfig = appConfig;
-        this.taskExecutorWrapper = taskExecutorWrapper;
     }
 
-    public void upload()
+    @Override
+    protected void run()
     {
         try {
             final File[] files = new File(appConfig.getExcelDir() ).listFiles();

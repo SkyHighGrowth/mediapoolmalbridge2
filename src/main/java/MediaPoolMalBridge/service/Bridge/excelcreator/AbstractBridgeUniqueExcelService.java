@@ -5,18 +5,15 @@ import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
 import MediaPoolMalBridge.persistence.repository.BM.BMAssetRepository;
 import MediaPoolMalBridge.persistence.repository.MAL.MALAssetRepository;
 import MediaPoolMalBridge.persistence.repository.MAL.MALPropertyRepository;
+import MediaPoolMalBridge.service.AbstractUniqueService;
 import jxl.Workbook;
 import jxl.write.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.util.List;
 
-public abstract class AbstractBridgeExcelService {
-
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+public abstract class AbstractBridgeUniqueExcelService extends AbstractUniqueService {
 
     @Autowired
     protected MALPropertyRepository malPropertyRepository;

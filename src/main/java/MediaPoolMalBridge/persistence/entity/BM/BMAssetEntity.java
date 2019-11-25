@@ -13,10 +13,16 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table( name = "bm_asset",
+        indexes = { @Index( columnList = "transferring_bm_asset_status" ),
+                    @Index( columnList = "transferring_mal_asset_status"),
+                    @Index( columnList = "transferring_asset_status" ),
+                    @Index( columnList = "property_id, mal_asset_type_id, color_id"),
+                    @Index( columnList = "property_id, mal_asset_type_id") })
 public class BMAssetEntity extends AbstractEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private long id;
 
@@ -58,6 +64,7 @@ public class BMAssetEntity extends AbstractEntity {
     private int bmStatesRepetitions = 0;
 
     @Column(name = "transferring_bm_asset_status")
+    @Enumerated(EnumType.STRING)
     private TransferringBMConnectionAssetStatus transferringBMConnectionAssetStatus = TransferringBMConnectionAssetStatus.INVALID;
 
     @Column(name = "transferring_mal_asset_status")

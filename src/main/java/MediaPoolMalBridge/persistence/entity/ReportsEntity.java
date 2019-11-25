@@ -3,22 +3,24 @@ package MediaPoolMalBridge.persistence.entity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table( name = "reports",
+        indexes = { @Index( columnList = "report_to" ),
+                    @Index( columnList = "report_to, created")})
 public class ReportsEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column( name = "id" )
     private long id;
 
-    @Column( name = "bm_report_type" )
+    @Column( name = "report_type" )
     @Enumerated(EnumType.STRING)
-    private ReportType bmReportType;
+    private ReportType reportType;
 
     @Column( name = "logger_name" )
     private String loggerName;
@@ -36,20 +38,17 @@ public class ReportsEntity {
     private String jsonedObject03;
 
     @Column( name = "report_to" )
+    @Enumerated( EnumType.STRING )
     private ReportTo reportTo;
 
     @CreationTimestamp
     @Column( name = "created" )
     private LocalDateTime created;
 
-    @UpdateTimestamp
-    @Column( name = "updated" )
-    private LocalDateTime updated;
-
     public ReportsEntity( ) { }
 
     public ReportsEntity( final ReportType reportType, final String loggerName, final String message, final ReportTo reportTo, final String jsonedObject01, final String jsonedObject02, final String jsonedObject03 ) {
-        this.bmReportType = reportType;
+        this.reportType = reportType;
         this.loggerName = loggerName;
         this.message = message;
         this.reportTo = reportTo;
@@ -66,12 +65,12 @@ public class ReportsEntity {
         this.id = id;
     }
 
-    public ReportType getBmReportType() {
-        return bmReportType;
+    public ReportType getReportType() {
+        return reportType;
     }
 
-    public void setBmReportType(ReportType bmReportType) {
-        this.bmReportType = bmReportType;
+    public void setReportType(ReportType bmReportType) {
+        this.reportType = bmReportType;
     }
 
     public String getLoggerName() {
@@ -128,13 +127,5 @@ public class ReportsEntity {
 
     public void setCreated(LocalDateTime created) {
         this.created = created;
-    }
-
-    public LocalDateTime getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(LocalDateTime updated) {
-        this.updated = updated;
     }
 }

@@ -18,9 +18,9 @@ public class Constants {
 
     public final static String XL_FILE_PREFIX = "xl_";
 
-    public final static String CRON_DAILY_TRIGGGER_EXPRESSION = "0 0 */1 * * *";
+    public final static String CRON_MIDNIGHT_TRIGGGER_EXPRESSION = "0 0 * * * *";
+
+    public final static String CRON_AT_2330_HOURS = "0 30 23 * * *";
 
     public final static String CRON_HOURLY_TRIGGGER_EXPRESSION = "0 0 */1 * * *";
-
-    public final static String CRON_SIX_HOURS_TRIGGER_EXPRESSION = "0 0 */6 * * *";
 }

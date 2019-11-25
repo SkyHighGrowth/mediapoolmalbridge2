@@ -1,34 +1,26 @@
 package MediaPoolMalBridge.persistence.repository.MAL;
 
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
+import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
-import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface MALAssetRepository extends CrudRepository<MALAssetEntity, Long> {
+public interface MALAssetRepository extends PagingAndSortingRepository<MALAssetEntity, Long> {
 
-    public List<MALAssetEntity> findByAssetType( final MALAssetType malAssetType );
-
-    public MALAssetEntity findByAssetId( final String assetId );
-
-    public List<MALAssetEntity> findByTransferringAssetStatus(final TransferringAssetStatus transferringAssetStatus );
+    public Slice<MALAssetEntity> findAllByTransferringAssetStatus(final TransferringAssetStatus transferringAssetStatus, final Pageable page );
 
     Optional<MALAssetEntity> findByAssetIdAndAssetType(final String assetId, final MALAssetType malAssetType);
 
-    @Query("select mae " +
-            "from MALAssetEntity mae " +
-            "where mae.transferringMALConnectionAssetStatus = :arg1 or " +
-            "mae.transferringAssetStatus = :arg2")
-    List<MALAssetEntity> findDownloadedOrMalDeleted(final TransferringMALConnectionAssetStatus arg1, final TransferringAssetStatus arg2 );
+    Slice<MALAssetEntity> findAllByTransferringMALConnectionAssetStatusOrTransferringAssetStatus(final TransferringMALConnectionAssetStatus arg1, final TransferringAssetStatus arg2, final Pageable page );
 
-    @Query("select mae " +
+    /*@Query("select mae " +
             "from MALAssetEntity mae " +
             "where mae.transferringAssetStatus = :arg1 or " +
-            "mae.transferringAssetStatus = :arg2")
-    List<MALAssetEntity> findMalUpdatedOrMalCreated( final TransferringAssetStatus arg1, final TransferringAssetStatus arg2 );
+            "mae.transferringAssetStatus = :arg2" )*/
+    Slice<MALAssetEntity> findAllByTransferringAssetStatusOrTransferringAssetStatus(final TransferringAssetStatus arg1, final TransferringAssetStatus arg2, final Pageable arg3  );
 }

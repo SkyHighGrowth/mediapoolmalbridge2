@@ -19,16 +19,13 @@ public class BridgeUploadExcelFilesSchedulerService extends AbstractSchedulerSer
     }
 
     @PostConstruct
-    public void scheduler()
+    public void init()
     {
-        if( isRunScheduler() )
-        {
-            taskSchedulerWrapper.getTaskScheduler().schedule( this::upload, new CronTrigger(Constants.CRON_DAILY_TRIGGGER_EXPRESSION ) );
-        }
+        taskSchedulerWrapper.getTaskScheduler().schedule( this::run, new CronTrigger( Constants.CRON_MIDNIGHT_TRIGGGER_EXPRESSION ) );
     }
 
-    public void upload( )
+    public void scheduled( )
     {
-        bridgeUploadExcelFilesService.upload();
+        bridgeUploadExcelFilesService.start();
     }
 }

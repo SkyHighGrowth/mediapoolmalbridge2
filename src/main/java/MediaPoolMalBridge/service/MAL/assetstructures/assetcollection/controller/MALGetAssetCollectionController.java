@@ -17,6 +17,6 @@ public class MALGetAssetCollectionController {
 
     @GetMapping("/service/mal/getCollections")
     public void getCollections() {
-        getAssetCollectionService.download();
+        getAssetCollectionService.start();
     }
 }

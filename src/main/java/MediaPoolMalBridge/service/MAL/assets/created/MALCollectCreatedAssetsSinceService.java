@@ -1,16 +1,17 @@
 package MediaPoolMalBridge.service.MAL.assets.created;
 
 import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAssetsRequest;
-import MediaPoolMalBridge.service.MAL.assets.AbstractMALAssetsService;
+import MediaPoolMalBridge.service.MAL.assets.AbstractMALAssetsUniqueService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MALCollectCreatedAssetsSinceService extends AbstractMALAssetsService {
+public class MALCollectCreatedAssetsSinceService extends AbstractMALAssetsUniqueService {
 
-    public void downloadCreatedAssets(final String createdSince) {
+    @Override
+    protected void run() {
         final MALGetAssetsRequest request = new MALGetAssetsRequest();
-        request.setDateCreatedStart(createdSince);
-        request.setPerPage(200);
-        downloadAssets(request, createdSince);
+        request.setDateCreatedStart(getSince());
+        request.setPerPage(2000);
+        downloadAssets(request);
     }
 }

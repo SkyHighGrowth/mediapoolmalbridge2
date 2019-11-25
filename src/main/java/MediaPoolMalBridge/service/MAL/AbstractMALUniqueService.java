@@ -2,16 +2,10 @@ package MediaPoolMalBridge.service.MAL;
 
 import MediaPoolMalBridge.persistence.repository.MAL.MALAssetRepository;
 import MediaPoolMalBridge.persistence.repository.MAL.MALPropertyRepository;
-import MediaPoolMalBridge.persistence.repository.ReportsRepository;
-import MediaPoolMalBridge.service.AbstractService;
+import MediaPoolMalBridge.service.AbstractUniqueService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class AbstractMALService extends AbstractService {
-
-    @Autowired
-    protected ReportsRepository reportsRepository;
+public abstract class AbstractMALUniqueService extends AbstractUniqueService {
 
     @Autowired
     protected MALAssetRepository malAssetRepository;

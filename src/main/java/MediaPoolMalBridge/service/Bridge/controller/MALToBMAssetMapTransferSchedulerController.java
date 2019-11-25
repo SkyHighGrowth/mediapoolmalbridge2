@@ -1,6 +1,6 @@
 package MediaPoolMalBridge.service.Bridge.controller;
 
-import MediaPoolMalBridge.service.Bridge.MALToBMAssetMapTransferSchedulerService;
+import MediaPoolMalBridge.service.Bridge.assetstransfer.MALToBMAssetMapTransferSchedulerService;
 import MediaPoolMalBridge.service.Bridge.deleteFiles.BridgeDeleteFilesSchedulerService;
 import MediaPoolMalBridge.service.Bridge.ktistotheme.MALKitsToBMThemeSchedulerService;
 import org.springframework.context.annotation.Profile;
@@ -27,16 +27,16 @@ public class MALToBMAssetMapTransferSchedulerController {
 
     @GetMapping("/MALtoBM/transferAssets")
     public void transferAssets() {
-        malToBMAssetMapTransferSchedulerService.transferAssets();
+        malToBMAssetMapTransferSchedulerService.scheduled();
     }
 
     @GetMapping("/MALtoBM/kitsToTheme")
     public void transferKits() {
-        malKitsToBMThemeSchedulerService.exchange();
+        malKitsToBMThemeSchedulerService.scheduled();
     }
 
     @GetMapping("/MALtoBM/deleteFiles")
     public void deleteFile() {
-        bridgeDeleteFilesSchedulerService.deleteFiles();
+        bridgeDeleteFilesSchedulerService.scheduled();
     }
 }

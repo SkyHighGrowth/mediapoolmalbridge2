@@ -17,7 +17,7 @@ public class BMUploadAssetSchedulerController {
 
     @GetMapping("/service/bm/assets")
     public void assets() {
-        bmUploadAssetSchedulerService.doOnAssets();
+        bmUploadAssetSchedulerService.scheduled();
     }
 
     @GetMapping("/service/bm/createAssets")

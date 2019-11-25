@@ -1,17 +1,18 @@
 package MediaPoolMalBridge.service.MAL.assetstructures.propertyvariants;
 
-import MediaPoolMalBridge.service.MAL.AbstractMALService;
+import MediaPoolMalBridge.service.MAL.AbstractMALUniqueService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MALGetPropertyVariantsService extends AbstractMALService {
+public class MALGetPropertyVariantsService extends AbstractMALUniqueService {
 
     public MALGetPropertyVariantsService()
     {
 
     }
 
-    public void download()
+    @Override
+    protected void run()
     {
 
     }

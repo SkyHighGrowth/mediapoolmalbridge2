@@ -4,7 +4,7 @@ import MediaPoolMalBridge.model.MAL.MALAssetStructures;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringBMConnectionAssetStatus;
 import MediaPoolMalBridge.persistence.entity.BM.BMAssetEntity;
 import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
-import MediaPoolMalBridge.service.Bridge.excelcreator.AbstractBridgeExcelService;
+import MediaPoolMalBridge.service.Bridge.excelcreator.AbstractBridgeUniqueExcelService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BridgeCreatePropertyStructureExcelService extends AbstractBridgeExcelService {
+public class BridgeCreatePropertyStructureExcelService extends AbstractBridgeUniqueExcelService {
 
     private MALAssetStructures malAssetStructures;
 
@@ -21,7 +21,8 @@ public class BridgeCreatePropertyStructureExcelService extends AbstractBridgeExc
         this.malAssetStructures = malAssetStructures;
     }
 
-    public void createPropertyStructuresExcelFiles()
+    @Override
+    protected void run()
     {
         MALAssetStructures.getPropertyVariants().values().forEach(
                 propertyVariant -> {

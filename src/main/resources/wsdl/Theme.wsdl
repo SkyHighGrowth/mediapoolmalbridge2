@@ -508,7 +508,7 @@
     </wsdl:binding>
     <wsdl:service name="ThemeService">
         <wsdl:port binding="tns:ThemeServiceSoapBinding" name="ThemePort">
-            <soap:address location="https://starwood.brandmakerinc.com/webservices/Theme/"/>
+            <soap:address location="https://qastarwood.brandmakerinc.com/webservices/Theme/"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

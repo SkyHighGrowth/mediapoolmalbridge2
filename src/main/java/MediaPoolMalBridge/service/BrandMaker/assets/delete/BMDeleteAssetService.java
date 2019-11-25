@@ -1,31 +1,34 @@
 package MediaPoolMalBridge.service.BrandMaker.assets.delete;
 
 import MediaPoolMalBridge.clients.BrandMaker.assetdelete.client.BMDeleteAssetClient;
-import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
-import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringBMConnectionAssetStatus;
+import MediaPoolMalBridge.clients.BrandMaker.assetdelete.client.model.DeleteMediaResponse;
 import MediaPoolMalBridge.persistence.entity.BM.BMAssetEntity;
-import MediaPoolMalBridge.service.BrandMaker.AbstractBMService;
-import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringBMConnectionAssetStatus;
+import MediaPoolMalBridge.service.BrandMaker.AbstractBMNonUniqueService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class BMDeleteAssetService extends AbstractBMService {
+public class BMDeleteAssetService extends AbstractBMNonUniqueService<BMAssetEntity> {
 
     private final BMDeleteAssetClient bmDeleteAssetClient;
 
-    private TaskExecutorWrapper taskExecutorWrapper;
-
-    public BMDeleteAssetService(final BMDeleteAssetClient bmDeleteAssetClient,
-                                final TaskExecutorWrapper taskExecutorWrapper) {
+    public BMDeleteAssetService(final BMDeleteAssetClient bmDeleteAssetClient) {
         this.bmDeleteAssetClient = bmDeleteAssetClient;
-        this.taskExecutorWrapper = taskExecutorWrapper;
     }
 
-    public void deleteAssets() {
-        final List<BMAssetEntity> bmAssetEntities = bmAssetRepository.findFileDeletingOrMalDeleted( TransferringBMConnectionAssetStatus.FILE_DELETING, TransferringAssetStatus.MAL_DELETED );
-        bmAssetEntities.forEach(bmAsset ->
-                taskExecutorWrapper.getTaskExecutor().execute(() -> bmDeleteAssetClient.delete(bmAsset)));
+    @Override
+    protected void run(BMAssetEntity bmAssetEntity) {
+        bmAssetEntity.setTransferringBMConnectionAssetStatus(TransferringBMConnectionAssetStatus.FILE_DELETING);
+        final DeleteMediaResponse deleteMediaResponse = bmDeleteAssetClient.delete( bmAssetEntity );
+        if (deleteMediaResponse.isStatus()) {
+            bmAssetEntity.setTransferringBMConnectionAssetStatus(TransferringBMConnectionAssetStatus.FILE_DELETED);
+        } else {
+            reportErrorOnResponse(bmAssetEntity.getAssetId(), deleteMediaResponse);
+            bmAssetEntity.setTransferringBMConnectionAssetStatus(TransferringBMConnectionAssetStatus.FILE_DELETING);
+        }
+        bmAssetRepository.save(bmAssetEntity);
+        synchronized ( this ) {
+            notify();
+        }
     }
 }

@@ -17,6 +17,6 @@ public class MALGetAssetBrandController {
 
     @GetMapping("/service/mal/getBrands")
     public void getBrands() {
-        getAssetBrandService.download();
+        getAssetBrandService.start();
     }
 }

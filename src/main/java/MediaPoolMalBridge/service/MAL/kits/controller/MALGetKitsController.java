@@ -17,6 +17,6 @@ public class MALGetKitsController {
 
     @GetMapping("/service/mal/getKits")
     public void getKits() {
-        malGetKitsService.downloadKits();
+        malGetKitsService.start();
     }
 }

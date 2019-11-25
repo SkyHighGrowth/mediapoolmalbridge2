@@ -15,11 +15,7 @@ public class BMDownloadThemeIdClient extends BrandMakerSoapClient {
             final ThemeName request = new ThemeName();
             request.setValue(theme.getThemePath());
             final Theme result = getThemeWebServicePort().receiveThemeInformationByPath(request);
-            final DownloadThemeIdResponse response = new DownloadThemeIdResponse(result);
-            if (!response.isStatus()) {
-                reportErrorOnResponse(String.valueOf(theme.getThemeId()), response);
-            }
-            return response;
+            return new DownloadThemeIdResponse(result);
         } catch (final Exception e) {
             reportErrorOnException(String.valueOf(theme.getThemeId()), e);
             return new DownloadThemeIdResponse(false, e.getMessage());

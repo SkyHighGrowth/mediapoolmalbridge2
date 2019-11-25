@@ -6,28 +6,36 @@ import MediaPoolMalBridge.clients.MAL.assetsunavailable.client.model.MALGetUnava
 import MediaPoolMalBridge.clients.MAL.assetsunavailable.client.model.MALGetUnavailableAssetsResponse;
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
 import MediaPoolMalBridge.clients.rest.RestResponse;
-import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
 import MediaPoolMalBridge.persistence.entity.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
-import MediaPoolMalBridge.service.MAL.AbstractMALService;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
+import MediaPoolMalBridge.service.MAL.AbstractMALUniqueService;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 @Service
-public class MALCollectDeletedAssetsSinceService extends AbstractMALService {
+public class MALCollectDeletedAssetsSinceService extends AbstractMALUniqueService {
 
     private final MALGetUnavailableAssetsClient getUnavailableAssetsClient;
+
+    private String since;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public MALCollectDeletedAssetsSinceService(final MALGetUnavailableAssetsClient getUnavailableAssetsClient) {
         this.getUnavailableAssetsClient = getUnavailableAssetsClient;
     }
 
-    public void downloadUnavailableAssets(final String unavailableSince) {
+    @Override
+    protected void run() {
         final MALGetUnavailableAssetsRequest request = new MALGetUnavailableAssetsRequest();
-        request.setUnavailableSince(unavailableSince);
+        request.setUnavailableSince(since);
 
         final RestResponse<MALGetUnavailableAssetsResponse> response = getUnavailableAssetsClient.download(request);
 
@@ -35,7 +43,7 @@ public class MALCollectDeletedAssetsSinceService extends AbstractMALService {
                 response.getResponse() == null ||
                 response.getResponse().getAssets() == null) {
             final String message = String.format("Can not download list of unavailable assets since [%s] with response [%s]",
-                    unavailableSince,
+                    since,
                     GSON.toJson(response.getResponse()));
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, null, null, null );
             reportsRepository.save( reportsEntity );
@@ -43,6 +51,7 @@ public class MALCollectDeletedAssetsSinceService extends AbstractMALService {
             return;
         }
 
+        entityManager.getTransaction().begin();
         response.getResponse()
                 .getAssets()
                 .forEach(malGetUnavailableAsset -> {
@@ -50,6 +59,7 @@ public class MALCollectDeletedAssetsSinceService extends AbstractMALService {
                     addAssetToDelete(malGetUnavailableAsset, MALAssetType.JPG_LOGO);
                     addAssetToDelete(malGetUnavailableAsset, MALAssetType.PNG_LOGO);
                 });
+        entityManager.getTransaction().commit();
     }
 
     private void addAssetToDelete(final MALGetUnavailableAsset malGetUnavailableAsset, final MALAssetType malAssetType) {
@@ -60,6 +70,14 @@ public class MALCollectDeletedAssetsSinceService extends AbstractMALService {
         final MALAssetEntity malAssetEntity = optionalMalAssetEntity.get();
         malAssetEntity.setTransferringAssetStatus(TransferringAssetStatus.MAL_DELETED);
         malAssetEntity.setBmAssetId(malAssetEntity.getBmAssetId());
-        malAssetRepository.save(malAssetEntity);
+        //malAssetRepository.save(malAssetEntity);
+    }
+
+    public String getSince() {
+        return since;
+    }
+
+    public void setSince(String since) {
+        this.since = since;
     }
 }

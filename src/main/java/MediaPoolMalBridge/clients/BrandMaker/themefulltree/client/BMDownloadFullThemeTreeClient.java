@@ -12,11 +12,7 @@ public class BMDownloadFullThemeTreeClient extends BrandMakerSoapClient {
     public DownloadFullThemeTreeResponse downloadFullThemeTree(final BMTheme theme) {
         try {
             final ThemesResult result = getThemeWebServicePort().receiveFullThemeTree(theme.getThemeId());
-            final DownloadFullThemeTreeResponse response = new DownloadFullThemeTreeResponse(result);
-            if (!response.isStatus()) {
-                reportErrorOnResponse(String.valueOf(theme.getThemeId()), response);
-            }
-            return response;
+            return new DownloadFullThemeTreeResponse(result);
         } catch (final Exception e) {
             reportErrorOnException(String.valueOf(theme.getThemeId()), e);
             return new DownloadFullThemeTreeResponse(false, e.getMessage());

@@ -1,6 +1,7 @@
 package MediaPoolMalBridge.service.MAL.assets.controller;
 
 import MediaPoolMalBridge.service.MAL.assets.MALAssetsSchedulerService;
+import MediaPoolMalBridge.service.MAL.assets.MALDownloadAssetSchedulerService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,8 +12,12 @@ public class MALAssetsSchedulerController {
 
     private final MALAssetsSchedulerService malAssetsSchedulerService;
 
-    public MALAssetsSchedulerController(final MALAssetsSchedulerService malAssetsSchedulerService) {
+    private final MALDownloadAssetSchedulerService malDownloadAssetSchedulerService;
+
+    public MALAssetsSchedulerController(final MALAssetsSchedulerService malAssetsSchedulerService,
+                                        final MALDownloadAssetSchedulerService malDownloadAssetSchedulerService) {
         this.malAssetsSchedulerService = malAssetsSchedulerService;
+        this.malDownloadAssetSchedulerService = malDownloadAssetSchedulerService;
     }
 
     /**
@@ -20,7 +25,7 @@ public class MALAssetsSchedulerController {
      */
     @GetMapping("/service/mal/updateAssets")
     public void getUpdates() {
-        malAssetsSchedulerService.update();
+        malAssetsSchedulerService.scheduled();
     }
 
     /**
@@ -28,6 +33,6 @@ public class MALAssetsSchedulerController {
      */
     @GetMapping("/service/mal/downloadAssets")
     public void getAssets() {
-        malAssetsSchedulerService.downloadAssets();
+        malDownloadAssetSchedulerService.scheduled( );
     }
 }

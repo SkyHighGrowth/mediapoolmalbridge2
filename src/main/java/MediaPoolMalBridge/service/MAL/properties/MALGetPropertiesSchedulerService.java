@@ -28,19 +28,18 @@ public class MALGetPropertiesSchedulerService extends AbstractSchedulerService {
     }
 
     @PostConstruct
-    public void schedulePropertiesUpdate() {
-        if (isRunScheduler()) {
-            taskSchedulerWrapper.getTaskScheduler()
-                    .schedule(this::update, new CronTrigger(Constants.CRON_DAILY_TRIGGGER_EXPRESSION));
-        }
+    public void init() {
+        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(Constants.CRON_MIDNIGHT_TRIGGGER_EXPRESSION));
     }
 
-    public void update() {
+    @Override
+    public void scheduled() {
         final String since = Instant.ofEpochMilli(System.currentTimeMillis())
                 .atOffset(ZoneOffset.UTC)
                 .toLocalDateTime()
                 .format(DATE_TIME_FORMATTER);
-        getPropertiesService.downloadProperties();
-        getPropertiesDeletedService.download(since);
+        getPropertiesService.start();
+        getPropertiesDeletedService.setUnavailableSince( since );
+        getPropertiesDeletedService.start();
     }
 }

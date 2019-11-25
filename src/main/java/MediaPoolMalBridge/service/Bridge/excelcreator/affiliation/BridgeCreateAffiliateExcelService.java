@@ -1,12 +1,13 @@
 package MediaPoolMalBridge.service.Bridge.excelcreator.affiliation;
 
-import MediaPoolMalBridge.service.Bridge.excelcreator.AbstractBridgeExcelService;
+import MediaPoolMalBridge.service.Bridge.excelcreator.AbstractBridgeUniqueExcelService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BridgeCreateAffiliateExcelService extends AbstractBridgeExcelService {
+public class BridgeCreateAffiliateExcelService extends AbstractBridgeUniqueExcelService {
 
-    public void createAffiliateExcel( )
+    @Override
+    protected void run()
     {
         writeToFile( "AFFILIATES_CODE.xls" );
     }

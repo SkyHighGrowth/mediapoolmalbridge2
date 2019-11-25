@@ -24,15 +24,13 @@ public class BridgeCreateExcelFileSchedulerService extends AbstractSchedulerServ
     @PostConstruct
     public void scheduleExcelFileCreation()
     {
-        if( isRunScheduler() )
-        {
-            taskSchedulerWrapper.getTaskScheduler().schedule( this::createExcelFiles, new CronTrigger(Constants.CRON_DAILY_TRIGGGER_EXPRESSION) );
-        }
+        taskSchedulerWrapper.getTaskScheduler().schedule( this::run, new CronTrigger(Constants.CRON_AT_2330_HOURS) );
     }
 
-    public void createExcelFiles()
+    @Override
+    public void scheduled()
     {
-        bridgeCreateAffiliateExcelService.createAffiliateExcel();
-        bridgeCreatePropertyStructureExcelService.createPropertyStructuresExcelFiles();
+        bridgeCreateAffiliateExcelService.start();
+        bridgeCreatePropertyStructureExcelService.start();
     }
 }

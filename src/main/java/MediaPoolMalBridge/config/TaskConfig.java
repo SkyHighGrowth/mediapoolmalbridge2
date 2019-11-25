@@ -15,21 +15,25 @@ public class TaskConfig {
 
     private final int executorThreadPoolSize;
 
+    private final int executorThreadQueueSize;
+
     private final int schedulerThreadPoolSize;
 
-    public TaskConfig(@Value("${mal.executor.thread.pool.size}") final int executorThreadPoolSize,
-                      @Value("${mal.scheduler.thread.pool.size}") final int schedulerThreadPoolSize) {
+    public TaskConfig(@Value("${threadexecutor.pool.size}") final int executorThreadPoolSize,
+                      @Value("${threadexecutor.queue.size}") final int executorThreadQueueSize,
+                      @Value("${threadscheduler.pool.size}") final int schedulerThreadPoolSize) {
         this.executorThreadPoolSize = executorThreadPoolSize;
         this.schedulerThreadPoolSize = schedulerThreadPoolSize;
+        this.executorThreadQueueSize = executorThreadQueueSize;
     }
 
     @Bean
     public TaskExecutorWrapper taskExecutorWrapper() {
         final ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor.setThreadNamePrefix("MAL-polling-task-executor-");
+        threadPoolTaskExecutor.setThreadNamePrefix("task-executor-");
         threadPoolTaskExecutor.setCorePoolSize(executorThreadPoolSize);
         threadPoolTaskExecutor.setMaxPoolSize(executorThreadPoolSize);
-        threadPoolTaskExecutor.setQueueCapacity(1);
+        threadPoolTaskExecutor.setQueueCapacity(executorThreadQueueSize);
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
         return new TaskExecutorWrapper(threadPoolTaskExecutor);
@@ -38,7 +42,7 @@ public class TaskConfig {
     @Bean
     public TaskSchedulerWrapper taskSchedulerWrapper() {
         final ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
-        threadPoolTaskScheduler.setThreadNamePrefix("MAL-polling-task-scheduler-");
+        threadPoolTaskScheduler.setThreadNamePrefix("task-scheduler-");
         threadPoolTaskScheduler.setPoolSize(schedulerThreadPoolSize);
         return new TaskSchedulerWrapper(threadPoolTaskScheduler);
     }

@@ -7,13 +7,18 @@ import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAssetsResponse;
 import MediaPoolMalBridge.clients.MAL.download.client.MALDownloadAssetClient;
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MALDownloadSingleAssetController {
+
+    private static Logger logger = LoggerFactory.getLogger(MALDownloadSingleAssetController.class);
 
     private final MALGetAssetsClient malGetAssetsClient;
 
@@ -36,6 +41,7 @@ public class MALDownloadSingleAssetController {
         final RestResponse<MALGetAssetsResponse> response = malGetAssetsClient.download( malGetAssetsRequest );
         final MALGetAsset malGetAsset = response.getResponse().getAssets().get( 0 );
 
+        logger.info( "Downloading asset {}", (new Gson()).toJson( malGetAsset ) );
         if(StringUtils.isNotBlank( malGetAsset.getXlUrl() ) )
         {
             taskExecutorWrapper.getTaskExecutor().execute( () -> malDownloadAssetClient.download( malGetAsset.getXlUrl(), "xl_file" ) );

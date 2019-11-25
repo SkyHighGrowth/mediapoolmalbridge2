@@ -22,9 +22,9 @@ public class BridgeExcelServiceController {
     @GetMapping( "/service/app/affiliateCodes" )
     public void createAffiliateCodes()
     {
-        bridgeCreateAffiliateExcelService.createAffiliateExcel();
+        bridgeCreateAffiliateExcelService.start();
     }
 
     @GetMapping( "/service/app/createStructures" )
-    public void createStructures( ) { bridgeCreatePropertyStructureExcelService.createPropertyStructuresExcelFiles(); }
+    public void createStructures( ) { bridgeCreatePropertyStructureExcelService.start(); }
 }

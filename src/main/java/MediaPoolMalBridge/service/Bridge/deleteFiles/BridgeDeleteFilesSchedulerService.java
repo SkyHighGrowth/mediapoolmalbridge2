@@ -31,12 +31,11 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
 
     @PostConstruct
     public void scheduledFileDelete() {
-        if (isRunScheduler()) {
-            taskSchedulerWrapper.getTaskScheduler().schedule(this::deleteFiles, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
-        }
+        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
     }
 
-    public void deleteFiles() {
+    @Override
+    public void scheduled() {
         final List<BMAssetEntity> bmAssetEntities = bmAssetRepository.findFilUploadedOrMetadataUploadingOrMetadataUploaded( TransferringBMConnectionAssetStatus.FILE_UPLOADED,
                 TransferringBMConnectionAssetStatus.METADATA_UPLOADING, TransferringBMConnectionAssetStatus.METADATA_UPLOADED );
         bmAssetEntities.forEach(bmAssetEntity -> {

@@ -17,6 +17,11 @@ public class TaskExecutorWrapper implements DisposableBean {
         return taskExecutor;
     }
 
+    public int getQueueSize()
+    {
+        return taskExecutor.getThreadPoolExecutor().getQueue().size();
+    }
+
     @PostConstruct
     public void initialize() {
         taskExecutor.initialize();

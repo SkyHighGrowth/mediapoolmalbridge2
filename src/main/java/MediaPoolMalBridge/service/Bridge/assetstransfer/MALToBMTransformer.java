@@ -1,4 +1,4 @@
-package MediaPoolMalBridge.service.Bridge;
+package MediaPoolMalBridge.service.Bridge.assetstransfer;
 
 import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAsset;
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
@@ -35,9 +35,10 @@ public class MALToBMTransformer {
         this.reportsRepository = reportsRepository;
     }
 
-    public BMAssetEntity translate(final MALAssetEntity malAsset) {
+    public BMAssetEntity transform(final MALAssetEntity malAsset) {
         final BMAssetEntity bmAsset = new BMAssetEntity();
         bmAsset.setTransferringConnectionAssetStatus(malAsset.getTransferringAssetStatus());
+        bmAsset.setTransferringMALConnectionAssetStatus(malAsset.getTransferringMALConnectionAssetStatus());
         bmAsset.setMalAssetType(malAsset.getAssetType());
         bmAsset.setAssetId(malAsset.getBmAssetId());
 
@@ -62,13 +63,9 @@ public class MALToBMTransformer {
     }
 
     private void transformMalGetAsset(final BMAssetEntity bmAsset, final MALAssetEntity malAsset) {
-        if (StringUtils.isNotBlank(malAsset.getFileName())) {
-            bmAsset.setFileName(malAsset.getFileName());
-        } else if (StringUtils.isNotBlank(malAsset.getLogoJPGFileName())) {
-            bmAsset.setFileName(malAsset.getLogoJPGFileName());
-        } else if (StringUtils.isNotBlank(malAsset.getLogoPNGFileName())) {
-            bmAsset.setFileName(malAsset.getLogoPNGFileName());
-        } else {
+        if (StringUtils.isNotBlank(malAsset.getFileNameOnDisc())) {
+            bmAsset.setFileName(malAsset.getFileNameOnDisc());
+        } else  {
             final String message = String.format("Detected mal asset without downloaded url mal asset id [%s]", malAsset.getAssetId());
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.WARNING, getClass().getName(), message, ReportTo.BM, (new Gson()).toJson(malAsset), null, null );
             reportsRepository.save( reportsEntity );

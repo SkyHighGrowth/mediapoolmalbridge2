@@ -16,6 +16,6 @@ public class MALGetPropertyTypesController {
 
     @GetMapping( "/appStatus/mal/propertyTypes" )
     public void download() {
-        getPropertyTypesService.download();
+        getPropertyTypesService.start();
     }
 }

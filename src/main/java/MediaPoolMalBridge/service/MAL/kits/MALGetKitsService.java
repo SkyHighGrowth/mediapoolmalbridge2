@@ -7,11 +7,11 @@ import MediaPoolMalBridge.model.MAL.kits.MALKits;
 import MediaPoolMalBridge.persistence.entity.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
-import MediaPoolMalBridge.service.MAL.AbstractMALService;
+import MediaPoolMalBridge.service.MAL.AbstractMALUniqueService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MALGetKitsService extends AbstractMALService {
+public class MALGetKitsService extends AbstractMALUniqueService {
 
     private final MALGetKitsClient getKitsClient;
 
@@ -23,7 +23,8 @@ public class MALGetKitsService extends AbstractMALService {
         this.malKits = malKits;
     }
 
-    public void downloadKits() {
+    @Override
+    protected void run() {
         final RestResponse<MALGetKitsResponse> response = getKitsClient.download();
         if (!response.isSuccess() ||
                 response.getResponse() == null ||

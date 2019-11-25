@@ -9,15 +9,15 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class RestConfig {
 
-    private static final int READ_TIME_OUT_MS = 30000;
+    private static final int READ_TIME_OUT_MS = 300000;
 
     private static final int CONNECTION_REQUEST_TIME_OUT = 50000;
 
     private static final int CONNECT_TIMEOUT = 50000;
 
-    private static final int MAX_CONN_TOTAL = 500;
+    private static final int MAX_CONN_TOTAL = 5000;
 
-    private static final int MAX_CONN_PER_ROUTE = 100;
+    private static final int MAX_CONN_PER_ROUTE = 1000;
 
     @Bean
     public RestTemplate restTemplate() {

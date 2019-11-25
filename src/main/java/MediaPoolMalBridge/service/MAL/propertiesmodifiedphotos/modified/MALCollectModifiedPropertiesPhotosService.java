@@ -9,20 +9,23 @@ import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
 import MediaPoolMalBridge.persistence.entity.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
-import MediaPoolMalBridge.service.MAL.AbstractMALService;
+import MediaPoolMalBridge.service.MAL.AbstractMALUniqueService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MALCollectModifiedPropertiesPhotosService extends AbstractMALService {
+public class MALCollectModifiedPropertiesPhotosService extends AbstractMALUniqueService {
 
     private final MALGetModifiedPropertyPhotoClient getModifiedPropertyPhotoClient;
+
+    private String modifiedSince;
 
     public MALCollectModifiedPropertiesPhotosService(final MALGetModifiedPropertyPhotoClient getModifiedPropertyPhotoClient) {
         this.getModifiedPropertyPhotoClient = getModifiedPropertyPhotoClient;
     }
 
-    public void downloadModifiedPhotos(final String modifiedSince) {
+    @Override
+    protected void run() {
         final MALGetModifiedPropertyPhotoRequest request = new MALGetModifiedPropertyPhotoRequest();
         request.setModifiedSince(modifiedSince);
         final RestResponse<MALGetModifiedPropertyPhotoResponse> response = getModifiedPropertyPhotoClient.download(request);
@@ -55,5 +58,13 @@ public class MALCollectModifiedPropertiesPhotosService extends AbstractMALServic
                     }
                     malAssetRepository.save(malAssetEntity);
                 });
+    }
+
+    public String getModifiedSince() {
+        return modifiedSince;
+    }
+
+    public void setModifiedSince(String modifiedSince) {
+        this.modifiedSince = modifiedSince;
     }
 }

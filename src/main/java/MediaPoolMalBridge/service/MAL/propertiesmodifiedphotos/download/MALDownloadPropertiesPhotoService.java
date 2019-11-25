@@ -4,9 +4,9 @@ import MediaPoolMalBridge.clients.MAL.download.client.MALDownloadAssetClient;
 import MediaPoolMalBridge.clients.MAL.download.client.model.MALDownloadAssetResponse;
 import MediaPoolMalBridge.clients.MAL.propertyphotomodified.client.model.MALModifiedPropertyPhotoAsset;
 import MediaPoolMalBridge.constants.Constants;
-import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
 import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
-import MediaPoolMalBridge.service.AbstractService;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
+import MediaPoolMalBridge.service.MAL.AbstractMALNonUniqueService;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
 @Service
-public class MALDownloadPropertiesPhotoService extends AbstractService {
+public class MALDownloadPropertiesPhotoService extends AbstractMALNonUniqueService<MALAssetEntity> {
 
     private static Logger logger = LoggerFactory.getLogger(MALDownloadPropertiesPhotoService.class);
 
@@ -30,7 +30,8 @@ public class MALDownloadPropertiesPhotoService extends AbstractService {
         this.malDownloadAssetClient = malDownloadAssetClient;
     }
 
-    public void downloadMALAsset(final MALAssetEntity malAsset) {
+    @Override
+    protected void run(final MALAssetEntity malAsset) {
 
         malAsset.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING);
         final MALModifiedPropertyPhotoAsset malModifiedPropertyPhotoAsset = malAsset.getMALModifiedPropertyPhotoAsset();
@@ -48,7 +49,7 @@ public class MALDownloadPropertiesPhotoService extends AbstractService {
                 final String mediumFileName = Constants.MEDIUM_PHOTO_FILE_PREFIX + fileName;
                 response = fire(decode(malModifiedPropertyPhotoAsset.getMediumDownloadUrl()), mediumFileName);
                 if (response.isSuccess()) {
-                    malAsset.setMediumPhotoFileName(mediumFileName);
+                    malAsset.setFileNameOnDisc(mediumFileName);
                 } else {
                     logger.error("Can not download medium file for property phot {}, with message {}",
                             GSON.toJson(malModifiedPropertyPhotoAsset),
@@ -61,7 +62,7 @@ public class MALDownloadPropertiesPhotoService extends AbstractService {
                 final String jpgFileName = Constants.JPG_PHOTO_FILE_PREFIX + fileName;
                 response = fire(decode(malModifiedPropertyPhotoAsset.getJpgDownloadUrl()), jpgFileName);
                 if (response.isSuccess()) {
-                    malAsset.setJpgPhotoFileName(jpgFileName);
+                    malAsset.setFileNameOnDisc(jpgFileName);
                 } else {
                     logger.error("Can not download JPG file for property photo {} with message {}",
                             GSON.toJson(malModifiedPropertyPhotoAsset),
@@ -77,6 +78,9 @@ public class MALDownloadPropertiesPhotoService extends AbstractService {
             }
         } catch (final Exception e) {
             logger.error("Can not create job for asset {}", (new Gson()).toJson(malModifiedPropertyPhotoAsset), e);
+        }
+        synchronized ( this ) {
+            notify();
         }
     }
 

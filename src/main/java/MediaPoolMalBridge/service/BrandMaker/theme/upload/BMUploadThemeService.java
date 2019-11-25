@@ -2,40 +2,27 @@ package MediaPoolMalBridge.service.BrandMaker.theme.upload;
 
 import MediaPoolMalBridge.clients.BrandMaker.model.BMTheme;
 import MediaPoolMalBridge.clients.BrandMaker.themecreate.client.BMCreateThemeClient;
-import MediaPoolMalBridge.model.BrandMaker.theme.BMThemes;
-import MediaPoolMalBridge.model.MAL.kits.MALKits;
-import MediaPoolMalBridge.service.AbstractService;
-import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import MediaPoolMalBridge.clients.BrandMaker.themecreate.client.model.CreateThemeResponse;
+import MediaPoolMalBridge.service.BrandMaker.AbstractBMNonUniqueService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BMUploadThemeService extends AbstractService {
+public class BMUploadThemeService extends AbstractBMNonUniqueService<BMTheme> {
 
     private final BMCreateThemeClient bmCreateThemeClient;
 
-    private final TaskExecutorWrapper taskExecutorWrapper;
-
-    private final MALKits malKits;
-
-    private final BMThemes bmThemes;
-
-    public BMUploadThemeService(final BMCreateThemeClient bmCreateThemeClient,
-                                final TaskExecutorWrapper taskExecutorWrapper,
-                                final MALKits malKits,
-                                final BMThemes bmThemes) {
+    public BMUploadThemeService(final BMCreateThemeClient bmCreateThemeClient) {
         this.bmCreateThemeClient = bmCreateThemeClient;
-        this.taskExecutorWrapper = taskExecutorWrapper;
-        this.malKits = malKits;
-        this.bmThemes = bmThemes;
     }
 
-    public void uploadTheme() {
-        bmThemes.keySet().forEach(malKits::remove);
-        malKits.keySet().forEach(malKit -> {
-            final BMTheme bmTheme = new BMTheme();
-            bmTheme.setThemeId(301);
-            bmTheme.setThemePath(malKit);
-            taskExecutorWrapper.getTaskExecutor().execute(() -> bmCreateThemeClient.createTheme(bmTheme));
-        });
+    @Override
+    protected void run(BMTheme bmTheme) {
+        final CreateThemeResponse response = bmCreateThemeClient.createTheme( bmTheme );
+        if (!response.isStatus()) {
+            reportErrorOnResponse(String.valueOf(bmTheme.getThemeId()), response);
+        }
+        synchronized ( this ) {
+            notify();
+        }
     }
 }

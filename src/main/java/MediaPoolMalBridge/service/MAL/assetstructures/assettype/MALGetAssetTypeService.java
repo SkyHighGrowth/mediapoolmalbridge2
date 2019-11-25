@@ -8,13 +8,13 @@ import MediaPoolMalBridge.model.MAL.MALAssetStructures;
 import MediaPoolMalBridge.persistence.entity.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
-import MediaPoolMalBridge.service.MAL.AbstractMALService;
+import MediaPoolMalBridge.service.MAL.AbstractMALUniqueService;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
 @Service
-public class MALGetAssetTypeService extends AbstractMALService {
+public class MALGetAssetTypeService extends AbstractMALUniqueService {
 
     private final MALGetAssetTypesClient getAssetTypesClient;
 
@@ -26,7 +26,8 @@ public class MALGetAssetTypeService extends AbstractMALService {
         this.malAssetStructures = malAssetStructures;
     }
 
-    public void download() {
+    @Override
+    protected void run() {
         final RestResponse<MALGetAssetTypesResponse> response = getAssetTypesClient.download();
         if (!response.isSuccess() ||
                 response.getResponse() == null ||

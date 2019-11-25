@@ -15,6 +15,6 @@ public class MALGetPropertiesController {
 
     @GetMapping("/service/mal/getProperties")
     public void getProperties() {
-        getPropertiesSchedulerService.update();
+        getPropertiesSchedulerService.scheduled();
     }
 }

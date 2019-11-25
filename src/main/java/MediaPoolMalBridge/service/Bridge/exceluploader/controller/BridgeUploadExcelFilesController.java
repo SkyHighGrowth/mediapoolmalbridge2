@@ -17,6 +17,6 @@ public class BridgeUploadExcelFilesController {
     @GetMapping( "/service/bridge/uploadExcel" )
     public void upload()
     {
-        bridgeUploadExcelFilesSchedulerService.upload();
+        bridgeUploadExcelFilesSchedulerService.scheduled();
     }
 }
