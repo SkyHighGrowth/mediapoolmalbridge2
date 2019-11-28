@@ -6,6 +6,7 @@ import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
 import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -64,6 +65,7 @@ public class MALAssetModelsToMALAssetEntityTransformer {
         malAssetEntity.setFileNameInMal( malGetAsset.getFilename() );
         malAssetEntity.setMalLastModified( malGetAsset.getLastModified() );
         malAssetEntity.setTransferringAssetStatus( TransferringAssetStatus.MAL_UPDATED );
+        malAssetEntity.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.OBSERVED);
         malAssetEntity.setMALGetAsset( malGetAsset );
 
         return malAssetEntity;
@@ -111,11 +113,64 @@ public class MALAssetModelsToMALAssetEntityTransformer {
         malAssetEntity.setMalAssetTypeId( malGetAsset.getAssetTypeId() );
         malAssetEntity.setPropertyId( malGetAsset.getPropertyId() );
         malAssetEntity.setMalColorId( malGetAsset.getColorId() );
-        malAssetEntity.setMALGetAsset(malGetAsset);
         malAssetEntity.setFileNameOnDisc( fileNameOnDisc );
         malAssetEntity.setUrl( url );
+        malAssetEntity.setFileNameInMal( malGetAsset.getFilename() );
+        malAssetEntity.setMalLastModified( malGetAsset.getLastModified() );
         malAssetEntity.setBmAssetId("CREATING_" + malAssetEntity.getAssetId());
         malAssetEntity.setTransferringAssetStatus( TransferringAssetStatus.MAL_CREATED );
+        malAssetEntity.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.OBSERVED);
+        malAssetEntity.setMALGetAsset( malGetAsset );
+
+        return malAssetEntity;
+    }
+
+
+    public MALAssetEntity fromMALGetAssetCreate(final MALAssetEntity malAssetEntity, final MALGetAsset malGetAsset, final MALAssetType malAssetType) {
+        String fileNameOnDisc = "";
+        String url = "";
+        switch (malAssetType) {
+            case FILE:
+                if (StringUtils.isNotBlank(malGetAsset.getXlUrl())) {
+                    url = malGetAsset.getXlUrl();
+                    fileNameOnDisc = Constants.XL_FILE_PREFIX + getFileName(url, malGetAsset);
+                } else if (StringUtils.isNotBlank(malGetAsset.getLargeUrl())) {
+                    url = malGetAsset.getLargeUrl();
+                    fileNameOnDisc = Constants.LARGE_FILE_PREFIX + getFileName(url, malGetAsset);
+                } else if (StringUtils.isNotBlank(malGetAsset.getMediumUrl())) {
+                    url = malGetAsset.getMediumUrl();
+                    fileNameOnDisc = Constants.MEDIUM_FILE_PREFIX + getFileName(url, malGetAsset);
+                } else if (StringUtils.isNotBlank(malGetAsset.getThumbnailUrl())) {
+                    url = malGetAsset.getThumbnailUrl();
+                    fileNameOnDisc = Constants.THUMBNAIL_FILE_PREFIX + getFileName(url, malGetAsset);
+                }
+                break;
+            case JPG_LOGO:
+                if (StringUtils.isNotBlank(malGetAsset.getLogoJpgUrl())) {
+                    fileNameOnDisc = Constants.LOGO_JPG_FILE_PREFIX +
+                            getFileNameWithExtension(malGetAsset.getLogoJpgUrl(), malGetAsset, ".jpg");
+                    url = malGetAsset.getLogoJpgUrl();
+                }
+                break;
+            case PNG_LOGO:
+                if (StringUtils.isNotBlank(malGetAsset.getLogoPngUrl())) {
+                    fileNameOnDisc = Constants.LOGO_PNG_FILE_PREFIX +
+                            getFileNameWithExtension(malGetAsset.getLogoPngUrl(), malGetAsset, ".png");
+                    url = malGetAsset.getLogoPngUrl();
+                }
+                break;
+        }
+        fileNameOnDisc = fileNameOnDisc.replace(" ", "_");
+
+        malAssetEntity.setMalAssetTypeId( malGetAsset.getAssetTypeId() );
+        malAssetEntity.setPropertyId( malGetAsset.getPropertyId() );
+        malAssetEntity.setMalColorId( malGetAsset.getColorId() );
+        malAssetEntity.setFileNameOnDisc( fileNameOnDisc );
+        malAssetEntity.setUrl( url );
+        malAssetEntity.setFileNameInMal( malGetAsset.getFilename() );
+        malAssetEntity.setMalLastModified( malGetAsset.getLastModified() );
+        malAssetEntity.setTransferringAssetStatus( TransferringAssetStatus.MAL_CREATED );
+        malAssetEntity.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.OBSERVED);
         malAssetEntity.setMALGetAsset( malGetAsset );
 
         return malAssetEntity;

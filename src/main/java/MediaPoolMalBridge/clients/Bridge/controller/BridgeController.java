@@ -1,11 +1,13 @@
 package MediaPoolMalBridge.clients.Bridge.controller;
 
-import MediaPoolMalBridge.AppConfig;
+import MediaPoolMalBridge.config.AppConfig;
 import MediaPoolMalBridge.clients.Bridge.jscp.client.BridgeJScpClient;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Profile("dev")
 public class BridgeController {
 
     private final BridgeJScpClient bridgeJScpClient;

@@ -1,6 +1,5 @@
 package MediaPoolMalBridge.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,28 +10,28 @@ import java.util.Properties;
 @Configuration
 public class MailSenderConfig {
 
+    private AppConfig appConfig;
+
+    public MailSenderConfig(final AppConfig appConfig)
+    {
+        this.appConfig = appConfig;
+    }
+
     @Bean
-    public JavaMailSender getJavaMailSender(@Value( "${mail.hostname}" ) final String hostName,
-                                            @Value( "${mail.port}") final int port,
-                                            @Value( "${mail.username}") final String username,
-                                            @Value( "${mail.password}") final String password,
-                                            @Value( "${mail.transport.protocol}" ) final String protocol,
-                                            @Value( "${mail.smtp.auth}" ) final String smtpAuth,
-                                            @Value( "${mail.smtp.starttls.enable}") final String starttlsEnable,
-                                            @Value( "${mail.debug}") final String debug )
+    public JavaMailSender getJavaMailSender()
     {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost( hostName );
-        mailSender.setPort( port );
+        mailSender.setHost( appConfig.getMailHostname() );
+        mailSender.setPort( appConfig.getMailPort() );
 
-        mailSender.setUsername( username );
-        mailSender.setPassword( password );
+        mailSender.setUsername( appConfig.getMailUsername() );
+        mailSender.setPassword( appConfig.getMailPassword() );
 
         Properties props = mailSender.getJavaMailProperties();
-        props.put( "mail.transport.protocol", protocol );
-        props.put( "mail.smtp.auth", smtpAuth );
-        props.put( "mail.smtp.starttls.enable", starttlsEnable );
-        props.put( "mail.debug", debug );
+        props.put( "mail.transport.protocol", appConfig.getMailTransportProtocol() );
+        props.put( "mail.smtp.auth", String.valueOf( appConfig.isMailSmtpAuth() ) );
+        props.put( "mail.smtp.starttls.enable", String.valueOf( appConfig.isMailSmtpStarttlsEnable() ) );
+        props.put( "mail.debug", String.valueOf( appConfig.isMailDebug() ) );
 
         return mailSender;
     }

@@ -1,10 +1,9 @@
 package MediaPoolMalBridge.persistence.entity.BM;
 
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
-import MediaPoolMalBridge.persistence.AbstractEntity;
+import MediaPoolMalBridge.persistence.entity.AbstractErroneousEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringBMConnectionAssetStatus;
-import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
 import com.brandmaker.webservices.mediapool.UploadMetadataArgument;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,12 +13,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table( name = "bm_asset",
-        indexes = { @Index( columnList = "transferring_bm_asset_status" ),
-                    @Index( columnList = "transferring_mal_asset_status"),
-                    @Index( columnList = "transferring_asset_status" ),
-                    @Index( columnList = "property_id, mal_asset_type_id, color_id"),
-                    @Index( columnList = "property_id, mal_asset_type_id") })
-public class BMAssetEntity extends AbstractEntity {
+        indexes = { @Index( columnList = "transferring_bm_asset_status, updated" ),
+                    @Index( columnList = "transferring_asset_status, updated" ),
+                    @Index( columnList = "property_id, mal_asset_type_id, color_id, updated"),
+                    @Index( columnList = "property_id, mal_asset_type_id, updated") })
+public class BMAssetEntity extends AbstractErroneousEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -66,10 +64,6 @@ public class BMAssetEntity extends AbstractEntity {
     @Column(name = "transferring_bm_asset_status")
     @Enumerated(EnumType.STRING)
     private TransferringBMConnectionAssetStatus transferringBMConnectionAssetStatus = TransferringBMConnectionAssetStatus.INVALID;
-
-    @Column(name = "transferring_mal_asset_status")
-    @Enumerated(EnumType.STRING)
-    private TransferringMALConnectionAssetStatus transferringMALConnectionAssetStatus = TransferringMALConnectionAssetStatus.INVALID;
 
     @Column(name = "transferring_asset_status")
     @Enumerated(EnumType.STRING)
@@ -194,21 +188,23 @@ public class BMAssetEntity extends AbstractEntity {
         return transferringBMConnectionAssetStatus;
     }
 
-    public void setTransferringBMConnectionAssetStatus(TransferringBMConnectionAssetStatus transferringBMConnectionAssetStatus) {
-        if (this.transferringBMConnectionAssetStatus.equals(transferringBMConnectionAssetStatus)) {
-            this.bmStatesRepetitions++;
-            return;
-        }
-        this.bmStatesRepetitions = 0;
+    public void setTransferringBMConnectionAssetStatus( TransferringBMConnectionAssetStatus transferringBMConnectionAssetStatus )
+    {
         this.transferringBMConnectionAssetStatus = transferringBMConnectionAssetStatus;
     }
 
-    public TransferringMALConnectionAssetStatus getTransferringMALConnectionAssetStatus() {
-        return transferringMALConnectionAssetStatus;
-    }
-
-    public void setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus transferringMALConnectionAssetStatus) {
-        this.transferringMALConnectionAssetStatus = transferringMALConnectionAssetStatus;
+    public boolean setTransferringBMConnectionAssetStatus(TransferringBMConnectionAssetStatus transferringBMConnectionAssetStatus, final int maxAssetOperationRetries) {
+        if (this.transferringBMConnectionAssetStatus.equals(transferringBMConnectionAssetStatus)) {
+            this.bmStatesRepetitions++;
+            if( this.bmStatesRepetitions > maxAssetOperationRetries ) {
+                this.transferringBMConnectionAssetStatus = TransferringBMConnectionAssetStatus.ERROR;
+                return true;
+            }
+            return false;
+        }
+        this.bmStatesRepetitions = 0;
+        this.transferringBMConnectionAssetStatus = transferringBMConnectionAssetStatus;
+        return false;
     }
 
     public TransferringAssetStatus getTransferringConnectionAssetStatus() {

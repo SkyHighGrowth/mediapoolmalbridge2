@@ -4,8 +4,8 @@ import MediaPoolMalBridge.model.BrandMaker.theme.BMThemes;
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
 import MediaPoolMalBridge.model.MAL.kits.MALKits;
 import MediaPoolMalBridge.persistence.entity.enums.schedule.ServiceState;
-import MediaPoolMalBridge.persistence.entity.schedule.ServiceEntity;
-import MediaPoolMalBridge.persistence.repository.schedule.ServiceRepository;
+import MediaPoolMalBridge.persistence.entity.Bridge.schedule.ServiceEntity;
+import MediaPoolMalBridge.persistence.repository.Bridge.schedule.ServiceRepository;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -99,7 +99,7 @@ public class AppStatusController {
         for(int i = 1; i < 10000; ++i )
         {
             taskExecutorWrapper.getTaskExecutor().execute(() -> {
-                ServiceEntity sE = new ServiceEntity(ServiceState.SERVICE_START, getClass().getName(), Thread.currentThread().getName(), taskExecutorWrapper.getQueueSize());
+                ServiceEntity sE = new ServiceEntity(ServiceState.SERVICE_START, getClass().getName(), Thread.currentThread().getName(), taskExecutorWrapper.getTaskExecutor().getActiveCount(), taskExecutorWrapper.getQueueSize());
                 serviceRepository.save(sE);
             });
         }

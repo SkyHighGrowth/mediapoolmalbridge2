@@ -1,9 +1,8 @@
 package MediaPoolMalBridge.service.MAL.properties;
 
-import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import MediaPoolMalBridge.service.MAL.properties.deleted.MALGetPropertiesDeletedService;
-import MediaPoolMalBridge.service.MAL.properties.download.MALGetPropertiesService;
+import MediaPoolMalBridge.service.MAL.properties.deleted.MALGetPropertiesDeletedUniqueThreadSinceService;
+import MediaPoolMalBridge.service.MAL.properties.download.MALGetPropertiesUniqueThreadService;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
@@ -15,21 +14,21 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class MALGetPropertiesSchedulerService extends AbstractSchedulerService {
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd+HH:mm:ss");
 
-    private MALGetPropertiesService getPropertiesService;
+    private MALGetPropertiesUniqueThreadService getPropertiesService;
 
-    private MALGetPropertiesDeletedService getPropertiesDeletedService;
+    private MALGetPropertiesDeletedUniqueThreadSinceService getPropertiesDeletedSinceService;
 
-    public MALGetPropertiesSchedulerService(final MALGetPropertiesService getPropertiesService,
-                                            final MALGetPropertiesDeletedService getPropertiesDeletedService) {
+    public MALGetPropertiesSchedulerService(final MALGetPropertiesUniqueThreadService getPropertiesService,
+                                            final MALGetPropertiesDeletedUniqueThreadSinceService getPropertiesDeletedSinceService) {
         this.getPropertiesService = getPropertiesService;
-        this.getPropertiesDeletedService = getPropertiesDeletedService;
+        this.getPropertiesDeletedSinceService = getPropertiesDeletedSinceService;
     }
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(Constants.CRON_MIDNIGHT_TRIGGGER_EXPRESSION));
+        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getMalPropertiesCronExpression()));
     }
 
     @Override
@@ -37,9 +36,10 @@ public class MALGetPropertiesSchedulerService extends AbstractSchedulerService {
         final String since = Instant.ofEpochMilli(System.currentTimeMillis())
                 .atOffset(ZoneOffset.UTC)
                 .toLocalDateTime()
+                .minusDays( appConfig.getMalLookInThePastDays() )
                 .format(DATE_TIME_FORMATTER);
         getPropertiesService.start();
-        getPropertiesDeletedService.setUnavailableSince( since );
-        getPropertiesDeletedService.start();
+        getPropertiesDeletedSinceService.setUnavailableSince( since );
+        getPropertiesDeletedSinceService.start();
     }
 }

@@ -1,36 +1,35 @@
 package MediaPoolMalBridge.service.Bridge.excelcreator;
 
-import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import MediaPoolMalBridge.service.Bridge.excelcreator.affiliation.BridgeCreateAffiliateExcelService;
-import MediaPoolMalBridge.service.Bridge.excelcreator.propertystructure.BridgeCreatePropertyStructureExcelService;
+import MediaPoolMalBridge.service.Bridge.excelcreator.affiliation.BridgeCreateAffiliateExcelUniqueThreadService;
+import MediaPoolMalBridge.service.Bridge.excelcreator.propertystructure.BridgeCreatePropertyStructureExcelUniqueThreadService;
 import org.springframework.scheduling.support.CronTrigger;
 
 import javax.annotation.PostConstruct;
 
 public class BridgeCreateExcelFileSchedulerService extends AbstractSchedulerService {
 
-    private BridgeCreateAffiliateExcelService bridgeCreateAffiliateExcelService;
+    private BridgeCreateAffiliateExcelUniqueThreadService bridgeCreateAffiliateExcelUniqueThreadService;
 
-    private BridgeCreatePropertyStructureExcelService bridgeCreatePropertyStructureExcelService;
+    private BridgeCreatePropertyStructureExcelUniqueThreadService bridgeCreatePropertyStructureExcelUniqueThreadService;
 
-    public BridgeCreateExcelFileSchedulerService(final BridgeCreateAffiliateExcelService bridgeCreateAffiliateExcelService,
-                                        final BridgeCreatePropertyStructureExcelService bridgeCreatePropertyStructureExcelService)
+    public BridgeCreateExcelFileSchedulerService(final BridgeCreateAffiliateExcelUniqueThreadService bridgeCreateAffiliateExcelUniqueThreadService,
+                                        final BridgeCreatePropertyStructureExcelUniqueThreadService bridgeCreatePropertyStructureExcelUniqueThreadService)
     {
-        this.bridgeCreateAffiliateExcelService = bridgeCreateAffiliateExcelService;
-        this.bridgeCreatePropertyStructureExcelService = bridgeCreatePropertyStructureExcelService;
+        this.bridgeCreateAffiliateExcelUniqueThreadService = bridgeCreateAffiliateExcelUniqueThreadService;
+        this.bridgeCreatePropertyStructureExcelUniqueThreadService = bridgeCreatePropertyStructureExcelUniqueThreadService;
     }
 
     @PostConstruct
     public void scheduleExcelFileCreation()
     {
-        taskSchedulerWrapper.getTaskScheduler().schedule( this::run, new CronTrigger(Constants.CRON_AT_2330_HOURS) );
+        taskSchedulerWrapper.getTaskScheduler().schedule( this::run, new CronTrigger(appConfig.getBridgeExcelFilesCronExpression()) );
     }
 
     @Override
     public void scheduled()
     {
-        bridgeCreateAffiliateExcelService.start();
-        bridgeCreatePropertyStructureExcelService.start();
+        bridgeCreateAffiliateExcelUniqueThreadService.start();
+        bridgeCreatePropertyStructureExcelUniqueThreadService.start();
     }
 }

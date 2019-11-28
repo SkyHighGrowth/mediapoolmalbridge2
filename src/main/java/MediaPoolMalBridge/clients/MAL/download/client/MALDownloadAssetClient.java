@@ -1,11 +1,11 @@
 package MediaPoolMalBridge.clients.MAL.download.client;
 
-import MediaPoolMalBridge.AppConfig;
+import MediaPoolMalBridge.config.AppConfig;
 import MediaPoolMalBridge.clients.MAL.download.client.model.MALDownloadAssetResponse;
-import MediaPoolMalBridge.persistence.entity.ReportsEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
-import MediaPoolMalBridge.persistence.repository.ReportsRepository;
+import MediaPoolMalBridge.persistence.repository.Bridge.ReportsRepository;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 import org.slf4j.Logger;

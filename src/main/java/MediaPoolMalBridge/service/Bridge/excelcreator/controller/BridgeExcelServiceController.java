@@ -1,30 +1,32 @@
 package MediaPoolMalBridge.service.Bridge.excelcreator.controller;
 
-import MediaPoolMalBridge.service.Bridge.excelcreator.affiliation.BridgeCreateAffiliateExcelService;
-import MediaPoolMalBridge.service.Bridge.excelcreator.propertystructure.BridgeCreatePropertyStructureExcelService;
+import MediaPoolMalBridge.service.Bridge.excelcreator.affiliation.BridgeCreateAffiliateExcelUniqueThreadService;
+import MediaPoolMalBridge.service.Bridge.excelcreator.propertystructure.BridgeCreatePropertyStructureExcelUniqueThreadService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Profile("dev")
 public class BridgeExcelServiceController {
 
-    private BridgeCreateAffiliateExcelService bridgeCreateAffiliateExcelService;
+    private BridgeCreateAffiliateExcelUniqueThreadService bridgeCreateAffiliateExcelUniqueThreadService;
 
-    private BridgeCreatePropertyStructureExcelService bridgeCreatePropertyStructureExcelService;
+    private BridgeCreatePropertyStructureExcelUniqueThreadService bridgeCreatePropertyStructureExcelUniqueThreadService;
 
-    public BridgeExcelServiceController(final BridgeCreateAffiliateExcelService bridgeCreateAffiliateExcelService,
-                                        final BridgeCreatePropertyStructureExcelService bridgeCreatePropertyStructureExcelService)
+    public BridgeExcelServiceController(final BridgeCreateAffiliateExcelUniqueThreadService bridgeCreateAffiliateExcelUniqueThreadService,
+                                        final BridgeCreatePropertyStructureExcelUniqueThreadService bridgeCreatePropertyStructureExcelUniqueThreadService)
     {
-        this.bridgeCreateAffiliateExcelService = bridgeCreateAffiliateExcelService;
-        this.bridgeCreatePropertyStructureExcelService = bridgeCreatePropertyStructureExcelService;
+        this.bridgeCreateAffiliateExcelUniqueThreadService = bridgeCreateAffiliateExcelUniqueThreadService;
+        this.bridgeCreatePropertyStructureExcelUniqueThreadService = bridgeCreatePropertyStructureExcelUniqueThreadService;
     }
 
     @GetMapping( "/service/app/affiliateCodes" )
     public void createAffiliateCodes()
     {
-        bridgeCreateAffiliateExcelService.start();
+        bridgeCreateAffiliateExcelUniqueThreadService.start();
     }
 
     @GetMapping( "/service/app/createStructures" )
-    public void createStructures( ) { bridgeCreatePropertyStructureExcelService.start(); }
+    public void createStructures( ) { bridgeCreatePropertyStructureExcelUniqueThreadService.start(); }
 }

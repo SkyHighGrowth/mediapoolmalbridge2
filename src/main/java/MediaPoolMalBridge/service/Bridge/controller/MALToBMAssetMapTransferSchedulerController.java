@@ -1,8 +1,8 @@
 package MediaPoolMalBridge.service.Bridge.controller;
 
-import MediaPoolMalBridge.service.Bridge.assetstransfer.MALToBMAssetMapTransferSchedulerService;
+import MediaPoolMalBridge.service.Bridge.assetstransfer.BridgeAssetTransferSchedulerService;
 import MediaPoolMalBridge.service.Bridge.deleteFiles.BridgeDeleteFilesSchedulerService;
-import MediaPoolMalBridge.service.Bridge.ktistotheme.MALKitsToBMThemeSchedulerService;
+import MediaPoolMalBridge.service.Bridge.ktistotheme.BridgeTransferThemeSchedulerService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,28 +11,28 @@ import org.springframework.web.bind.annotation.RestController;
 @Profile("dev")
 public class MALToBMAssetMapTransferSchedulerController {
 
-    private final MALToBMAssetMapTransferSchedulerService malToBMAssetMapTransferSchedulerService;
+    private final BridgeAssetTransferSchedulerService bridgeAssetTransferSchedulerService;
 
-    private final MALKitsToBMThemeSchedulerService malKitsToBMThemeSchedulerService;
+    private final BridgeTransferThemeSchedulerService bridgeTransferThemeSchedulerService;
 
     private final BridgeDeleteFilesSchedulerService bridgeDeleteFilesSchedulerService;
 
-    public MALToBMAssetMapTransferSchedulerController(final MALToBMAssetMapTransferSchedulerService malToBMAssetMapTransferSchedulerService,
-                                                      final MALKitsToBMThemeSchedulerService malKitsToBMThemeSchedulerService,
+    public MALToBMAssetMapTransferSchedulerController(final BridgeAssetTransferSchedulerService bridgeAssetTransferSchedulerService,
+                                                      final BridgeTransferThemeSchedulerService bridgeTransferThemeSchedulerService,
                                                       final BridgeDeleteFilesSchedulerService bridgeDeleteFilesSchedulerService) {
-        this.malToBMAssetMapTransferSchedulerService = malToBMAssetMapTransferSchedulerService;
-        this.malKitsToBMThemeSchedulerService = malKitsToBMThemeSchedulerService;
+        this.bridgeAssetTransferSchedulerService = bridgeAssetTransferSchedulerService;
+        this.bridgeTransferThemeSchedulerService = bridgeTransferThemeSchedulerService;
         this.bridgeDeleteFilesSchedulerService = bridgeDeleteFilesSchedulerService;
     }
 
     @GetMapping("/MALtoBM/transferAssets")
     public void transferAssets() {
-        malToBMAssetMapTransferSchedulerService.scheduled();
+        bridgeAssetTransferSchedulerService.scheduled();
     }
 
     @GetMapping("/MALtoBM/kitsToTheme")
     public void transferKits() {
-        malKitsToBMThemeSchedulerService.scheduled();
+        bridgeTransferThemeSchedulerService.scheduled();
     }
 
     @GetMapping("/MALtoBM/deleteFiles")

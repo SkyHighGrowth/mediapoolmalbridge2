@@ -4,9 +4,12 @@ import MediaPoolMalBridge.clients.MAL.download.client.MALDownloadAssetClient;
 import MediaPoolMalBridge.clients.MAL.download.client.model.MALDownloadAssetResponse;
 import MediaPoolMalBridge.clients.MAL.propertyphotomodified.client.model.MALModifiedPropertyPhotoAsset;
 import MediaPoolMalBridge.constants.Constants;
+import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
+import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
+import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
-import MediaPoolMalBridge.service.MAL.AbstractMALNonUniqueService;
+import MediaPoolMalBridge.service.MAL.AbstractMALNonUniqueThreadService;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,7 +21,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
 @Service
-public class MALDownloadPropertiesPhotoService extends AbstractMALNonUniqueService<MALAssetEntity> {
+public class MALDownloadPropertiesPhotoService extends AbstractMALNonUniqueThreadService<MALAssetEntity> {
 
     private static Logger logger = LoggerFactory.getLogger(MALDownloadPropertiesPhotoService.class);
 
@@ -33,7 +36,13 @@ public class MALDownloadPropertiesPhotoService extends AbstractMALNonUniqueServi
     @Override
     protected void run(final MALAssetEntity malAsset) {
 
-        malAsset.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING);
+        if( malAsset.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING, appConfig.getAssetStateRepetitionMax() ) ) {
+            final String message = String.format( "Max retries for downloading photo achieved for asset id [%s]", malAsset.getAssetId() );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(malAsset), null, null );
+            reportsRepository.save( reportsEntity );
+            logger.error( "message {}, bmAsset {}", message, GSON.toJson( malAsset ) );
+            return;
+        }
         final MALModifiedPropertyPhotoAsset malModifiedPropertyPhotoAsset = malAsset.getMALModifiedPropertyPhotoAsset();
         final String fileName = malModifiedPropertyPhotoAsset.getFilename();
 
@@ -74,13 +83,10 @@ public class MALDownloadPropertiesPhotoService extends AbstractMALNonUniqueServi
             if (downloaded) {
                 malAsset.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADED);
             } else {
-                malAsset.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING);
+                malAsset.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING, appConfig.getAssetStateRepetitionMax());
             }
         } catch (final Exception e) {
             logger.error("Can not create job for asset {}", (new Gson()).toJson(malModifiedPropertyPhotoAsset), e);
-        }
-        synchronized ( this ) {
-            notify();
         }
     }
 

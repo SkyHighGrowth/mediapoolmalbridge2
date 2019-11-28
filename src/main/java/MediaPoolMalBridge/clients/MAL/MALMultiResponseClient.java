@@ -2,10 +2,10 @@ package MediaPoolMalBridge.clients.MAL;
 
 import MediaPoolMalBridge.clients.MAL.multiresponse.transformer.ResponseTransformer;
 import MediaPoolMalBridge.clients.rest.RestResponse;
+import MediaPoolMalBridge.config.AppConfig;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,14 +23,7 @@ public abstract class MALMultiResponseClient<REQUEST, RESPONSE> {
 
     private static Logger logger = LoggerFactory.getLogger(MALMultiResponseClient.class);
 
-    @Value("${mal.hostname}")
-    private String hostName;
-
-    @Value("${mal.login}")
-    private String malLogin;
-
-    @Value("${mal.apiKey}")
-    private String malAPIKey;
+    private AppConfig appConfig;
 
     private RestTemplate restTemplate;
 
@@ -63,14 +56,13 @@ public abstract class MALMultiResponseClient<REQUEST, RESPONSE> {
 
     private URI createURL(final String urlSegment) {
         final MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
-        queryParameters.set("login", malLogin);
-        queryParameters.set("api_key", malAPIKey);
+        queryParameters.set("login", appConfig.getMalLogin());
+        queryParameters.set("api_key", appConfig.getMalApiKey());
         queryParameters.set("per_page", "20000");
-        return UriComponentsBuilder.fromHttpUrl(hostName + urlSegment)
+        return UriComponentsBuilder.fromHttpUrl(appConfig.getMalHostname() + urlSegment)
                 .queryParams(queryParameters)
                 .build()
                 .encode()
                 .toUri();
     }
-
 }

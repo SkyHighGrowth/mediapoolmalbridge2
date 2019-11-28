@@ -4,7 +4,6 @@ import com.brandmaker.webservices.mediapool.MediaPoolService;
 import com.brandmaker.webservices.mediapool.MediaPoolWebServicePort;
 import com.brandmaker.webservices.theme.ThemeService;
 import com.brandmaker.webservices.theme.ThemeWebServicePort;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -15,55 +14,54 @@ import java.util.Map;
 @Configuration
 public class SOAPBrandMakerConfig {
 
+    private AppConfig appConfig;
+
+    public SOAPBrandMakerConfig(final AppConfig appConfig )
+    {
+        this.appConfig = appConfig;
+    }
+
     @Bean
-    @Profile("dev")
-    public MediaPoolWebServicePort mediaPoolWebServicePortDev(@Value("${mediapool.username.test}") final String username,
-                                                              @Value("${mediapool.password.test}") final String password,
-                                                              @Value("${mediapool.url.test}") final String url) {
+    @Profile({"dev", "!production"})
+    public MediaPoolWebServicePort mediaPoolWebServicePortDev() {
         final MediaPoolWebServicePort port = (new MediaPoolService()).getMediaPoolPort();
         Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-        reqContext.put(BindingProvider.USERNAME_PROPERTY, username);
-        reqContext.put(BindingProvider.PASSWORD_PROPERTY, password);
-        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, url);
+        reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfig.getMediapoolUsernameDev());
+        reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfig.getMediapoolPasswordDev());
+        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfig.getMediapoolUrlDev());
         return port;
     }
 
     @Bean
-    @Profile("production")
-    public MediaPoolWebServicePort mediaPoolWebServicePortProduction(@Value("${mediapool.username.live}") final String username,
-                                                                     @Value("${mediapool.password.live}") final String password,
-                                                                     @Value("${mediapool.url.live}") final String url) {
+    @Profile({"production", "!dev"})
+    public MediaPoolWebServicePort mediaPoolWebServicePortProduction() {
         final MediaPoolWebServicePort port = (new MediaPoolService()).getMediaPoolPort();
         Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-        reqContext.put(BindingProvider.USERNAME_PROPERTY, username);
-        reqContext.put(BindingProvider.PASSWORD_PROPERTY, password);
-        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, url);
+        reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfig.getMediapoolUsernameProduction());
+        reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfig.getMediapoolPasswordProduction());
+        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfig.getMediapoolUrlProduction());
         return port;
     }
 
     @Bean
-    @Profile("dev")
-    public ThemeWebServicePort themeWebServicePortDev(@Value("${mediapool.username.test}") final String username,
-                                                      @Value("${mediapool.password.test}") final String password,
-                                                      @Value("${mediapool.url.test}") final String url) {
+    @Profile( {"dev", "!production"})
+    public ThemeWebServicePort themeWebServicePortDev() {
         final ThemeWebServicePort port = (new ThemeService()).getThemePort();
         Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-        reqContext.put(BindingProvider.USERNAME_PROPERTY, username);
-        reqContext.put(BindingProvider.PASSWORD_PROPERTY, password);
-        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, url);
+        reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfig.getMediapoolUsernameDev());
+        reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfig.getMediapoolPasswordDev());
+        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfig.getThemeUrlDev());
         return port;
     }
 
     @Bean
-    @Profile("production")
-    public ThemeWebServicePort themeWebServicePortProduction(@Value("${mediapool.username.test}") final String username,
-                                                             @Value("${mediapool.password.test}") final String password,
-                                                             @Value("${mediapool.url.test}") final String url) {
+    @Profile({"production", "!dev"})
+    public ThemeWebServicePort themeWebServicePortProduction() {
         final ThemeWebServicePort port = (new ThemeService()).getThemePort();
         Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-        reqContext.put(BindingProvider.USERNAME_PROPERTY, username);
-        reqContext.put(BindingProvider.PASSWORD_PROPERTY, password);
-        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, url);
+        reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfig.getMediapoolUsernameProduction());
+        reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfig.getMediapoolPasswordProduction());
+        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfig.getThemeUrlProduction());
         return port;
     }
 }

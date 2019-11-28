@@ -1,7 +1,7 @@
 package MediaPoolMalBridge.clients.MAL;
 
 import MediaPoolMalBridge.clients.rest.RestResponse;
-import MediaPoolMalBridge.persistence.entity.ReportsEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import org.slf4j.Logger;

@@ -1,14 +1,17 @@
 package MediaPoolMalBridge.persistence.entity.MAL;
 
 import MediaPoolMalBridge.clients.MAL.properties.client.model.MALProperty;
-import MediaPoolMalBridge.persistence.AbstractEntity;
+import MediaPoolMalBridge.persistence.entity.AbstractEntity;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table( name = "mal_property",
-        indexes = { @Index(columnList = "property_id"),
-                    @Index( columnList = "brand" ) },
+        indexes = { @Index(columnList = "property_id, updated"),
+                    @Index( columnList = "brand, updated" ) },
         uniqueConstraints = {@UniqueConstraint(columnNames = {"property_id"})})
 public class MALPropertyEntity extends AbstractEntity {
 
@@ -66,10 +69,18 @@ public class MALPropertyEntity extends AbstractEntity {
     private String md5Checksum;
 
     @Column(name = "status")
-    private int status = 1;
+    private String status = "1";
 
     @Column(name = "primary_property_photo")
     private int primaryPropertyImage;
+
+    @Column( name = "created" )
+    @CreationTimestamp
+    private LocalDateTime created;
+
+    @Column( name = "updated" )
+    @UpdateTimestamp
+    private LocalDateTime updated;
 
     public MALPropertyEntity() {
     }
@@ -91,6 +102,8 @@ public class MALPropertyEntity extends AbstractEntity {
         this.latitude = malProperty.getLatitude();
         this.longitude = malProperty.getLongitude();
         this.primaryPropertyImage = malProperty.getPrimaryPropertyImage();
+        this.md5Checksum = malProperty.getMd5Checksum();
+        this.status = malProperty.getStatus();
     }
 
     public void update(final MALProperty malProperty) {
@@ -109,6 +122,8 @@ public class MALPropertyEntity extends AbstractEntity {
         this.latitude = malProperty.getLatitude();
         this.longitude = malProperty.getLongitude();
         this.primaryPropertyImage = malProperty.getPrimaryPropertyImage();
+        this.md5Checksum = malProperty.getMd5Checksum();
+        this.status = malProperty.getStatus();
     }
 
     public long getId() {
@@ -239,11 +254,11 @@ public class MALPropertyEntity extends AbstractEntity {
         this.md5Checksum = md5Checksum;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

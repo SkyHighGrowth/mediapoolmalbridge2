@@ -3,11 +3,11 @@ package MediaPoolMalBridge.service.MAL.assets.download;
 import MediaPoolMalBridge.clients.MAL.download.client.MALDownloadAssetClient;
 import MediaPoolMalBridge.clients.MAL.download.client.model.MALDownloadAssetResponse;
 import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
-import MediaPoolMalBridge.persistence.entity.ReportsEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
-import MediaPoolMalBridge.service.MAL.AbstractMALNonUniqueService;
+import MediaPoolMalBridge.service.MAL.AbstractMALNonUniqueThreadService;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -15,7 +15,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
 @Service
-public class MALDownloadAssetService extends AbstractMALNonUniqueService<MALAssetEntity> {
+public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<MALAssetEntity> {
 
     private final MALDownloadAssetClient malDownloadAssetClient;
 
@@ -25,7 +25,13 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueService<MALAsse
 
     @Override
     protected void run( final MALAssetEntity malAssetEntity ) {
-        malAssetEntity.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING);
+        if( malAssetEntity.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING, appConfig.getAssetStateRepetitionMax() ) ) {
+            final String message = String.format( "Max retries for metadata downloading achieved for asset id [%s]", malAssetEntity.getAssetId() );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson( malAssetEntity ), null, null );
+            reportsRepository.save( reportsEntity );
+            logger.error( "message {}, bmAsset {}", message, GSON.toJson( malAssetEntity ) );
+            return;
+        }
         try {
             final MALDownloadAssetResponse response = malDownloadAssetClient.download(decode(malAssetEntity.getUrl()), malAssetEntity.getFileNameOnDisc());
             if ( response.isSuccess() ) {
@@ -36,18 +42,9 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueService<MALAsse
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, malAssetEntity.getMalGetAssetJson(), GSON.toJson( malAssetEntity ), null );
             reportsRepository.save( reportsEntity );
             logger.error( message, e );
-            malAssetEntity.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING);
+            malAssetEntity.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING, appConfig.getAssetStateRepetitionMax());
         }
-        storeMalAssetEntity( malAssetEntity );
-        //malAssetRepository.save(malAssetEntity);
-        synchronized ( this ) {
-            notify();
-        }
-    }
-
-    private void storeMalAssetEntity( final MALAssetEntity malAssetEntity )
-    {
-        malAssetRepository.save( malAssetEntity );
+        malAssetRepository.save(malAssetEntity);
     }
 
     private MALDownloadAssetResponse fire(final String url, final String fileName) {

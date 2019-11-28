@@ -1,10 +1,9 @@
 package MediaPoolMalBridge.service.BrandMaker.assets;
 
-import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import MediaPoolMalBridge.service.BrandMaker.assets.create.BMFireCreateAssetsService;
-import MediaPoolMalBridge.service.BrandMaker.assets.delete.BMFireDeleteAssetsService;
-import MediaPoolMalBridge.service.BrandMaker.assets.upload.BMFireUploadAssetsService;
+import MediaPoolMalBridge.service.BrandMaker.assets.create.BMFireCreateAssetsUniqueThreadService;
+import MediaPoolMalBridge.service.BrandMaker.assets.delete.BMFireDeleteAssetsUniqueThreadService;
+import MediaPoolMalBridge.service.BrandMaker.assets.upload.BMFireUploadAssetsUniqueThreadService;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
@@ -13,23 +12,23 @@ import javax.annotation.PostConstruct;
 @Service
 public class BMUploadAssetSchedulerService extends AbstractSchedulerService {
 
-    private final BMFireCreateAssetsService bmFireCreateAssetsService;
+    private final BMFireCreateAssetsUniqueThreadService bmFireCreateAssetsUniqueThreadService;
 
-    private final BMFireUploadAssetsService bmFireUploadAssetsService;
+    private final BMFireUploadAssetsUniqueThreadService bmFireUploadAssetsUniqueThreadService;
 
-    private final BMFireDeleteAssetsService bmFireDeleteAssetsService;
+    private final BMFireDeleteAssetsUniqueThreadService bmFireDeleteAssetsUniqueThreadService;
 
-    public BMUploadAssetSchedulerService(final BMFireCreateAssetsService bmFireCreateAssetsService,
-                                         final BMFireUploadAssetsService bmFireUploadAssetsService,
-                                         final BMFireDeleteAssetsService bmFireDeleteAssetsService) {
-        this.bmFireCreateAssetsService = bmFireCreateAssetsService;
-        this.bmFireUploadAssetsService = bmFireUploadAssetsService;
-        this.bmFireDeleteAssetsService = bmFireDeleteAssetsService;
+    public BMUploadAssetSchedulerService(final BMFireCreateAssetsUniqueThreadService bmFireCreateAssetsUniqueThreadService,
+                                         final BMFireUploadAssetsUniqueThreadService bmFireUploadAssetsUniqueThreadService,
+                                         final BMFireDeleteAssetsUniqueThreadService bmFireDeleteAssetsUniqueThreadService) {
+        this.bmFireCreateAssetsUniqueThreadService = bmFireCreateAssetsUniqueThreadService;
+        this.bmFireUploadAssetsUniqueThreadService = bmFireUploadAssetsUniqueThreadService;
+        this.bmFireDeleteAssetsUniqueThreadService = bmFireDeleteAssetsUniqueThreadService;
     }
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
+        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getBmUploadSchedulerCronExpression()));
     }
 
     @Override
@@ -40,15 +39,15 @@ public class BMUploadAssetSchedulerService extends AbstractSchedulerService {
     }
 
     public void create() {
-        bmFireCreateAssetsService.start();
+        bmFireCreateAssetsUniqueThreadService.start();
     }
 
     public void update() {
-        bmFireUploadAssetsService.start();
+        bmFireUploadAssetsUniqueThreadService.start();
     }
 
     public void delete() {
-        bmFireDeleteAssetsService.start();
+        bmFireDeleteAssetsUniqueThreadService.start();
     }
 
 }

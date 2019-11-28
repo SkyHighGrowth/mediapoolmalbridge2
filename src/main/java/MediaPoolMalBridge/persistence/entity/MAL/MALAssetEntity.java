@@ -4,7 +4,7 @@ import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAsset;
 import MediaPoolMalBridge.clients.MAL.assetsunavailable.client.model.MALGetUnavailableAsset;
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
 import MediaPoolMalBridge.clients.MAL.propertyphotomodified.client.model.MALModifiedPropertyPhotoAsset;
-import MediaPoolMalBridge.persistence.AbstractEntity;
+import MediaPoolMalBridge.persistence.entity.AbstractErroneousEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -16,11 +16,12 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table( name = "mal_asset",
-        indexes = { @Index( columnList = "asset_id, asset_type" ),
-                    @Index( columnList = "transferring_asset_status"),
-                    @Index( columnList = "transferring_mal_connection_status, transferring_asset_status")},
+        indexes = { @Index( columnList = "asset_id, asset_type, updated" ),
+                    @Index( columnList = "transferring_asset_status, updated"),
+                    @Index( columnList = "transferring_mal_connection_status, updated"),
+                    @Index( columnList = "transferring_mal_connection_status, transferring_asset_status, updated")},
         uniqueConstraints = { @UniqueConstraint( columnNames = { "asset_id", "asset_type" } ) } )
-public class MALAssetEntity extends AbstractEntity {
+public class MALAssetEntity extends AbstractErroneousEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -245,13 +246,22 @@ public class MALAssetEntity extends AbstractEntity {
         return transferringMALConnectionAssetStatus;
     }
 
-    public void setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus transferringMALConnectionAssetStatus) {
+    public void setTransferringMALConnectionAssetStatus( final TransferringMALConnectionAssetStatus transferringMALConnectionAssetStatus ) {
+        this.transferringMALConnectionAssetStatus = transferringMALConnectionAssetStatus;
+    }
+
+    public boolean setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus transferringMALConnectionAssetStatus, final int maxRetriesAssetOperation ) {
         if (this.transferringMALConnectionAssetStatus.equals(transferringMALConnectionAssetStatus)) {
             malStatesRepetitions++;
-            return;
+            if( this.malStatesRepetitions > 5 ) {
+                this.transferringMALConnectionAssetStatus = TransferringMALConnectionAssetStatus.ERROR;
+                return true;
+            }
+            return false;
         }
         this.transferringMALConnectionAssetStatus = transferringMALConnectionAssetStatus;
         malStatesRepetitions = 0;
+        return false;
     }
 
     public MALModifiedPropertyPhotoAsset getMALModifiedPropertyPhotoAsset() {
@@ -275,6 +285,7 @@ public class MALAssetEntity extends AbstractEntity {
 
     public void setMALGetAsset(final MALGetAsset malGetAsset) {
         this.malGetAssetJson = GSON.toJson(malGetAsset);
+        this.md5Hash = DigestUtils.md5Hex( malGetAssetJson );
     }
 
     public MALGetUnavailableAsset getMALGetUnavailableAsset() {

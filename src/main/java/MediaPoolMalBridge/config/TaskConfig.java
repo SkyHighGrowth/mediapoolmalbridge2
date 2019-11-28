@@ -2,7 +2,6 @@ package MediaPoolMalBridge.config;
 
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
 import MediaPoolMalBridge.tasks.TaskSchedulerWrapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -13,27 +12,19 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 public class TaskConfig {
 
-    private final int executorThreadPoolSize;
+    private AppConfig appConfig;
 
-    private final int executorThreadQueueSize;
-
-    private final int schedulerThreadPoolSize;
-
-    public TaskConfig(@Value("${threadexecutor.pool.size}") final int executorThreadPoolSize,
-                      @Value("${threadexecutor.queue.size}") final int executorThreadQueueSize,
-                      @Value("${threadscheduler.pool.size}") final int schedulerThreadPoolSize) {
-        this.executorThreadPoolSize = executorThreadPoolSize;
-        this.schedulerThreadPoolSize = schedulerThreadPoolSize;
-        this.executorThreadQueueSize = executorThreadQueueSize;
+    public TaskConfig(final AppConfig appConfig) {
+        this.appConfig = appConfig;
     }
 
     @Bean
     public TaskExecutorWrapper taskExecutorWrapper() {
         final ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
         threadPoolTaskExecutor.setThreadNamePrefix("task-executor-");
-        threadPoolTaskExecutor.setCorePoolSize(executorThreadPoolSize);
-        threadPoolTaskExecutor.setMaxPoolSize(executorThreadPoolSize);
-        threadPoolTaskExecutor.setQueueCapacity(executorThreadQueueSize);
+        threadPoolTaskExecutor.setCorePoolSize(appConfig.getThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setMaxPoolSize(appConfig.getThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setQueueCapacity(appConfig.getThreadexecutorQueueSize());
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
         return new TaskExecutorWrapper(threadPoolTaskExecutor);
@@ -43,7 +34,7 @@ public class TaskConfig {
     public TaskSchedulerWrapper taskSchedulerWrapper() {
         final ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.setThreadNamePrefix("task-scheduler-");
-        threadPoolTaskScheduler.setPoolSize(schedulerThreadPoolSize);
+        threadPoolTaskScheduler.setPoolSize(appConfig.getThreadschedulerPoolSize());
         return new TaskSchedulerWrapper(threadPoolTaskScheduler);
     }
 }

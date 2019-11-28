@@ -18,9 +18,11 @@ public class Constants {
 
     public final static String XL_FILE_PREFIX = "xl_";
 
-    public final static String CRON_MIDNIGHT_TRIGGGER_EXPRESSION = "0 0 * * * *";
+    public final static String APPLICATION_DIR = "marriott";
 
-    public final static String CRON_AT_2330_HOURS = "0 30 23 * * *";
+    public final static String ASSET_DOWNLOAD_DIR = "temp";
 
-    public final static String CRON_HOURLY_TRIGGGER_EXPRESSION = "0 0 */1 * * *";
+    public final static String EXCEL_DIR = "excel";
+
+    public final static String APPLICATION_PROPERTIES_JSON = "application.properties.json";
 }

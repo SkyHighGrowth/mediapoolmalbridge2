@@ -1,9 +1,8 @@
 package MediaPoolMalBridge.service.BrandMaker.assetmetadata;
 
-import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import MediaPoolMalBridge.service.BrandMaker.assetmetadata.download.BMFireDownloadAssetsMetadataService;
-import MediaPoolMalBridge.service.BrandMaker.assetmetadata.upload.BMFireUploadAssetsMetadataService;
+import MediaPoolMalBridge.service.BrandMaker.assetmetadata.download.BMFireDownloadAssetsMetadataUniqueThreadService;
+import MediaPoolMalBridge.service.BrandMaker.assetmetadata.upload.BMFireUploadAssetsMetadataUniqueThreadService;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
@@ -12,24 +11,24 @@ import javax.annotation.PostConstruct;
 @Service
 public class BMExchangeAssetMetadataSchedulerService extends AbstractSchedulerService {
 
-    private BMFireUploadAssetsMetadataService bmFireUploadAssetsMetadataService;
+    private BMFireUploadAssetsMetadataUniqueThreadService bmFireUploadAssetsMetadataUniqueThreadService;
 
-    private BMFireDownloadAssetsMetadataService bmFireDownloadAssetsMetadataService;
+    private BMFireDownloadAssetsMetadataUniqueThreadService bmFireDownloadAssetsMetadataUniqueThreadService;
 
-    public BMExchangeAssetMetadataSchedulerService(final BMFireUploadAssetsMetadataService bmFireUploadAssetsMetadataService,
-                                                   final BMFireDownloadAssetsMetadataService bmFireDownloadAssetsMetadataService) {
-        this.bmFireUploadAssetsMetadataService = bmFireUploadAssetsMetadataService;
-        this.bmFireDownloadAssetsMetadataService = bmFireDownloadAssetsMetadataService;
+    public BMExchangeAssetMetadataSchedulerService(final BMFireUploadAssetsMetadataUniqueThreadService bmFireUploadAssetsMetadataUniqueThreadService,
+                                                   final BMFireDownloadAssetsMetadataUniqueThreadService bmFireDownloadAssetsMetadataUniqueThreadService) {
+        this.bmFireUploadAssetsMetadataUniqueThreadService = bmFireUploadAssetsMetadataUniqueThreadService;
+        this.bmFireDownloadAssetsMetadataUniqueThreadService = bmFireDownloadAssetsMetadataUniqueThreadService;
     }
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
+        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getBmExchangeSchedulerCronExpression()));
     }
 
     @Override
     public void scheduled() {
-        bmFireUploadAssetsMetadataService.start();
-        bmFireDownloadAssetsMetadataService.start();
+        bmFireUploadAssetsMetadataUniqueThreadService.start();
+        bmFireDownloadAssetsMetadataUniqueThreadService.start();
     }
 }

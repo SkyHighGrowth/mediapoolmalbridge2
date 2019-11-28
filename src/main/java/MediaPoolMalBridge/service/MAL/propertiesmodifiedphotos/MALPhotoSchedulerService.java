@@ -1,8 +1,7 @@
 package MediaPoolMalBridge.service.MAL.propertiesmodifiedphotos;
 
-import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import MediaPoolMalBridge.service.MAL.propertiesmodifiedphotos.download.MALFireDownloadPhotoService;
+import MediaPoolMalBridge.service.MAL.propertiesmodifiedphotos.download.MALFireDownloadPhotoUniqueThreadService;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
@@ -11,18 +10,18 @@ import javax.annotation.PostConstruct;
 @Service
 public class MALPhotoSchedulerService extends AbstractSchedulerService {
 
-    private final MALFireDownloadPhotoService malFireDownloadPhotoService;
+    private final MALFireDownloadPhotoUniqueThreadService malFireDownloadPhotoUniqueThreadService;
 
-    public MALPhotoSchedulerService(final MALFireDownloadPhotoService malFireDownloadPhotoService) {
-        this.malFireDownloadPhotoService = malFireDownloadPhotoService;
+    public MALPhotoSchedulerService(final MALFireDownloadPhotoUniqueThreadService malFireDownloadPhotoUniqueThreadService) {
+        this.malFireDownloadPhotoUniqueThreadService = malFireDownloadPhotoUniqueThreadService;
     }
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
+        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getMalPhotoCronExpression()));
     }
 
     public void scheduled() {
-        malFireDownloadPhotoService.start();
+        malFireDownloadPhotoUniqueThreadService.start();
     }
 }

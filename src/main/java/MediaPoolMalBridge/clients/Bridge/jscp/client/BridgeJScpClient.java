@@ -1,16 +1,16 @@
 package MediaPoolMalBridge.clients.Bridge.jscp.client;
 
-import MediaPoolMalBridge.persistence.entity.ReportsEntity;
+import MediaPoolMalBridge.config.AppConfig;
+import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
-import MediaPoolMalBridge.persistence.repository.ReportsRepository;
+import MediaPoolMalBridge.persistence.repository.Bridge.ReportsRepository;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -20,25 +20,14 @@ public class BridgeJScpClient {
 
     private static Logger logger = LoggerFactory.getLogger(BridgeJScpClient.class);
 
-    @Value( "${bridge.jscp.username}")
-    private String username;
-
-    @Value( "${bridge.jscp.password}" )
-    private String password;
-
-    @Value( "${bridge.jscp.hostname}")
-    private String hostname;
-
-    @Value( "${server.ssh.public.key}")
-    private String publicKey;
-
-    @Value( "${bridge.jscp.port}" )
-    private int port;
+    private AppConfig appConfig;
 
     private ReportsRepository reportsRepository;
 
-    public BridgeJScpClient(final ReportsRepository reportsRepository)
+    public BridgeJScpClient(final AppConfig appConfig,
+                            final ReportsRepository reportsRepository)
     {
+        this.appConfig = appConfig;
         this.reportsRepository = reportsRepository;
     }
 
@@ -52,9 +41,9 @@ public class BridgeJScpClient {
         final String localFileName = absoluteFileName.substring( absoluteFileName.lastIndexOf( File.separator ) + 1 );
         try{
             JSch jsch = new JSch();
-            jsch.setKnownHosts( new ByteArrayInputStream( (hostname  + " " + publicKey).getBytes() ) );
-            Session session = jsch.getSession(username, hostname, port);
-            session.setPassword(password);
+            jsch.setKnownHosts( new ByteArrayInputStream( ( appConfig.getSftpHostname() + " " + appConfig.getSftpPublicKey()).getBytes() ) );
+            Session session = jsch.getSession(appConfig.getSftpUsername(), appConfig.getSftpHostname(), appConfig.getSftpPort());
+            session.setPassword(appConfig.getSftpPassword());
             session.connect();
 
             boolean ptimestamp = false;
@@ -74,7 +63,7 @@ public class BridgeJScpClient {
 
             if( checkAck( in) != 0 ) {
                 logger.error( "COMMAND {}", command );
-                throw new Exception( "Can not connect to scp server " + hostname + ":" + port );
+                throw new Exception( "Can not connect to scp server " + appConfig.getSftpHostname() + ":" + appConfig.getSftpPort() );
             }
 
             File _lfile = new File( absoluteFileName );
@@ -132,7 +121,7 @@ public class BridgeJScpClient {
             session.disconnect();
         }
         catch( final Exception e ){
-            final String message = String.format( "Can not upload file [%s] to host [%s:%s]", localFileName, hostname, port);
+            final String message = String.format( "Can not upload file [%s] to host [%s:%s]", localFileName, appConfig.getSftpHostname(), appConfig.getSftpPort());
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null,  null );
             reportsRepository.save( reportsEntity );
             logger.error( message, e );

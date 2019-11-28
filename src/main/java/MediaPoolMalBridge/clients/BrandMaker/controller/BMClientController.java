@@ -17,11 +17,13 @@ import MediaPoolMalBridge.clients.BrandMaker.themefulltree.client.model.Download
 import MediaPoolMalBridge.clients.BrandMaker.themeid.client.BMDownloadThemeIdClient;
 import MediaPoolMalBridge.clients.BrandMaker.themeid.client.model.DownloadThemeIdResponse;
 import MediaPoolMalBridge.persistence.entity.BM.BMAssetEntity;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Profile("dev")
 public class BMClientController {
 
     private final BMDeleteAssetClient bmDeleteAssetClient;

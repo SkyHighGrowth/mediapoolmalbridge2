@@ -12,7 +12,6 @@ public class BMDeleteAssetClient extends BrandMakerSoapClient {
 
     public DeleteMediaResponse delete(final BMAssetEntity bmAsset) {
         try {
-
             final DeleteMediaArgument request = new DeleteMediaArgument();
             request.setMediaGuid(bmAsset.getAssetId());
             final DeleteMediaResult result = getMediaPoolPort().deleteMedia(request);

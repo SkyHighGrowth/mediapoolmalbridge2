@@ -1,10 +1,9 @@
 package MediaPoolMalBridge.service.MAL.assets;
 
-import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import MediaPoolMalBridge.service.MAL.assets.created.MALCollectCreatedAssetsSinceService;
-import MediaPoolMalBridge.service.MAL.assets.deleted.MALCollectDeletedAssetsSinceService;
-import MediaPoolMalBridge.service.MAL.assets.modified.MALCollectModifiedAssetSinceService;
+import MediaPoolMalBridge.service.MAL.assets.created.MALCollectCreatedAssetsUniqueThreadSinceService;
+import MediaPoolMalBridge.service.MAL.assets.deleted.MALCollectDeletedAssetsUniqueThreadSinceService;
+import MediaPoolMalBridge.service.MAL.assets.modified.MALCollectModifiedAssetUniqueThreadSinceService;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
@@ -16,25 +15,25 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class MALAssetsSchedulerService extends AbstractSchedulerService {
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd+HH:mm:ss");
 
-    private final MALCollectCreatedAssetsSinceService malCollectCreatedAssetsSinceService;
+    private final MALCollectCreatedAssetsUniqueThreadSinceService malCollectCreatedAssetsUniqueThreadSinceService;
 
-    private final MALCollectModifiedAssetSinceService malCollectModifiedAssetSinceService;
+    private final MALCollectModifiedAssetUniqueThreadSinceService malCollectModifiedAssetUniqueThreadSinceService;
 
-    private MALCollectDeletedAssetsSinceService malCollectDeletedAssetsSinceService;
+    private final MALCollectDeletedAssetsUniqueThreadSinceService malCollectDeletedAssetsUniqueThreadSinceService;
 
-    public MALAssetsSchedulerService(final MALCollectCreatedAssetsSinceService malCollectCreatedAssetsSinceService,
-                                     final MALCollectModifiedAssetSinceService malCollectModifiedAssetSinceService,
-                                     final MALCollectDeletedAssetsSinceService malCollectDeletedAssetsSinceService) {
-        this.malCollectCreatedAssetsSinceService = malCollectCreatedAssetsSinceService;
-        this.malCollectModifiedAssetSinceService = malCollectModifiedAssetSinceService;
-        this.malCollectDeletedAssetsSinceService = malCollectDeletedAssetsSinceService;
+    public MALAssetsSchedulerService(final MALCollectCreatedAssetsUniqueThreadSinceService malCollectCreatedAssetsUniqueThreadSinceService,
+                                     final MALCollectModifiedAssetUniqueThreadSinceService malCollectModifiedAssetUniqueThreadSinceService,
+                                     final MALCollectDeletedAssetsUniqueThreadSinceService malCollectDeletedAssetsUniqueThreadSinceService) {
+        this.malCollectCreatedAssetsUniqueThreadSinceService = malCollectCreatedAssetsUniqueThreadSinceService;
+        this.malCollectModifiedAssetUniqueThreadSinceService = malCollectModifiedAssetUniqueThreadSinceService;
+        this.malCollectDeletedAssetsUniqueThreadSinceService = malCollectDeletedAssetsUniqueThreadSinceService;
     }
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(Constants.CRON_MIDNIGHT_TRIGGGER_EXPRESSION));
+        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getMalAssetCronExpression()));
     }
 
     @Override
@@ -42,14 +41,14 @@ public class MALAssetsSchedulerService extends AbstractSchedulerService {
         final String since = Instant.ofEpochMilli(System.currentTimeMillis())
                 .atOffset(ZoneOffset.UTC)
                 .toLocalDateTime()
-                .minusDays(200L)
+                .minusDays( appConfig.getMalLookInThePastDays() )
                 .format(DATE_TIME_FORMATTER);
 
-        malCollectCreatedAssetsSinceService.setSince( since );
-        malCollectCreatedAssetsSinceService.start();
-        malCollectModifiedAssetSinceService.setSince( since );
-        malCollectModifiedAssetSinceService.start();
-        malCollectDeletedAssetsSinceService.setSince( since );
-        malCollectDeletedAssetsSinceService.start();
+        malCollectCreatedAssetsUniqueThreadSinceService.setSince( since );
+        malCollectCreatedAssetsUniqueThreadSinceService.start();
+        malCollectModifiedAssetUniqueThreadSinceService.setSince( since );
+        malCollectModifiedAssetUniqueThreadSinceService.start();
+        malCollectDeletedAssetsUniqueThreadSinceService.setSince( since );
+        malCollectDeletedAssetsUniqueThreadSinceService.start();
     }
 }

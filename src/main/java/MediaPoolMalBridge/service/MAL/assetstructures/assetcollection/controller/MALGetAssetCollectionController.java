@@ -1,6 +1,6 @@
 package MediaPoolMalBridge.service.MAL.assetstructures.assetcollection.controller;
 
-import MediaPoolMalBridge.service.MAL.assetstructures.assetcollection.MALGetAssetCollectionService;
+import MediaPoolMalBridge.service.MAL.assetstructures.assetcollection.MALGetAssetCollectionUniqueThreadService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Profile("dev")
 public class MALGetAssetCollectionController {
 
-    private MALGetAssetCollectionService getAssetCollectionService;
+    private MALGetAssetCollectionUniqueThreadService getAssetCollectionService;
 
-    public MALGetAssetCollectionController(final MALGetAssetCollectionService getAssetCollectionService) {
+    public MALGetAssetCollectionController(final MALGetAssetCollectionUniqueThreadService getAssetCollectionService) {
         this.getAssetCollectionService = getAssetCollectionService;
     }
 

@@ -1,8 +1,7 @@
 package MediaPoolMalBridge.service.Bridge.exceluploader;
 
-import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import MediaPoolMalBridge.service.Bridge.exceluploader.upload.BridgeUploadExcelFilesService;
+import MediaPoolMalBridge.service.Bridge.exceluploader.upload.BridgeUploadExcelFilesUniqueThreadService;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +10,21 @@ import javax.annotation.PostConstruct;
 @Service
 public class BridgeUploadExcelFilesSchedulerService extends AbstractSchedulerService {
 
-    private final BridgeUploadExcelFilesService bridgeUploadExcelFilesService;
+    private final BridgeUploadExcelFilesUniqueThreadService bridgeUploadExcelFilesUniqueThreadService;
 
-    public BridgeUploadExcelFilesSchedulerService( final BridgeUploadExcelFilesService bridgeUploadExcelFilesService )
+    public BridgeUploadExcelFilesSchedulerService( final BridgeUploadExcelFilesUniqueThreadService bridgeUploadExcelFilesUniqueThreadService)
     {
-        this.bridgeUploadExcelFilesService = bridgeUploadExcelFilesService;
+        this.bridgeUploadExcelFilesUniqueThreadService = bridgeUploadExcelFilesUniqueThreadService;
     }
 
     @PostConstruct
     public void init()
     {
-        taskSchedulerWrapper.getTaskScheduler().schedule( this::run, new CronTrigger( Constants.CRON_MIDNIGHT_TRIGGGER_EXPRESSION ) );
+        taskSchedulerWrapper.getTaskScheduler().schedule( this::run, new CronTrigger( appConfig.getBridgeUploadExcelFilesCronExpression() ) );
     }
 
     public void scheduled( )
     {
-        bridgeUploadExcelFilesService.start();
+        bridgeUploadExcelFilesUniqueThreadService.start();
     }
 }

@@ -1,15 +1,14 @@
 package MediaPoolMalBridge.service.MAL.assetstructures;
 
-import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import MediaPoolMalBridge.service.MAL.assetstructures.assetbrand.MALGetAssetBrandService;
-import MediaPoolMalBridge.service.MAL.assetstructures.assetcollection.MALGetAssetCollectionService;
-import MediaPoolMalBridge.service.MAL.assetstructures.assetcolor.MALGetAssetColorService;
-import MediaPoolMalBridge.service.MAL.assetstructures.assetdestination.MALGetAssetDestinationService;
-import MediaPoolMalBridge.service.MAL.assetstructures.assetfiletypes.MALGetAssetFileTypesService;
-import MediaPoolMalBridge.service.MAL.assetstructures.assetsubject.MALGetAssetSubjectService;
-import MediaPoolMalBridge.service.MAL.assetstructures.assettype.MALGetAssetTypeService;
-import MediaPoolMalBridge.service.MAL.assetstructures.propertytypes.MALGetPropertyTypesService;
+import MediaPoolMalBridge.service.MAL.assetstructures.assetbrand.MALGetAssetBrandUniqueThreadService;
+import MediaPoolMalBridge.service.MAL.assetstructures.assetcollection.MALGetAssetCollectionUniqueThreadService;
+import MediaPoolMalBridge.service.MAL.assetstructures.assetcolor.MALGetAssetColorUniqueThreadService;
+import MediaPoolMalBridge.service.MAL.assetstructures.assetdestination.MALGetAssetDestinationUniqueThreadService;
+import MediaPoolMalBridge.service.MAL.assetstructures.assetfiletypes.MALGetAssetFileTypesUniqueThreadService;
+import MediaPoolMalBridge.service.MAL.assetstructures.assetsubject.MALGetAssetSubjectUniqueThreadService;
+import MediaPoolMalBridge.service.MAL.assetstructures.assettype.MALGetAssetTypeUniqueThreadService;
+import MediaPoolMalBridge.service.MAL.assetstructures.propertytypes.MALGetPropertyTypesUniqueThreadService;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
@@ -18,48 +17,48 @@ import javax.annotation.PostConstruct;
 @Service
 public class MALGetAssetStructureSchedulerService extends AbstractSchedulerService {
 
-    private final MALGetAssetBrandService malGetAssetBrandService;
-    private final MALGetAssetCollectionService malGetAssetCollectionService;
-    private final MALGetAssetColorService malGetAssetColorService;
-    private final MALGetAssetDestinationService malGetAssetDestinationService;
-    private final MALGetAssetFileTypesService malGetAssetFileTypesService;
-    private final MALGetAssetSubjectService malGetAssetSubjectService;
-    private final MALGetAssetTypeService malGetAssetTypeService;
-    private final MALGetPropertyTypesService malGetPropertyTypesService;
+    private final MALGetAssetBrandUniqueThreadService malGetAssetBrandUniqueThreadService;
+    private final MALGetAssetCollectionUniqueThreadService malGetAssetCollectionUniqueThreadService;
+    private final MALGetAssetColorUniqueThreadService malGetAssetColorUniqueThreadService;
+    private final MALGetAssetDestinationUniqueThreadService malGetAssetDestinationUniqueThreadService;
+    private final MALGetAssetFileTypesUniqueThreadService malGetAssetFileTypesUniqueThreadService;
+    private final MALGetAssetSubjectUniqueThreadService malGetAssetSubjectUniqueThreadService;
+    private final MALGetAssetTypeUniqueThreadService malGetAssetTypeUniqueThreadService;
+    private final MALGetPropertyTypesUniqueThreadService malGetPropertyTypesUniqueThreadService;
 
-    public MALGetAssetStructureSchedulerService(final MALGetAssetBrandService malGetAssetBrandService,
-                                                final MALGetAssetCollectionService malGetAssetCollectionService,
-                                                final MALGetAssetColorService malGetAssetColorService,
-                                                final MALGetAssetDestinationService malGetAssetDestinationService,
-                                                final MALGetAssetFileTypesService malGetAssetFileTypesService,
-                                                final MALGetAssetSubjectService malGetAssetSubjectService,
-                                                final MALGetAssetTypeService malGetAssetTypeService,
-                                                final MALGetPropertyTypesService malGetPropertyTypesService) {
-        this.malGetAssetBrandService = malGetAssetBrandService;
-        this.malGetAssetCollectionService = malGetAssetCollectionService;
-        this.malGetAssetColorService = malGetAssetColorService;
-        this.malGetAssetDestinationService = malGetAssetDestinationService;
-        this.malGetAssetFileTypesService = malGetAssetFileTypesService;
-        this.malGetAssetSubjectService = malGetAssetSubjectService;
-        this.malGetAssetTypeService = malGetAssetTypeService;
-        this.malGetPropertyTypesService = malGetPropertyTypesService;
+    public MALGetAssetStructureSchedulerService(final MALGetAssetBrandUniqueThreadService malGetAssetBrandUniqueThreadService,
+                                                final MALGetAssetCollectionUniqueThreadService malGetAssetCollectionUniqueThreadService,
+                                                final MALGetAssetColorUniqueThreadService malGetAssetColorUniqueThreadService,
+                                                final MALGetAssetDestinationUniqueThreadService malGetAssetDestinationUniqueThreadService,
+                                                final MALGetAssetFileTypesUniqueThreadService malGetAssetFileTypesUniqueThreadService,
+                                                final MALGetAssetSubjectUniqueThreadService malGetAssetSubjectUniqueThreadService,
+                                                final MALGetAssetTypeUniqueThreadService malGetAssetTypeUniqueThreadService,
+                                                final MALGetPropertyTypesUniqueThreadService malGetPropertyTypesUniqueThreadService) {
+        this.malGetAssetBrandUniqueThreadService = malGetAssetBrandUniqueThreadService;
+        this.malGetAssetCollectionUniqueThreadService = malGetAssetCollectionUniqueThreadService;
+        this.malGetAssetColorUniqueThreadService = malGetAssetColorUniqueThreadService;
+        this.malGetAssetDestinationUniqueThreadService = malGetAssetDestinationUniqueThreadService;
+        this.malGetAssetFileTypesUniqueThreadService = malGetAssetFileTypesUniqueThreadService;
+        this.malGetAssetSubjectUniqueThreadService = malGetAssetSubjectUniqueThreadService;
+        this.malGetAssetTypeUniqueThreadService = malGetAssetTypeUniqueThreadService;
+        this.malGetPropertyTypesUniqueThreadService = malGetPropertyTypesUniqueThreadService;
     }
 
     @PostConstruct
     public void init() {
         scheduled();
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
+        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getMalAssetStructureCronExpression()));
     }
 
     @Override
     public void scheduled() {
-        malGetAssetBrandService.start();
-        malGetAssetCollectionService.start();
-        malGetAssetColorService.start();
-        malGetAssetDestinationService.start();
-        malGetAssetFileTypesService.start();
-        malGetAssetSubjectService.start();
-        malGetAssetTypeService.start();
-        malGetPropertyTypesService.start();
+        malGetAssetBrandUniqueThreadService.start();
+        malGetAssetCollectionUniqueThreadService.start();
+        malGetAssetColorUniqueThreadService.start();
+        malGetAssetDestinationUniqueThreadService.start();
+        malGetAssetFileTypesUniqueThreadService.start();
+        malGetAssetSubjectUniqueThreadService.start();
+        malGetAssetTypeUniqueThreadService.start();
+        malGetPropertyTypesUniqueThreadService.start();
     }
 }

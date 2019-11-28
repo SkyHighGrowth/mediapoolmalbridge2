@@ -1,8 +1,7 @@
 package MediaPoolMalBridge.service.MAL.assets;
 
-import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import MediaPoolMalBridge.service.MAL.assets.download.MALFireDownloadAssetsService;
+import MediaPoolMalBridge.service.MAL.assets.download.MALFireDownloadAssetsUniqueThreadService;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
@@ -11,20 +10,20 @@ import javax.annotation.PostConstruct;
 @Service
 public class MALDownloadAssetSchedulerService extends AbstractSchedulerService {
 
-    private final MALFireDownloadAssetsService malFireDownloadAssetsService;
+    private final MALFireDownloadAssetsUniqueThreadService malFireDownloadAssetsUniqueThreadService;
 
-    public MALDownloadAssetSchedulerService(final MALFireDownloadAssetsService malFireDownloadAssetsService) {
-        this.malFireDownloadAssetsService = malFireDownloadAssetsService;
+    public MALDownloadAssetSchedulerService(final MALFireDownloadAssetsUniqueThreadService malFireDownloadAssetsUniqueThreadService) {
+        this.malFireDownloadAssetsUniqueThreadService = malFireDownloadAssetsUniqueThreadService;
     }
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(Constants.CRON_HOURLY_TRIGGGER_EXPRESSION));
+        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getMalDownloadAssetCronExpression()));
     }
 
     @Override
     public void scheduled() {
-        malFireDownloadAssetsService.start();
+        malFireDownloadAssetsUniqueThreadService.start();
     }
 }
 

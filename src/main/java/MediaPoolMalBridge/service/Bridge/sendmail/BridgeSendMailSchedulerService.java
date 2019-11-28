@@ -1,6 +1,5 @@
 package MediaPoolMalBridge.service.Bridge.sendmail;
 
-import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
@@ -10,21 +9,21 @@ import javax.annotation.PostConstruct;
 @Service
 public class BridgeSendMailSchedulerService extends AbstractSchedulerService {
 
-    private BridgeSendMailService bridgeSendMailService;
+    private BridgeSendMailUniqueThreadService bridgeSendMailUniqueThreadService;
 
-    public BridgeSendMailSchedulerService( final BridgeSendMailService bridgeSendMailService )
+    public BridgeSendMailSchedulerService( final BridgeSendMailUniqueThreadService bridgeSendMailUniqueThreadService)
     {
-        this.bridgeSendMailService = bridgeSendMailService;
+        this.bridgeSendMailUniqueThreadService = bridgeSendMailUniqueThreadService;
     }
 
     @PostConstruct
     public void init()
     {
-        taskSchedulerWrapper.getTaskScheduler().schedule( this::run, new CronTrigger(Constants.CRON_MIDNIGHT_TRIGGGER_EXPRESSION ) );
+        taskSchedulerWrapper.getTaskScheduler().schedule( this::run, new CronTrigger(appConfig.getBridgeSendMailCronExpression() ) );
     }
 
     @Override
     public void scheduled() {
-        bridgeSendMailService.start();
+        bridgeSendMailUniqueThreadService.start();
     }
 }

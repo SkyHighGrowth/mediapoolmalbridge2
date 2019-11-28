@@ -2,6 +2,7 @@ package MediaPoolMalBridge.persistence.entity.enums.asset;
 
 public enum TransferringBMConnectionAssetStatus {
     INVALID,
+    INITIALIZED,
     FILE_UPLOADING,
     FILE_UPLOADED,
     FILE_DELETING,

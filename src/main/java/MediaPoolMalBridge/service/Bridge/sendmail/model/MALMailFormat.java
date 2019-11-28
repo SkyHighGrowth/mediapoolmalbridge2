@@ -1,6 +1,6 @@
 package MediaPoolMalBridge.service.Bridge.sendmail.model;
 
-import MediaPoolMalBridge.persistence.entity.ReportsEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
 
