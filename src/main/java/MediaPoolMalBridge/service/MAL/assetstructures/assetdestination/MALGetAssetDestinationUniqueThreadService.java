@@ -18,12 +18,12 @@ public class MALGetAssetDestinationUniqueThreadService extends AbstractMALUnique
 
     private final MALGetDestinationsClient getDestinationsClient;
 
-    private final MALAssetStructures malAssetStructures;
+    private final MALAssetStructures assetStructures;
 
     public MALGetAssetDestinationUniqueThreadService(final MALGetDestinationsClient getDestinationsClient,
-                                                     final MALAssetStructures malAssetStructures) {
+                                                     final MALAssetStructures assetStructures) {
         this.getDestinationsClient = getDestinationsClient;
-        this.malAssetStructures = malAssetStructures;
+        this.assetStructures = assetStructures;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MALGetAssetDestinationUniqueThreadService extends AbstractMALUnique
             return;
         }
 
-        malAssetStructures.setDestinations(response.getResponse()
+        assetStructures.setDestinations(response.getResponse()
                 .getDestinations()
                 .stream()
                 .collect(Collectors.toMap(Destination::getDestinationId, Destination::getName)));

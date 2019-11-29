@@ -6,7 +6,7 @@
         </encoder>
     </appender>
 
-    <!--<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <fieldNames>
@@ -17,9 +17,9 @@
                 <logger>logger</logger>
             </fieldNames>
         </encoder>
-        <file>${user.home}/mediaPoolSyncTool/logs/logFile.log</file>
+        <file>${user.home}/marriott/logs/logFile.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${user.home}/mediaPoolSyncTool/logs/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${user.home}/marriott/logs/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
             <totalSizeCap>100MB</totalSizeCap>
         </rollingPolicy>
@@ -28,6 +28,6 @@
 
     <root level="info">
         <appender-ref ref="STDOUT" />
-        <!--<appender-ref ref="FILE" />-->
+        <appender-ref ref="FILE" />
     </root>
 </configuration>

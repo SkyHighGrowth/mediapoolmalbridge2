@@ -37,7 +37,7 @@ public class MALDownloadSingleAssetController {
         this.taskExecutorWrapper = taskExecutorWrapper;
     }
 
-    @PostMapping( "/downloadAssets" )
+    @PostMapping( "/client/mal/downloadAssets" )
     public void download(@RequestBody final MALGetAssetsRequest malGetAssetsRequest )
     {
         final RestResponse<MALGetAssetsResponse> response = malGetAssetsClient.download( malGetAssetsRequest );

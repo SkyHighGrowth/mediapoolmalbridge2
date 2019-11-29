@@ -2,7 +2,7 @@ package MediaPoolMalBridge.clients.BrandMaker.assetgetmediadetails.client;
 
 import MediaPoolMalBridge.clients.BrandMaker.BrandMakerSoapClient;
 import MediaPoolMalBridge.clients.BrandMaker.assetgetmediadetails.client.model.DownloadMediaDetailsResponse;
-import MediaPoolMalBridge.persistence.entity.BM.BMAssetEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import com.brandmaker.webservices.mediapool.GetMediaDetailsArgument;
 import com.brandmaker.webservices.mediapool.GetMediaDetailsResult;
 import org.springframework.stereotype.Component;
@@ -10,16 +10,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class BMDownloadMediaDetailsClient extends BrandMakerSoapClient {
 
-    public DownloadMediaDetailsResponse download(final BMAssetEntity bmAsset) {
+    public DownloadMediaDetailsResponse download(final AssetEntity asset) {
         try {
             final GetMediaDetailsArgument request = new GetMediaDetailsArgument();
-            request.setMediaGuid(bmAsset.getAssetId());
+            request.setMediaGuid(asset.getBmAssetId());
             final GetMediaDetailsResult result = getMediaPoolPort().getMediaDetails(request);
-            final DownloadMediaDetailsResponse response = new DownloadMediaDetailsResponse(result);
-            return response;
+            return new DownloadMediaDetailsResponse(result);
         } catch (final Exception e) {
-            logger.error("Error downloading asset {}", bmAsset, e);
-            reportErrorOnException( bmAsset.getAssetId(), e );
+            logger.error("Error downloading asset {}", asset, e);
+            reportErrorOnException( asset.getBmAssetId(), e );
             return new DownloadMediaDetailsResponse(false, e.getMessage());
         }
     }

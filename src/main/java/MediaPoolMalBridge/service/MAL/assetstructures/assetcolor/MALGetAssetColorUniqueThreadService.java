@@ -18,12 +18,12 @@ public class MALGetAssetColorUniqueThreadService extends AbstractMALUniqueThread
 
     private final MALGetColorsClient getColorsClient;
 
-    private final MALAssetStructures malAssetStructures;
+    private final MALAssetStructures assetStructures;
 
     public MALGetAssetColorUniqueThreadService(final MALGetColorsClient getColorsClient,
-                                               final MALAssetStructures malAssetStructures) {
+                                               final MALAssetStructures assetStructures) {
         this.getColorsClient = getColorsClient;
-        this.malAssetStructures = malAssetStructures;
+        this.assetStructures = assetStructures;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MALGetAssetColorUniqueThreadService extends AbstractMALUniqueThread
             return;
         }
 
-        malAssetStructures.setColors(response.getResponse()
+        assetStructures.setColors(response.getResponse()
                 .getColors()
                 .stream()
                 .collect(Collectors.toMap(Color::getColorId, Color::getName)));

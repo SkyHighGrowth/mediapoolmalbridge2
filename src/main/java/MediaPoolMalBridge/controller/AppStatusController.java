@@ -3,42 +3,39 @@ package MediaPoolMalBridge.controller;
 import MediaPoolMalBridge.model.BrandMaker.theme.BMThemes;
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
 import MediaPoolMalBridge.model.MAL.kits.MALKits;
-import MediaPoolMalBridge.persistence.entity.enums.schedule.ServiceState;
-import MediaPoolMalBridge.persistence.entity.Bridge.schedule.ServiceEntity;
-import MediaPoolMalBridge.persistence.repository.Bridge.schedule.ServiceRepository;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Instant;
 import java.util.Map;
 
 @RestController
 @Profile("dev")
 public class AppStatusController {
 
+    private static Logger logger = LoggerFactory.getLogger(AppStatusController.class);
+
     private final MALKits malKits;
     private final BMThemes bmThemes;
-    private final MALAssetStructures malAssetStructures;
+    private final MALAssetStructures assetStructures;
     private TaskExecutorWrapper taskExecutorWrapper;
-    private ServiceRepository serviceRepository;
 
     public AppStatusController(final MALKits malKits,
                                final BMThemes bmThemes,
-                               final MALAssetStructures malAssetStructures,
-                               final TaskExecutorWrapper taskExecutorWrapper,
-                               final ServiceRepository serviceRepository) {
+                               final MALAssetStructures assetStructures,
+                               final TaskExecutorWrapper taskExecutorWrapper) {
         this.malKits = malKits;
         this.bmThemes = bmThemes;
-        this.malAssetStructures = malAssetStructures;
+        this.assetStructures = assetStructures;
         this.taskExecutorWrapper = taskExecutorWrapper;
-        this.serviceRepository = serviceRepository;
     }
 
     @GetMapping("/appStatus/mal/fileTypes")
     public Map<String, String> getFileTypes() {
-        return malAssetStructures.getFileTypes();
+        return assetStructures.getFileTypes();
     }
 
     @GetMapping("/appStatus/mal/kits")
@@ -53,56 +50,42 @@ public class AppStatusController {
 
     @GetMapping("/appStatus/mal/brands")
     public Map<String, String> getBrands() {
-        return malAssetStructures.getBrands();
+        return assetStructures.getBrands();
     }
 
     @GetMapping("/appStatus/mal/collections")
     public Map<String, String> getCollections() {
-        return malAssetStructures.getCollections();
+        return assetStructures.getCollections();
     }
 
     @GetMapping("/appStatus/mal/colors")
     public Map<String, String> getColors() {
-        return malAssetStructures.getColors();
+        return assetStructures.getColors();
     }
 
     @GetMapping("/appStatus/mal/destinations")
     public Map<String, String> getMalDestinations() {
-        return malAssetStructures.getDestinations();
+        return assetStructures.getDestinations();
     }
 
     @GetMapping("/appStatus/mal/subjects")
     public Map<String, String> getSubjects() {
-        return malAssetStructures.getSubjects();
+        return assetStructures.getSubjects();
     }
 
     @GetMapping("/appStatus/mal/assetTypes")
     public Map<String, String> getMalAssetTypes() {
-        return malAssetStructures.getAssetTypes();
+        return assetStructures.getAssetTypes();
     }
 
     @GetMapping("/appStatus/app/propertyTypes")
     public Map<String, String> getPropertyTypes() {
-        return malAssetStructures.getPropertyTypes();
+        return assetStructures.getPropertyTypes();
     }
 
     @GetMapping("/appStatus/app/queueSize" )
     public int getQueueSize()
     {
         return taskExecutorWrapper.getQueueSize();
-    }
-
-    @GetMapping( "/killConnections" )
-    public int killConnections( )
-    {
-        int instant = Instant.now().getNano();
-        for(int i = 1; i < 10000; ++i )
-        {
-            taskExecutorWrapper.getTaskExecutor().execute(() -> {
-                ServiceEntity sE = new ServiceEntity(ServiceState.SERVICE_START, getClass().getName(), Thread.currentThread().getName(), taskExecutorWrapper.getTaskExecutor().getActiveCount(), taskExecutorWrapper.getQueueSize());
-                serviceRepository.save(sE);
-            });
-        }
-        return Instant.now().getNano() - instant;
     }
 }

@@ -6,31 +6,30 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Rest controller that triggers {@link MALAssetsSchedulerService} and {@link MALDownloadAssetSchedulerService}
+ * servises, calling get methods only trigger only oxecution of this schedulers using current no {@link MediaPoolMalBridge.tasks.TaskSchedulerWrapper}
+ * is involved
+ */
 @RestController
 @Profile("dev")
 public class MALAssetsSchedulerController {
 
-    private final MALAssetsSchedulerService malAssetsSchedulerService;
+    private final MALAssetsSchedulerService assetsSchedulerService;
 
     private final MALDownloadAssetSchedulerService malDownloadAssetSchedulerService;
 
-    public MALAssetsSchedulerController(final MALAssetsSchedulerService malAssetsSchedulerService,
+    public MALAssetsSchedulerController(final MALAssetsSchedulerService assetsSchedulerService,
                                         final MALDownloadAssetSchedulerService malDownloadAssetSchedulerService) {
-        this.malAssetsSchedulerService = malAssetsSchedulerService;
+        this.assetsSchedulerService = assetsSchedulerService;
         this.malDownloadAssetSchedulerService = malDownloadAssetSchedulerService;
     }
 
-    /**
-     * updates MALAssets structure for unavailable created and updated
-     */
     @GetMapping("/service/mal/updateAssets")
     public void getUpdates() {
-        malAssetsSchedulerService.scheduled();
+        assetsSchedulerService.scheduled();
     }
 
-    /**
-     * triggers download of MALAssets
-     */
     @GetMapping("/service/mal/downloadAssets")
     public void getAssets() {
         malDownloadAssetSchedulerService.scheduled( );

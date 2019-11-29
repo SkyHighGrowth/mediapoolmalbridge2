@@ -16,7 +16,7 @@ import MediaPoolMalBridge.clients.BrandMaker.themefulltree.client.BMDownloadFull
 import MediaPoolMalBridge.clients.BrandMaker.themefulltree.client.model.DownloadFullThemeTreeResponse;
 import MediaPoolMalBridge.clients.BrandMaker.themeid.client.BMDownloadThemeIdClient;
 import MediaPoolMalBridge.clients.BrandMaker.themeid.client.model.DownloadThemeIdResponse;
-import MediaPoolMalBridge.persistence.entity.BM.BMAssetEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,42 +55,42 @@ public class BMClientController {
         this.bmDownloadThemeIdClient = bmDownloadThemeIdClient;
     }
 
-    @PostMapping("/bm/deleteAsset")
-    public DeleteMediaResponse deleteAsset(@RequestBody() final BMAssetEntity bmAsset) {
-        return bmDeleteAssetClient.delete(bmAsset);
+    @PostMapping("/client/bm/deleteAsset")
+    public DeleteMediaResponse deleteAsset(@RequestBody() final AssetEntity asset) {
+        return bmDeleteAssetClient.delete(asset);
     }
 
-    @PostMapping("/bm/getMediaDetails")
-    public DownloadMediaDetailsResponse getMediaDetails(@RequestBody() final BMAssetEntity bmAsset) {
-        return bmDownloadMediaDetailsClient.download(bmAsset);
+    @PostMapping("/client/bm/getMediaDetails")
+    public DownloadMediaDetailsResponse getMediaDetails(@RequestBody() final AssetEntity asset) {
+        return bmDownloadMediaDetailsClient.download(asset);
     }
 
-    @PostMapping("/bm/uploadAsset")
-    public UploadStatus uploadAsset(@RequestBody() final BMAssetEntity bmAsset) {
-        return bmUploadAssetClient.upload(bmAsset);
+    @PostMapping("/client/bm/uploadAsset")
+    public UploadStatus uploadAsset(@RequestBody() final AssetEntity asset) {
+        return bmUploadAssetClient.upload(asset);
     }
 
-    @PostMapping("/bm/uploadMetadata")
-    public UploadMetadataStatus uploadMetadata(@RequestBody() final BMAssetEntity bmAsset) {
-        return bmUploadMetadataClient.upload(bmAsset);
+    @PostMapping("/client/bm/uploadMetadata")
+    public UploadMetadataStatus uploadMetadata(@RequestBody() final AssetEntity asset) {
+        return bmUploadMetadataClient.upload(asset);
     }
 
-    @PostMapping("/bm/uploadAssetVersion")
-    public UploadStatus uploadAssetVersion(@RequestBody() final BMAssetEntity bmAsset) {
-        return bmUploadVersionAssetClient.upload(bmAsset);
+    @PostMapping("/client/bm/uploadAssetVersion")
+    public UploadStatus uploadAssetVersion(@RequestBody() final AssetEntity asset) {
+        return bmUploadVersionAssetClient.upload(asset);
     }
 
-    @PostMapping("/bm/createTheme")
+    @PostMapping("/client/bm/createTheme")
     public CreateThemeResponse createTheme(@RequestBody() final BMTheme bmTheme) {
         return bmCreateThemeClient.createTheme(bmTheme);
     }
 
-    @PostMapping("/bm/downloadFullThemeTree")
+    @PostMapping("/client/bm/downloadFullThemeTree")
     public DownloadFullThemeTreeResponse downloadFullThemeTree(@RequestBody() final BMTheme bmTheme) {
         return bmDownloadFullThemeTreeClient.downloadFullThemeTree(bmTheme);
     }
 
-    @PostMapping("/bm/getThemeId")
+    @PostMapping("/client/bm/getThemeId")
     public DownloadThemeIdResponse getThemeId(@RequestBody() final BMTheme bmTheme) {
         return bmDownloadThemeIdClient.downloadThemeId(bmTheme);
     }

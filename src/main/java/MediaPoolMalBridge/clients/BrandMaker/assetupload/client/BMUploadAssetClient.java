@@ -2,7 +2,7 @@ package MediaPoolMalBridge.clients.BrandMaker.assetupload.client;
 
 import MediaPoolMalBridge.clients.BrandMaker.BrandMakerSoapClient;
 import MediaPoolMalBridge.clients.BrandMaker.assetuploadversion.client.model.UploadStatus;
-import MediaPoolMalBridge.persistence.entity.BM.BMAssetEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import com.brandmaker.webservices.mediapool.UploadMediaResult;
 import org.springframework.stereotype.Component;
 
@@ -12,16 +12,16 @@ import javax.activation.FileDataSource;
 @Component
 public class BMUploadAssetClient extends BrandMakerSoapClient {
 
-    public UploadStatus upload(final BMAssetEntity bmAsset) {
+    public UploadStatus upload(final AssetEntity asset) {
         try {
-            final String absoluteFilePath = getAppConfig().getTempDir() + bmAsset.getFileName();
+            final String absoluteFilePath = getAppConfig().getTempDir() + asset.getFileNameOnDisc();
             final FileDataSource fileDataSource = new FileDataSource(absoluteFilePath);
             final DataHandler dataHandler = new DataHandler(fileDataSource);
-            final UploadMediaResult result = getMediaPoolPort().uploadMediaAsStream(bmAsset.getFileName(), dataHandler);
-            return new UploadStatus(result, bmAsset.getAssetId());
+            final UploadMediaResult result = getMediaPoolPort().uploadMediaAsStream(asset.getFileNameOnDisc(), dataHandler);
+            return new UploadStatus(result, asset.getBmAssetId());
         } catch (final Exception e) {
-            reportErrorOnException(bmAsset.getAssetId(), e);
-            return new UploadStatus(false, e.getMessage(), bmAsset.getAssetId());
+            reportErrorOnException(asset.getBmAssetId(), e);
+            return new UploadStatus(false, e.getMessage(), asset.getBmAssetId());
         }
     }
 }

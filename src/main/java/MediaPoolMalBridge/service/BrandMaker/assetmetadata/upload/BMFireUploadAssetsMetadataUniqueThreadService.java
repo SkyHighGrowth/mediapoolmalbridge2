@@ -1,7 +1,7 @@
 package MediaPoolMalBridge.service.BrandMaker.assetmetadata.upload;
 
-import MediaPoolMalBridge.persistence.entity.BM.BMAssetEntity;
-import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringBMConnectionAssetStatus;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMUniqueThreadService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -22,12 +22,12 @@ public class BMFireUploadAssetsMetadataUniqueThreadService extends AbstractBMUni
     protected void run() {
         boolean condition = true;
         for (int page = 0; condition; ++page) {
-            final Slice<BMAssetEntity> bmAssetEntities = bmAssetRepository.findAllByTransferringBMConnectionAssetStatusOrTransferringBMConnectionAssetStatusOrTransferringBMConnectionAssetStatusAndUpdatedIsAfter(
-                    TransferringBMConnectionAssetStatus.FILE_CREATED, TransferringBMConnectionAssetStatus.FILE_UPLOADED, TransferringBMConnectionAssetStatus.METADATA_UPLOADING, getTodayMidnight(), PageRequest.of(page, pageSize));
-            condition = bmAssetEntities.hasNext();
-            bmAssetEntities.forEach( bmAssetEntity -> {
+            final Slice<AssetEntity> assetEntities = assetRepository.findAllByTransferringAssetStatusAndUpdatedIsAfter(
+                    TransferringAssetStatus.FILE_UPLOADED, getTodayMidnight(), PageRequest.of(page, pageSize));
+            condition = assetEntities.hasNext();
+            assetEntities.forEach( assetEntity -> {
                 if( taskExecutorWrapper.getQueueSize() < appConfig.getThreadexecutorQueueLengthMax() ) {
-                    taskExecutorWrapper.getTaskExecutor().execute(() -> bmUploadAssetMetadataService.start(bmAssetEntity)); }
+                    taskExecutorWrapper.getTaskExecutor().execute(() -> bmUploadAssetMetadataService.start(assetEntity)); }
             } );
         }
     }

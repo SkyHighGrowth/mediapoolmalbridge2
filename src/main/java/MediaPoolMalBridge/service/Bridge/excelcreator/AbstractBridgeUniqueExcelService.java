@@ -2,8 +2,7 @@ package MediaPoolMalBridge.service.Bridge.excelcreator;
 
 import MediaPoolMalBridge.config.AppConfig;
 import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
-import MediaPoolMalBridge.persistence.repository.BM.BMAssetRepository;
-import MediaPoolMalBridge.persistence.repository.MAL.MALAssetRepository;
+import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
 import MediaPoolMalBridge.persistence.repository.MAL.MALPropertyRepository;
 import MediaPoolMalBridge.service.AbstractUniqueThreadService;
 import jxl.Workbook;
@@ -19,10 +18,7 @@ public abstract class AbstractBridgeUniqueExcelService extends AbstractUniqueThr
     protected MALPropertyRepository malPropertyRepository;
 
     @Autowired
-    protected MALAssetRepository malAssetRepository;
-
-    @Autowired
-    protected BMAssetRepository bmAssetRepository;
+    protected AssetRepository assetRepository;
 
     @Autowired
     private AppConfig appConfig;

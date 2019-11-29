@@ -18,12 +18,12 @@ public class MALGetAssetSubjectUniqueThreadService extends AbstractMALUniqueThre
 
     private final MALGetSubjectsClient getSubjectsClient;
 
-    private final MALAssetStructures malAssetStructures;
+    private final MALAssetStructures assetStructures;
 
     public MALGetAssetSubjectUniqueThreadService(final MALGetSubjectsClient getSubjectsClient,
-                                                 final MALAssetStructures malAssetStructures) {
+                                                 final MALAssetStructures assetStructures) {
         this.getSubjectsClient = getSubjectsClient;
-        this.malAssetStructures = malAssetStructures;
+        this.assetStructures = assetStructures;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MALGetAssetSubjectUniqueThreadService extends AbstractMALUniqueThre
             return;
         }
 
-        malAssetStructures.setSubjects(response.getResponse()
+        assetStructures.setSubjects(response.getResponse()
                 .getSubjects()
                 .stream()
                 .collect(Collectors.toMap(Subject::getSubjectId, Subject::getName)));

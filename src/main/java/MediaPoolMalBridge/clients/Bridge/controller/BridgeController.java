@@ -21,7 +21,7 @@ public class BridgeController {
         this.appConfig = appConfig;
     }
 
-    @GetMapping( "/bridge/uploadFile" )
+    @GetMapping( "/service/app/uploadFile" )
     public void uploadFile()
     {
         bridgeJScpClient.uploadFile( appConfig.getExcelDir() + "aca.txt" );

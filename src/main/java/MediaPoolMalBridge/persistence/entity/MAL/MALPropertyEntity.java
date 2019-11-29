@@ -78,6 +78,7 @@ public class MALPropertyEntity extends AbstractEntity {
     @CreationTimestamp
     private LocalDateTime created;
 
+    @Version
     @Column( name = "updated" )
     @UpdateTimestamp
     private LocalDateTime updated;
@@ -260,5 +261,37 @@ public class MALPropertyEntity extends AbstractEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getVanityUrl() {
+        return vanityUrl;
+    }
+
+    public void setVanityUrl(String vanityUrl) {
+        this.vanityUrl = vanityUrl;
+    }
+
+    public int getPrimaryPropertyImage() {
+        return primaryPropertyImage;
+    }
+
+    public void setPrimaryPropertyImage(int primaryPropertyImage) {
+        this.primaryPropertyImage = primaryPropertyImage;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
     }
 }

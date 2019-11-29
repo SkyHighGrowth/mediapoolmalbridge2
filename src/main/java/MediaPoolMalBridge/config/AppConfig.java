@@ -36,6 +36,14 @@ public class AppConfig {
             }
         }
 
+        file = new File(System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + "logs" );
+        if (!file.exists()) {
+            if (!file.mkdir()) {
+                logger.info("Dir {} can not be created", file.getAbsolutePath());
+                throw new RuntimeException();
+            }
+        }
+
         file = new File(System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.ASSET_DOWNLOAD_DIR );
         if (!file.exists()) {
             if (!file.mkdir()) {
@@ -87,11 +95,11 @@ public class AppConfig {
     }
 
     public String getTempDir() {
-        return System.getProperty("user.home") + File.separator + "marriott_temp" + File.separator;
+        return System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.ASSET_DOWNLOAD_DIR + File.separator;
     }
 
     public String getExcelDir() {
-        return System.getProperty("user.home") + File.separator + "marriott_temp" + File.separator + "excel" + File.separator;
+        return System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR + File.separator;
     }
 
     public String getSftpUsername() {

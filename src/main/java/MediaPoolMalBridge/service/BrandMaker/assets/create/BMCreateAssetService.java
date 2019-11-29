@@ -2,18 +2,18 @@ package MediaPoolMalBridge.service.BrandMaker.assets.create;
 
 import MediaPoolMalBridge.clients.BrandMaker.assetupload.client.BMUploadAssetClient;
 import MediaPoolMalBridge.clients.BrandMaker.assetuploadversion.client.model.UploadStatus;
-import MediaPoolMalBridge.persistence.entity.BM.BMAssetEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.UploadedFileEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
-import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringBMConnectionAssetStatus;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.repository.Bridge.UploadedFileRepository;
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMNonUniqueThreadService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BMCreateAssetService extends AbstractBMNonUniqueThreadService<BMAssetEntity> {
+public class BMCreateAssetService extends AbstractBMNonUniqueThreadService<AssetEntity> {
 
     private final BMUploadAssetClient bmUploadAssetClient;
 
@@ -27,23 +27,27 @@ public class BMCreateAssetService extends AbstractBMNonUniqueThreadService<BMAss
     }
 
     @Override
-    protected void run(BMAssetEntity bmAssetEntity) {
-        if( bmAssetEntity.setTransferringBMConnectionAssetStatus(TransferringBMConnectionAssetStatus.FILE_CREATING, appConfig.getAssetStateRepetitionMax() ) ) {
-            final String message = String.format( "Max retries for create asset achieved for asset id [%s]", bmAssetEntity.getAssetId() );
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(bmAssetEntity), null, null );
+    protected void run(final AssetEntity assetEntity) {
+        assetEntity.increaseMalStatesRepetitions();
+        final TransferringAssetStatus transferringAssetStatus = assetEntity.getTransferringAssetStatus();
+        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.FILE_CREATING );
+        if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
+            final String message = String.format( "Max retries for create asset achieved for asset id [%s]", assetEntity.getBmAssetId() );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
             reportsRepository.save( reportsEntity );
-            logger.error( "message {}, bmAsset {}", message, GSON.toJson( bmAssetEntity ) );
+            logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
             return;
         }
-        final UploadStatus uploadStatus = bmUploadAssetClient.upload( bmAssetEntity );
+        final UploadStatus uploadStatus = bmUploadAssetClient.upload( assetEntity );
         if (uploadStatus.isStatus()) {
-            bmAssetEntity.setAssetId(uploadStatus.getBmAsset());
-            bmAssetEntity.setTransferringBMConnectionAssetStatus(TransferringBMConnectionAssetStatus.FILE_CREATED);
-            uploadedFileRepository.save( new UploadedFileEntity( bmAssetEntity.getFileName() ) );
+            assetEntity.getBmAssetIdEntity().setBmAssetId( uploadStatus.getBmAsset() );
+            assetEntity.setMalStatesRepetitions( 0 );
+            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_CREATED);
+            uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
         } else {
-            reportErrorOnResponse(bmAssetEntity.getAssetId(), uploadStatus);
-            bmAssetEntity.setTransferringBMConnectionAssetStatus(TransferringBMConnectionAssetStatus.FILE_CREATING);
+            reportErrorOnResponse(assetEntity.getBmAssetId(), uploadStatus);
+            assetEntity.setTransferringAssetStatus(transferringAssetStatus);
         }
-        bmAssetRepository.save(bmAssetEntity);
+        assetRepository.save(assetEntity);
     }
 }

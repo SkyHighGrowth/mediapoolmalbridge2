@@ -1,9 +1,9 @@
 package MediaPoolMalBridge.service.MAL.assets.download.controller;
 
 import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAssetsRequest;
-import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
-import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
-import MediaPoolMalBridge.persistence.repository.MAL.MALAssetRepository;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
+import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
 import MediaPoolMalBridge.service.MAL.assets.download.MALDownloadAssetService;
 import MediaPoolMalBridge.service.MAL.assets.download.MALFireDownloadAssetsUniqueThreadService;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
@@ -30,18 +30,18 @@ public class MALDownloadAssetController {
     private final MALFireDownloadAssetsUniqueThreadService malFireDownloadAssetsUniqueThreadService;
     private final TaskExecutorWrapper taskExecutorWrapper;
     private final MALGetAssetsDev malGetAssetsDev;
-    private final MALAssetRepository malAssetRepository;
+    private final AssetRepository assetRepository;
 
     public MALDownloadAssetController(final MALDownloadAssetService malDownloadAssetService,
                                       final MALFireDownloadAssetsUniqueThreadService malFireDownloadAssetsUniqueThreadService,
                                       final TaskExecutorWrapper taskExecutorWrapper,
                                       final MALGetAssetsDev malGetAssetsDev,
-                                      final MALAssetRepository malAssetRepository) {
+                                      final AssetRepository assetRepository) {
         this.malDownloadAssetService = malDownloadAssetService;
         this.malFireDownloadAssetsUniqueThreadService = malFireDownloadAssetsUniqueThreadService;
         this.taskExecutorWrapper = taskExecutorWrapper;
         this.malGetAssetsDev = malGetAssetsDev;
-        this.malAssetRepository = malAssetRepository;
+        this.assetRepository = assetRepository;
     }
 
     @PostMapping(value = "/service/mal/downloadAssets", consumes = "application/json")
@@ -49,14 +49,14 @@ public class MALDownloadAssetController {
         malGetAssetsDev.start(request);
         boolean condition = true;
         for (int page = 0; condition; ++page) {
-            final Slice<MALAssetEntity> malAssetEntities = malAssetRepository.findAllByTransferringMALConnectionAssetStatusOrTransferringMALConnectionAssetStatusAndUpdatedIsAfter(
-                    TransferringMALConnectionAssetStatus.OBSERVED, TransferringMALConnectionAssetStatus.DOWNLOADING, getTodayMidnight(), PageRequest.of(page, 1000));
-            logger.error( "page {} num of assets {}", page, malAssetEntities.getSize());
-            condition = malAssetEntities.hasNext();
-            malAssetEntities.forEach(malAssetEntity -> {
+            final Slice<AssetEntity> assetEntities = assetRepository.findAllByTransferringAssetStatusOrTransferringAssetStatusAndUpdatedIsAfter(
+                    TransferringAssetStatus.ASSET_OBSERVED_CREATION, TransferringAssetStatus.FILE_DOWNLOADING, getTodayMidnight(), PageRequest.of(page, 1000));
+            logger.error( "page {} num of assets {}", page, assetEntities.getNumberOfElements());
+            condition = assetEntities.hasNext();
+            assetEntities.forEach(assetEntity -> {
                 if (taskExecutorWrapper.getQueueSize() < 9000) {
                     logger.error( "hitted it" );
-                    taskExecutorWrapper.getTaskExecutor().execute(() -> malDownloadAssetService.start(malAssetEntity));
+                    taskExecutorWrapper.getTaskExecutor().execute(() -> malDownloadAssetService.start(assetEntity));
                 } else {
                     logger.error( "missed it" );
                 }

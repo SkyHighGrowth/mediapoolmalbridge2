@@ -5,7 +5,7 @@ import MediaPoolMalBridge.clients.MAL.propertyphotomodified.client.MALGetModifie
 import MediaPoolMalBridge.clients.MAL.propertyphotomodified.client.model.MALGetModifiedPropertyPhotoRequest;
 import MediaPoolMalBridge.clients.MAL.propertyphotomodified.client.model.MALGetModifiedPropertyPhotoResponse;
 import MediaPoolMalBridge.clients.rest.RestResponse;
-import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
@@ -42,13 +42,13 @@ public class MALCollectModifiedPropertiesPhotosUniqueThreadService extends Abstr
         response.getResponse()
                 .getAssets()
                 .forEach(malModifiedPropertyPhotoAsset -> {
-                    MALAssetEntity malAssetEntity;
+                    AssetEntity assetEntity;
                     if (StringUtils.isNotBlank(malModifiedPropertyPhotoAsset.getJpgDownloadUrl())) {
-                        malAssetEntity = MALAssetEntity.fromMALGetModifiedPropertyPhotos(malModifiedPropertyPhotoAsset, MALAssetType.PHOTO_JPG_LOGO);
+                        assetEntity = AssetEntity.fromMALGetModifiedPropertyPhotos(malModifiedPropertyPhotoAsset, MALAssetType.PHOTO_JPG_LOGO);
                     } else if (StringUtils.isNotBlank(malModifiedPropertyPhotoAsset.getMediumDownloadUrl())) {
-                        malAssetEntity = MALAssetEntity.fromMALGetModifiedPropertyPhotos(malModifiedPropertyPhotoAsset, MALAssetType.PHOTO_MEDIUM);
+                        assetEntity = AssetEntity.fromMALGetModifiedPropertyPhotos(malModifiedPropertyPhotoAsset, MALAssetType.PHOTO_MEDIUM);
                     } else if (StringUtils.isNotBlank(malModifiedPropertyPhotoAsset.getDownloadUrl())) {
-                        malAssetEntity = MALAssetEntity.fromMALGetModifiedPropertyPhotos(malModifiedPropertyPhotoAsset, MALAssetType.PHOTO_DOWNLOAD_URL);
+                        assetEntity = AssetEntity.fromMALGetModifiedPropertyPhotos(malModifiedPropertyPhotoAsset, MALAssetType.PHOTO_DOWNLOAD_URL);
                     } else {
                         final String message = String.format("Can not download modified photo [%s]", GSON.toJson(malModifiedPropertyPhotoAsset));
                         final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, null, null, null );
@@ -56,7 +56,7 @@ public class MALCollectModifiedPropertiesPhotosUniqueThreadService extends Abstr
                         logger.error(message);
                         return;
                     }
-                    malAssetRepository.save(malAssetEntity);
+                    assetRepository.save(assetEntity);
                 });
     }
 

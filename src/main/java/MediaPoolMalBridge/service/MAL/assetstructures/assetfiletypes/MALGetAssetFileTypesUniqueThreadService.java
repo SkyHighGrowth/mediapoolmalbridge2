@@ -18,12 +18,12 @@ public class MALGetAssetFileTypesUniqueThreadService extends AbstractMALUniqueTh
 
     private final MALGetFileTypesClient getFileTypesClient;
 
-    private final MALAssetStructures malAssetStructures;
+    private final MALAssetStructures assetStructures;
 
     public MALGetAssetFileTypesUniqueThreadService(final MALGetFileTypesClient getFileTypesClient,
-                                                   final MALAssetStructures malAssetStructures) {
+                                                   final MALAssetStructures assetStructures) {
         this.getFileTypesClient = getFileTypesClient;
-        this.malAssetStructures = malAssetStructures;
+        this.assetStructures = assetStructures;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MALGetAssetFileTypesUniqueThreadService extends AbstractMALUniqueTh
             return;
         }
 
-        malAssetStructures.setFileTypes(response.getResponse()
+        assetStructures.setFileTypes(response.getResponse()
                 .getFileTypes()
                 .stream()
                 .collect(Collectors.toMap(FileType::getFileTypeId, x -> x.getName().toLowerCase())));

@@ -1,6 +1,6 @@
 package MediaPoolMalBridge.service.BrandMaker.assetmetadata.controller;
 
-import MediaPoolMalBridge.persistence.entity.BM.BMAssetEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.service.BrandMaker.assetmetadata.BMExchangeAssetMetadataSchedulerService;
 import MediaPoolMalBridge.service.BrandMaker.assetmetadata.download.BMDownloadAssetMetadataService;
 import org.springframework.context.annotation.Profile;
@@ -26,8 +26,8 @@ public class BMUploadAssetMetadataController {
     }
 
     @PostMapping( "/service/bm/downloadMetadata" )
-    public void downloadMetadata(@RequestBody final BMAssetEntity bmAssetEntity )
+    public void downloadMetadata(@RequestBody final AssetEntity assetEntity )
     {
-        bmDownloadAssetMetadataService.start( bmAssetEntity );
+        bmDownloadAssetMetadataService.start( assetEntity );
     }
 }

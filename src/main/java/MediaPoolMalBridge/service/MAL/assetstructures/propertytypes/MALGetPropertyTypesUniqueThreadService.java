@@ -18,12 +18,12 @@ public class MALGetPropertyTypesUniqueThreadService extends AbstractMALUniqueThr
 
     private final MALGetPropertyTypesClient getPropertyTypesClient;
 
-    private final MALAssetStructures malAssetStructures;
+    private final MALAssetStructures assetStructures;
 
     public MALGetPropertyTypesUniqueThreadService(final MALGetPropertyTypesClient getPropertyTypesClient,
-                                                  final MALAssetStructures malAssetStructures) {
+                                                  final MALAssetStructures assetStructures) {
         this.getPropertyTypesClient = getPropertyTypesClient;
-        this.malAssetStructures = malAssetStructures;
+        this.assetStructures = assetStructures;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MALGetPropertyTypesUniqueThreadService extends AbstractMALUniqueThr
             return;
         }
 
-        malAssetStructures.setPropertyTypes(response.getResponse()
+        assetStructures.setPropertyTypes(response.getResponse()
                 .getPropertyTypes()
                 .stream()
                 .collect(Collectors.toMap(MALPropertyType::getPropertyTypeId, MALPropertyType::getName)));

@@ -25,6 +25,7 @@ public class ServiceEntity {
     @Column( name = "thread_id" )
     private String threadId;
 
+    @Version
     @CreationTimestamp
     @Column( name = "created")
     private LocalDateTime created;
@@ -34,6 +35,8 @@ public class ServiceEntity {
 
     @Column(name = "task_queue_size")
     private int taskQueueSize;
+
+    public ServiceEntity() {}
 
     public ServiceEntity(final ServiceState serviceState, final String clazz, final String threadId, final int taskActiveCount, final int taskQueueSize )
     {
@@ -99,4 +102,6 @@ public class ServiceEntity {
     public void setTaskQueueSize(int taskQueueSize) {
         this.taskQueueSize = taskQueueSize;
     }
+
+
 }

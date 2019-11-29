@@ -6,17 +6,17 @@ import MediaPoolMalBridge.clients.MAL.assetsunavailable.client.model.MALGetUnava
 import MediaPoolMalBridge.clients.MAL.assetsunavailable.client.model.MALGetUnavailableAssetsResponse;
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
 import MediaPoolMalBridge.clients.rest.RestResponse;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
-import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
+import MediaPoolMalBridge.persistence.entity.enums.asset.MALAssetOperation;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.service.MAL.AbstractMALUniqueThreadService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MALCollectDeletedAssetsUniqueThreadSinceService extends AbstractMALUniqueThreadService {
@@ -62,15 +62,16 @@ public class MALCollectDeletedAssetsUniqueThreadSinceService extends AbstractMAL
     }
 
     @Transactional
-    protected void addAssetToDelete(final MALGetUnavailableAsset malGetUnavailableAsset, final MALAssetType malAssetType) {
-        final Optional<MALAssetEntity> optionalMalAssetEntity = malAssetRepository.findByAssetIdAndAssetType(malGetUnavailableAsset.getAssetId(), malAssetType);
-        if (!optionalMalAssetEntity.isPresent()) {
+    protected void addAssetToDelete(final MALGetUnavailableAsset malGetUnavailableAsset, final MALAssetType assetType) {
+        final List<AssetEntity> malAssetEntities = assetRepository.findByMalAssetIdAndAssetType(malGetUnavailableAsset.getAssetId(), assetType);
+        if (malAssetEntities == null || malAssetEntities.isEmpty()) {
             return;
         }
-        final MALAssetEntity malAssetEntity = optionalMalAssetEntity.get();
-        malAssetEntity.setTransferringAssetStatus(TransferringAssetStatus.MAL_DELETED);
-        malAssetEntity.setBmAssetId(malAssetEntity.getBmAssetId());
-        malAssetRepository.save(malAssetEntity);
+        final AssetEntity assetEntity = new AssetEntity();
+        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_OBSERVED_DELETION);
+        assetEntity.setMalAssetOperation( MALAssetOperation.MAL_DELETED );
+        assetEntity.setBmAssetIdEntity( malAssetEntities.get( 0 ).getBmAssetIdEntity() );
+        assetRepository.save(assetEntity);
     }
 
     public String getSince() {

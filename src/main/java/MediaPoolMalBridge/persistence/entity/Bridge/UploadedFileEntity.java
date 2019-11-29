@@ -25,6 +25,8 @@ public class UploadedFileEntity {
     @Column( name = "deleted" )
     private boolean deleted;
 
+    public UploadedFileEntity() { }
+
     public UploadedFileEntity( final String filename )
     {
         this.filename = filename;

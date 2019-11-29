@@ -96,11 +96,11 @@ public class AppConfigData {
     @Value( "${scheduler.bridgesendmail.cron.expression: 0 0 0 * * *}" )
     private String bridgeSendMailCronExpression;
     @Value( "${scheduler.malasset.cron.expression: 0 0 */1 * * *}" )
-    private String malAssetCronExpression;
+    private String assetCronExpression;
     @Value( "${scheduler.maldownloadasset.cron.expression: 0 0 */1 * * *}" )
     private String malDownloadAssetCronExpression;
     @Value( "${scheduler.malassetstructures.cron.expression:0 0 */1 * * *}" )
-    private String malAssetStructureCronExpression;
+    private String assetStructureCronExpression;
     @Value( "${scheduler.malproperties.cron.expression:0 0 */1 * * *}" )
     private String malPropertiesCronExpression;
     @Value( "${scheduler.malgetphotos.cron.expression:0 0 */1 * * *}" )
@@ -305,7 +305,7 @@ public class AppConfigData {
     }
 
     public String getMalAssetCronExpression() {
-        return malAssetCronExpression;
+        return assetCronExpression;
     }
 
     public String getMalDownloadAssetCronExpression() {
@@ -313,7 +313,7 @@ public class AppConfigData {
     }
 
     public String getMalAssetStructureCronExpression() {
-        return malAssetStructureCronExpression;
+        return assetStructureCronExpression;
     }
 
     public String getMalPropertiesCronExpression() {

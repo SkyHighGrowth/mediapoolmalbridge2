@@ -1,9 +1,9 @@
 package MediaPoolMalBridge.service.Bridge.excelcreator.propertystructure;
 
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
-import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringBMConnectionAssetStatus;
-import MediaPoolMalBridge.persistence.entity.BM.BMAssetEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.service.Bridge.excelcreator.AbstractBridgeUniqueExcelService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,11 @@ import java.util.List;
 @Service
 public class BridgeCreatePropertyStructureExcelUniqueThreadService extends AbstractBridgeUniqueExcelService {
 
-    private MALAssetStructures malAssetStructures;
+    private MALAssetStructures assetStructures;
 
-    public BridgeCreatePropertyStructureExcelUniqueThreadService(final MALAssetStructures malAssetStructures )
+    public BridgeCreatePropertyStructureExcelUniqueThreadService(final MALAssetStructures assetStructures )
     {
-        this.malAssetStructures = malAssetStructures;
+        this.assetStructures = assetStructures;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
         MALAssetStructures.getPropertyVariants().values().forEach(
                 propertyVariant -> {
                     final String[] fields = propertyVariant.getFieldsArray();
-                    final String brandName = malAssetStructures.getBrands().get( propertyVariant.getBrandId() );
+                    final String brandName = assetStructures.getBrands().get( propertyVariant.getBrandId() );
                     if( StringUtils.isBlank( brandName ) ) {
                         return;
                     }
@@ -85,45 +85,45 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                                 addressField05 = addressField05.replace("{" + field + "}", replacement);
                             }
                         }
-                        List<BMAssetEntity> logo = bmAssetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "ko", TransferringBMConnectionAssetStatus.DONE, getTodayMidnight() );
+                        List<AssetEntity> logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "ko", TransferringAssetStatus.DONE, getTodayMidnight() );
                         String propertyLogo1c = "";
                         if( logo != null && !logo.isEmpty() ) {
-                            propertyLogo1c = "[MD5_HASH=" + logo.get( 0 ).getBmHash() + ";MEDIA_GUID=" + logo.get( 0 ).getAssetId() + ";]";
+                            propertyLogo1c = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = bmAssetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "cmyk", TransferringBMConnectionAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "cmyk", TransferringAssetStatus.DONE, getTodayMidnight() );
                         String propertyLogo4c = "";
                         if( logo != null && !logo.isEmpty() ) {
-                            propertyLogo4c = "[MD5_HASH=" + logo.get( 0 ).getBmHash() + ";MEDIA_GUID=" + logo.get( 0 ).getAssetId() + ";]";
+                            propertyLogo4c = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = bmAssetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "cmyk-B", TransferringBMConnectionAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "cmyk-B", TransferringAssetStatus.DONE, getTodayMidnight() );
                         String propertyLogo4cb = "";
                         if( logo != null && !logo.isEmpty() ) {
-                            propertyLogo4cb = "[MD5_HASH=" + logo.get( 0 ).getBmHash() + ";MEDIA_GUID=" + logo.get( 0 ).getAssetId() + ";]";
+                            propertyLogo4cb = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = bmAssetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "k", TransferringBMConnectionAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE, getTodayMidnight() );
                         String propertyLogolcBlack = "";
                         if( logo != null && !logo.isEmpty() ) {
-                            propertyLogolcBlack = "[MD5_HASH=" + logo.get( 0 ).getBmHash() + ";MEDIA_GUID=" + logo.get( 0 ).getAssetId() + ";]";
+                            propertyLogolcBlack = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = bmAssetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "pms", TransferringBMConnectionAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "pms", TransferringAssetStatus.DONE, getTodayMidnight() );
                         String propertyLogoPMS = "";
                         if( logo != null && !logo.isEmpty() ) {
-                            propertyLogoPMS = "[MD5_HASH=" + logo.get( 0 ).getBmHash() + ";MEDIA_GUID=" + logo.get( 0 ).getAssetId() + ";]";
+                            propertyLogoPMS = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = bmAssetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "pms-c", TransferringBMConnectionAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "pms-c", TransferringAssetStatus.DONE, getTodayMidnight() );
                         String propertyLogoPMSC = "";
                         if( logo != null && !logo.isEmpty() ) {
-                            propertyLogoPMSC = "[MD5_HASH=" + logo.get( 0 ).getBmHash() + ";MEDIA_GUID=" + logo.get( 0 ).getAssetId() + ";]";
+                            propertyLogoPMSC = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = bmAssetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "cmyk-C", TransferringBMConnectionAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "cmyk-C", TransferringAssetStatus.DONE, getTodayMidnight() );
                         String propertyLogo4cc = "";
                         if( logo != null && !logo.isEmpty() ) {
-                            propertyLogo4cc = "[MD5_HASH=" + logo.get( 0 ).getBmHash() + ";MEDIA_GUID=" + logo.get( 0 ).getAssetId() + ";]";
+                            propertyLogo4cc = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = bmAssetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "ko-D", TransferringBMConnectionAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "ko-D", TransferringAssetStatus.DONE, getTodayMidnight() );
                         String propertyLogolcd = "";
                         if( logo != null && !logo.isEmpty() ) {
-                            propertyLogolcd = "[MD5_HASH=" + logo.get( 0 ).getBmHash() + ";MEDIA_GUID=" + logo.get( 0 ).getAssetId() + ";]";
+                            propertyLogolcd = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
 
                         String[] row = new String[ 45 ];
@@ -174,10 +174,10 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                         row[ 44 ] = malPropertyEntity.getPropertyId();
                         rows.add( row );
 
-                        List<BMAssetEntity> bmAssetEntities = bmAssetRepository.findPropertyAssets( malPropertyEntity.getPropertyId(), "1", getTodayMidnight() );
-                        if( bmAssetEntities != null && !bmAssetEntities.isEmpty() ) {
-                            bmAssetEntities.forEach( bmAssetEntity ->
-                                addRow( rows, bmAssetEntity, propertyVariant.getSubName(), malPropertyEntity.getPropertyId() ) );
+                        List<AssetEntity> assetEntities = assetRepository.findPropertyAssets( malPropertyEntity.getPropertyId(), "1", getTodayMidnight() );
+                        if( assetEntities != null && !assetEntities.isEmpty() ) {
+                            assetEntities.forEach( assetEntity ->
+                                addRow( rows, assetEntity, propertyVariant.getSubName(), malPropertyEntity.getPropertyId() ) );
                         }
 
                         final String[] mapColors = new String[ 3 ];
@@ -185,10 +185,10 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                         mapColors[ 1 ] = "Mla";
                         mapColors[ 2 ] = "Mrm";
                         for( final String mapColor : mapColors ) {
-                            bmAssetEntities = bmAssetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "5", mapColor, TransferringBMConnectionAssetStatus.DONE, getTodayMidnight());
-                            if (bmAssetEntities != null && !bmAssetEntities.isEmpty()) {
-                                bmAssetEntities.forEach(bmAssetEntity ->
-                                    addRow( rows, bmAssetEntity, propertyVariant.getSubNameMaps(), malPropertyEntity.getPropertyId() ) );
+                            assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "5", mapColor, TransferringAssetStatus.DONE, getTodayMidnight());
+                            if (assetEntities != null && !assetEntities.isEmpty()) {
+                                assetEntities.forEach(assetEntity ->
+                                    addRow( rows, assetEntity, propertyVariant.getSubNameMaps(), malPropertyEntity.getPropertyId() ) );
                             }
                         }
 
@@ -196,10 +196,10 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                         floorTypes[ 0 ] = "Fmt";
                         floorTypes[ 1 ] = "Fgr";
                         for( final String floorType : floorTypes ) {
-                            bmAssetEntities = bmAssetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "5", floorType, TransferringBMConnectionAssetStatus.DONE, getTodayMidnight());
-                            if (bmAssetEntities != null && !bmAssetEntities.isEmpty()) {
-                                bmAssetEntities.forEach(bmAssetEntity ->
-                                    addRow( rows, bmAssetEntity, propertyVariant.getSubNameFloorPlans(), malPropertyEntity.getPropertyId() ) );
+                            assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "5", floorType, TransferringAssetStatus.DONE, getTodayMidnight());
+                            if (assetEntities != null && !assetEntities.isEmpty()) {
+                                assetEntities.forEach(assetEntity ->
+                                    addRow( rows, assetEntity, propertyVariant.getSubNameFloorPlans(), malPropertyEntity.getPropertyId() ) );
                             }
                         }
                     } );
@@ -208,12 +208,12 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                 } );
     }
 
-    private void addRow( final List<String[]> rows, final BMAssetEntity bmAssetEntity, final String subName, final String propertyId )
+    private void addRow( final List<String[]> rows, final AssetEntity assetEntity, final String subName, final String propertyId )
     {
         final String[] row_ = new String[45];
         row_[0] = subName;
-        row_[1] = bmAssetEntity.getMalAssetId();
-        row_[2] = bmAssetEntity.getMalAssetId() + " - " + bmAssetEntity.getCaption();
+        row_[1] = assetEntity.getMalAssetId();
+        row_[2] = assetEntity.getMalAssetId() + " - " + assetEntity.getCaption();
         row_[3] = propertyId;
         row_[4] = "1";
         row_[5] = "";
@@ -239,7 +239,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
         row_[25] = "";
         row_[26] = "";
         row_[27] = "";
-        row_[28] = "[MD5_HASH=" + bmAssetEntity.getBmHash() + ";MEDIA_GUID=" + bmAssetEntity.getAssetId() + ";]";
+        row_[28] = "[MD5_HASH=" + assetEntity.getBmMd5Hash() + ";MEDIA_GUID=" + assetEntity.getBmAssetId() + ";]";
         row_[29] = "";
         row_[30] = "";
         row_[31] = "";

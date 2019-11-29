@@ -1,7 +1,7 @@
 package MediaPoolMalBridge.service.MAL.propertiesmodifiedphotos.download;
 
-import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
-import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
+import MediaPoolMalBridge.persistence.entity.enums.asset.MALAssetOperation;
 import MediaPoolMalBridge.service.MAL.AbstractMALUniqueThreadService;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
 import org.springframework.data.domain.PageRequest;
@@ -27,12 +27,12 @@ public class MALFireDownloadPhotoUniqueThreadService extends AbstractMALUniqueTh
     protected void run() {
         boolean condition = true;
         for (int page = 0; condition; ++page) {
-            final Slice<MALAssetEntity> malAssetEntities = malAssetRepository.findAllByTransferringAssetStatusAndUpdatedIsAfter(
-                    TransferringAssetStatus.MAL_PHOTO_UPDATED, getTodayMidnight(), PageRequest.of(page, pageSize));
-            condition = malAssetEntities.hasNext();
-            malAssetEntities.forEach( malAssetEntity -> {
+            final Slice<AssetEntity> assetEntities = assetRepository.findAllByMalAssetOperationAndUpdatedIsAfter(
+                    MALAssetOperation.MAL_PHOTO_UPDATED, getTodayMidnight(), PageRequest.of(page, pageSize));
+            condition = assetEntities.hasNext();
+            assetEntities.forEach( assetEntity -> {
                 if( taskExecutorWrapper.getQueueSize() < appConfig.getThreadexecutorQueueLengthMax() ) {
-                    taskExecutorWrapper.getTaskExecutor().execute(() -> malDownloadPropertiesPhotoService.start(malAssetEntity)); }
+                    taskExecutorWrapper.getTaskExecutor().execute(() -> malDownloadPropertiesPhotoService.start(assetEntity)); }
             } );
         }
     }

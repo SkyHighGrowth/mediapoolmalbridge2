@@ -5,12 +5,17 @@ import MediaPoolMalBridge.persistence.entity.Bridge.schedule.ServiceEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.entity.enums.schedule.ServiceState;
+import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class AbstractUniqueThreadService extends AbstractService {
+
+    @Autowired
+    protected AssetRepository assetRepository;
 
     private Lock lock = new ReentrantLock();
 

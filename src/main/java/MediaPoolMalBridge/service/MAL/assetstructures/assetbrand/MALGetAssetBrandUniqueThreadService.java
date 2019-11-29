@@ -18,12 +18,12 @@ public class MALGetAssetBrandUniqueThreadService extends AbstractMALUniqueThread
 
     private final MALGetBrandsClient getBrandsClient;
 
-    private final MALAssetStructures malAssetStructures;
+    private final MALAssetStructures assetStructures;
 
     public MALGetAssetBrandUniqueThreadService(final MALGetBrandsClient getBrandsClient,
-                                               final MALAssetStructures malAssetStructures) {
+                                               final MALAssetStructures assetStructures) {
         this.getBrandsClient = getBrandsClient;
-        this.malAssetStructures = malAssetStructures;
+        this.assetStructures = assetStructures;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MALGetAssetBrandUniqueThreadService extends AbstractMALUniqueThread
             return;
         }
 
-        malAssetStructures.setBrands(response.getResponse()
+        assetStructures.setBrands(response.getResponse()
                 .getBrands()
                 .stream()
                 .collect(Collectors.toMap(Brand::getBrandId, Brand::getName)));

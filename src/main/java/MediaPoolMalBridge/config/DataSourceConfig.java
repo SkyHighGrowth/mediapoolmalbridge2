@@ -12,16 +12,9 @@ import java.util.Properties;
 @Configuration
 public class DataSourceConfig {
 
-    private AppConfig appConfig;
-
-    public DataSourceConfig( final AppConfig appConfig )
-    {
-        this.appConfig = appConfig;
-    }
-
     @Bean( "DataSource" )
     @Profile( {"dev", "!production"})
-    public DataSource getDataSourceDev()
+    public DataSource getDataSourceDev(final AppConfig appConfig)
     {
         Properties dsProps = new Properties();
         dsProps.put("url", appConfig.getDatasourceUrlDev());
@@ -42,7 +35,7 @@ public class DataSourceConfig {
 
     @Bean( "DataSource" )
     @Profile( {"production", "!dev"} )
-    public DataSource getDataSourceProduction()
+    public DataSource getDataSourceProduction(final AppConfig appConfig)
     {
         Properties dsProps = new Properties();
         dsProps.put("url", appConfig.getDatasourceUrlProduction());

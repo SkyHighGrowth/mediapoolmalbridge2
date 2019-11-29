@@ -4,7 +4,7 @@ import MediaPoolMalBridge.config.AppConfig;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
-import MediaPoolMalBridge.persistence.repository.BM.BMAssetRepository;
+import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.ReportsRepository;
 import com.brandmaker.webservices.mediapool.MediaPoolWebServicePort;
 import com.brandmaker.webservices.theme.ThemeWebServicePort;
@@ -29,7 +29,7 @@ public abstract class BrandMakerSoapClient {
     protected ReportsRepository reportsRepository;
 
     @Autowired
-    protected BMAssetRepository bmAssetRepository;
+    protected AssetRepository assetRepository;
 
     protected MediaPoolWebServicePort getMediaPoolPort() {
         return mediaPoolWebServicePort;
@@ -43,8 +43,8 @@ public abstract class BrandMakerSoapClient {
         return appConfig;
     }
 
-    protected void reportErrorOnException(final String bmAssetId, final Exception e) {
-        final String message = String.format("Can not perform operation [%s] asset with id [%s], with exception message [%s]", getClass().getName(), bmAssetId, e.getMessage());
+    protected void reportErrorOnException(final String assetId, final Exception e) {
+        final String message = String.format("Can not perform operation [%s] asset with id [%s], with exception message [%s]", getClass().getName(), assetId, e.getMessage());
         final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null );
         reportsRepository.save( reportsEntity );
         logger.error(message, e);

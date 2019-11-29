@@ -18,12 +18,12 @@ public class MALGetAssetCollectionUniqueThreadService extends AbstractMALUniqueT
 
     private final MALGetCollectionsClient getCollectionsClient;
 
-    private final MALAssetStructures malAssetStructures;
+    private final MALAssetStructures assetStructures;
 
     public MALGetAssetCollectionUniqueThreadService(final MALGetCollectionsClient getCollectionsClient,
-                                                    final MALAssetStructures malAssetStructures) {
+                                                    final MALAssetStructures assetStructures) {
         this.getCollectionsClient = getCollectionsClient;
-        this.malAssetStructures = malAssetStructures;
+        this.assetStructures = assetStructures;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MALGetAssetCollectionUniqueThreadService extends AbstractMALUniqueT
             return;
         }
 
-        malAssetStructures.setCollections(response.getResponse()
+        assetStructures.setCollections(response.getResponse()
                 .getCollections()
                 .stream()
                 .collect(Collectors.toMap(Collection::getCollectionId, Collection::getName)));

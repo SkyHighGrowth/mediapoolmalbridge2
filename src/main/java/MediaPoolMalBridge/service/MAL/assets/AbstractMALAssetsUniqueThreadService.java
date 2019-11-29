@@ -6,13 +6,17 @@ import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAssetsRequest;
 import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAssetsResponse;
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
 import MediaPoolMalBridge.clients.rest.RestResponse;
+import MediaPoolMalBridge.persistence.entity.BM.BMAssetIdEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
-import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
+import MediaPoolMalBridge.persistence.entity.enums.asset.MALAssetOperation;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
+import MediaPoolMalBridge.persistence.repository.BM.BMAssetIdRepository;
 import MediaPoolMalBridge.persistence.transformer.MAL.MALAssetModelsToMALAssetEntityTransformer;
 import MediaPoolMalBridge.service.MAL.AbstractMALUniqueThreadService;
+import MediaPoolMalBridge.service.MAL.assets.transformer.MALToBMTransformer;
 import com.google.gson.Gson;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUniqueThreadService {
 
@@ -28,7 +31,13 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
     private MALGetAssetsClient getAssetsClient;
 
     @Autowired
-    private MALAssetModelsToMALAssetEntityTransformer malAssetModelsToMALAssetEntityTransformer;
+    private MALAssetModelsToMALAssetEntityTransformer assetModelsToMALAssetEntityTransformer;
+
+    @Autowired
+    private MALToBMTransformer malToBMTransformer;
+
+    @Autowired
+    private BMAssetIdRepository bmAssetIdRepository;
 
     private String since;
 
@@ -91,60 +100,69 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                             StringUtils.isNotBlank(malGetAsset.getMediumUrl()) ||
                             StringUtils.isNotBlank(malGetAsset.getLargeUrl()) ||
                             StringUtils.isNotBlank(malGetAsset.getXlUrl())) {
-                        final MALAssetEntity malAssetEntity = putIntoMALAssetMap(malGetAsset, MALAssetType.FILE);
-                        if( malAssetEntity != null ) {
-                            malAssetRepository.save( malAssetEntity );
+                        final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.FILE);
+                        if( assetEntity != null ) {
+                            assetRepository.save( assetEntity );
                         }
                     }
 
                     if (StringUtils.isNotBlank(malGetAsset.getLogoJpgUrl())) {
-                        final MALAssetEntity malAssetEntity = putIntoMALAssetMap(malGetAsset, MALAssetType.JPG_LOGO);
-                        if( malAssetEntity != null ) {
-                            malAssetRepository.save( malAssetEntity );
+                        final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.JPG_LOGO);
+                        if( assetEntity != null ) {
+                            assetRepository.save( assetEntity );
                         }
                     }
 
                     if (StringUtils.isNotBlank(malGetAsset.getLogoPngUrl())) {
-                        final MALAssetEntity malAssetEntity = putIntoMALAssetMap(malGetAsset, MALAssetType.PNG_LOGO);
-                        if( malAssetEntity != null ) {
-                            malAssetRepository.save( malAssetEntity );
+                        final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.PNG_LOGO);
+                        if( assetEntity != null ) {
+                            assetRepository.save( assetEntity );
                         }
                     }
                 });
     }
 
-    private MALAssetEntity putIntoMALAssetMap(final MALGetAsset malGetAsset, final MALAssetType malAssetType) {
-        final Optional<MALAssetEntity> optionalMALAssetEntity = malAssetRepository.findByAssetIdAndAssetType( malGetAsset.getAssetId(), malAssetType );
-        MALAssetEntity malAssetEntity;
-        if (optionalMALAssetEntity.isPresent()) {
-            malAssetEntity = optionalMALAssetEntity.get();
-            final String md5Hash = DigestUtils.md5Hex( GSON.toJson( malGetAsset ) );
-            logger.error( "malAssetEntity modified {}, downloaded modified{}, md5Hash {}, downloaded md5hash {}, bmAsset {}", malAssetEntity.getMalLastModified(), malGetAsset.getLastModified(), md5Hash, malAssetEntity.getMd5Hash(), malAssetEntity.getBmAssetId());
-            if( malAssetEntity.getMalLastModified().equals( malGetAsset.getLastModified() ) && md5Hash.equals( malAssetEntity.getMd5Hash() ) ) {
-                logger.error( "not modified" );
-                return null;
+    private AssetEntity putIntoAssetMap(final MALGetAsset malGetAsset, final MALAssetType assetType) {
+
+        final String malMd5Hash = DigestUtils.md5Hex( GSON.toJson( malGetAsset ) );
+        final List<AssetEntity> dbAssetEntities = assetRepository.findAllByMalAssetIdAndAssetType( malGetAsset.getAssetId(), assetType );
+
+        final AssetEntity assetEntity;
+        logger.error( "Assets from database {}", dbAssetEntities.size());
+        if( !dbAssetEntities.isEmpty() ) {
+            for( final AssetEntity aE : dbAssetEntities ) {
+                if( StringUtils.isNotBlank( aE.getMalLastModified() ) &&
+                        aE.getMalLastModified().equals( malGetAsset.getLastModified() ) &&
+                        malMd5Hash.equals( aE.getMalMd5Hash() ) ) {
+                    logger.error( "Duplicate entry {}, {}", aE.getMalAssetId(), aE.getAssetType());
+                    return null;
+                }
             }
-            if( StringUtils.isNotBlank(malAssetEntity.getBmAssetId()) && malAssetEntity.getBmAssetId().startsWith( "CREATING_") )
-            {
-                logger.error( "should go to MAL_CREATED" );
-                malAssetEntity = malAssetModelsToMALAssetEntityTransformer.fromMALGetAssetCreate( optionalMALAssetEntity.get(), malGetAsset, malAssetType);
-            } else {
-                logger.error( "should go to MAL_UPDATE" );
-                malAssetEntity = malAssetModelsToMALAssetEntityTransformer.fromMALGetAssetUpdate(optionalMALAssetEntity.get(), malGetAsset, malAssetType);
-            }
+            assetEntity = assetModelsToMALAssetEntityTransformer.fromMALGetAsset( malGetAsset, assetType );
+            assetEntity.setBmAssetIdEntity( dbAssetEntities.get( 0 ).getBmAssetIdEntity() );
+            assetEntity.setMalAssetOperation( MALAssetOperation.MAL_MODIFIED );
+            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ASSET_OBSERVED_MODIFICATION );
         } else {
-            logger.error( "should go to MAL_CREATED" );
-            malAssetEntity = malAssetModelsToMALAssetEntityTransformer.fromMALGetAssetCreate(malGetAsset, malAssetType);
+            assetEntity = assetModelsToMALAssetEntityTransformer.fromMALGetAsset( malGetAsset, assetType );
+            final BMAssetIdEntity bmAssetIdEntity = new BMAssetIdEntity( "CREATING_" + malGetAsset.getAssetId() );
+            bmAssetIdRepository.save( bmAssetIdEntity );
+            assetEntity.setBmAssetIdEntity( bmAssetIdEntity );
+            assetEntity.setMalAssetOperation( MALAssetOperation.MAL_CREATED );
+            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ASSET_OBSERVED_CREATION );
         }
-        if( StringUtils.isBlank( malAssetEntity.getUrl() ) )
+        assetEntity.setMalMd5Hash( malMd5Hash );
+        assetEntity.setBmUploadMetadataArgument( malToBMTransformer.transformToUploadMetadataArgument( malGetAsset ) );
+
+        if( StringUtils.isBlank( assetEntity.getUrl() ) )
         {
             final String message = String.format( "Found asset with id [%s] with invalid download url", malGetAsset.getAssetId() );
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, (new Gson()).toJson( malGetAsset), null, null);
-            malAssetEntity.setTransferringAssetStatus( TransferringAssetStatus.INVALID );
+            reportsRepository.save( reportsEntity );
+            assetEntity.setMalAssetOperation( MALAssetOperation.INVALID );
         }
-        return malAssetEntity;
-    }
 
+        return assetEntity;
+    }
 
     public String getSince() {
         return since;

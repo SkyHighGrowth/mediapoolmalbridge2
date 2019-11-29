@@ -4,11 +4,11 @@ import MediaPoolMalBridge.clients.MAL.download.client.MALDownloadAssetClient;
 import MediaPoolMalBridge.clients.MAL.download.client.model.MALDownloadAssetResponse;
 import MediaPoolMalBridge.clients.MAL.propertyphotomodified.client.model.MALModifiedPropertyPhotoAsset;
 import MediaPoolMalBridge.constants.Constants;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
-import MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
-import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringMALConnectionAssetStatus;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.service.MAL.AbstractMALNonUniqueThreadService;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +21,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
 @Service
-public class MALDownloadPropertiesPhotoService extends AbstractMALNonUniqueThreadService<MALAssetEntity> {
+public class MALDownloadPropertiesPhotoService extends AbstractMALNonUniqueThreadService<AssetEntity> {
 
     private static Logger logger = LoggerFactory.getLogger(MALDownloadPropertiesPhotoService.class);
 
@@ -34,16 +34,18 @@ public class MALDownloadPropertiesPhotoService extends AbstractMALNonUniqueThrea
     }
 
     @Override
-    protected void run(final MALAssetEntity malAsset) {
-
-        if( malAsset.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING, appConfig.getAssetStateRepetitionMax() ) ) {
-            final String message = String.format( "Max retries for downloading photo achieved for asset id [%s]", malAsset.getAssetId() );
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(malAsset), null, null );
+    protected void run(final AssetEntity assetEntity) {
+        assetEntity.increaseMalStatesRepetitions();
+        final TransferringAssetStatus transferringAssetStatus = assetEntity.getTransferringAssetStatus();
+        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.FILE_DELETING );
+        if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
+            final String message = String.format( "Max retries for downloading photo achieved for asset id [%s]", assetEntity.getMalAssetId() );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
             reportsRepository.save( reportsEntity );
-            logger.error( "message {}, bmAsset {}", message, GSON.toJson( malAsset ) );
+            logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
             return;
         }
-        final MALModifiedPropertyPhotoAsset malModifiedPropertyPhotoAsset = malAsset.getMALModifiedPropertyPhotoAsset();
+        final MALModifiedPropertyPhotoAsset malModifiedPropertyPhotoAsset = assetEntity.getMALModifiedPropertyPhotoAsset();
         final String fileName = malModifiedPropertyPhotoAsset.getFilename();
 
         if (StringUtils.isBlank(fileName)) {
@@ -58,7 +60,7 @@ public class MALDownloadPropertiesPhotoService extends AbstractMALNonUniqueThrea
                 final String mediumFileName = Constants.MEDIUM_PHOTO_FILE_PREFIX + fileName;
                 response = fire(decode(malModifiedPropertyPhotoAsset.getMediumDownloadUrl()), mediumFileName);
                 if (response.isSuccess()) {
-                    malAsset.setFileNameOnDisc(mediumFileName);
+                    assetEntity.setFileNameOnDisc(mediumFileName);
                 } else {
                     logger.error("Can not download medium file for property phot {}, with message {}",
                             GSON.toJson(malModifiedPropertyPhotoAsset),
@@ -71,7 +73,7 @@ public class MALDownloadPropertiesPhotoService extends AbstractMALNonUniqueThrea
                 final String jpgFileName = Constants.JPG_PHOTO_FILE_PREFIX + fileName;
                 response = fire(decode(malModifiedPropertyPhotoAsset.getJpgDownloadUrl()), jpgFileName);
                 if (response.isSuccess()) {
-                    malAsset.setFileNameOnDisc(jpgFileName);
+                    assetEntity.setFileNameOnDisc(jpgFileName);
                 } else {
                     logger.error("Can not download JPG file for property photo {} with message {}",
                             GSON.toJson(malModifiedPropertyPhotoAsset),
@@ -81,9 +83,9 @@ public class MALDownloadPropertiesPhotoService extends AbstractMALNonUniqueThrea
             }
 
             if (downloaded) {
-                malAsset.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADED);
+                assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
             } else {
-                malAsset.setTransferringMALConnectionAssetStatus(TransferringMALConnectionAssetStatus.DOWNLOADING, appConfig.getAssetStateRepetitionMax());
+                assetEntity.setTransferringAssetStatus(transferringAssetStatus);
             }
         } catch (final Exception e) {
             logger.error("Can not create job for asset {}", (new Gson()).toJson(malModifiedPropertyPhotoAsset), e);
@@ -91,7 +93,6 @@ public class MALDownloadPropertiesPhotoService extends AbstractMALNonUniqueThrea
     }
 
     private MALDownloadAssetResponse fire(final String url, final String fileName) {
-        logger.info("Firing fileName {}, url {}", fileName, url);
         return malDownloadAssetClient.download(url, fileName);
     }
 

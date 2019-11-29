@@ -119,97 +119,97 @@ public class MALClientController {
         this.getSubjectsClient = getSubjectsClient;
     }
 
-    @PostMapping(value = "/mal/getUnavailableAssets", consumes = "application/json")
+    @PostMapping(value = "/client/mal/getUnavailableAssets", consumes = "application/json")
     public MALGetUnavailableAssetsResponse getUnavailableAssets(@RequestBody final MALGetUnavailableAssetsRequest request) {
         return getUnavailableAssetsClient.download(request).getResponse();
     }
 
-    @PostMapping(value = "/mal/getAssets", consumes = "application/json")
+    @PostMapping(value = "/client/mal/getAssets", consumes = "application/json")
     public MALGetAssetsResponse getAssets(@RequestBody final MALGetAssetsRequest request) {
         return getAssetsClient.download(request).getResponse();
     }
 
-    @GetMapping("/mal/getAssetTypes")
+    @GetMapping("/client/mal/getAssetTypes")
     public MALGetAssetTypesResponse getAssetTypes() {
         return getAssetTypesClient.download().getResponse();
     }
 
-    @GetMapping("/mal/getBrands")
+    @GetMapping("/client/mal/getBrands")
     public MALGetBrandsResponse getBrands() {
         return getBrandsClient.download().getResponse();
     }
 
-    @GetMapping("/mal/getCollections")
+    @GetMapping("/client/mal/getCollections")
     public MALGetCollectionsResponse getCollections() {
         return getCollectionsClient.download().getResponse();
     }
 
-    @GetMapping("/mal/getColors")
+    @GetMapping("/client/mal/getColors")
     public MALGetColorsResponse getColors() {
         return getColorsClient.download().getResponse();
     }
 
-    @GetMapping("/getCountry")
+    @GetMapping("/client/mal/getCountry")
     public MALGetCountryResponse getCountry() {
         return getCountryClient.download().getResponse();
     }
 
-    @GetMapping("/mal/getDestinations")
+    @GetMapping("/client/mal/getDestinations")
     public MALGetDestinationsResponse getDestinations() {
         return getDestinationsClient.download().getResponse();
     }
 
-    @GetMapping("/mal/getDivisions")
+    @GetMapping("/client/mal/getDivisions")
     public MALGetDivisionsResponse getDivisions() {
         return getDivisionsClient.download().getResponse();
     }
 
-    @GetMapping("/mal/getFileTypes")
+    @GetMapping("/client/mal/getFileTypes")
     public MALGetFileTypesResponse getFileTypes() {
         return getFileTypesClient.download().getResponse();
     }
 
-    @GetMapping("/mal/getKits")
+    @GetMapping("/client/mal/getKits")
     public MALGetKitsResponse getKits() {
         return getKitsClient.download().getResponse();
     }
 
-    @PostMapping(value = "/mal/getProperties", consumes = "application/json")
+    @PostMapping(value = "/client/mal/getProperties", consumes = "application/json")
     public MALGetPropertiesResponse getProperties(@RequestBody final MALGetPropertiesRequest request) {
         return getPropertiesClient.download(request).getResponse();
     }
 
-    @PostMapping(value = "/mal/getUnavailableProperties", consumes = "application/json")
+    @PostMapping(value = "/client/mal/getUnavailableProperties", consumes = "application/json")
     public MALGetUnavailabelPropertiesResponse getUnavailableProperties(@RequestBody final MALGetUnavailablePropertiesRequest request) {
         return getUnavailablePropertiesClient.download(request).getResponse();
     }
 
-    @GetMapping("/mal/getPropertiesWithRelatedAssets")
+    @GetMapping("/client/mal/getPropertiesWithRelatedAssets")
     public MALGetPropertiesWithRelatedAssetsResponse getPropertiesWithUnavailableAssets() {
         return getPropertiesWithRelatedAssetsClient.download().getResponse();
     }
 
-    @PostMapping(value = "/mal/getModifiedPropertiesPhotos", consumes = "application/json")
+    @PostMapping(value = "/client/mal/getModifiedPropertiesPhotos", consumes = "application/json")
     public MALGetModifiedPropertyPhotoResponse getModifiedPropertyPhotos(@RequestBody final MALGetModifiedPropertyPhotoRequest request) {
         return getModifiedPropertyPhotoClient.download(request).getResponse();
     }
 
-    @PostMapping(value = "/mal/getPropertiesPhotos", consumes = "application/json")
+    @PostMapping(value = "/client/mal/getPropertiesPhotos", consumes = "application/json")
     public MALGetPropertyPhotosResponse getPropertyPhotos(@RequestBody final MALGetPropertyPhotosRequest request) {
         return getPropertyPhotosClient.download(request).getResponse();
     }
 
-    @GetMapping("/mal/getPropertiesTypes")
+    @GetMapping("/client/mal/getPropertiesTypes")
     public MALGetPropertyTypesResponse getPropertyTypes() {
         return getPropertyTypesClient.download().getResponse();
     }
 
-    @GetMapping("/mal/getStates")
+    @GetMapping("/client/mal/getStates")
     public MALGetStatesResponse getStates() {
         return getStatesClient.download().getResponse();
     }
 
-    @GetMapping("/mal/getSubjects")
+    @GetMapping("/client/mal/getSubjects")
     public MALGetSubjectsResponse getSubjects() {
         return getSubjectsClient.download().getResponse();
     }
