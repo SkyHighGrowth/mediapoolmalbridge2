@@ -8,6 +8,12 @@ public class MALPropertyVariant {
 
     private String structureName;
 
+    private String subName;
+
+    private String subNameMaps;
+
+    private String subNameFloorPlans;
+
     private String addressField01;
 
     private String addressField02;
@@ -20,10 +26,23 @@ public class MALPropertyVariant {
 
     private String fields;
 
-    public MALPropertyVariant( final String id, final String structureName, final String addressField01, final String addressField02, final String addressField03, final String addressField04, final String addressField05, final String fields )
+    public MALPropertyVariant( final String id,
+                               final String structureName,
+                               final String subName,
+                               final String subNameMaps,
+                               final String subNameFloorPlans,
+                               final String addressField01,
+                               final String addressField02,
+                               final String addressField03,
+                               final String addressField04,
+                               final String addressField05,
+                               final String fields )
     {
         this.id = id;
         this.structureName = structureName;
+        this.subName = subName;
+        this.subNameMaps = subNameMaps;
+        this.subNameFloorPlans = subNameFloorPlans;
         this.addressField01 = addressField01;
         this.addressField02 = addressField02;
         this.addressField03 = addressField03;
@@ -36,64 +55,32 @@ public class MALPropertyVariant {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getStructureName() {
         return structureName;
-    }
-
-    public void setStructureName(String structureName) {
-        this.structureName = structureName;
     }
 
     public String getAddressField01() {
         return addressField01;
     }
 
-    public void setAddressField01(String addressField01) {
-        this.addressField01 = addressField01;
-    }
-
     public String getAddressField02() {
         return addressField02;
-    }
-
-    public void setAddressField02(String addressField02) {
-        this.addressField02 = addressField02;
     }
 
     public String getAddressField03() {
         return addressField03;
     }
 
-    public void setAddressField03(String addressField03) {
-        this.addressField03 = addressField03;
-    }
-
     public String getAddressField04() {
         return addressField04;
-    }
-
-    public void setAddressField04(String addressField04) {
-        this.addressField04 = addressField04;
     }
 
     public String getAddressField05() {
         return addressField05;
     }
 
-    public void setAddressField05(String addressField05) {
-        this.addressField05 = addressField05;
-    }
-
     public String getFields() {
         return fields;
-    }
-
-    public void setFields(String fields) {
-        this.fields = fields;
     }
 
     public String getBrandId()
@@ -112,19 +99,16 @@ public class MALPropertyVariant {
 
     public String getSubName()
     {
-        //TODO compute subname to be used with photos in excel creation
-        return "SUB_NAME";
+        return subName;
     }
 
     public String getSubNameMaps()
     {
-        //TODO compute subname maps to be used with photos in excel creation
-        return "SUB_NAME_MAPS";
+        return subNameMaps;
     }
 
     public String getSubNameFloorPlans()
     {
-        //TODO compute subname floor plans to be used with floor plans in excel generation
-        return "SUB_NAME_FLOOR_PLANS";
+        return subNameFloorPlans;
     }
 }

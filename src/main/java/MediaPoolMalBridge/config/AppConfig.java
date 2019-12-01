@@ -5,11 +5,13 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Arrays;
 
 @Component
 public class AppConfig {
@@ -18,8 +20,15 @@ public class AppConfig {
 
     private AppConfigData appConfigData;
 
-    public AppConfig( final AppConfigData appConfigData )
+    private Environment environment;
+
+    public AppConfig( final AppConfigData appConfigData, final Environment environment )
     {
+        if(Arrays.asList( environment.getActiveProfiles() ).contains( "dev" ) &&
+           Arrays.asList( environment.getActiveProfiles() ).contains( "production" ) ) {
+            logger.error( "Can not start with profiles dev and production set at the same time" );
+            throw new RuntimeException();
+        }
         this.appConfigData = appConfigData;
         File file = new File(System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR);
         if (!file.exists()) {

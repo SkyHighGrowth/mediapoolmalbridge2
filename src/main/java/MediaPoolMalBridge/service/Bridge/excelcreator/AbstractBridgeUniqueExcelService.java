@@ -1,7 +1,10 @@
 package MediaPoolMalBridge.service.Bridge.excelcreator;
 
 import MediaPoolMalBridge.config.AppConfig;
+import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
+import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
+import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
 import MediaPoolMalBridge.persistence.repository.MAL.MALPropertyRepository;
 import MediaPoolMalBridge.service.AbstractUniqueThreadService;
@@ -50,7 +53,7 @@ public abstract class AbstractBridgeUniqueExcelService extends AbstractUniqueThr
                 sheet.addCell(headerLabel);
             }
 
-            for (final MALPropertyEntity malPropertyEntity : malPropertyRepository.findAll()) {
+            for (final MALPropertyEntity malPropertyEntity : malPropertyRepository.findAllByUpdatedIsAfter( getMidnight() ) ) {
                 ++rowIndex;
                 colIndex = 0;
                 Label headerLabel = new Label(colIndex++, rowIndex, "AFFILIATES_CODE", headerFormat);
@@ -168,6 +171,7 @@ public abstract class AbstractBridgeUniqueExcelService extends AbstractUniqueThr
                 //27
                 headerLabel = new Label(colIndex++, rowIndex, "", headerFormat);
                 sheet.addCell(headerLabel);
+                //28
                 headerLabel = new Label(colIndex, rowIndex, malPropertyEntity.getPropertyId(), headerFormat);
                 sheet.addCell(headerLabel);
             }
@@ -206,7 +210,9 @@ public abstract class AbstractBridgeUniqueExcelService extends AbstractUniqueThr
             workbook.write();
             workbook.close();
         } catch (final Exception e) {
-            final String message = String.format("Can not create excel file [%s]", fileName);
+            final String message = String.format("Can not save excel file [%s]", fileName);
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null);
+            reportsRepository.save( reportsEntity );
             logger.error(message, e);
         }
     }

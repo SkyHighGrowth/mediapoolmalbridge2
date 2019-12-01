@@ -27,6 +27,8 @@ public class BMDownloadAssetMetadataService extends AbstractBMNonUniqueThreadSer
             final String message = String.format( "Max retries for metadata downloading achieved for asset id [%s]", assetEntity.getBmAssetId() );
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
             reportsRepository.save( reportsEntity );
+            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ERROR );
+            assetRepository.save( assetEntity );
             logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
             return;
         }

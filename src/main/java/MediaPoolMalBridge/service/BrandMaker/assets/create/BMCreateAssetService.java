@@ -12,6 +12,7 @@ import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus
 import MediaPoolMalBridge.persistence.repository.BM.BMAssetIdRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.UploadedFileRepository;
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMNonUniqueThreadService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,6 +41,8 @@ public class BMCreateAssetService extends AbstractBMNonUniqueThreadService<Asset
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
             reportsRepository.save( reportsEntity );
             logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
+            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ERROR );
+            assetRepository.save( assetEntity );
             uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
             return;
         }
@@ -53,9 +56,28 @@ public class BMCreateAssetService extends AbstractBMNonUniqueThreadService<Asset
             assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_UPLOADED);
             uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
         } else {
-            reportErrorOnResponse(assetEntity.getBmAssetId(), uploadStatus);
-            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
+            if( !triggerBMAssetIdDownloadFormHashIfPossible( assetEntity, uploadStatus ) ) {
+                reportErrorOnResponse(assetEntity.getBmAssetId(), uploadStatus);
+                assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
+            }
         }
         assetRepository.save(assetEntity);
+    }
+
+    private boolean triggerBMAssetIdDownloadFormHashIfPossible( final AssetEntity assetEntity, final UploadStatus uploadStatus ) {
+        if( uploadStatus.getErrors() == null ||
+            uploadStatus.getErrors().isEmpty() ) {
+            return false;
+        }
+
+        for( final String error : uploadStatus.getErrors() ) {
+            if( error.startsWith( "The media already exists!" ) ) {
+                final String bmAssetId = StringUtils.substringAfter( error, "The media already exists!" );
+                assetEntity.setBmMd5Hash( bmAssetId.trim() );
+                assetEntity.setTransferringAssetStatus( TransferringAssetStatus.GET_BM_ASSET_ID );
+                return true;
+            }
+        }
+        return false;
     }
 }

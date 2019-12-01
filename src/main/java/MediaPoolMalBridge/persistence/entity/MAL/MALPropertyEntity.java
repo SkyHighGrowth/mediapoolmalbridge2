@@ -2,6 +2,7 @@ package MediaPoolMalBridge.persistence.entity.MAL;
 
 import MediaPoolMalBridge.clients.MAL.properties.client.model.MALProperty;
 import MediaPoolMalBridge.persistence.entity.AbstractEntity;
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,38 +11,48 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table( name = "mal_property",
-        indexes = { @Index(columnList = "property_id, updated"),
-                    @Index( columnList = "brand, updated" ) },
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"property_id"})})
+        indexes = { @Index( columnList = "property_id, updated" ),
+                    @Index( columnList = "property_id" ),
+                    @Index( columnList = "brand, updated")},
+        uniqueConstraints = { @UniqueConstraint(columnNames = { "property_id" } ) } )
 public class MALPropertyEntity extends AbstractEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
+    @GeneratedValue( strategy = GenerationType.SEQUENCE )
+    @Column( name = "id" )
+    @Expose( serialize = true, deserialize = true )
     private long id;
 
-    @Column(name = "property_id")
+    @Column( name = "property_id" )
+    @Expose( serialize = true, deserialize = true )
     private String propertyId;
 
-    @Column(name = "name")
+    @Column( name = "name" )
+    @Expose( serialize = true, deserialize = true )
     private String name;
 
-    @Column(name = "address")
+    @Column( name = "address" )
+    @Expose( serialize = true, deserialize = true )
     private String address;
 
-    @Column(name = "address_2")
+    @Column( name = "address_2" )
+    @Expose( serialize = true, deserialize = true )
     private String address2;
 
-    @Column(name = "state")
+    @Column( name = "state" )
+    @Expose( serialize = true, deserialize = true )
     private String state;
 
-    @Column(name = "zip")
+    @Column( name = "zip" )
+    @Expose( serialize = true, deserialize = true )
     private String zip;
 
-    @Column(name = "city")
+    @Column( name = "city" )
+    @Expose( serialize = true, deserialize = true )
     private String city;
 
-    @Column(name = "country")
+    @Column( name = "country" )
+    @Expose( serialize = true, deserialize = true )
     private String country;
 
     @Column(name = "url")

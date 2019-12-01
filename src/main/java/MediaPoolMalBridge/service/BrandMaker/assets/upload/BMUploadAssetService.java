@@ -33,6 +33,9 @@ public class BMUploadAssetService extends AbstractBMNonUniqueThreadService<Asset
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
             reportsRepository.save( reportsEntity );
             logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
+            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ERROR );
+            assetRepository.save( assetEntity );
+            uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
             return;
         }
         final UploadStatus uploadStatus = bmUploadVersionAssetClient.upload( assetEntity );

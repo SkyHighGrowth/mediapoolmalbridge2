@@ -7,11 +7,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table( name = "files_to_be_deleted",
-        indexes = {@Index( columnList = "deleted" ) } )
+        indexes = { @Index( columnList = "deleted" ) } )
 public class UploadedFileEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue( strategy = GenerationType.SEQUENCE )
     @Column( name = "id")
     private long id;
 

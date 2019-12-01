@@ -6,11 +6,18 @@ import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.ReportsRepository;
+import com.brandmaker.webservices.mediapool.MediaPoolService;
 import com.brandmaker.webservices.mediapool.MediaPoolWebServicePort;
+import com.brandmaker.webservices.theme.ThemeService;
 import com.brandmaker.webservices.theme.ThemeWebServicePort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+
+import javax.xml.ws.BindingProvider;
+import java.util.Arrays;
+import java.util.Map;
 
 public abstract class BrandMakerSoapClient {
 
@@ -20,10 +27,13 @@ public abstract class BrandMakerSoapClient {
     private AppConfig appConfig;
 
     @Autowired
-    private MediaPoolWebServicePort mediaPoolWebServicePort;
+    private Environment environment;
 
     @Autowired
-    private ThemeWebServicePort themeWebServicePort;
+    private MediaPoolService mediaPoolService;
+
+    @Autowired
+    private ThemeService themeService;
 
     @Autowired
     protected ReportsRepository reportsRepository;
@@ -32,11 +42,42 @@ public abstract class BrandMakerSoapClient {
     protected AssetRepository assetRepository;
 
     protected MediaPoolWebServicePort getMediaPoolPort() {
-        return mediaPoolWebServicePort;
+        final MediaPoolWebServicePort port = mediaPoolService.getMediaPoolPort();
+        if( Arrays.asList( environment.getActiveProfiles() ).contains( "dev" ) &&
+            !Arrays.asList( environment.getActiveProfiles() ).contains( "production" ) ) {
+            Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
+            reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfig.getMediapoolUsernameDev());
+            reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfig.getMediapoolPasswordDev());
+            reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfig.getMediapoolUrlDev());
+        }
+        if( Arrays.asList( environment.getActiveProfiles() ).contains( "production" ) &&
+            !Arrays.asList( environment.getActiveProfiles() ).contains( "dev" ) ) {
+            Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
+            reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfig.getMediapoolUsernameProduction());
+            reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfig.getMediapoolPasswordProduction());
+            reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfig.getMediapoolUrlProduction());
+        }
+        return port;
     }
 
     protected ThemeWebServicePort getThemeWebServicePort() {
-        return themeWebServicePort;
+        final ThemeWebServicePort port = themeService.getThemePort();
+        if( Arrays.asList( environment.getActiveProfiles() ).contains( "dev" ) &&
+            !Arrays.asList( environment.getActiveProfiles() ).contains( "production" ) ) {
+            Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
+            reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfig.getMediapoolUsernameDev());
+            reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfig.getMediapoolPasswordDev());
+            reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfig.getThemeUrlDev());
+        }
+        if( Arrays.asList( environment.getActiveProfiles() ).contains( "production" ) &&
+            !Arrays.asList( environment.getActiveProfiles() ).contains( "dev" ) ) {
+            Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
+            reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfig.getMediapoolUsernameProduction());
+            reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfig.getMediapoolPasswordProduction());
+            reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfig.getThemeUrlProduction());
+
+        }
+        return port;
     }
 
     protected AppConfig getAppConfig() {

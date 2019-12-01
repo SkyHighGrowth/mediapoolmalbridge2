@@ -11,11 +11,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
-    Slice<AssetEntity> findAllByTransferringAssetStatusOrTransferringAssetStatusAndUpdatedIsAfter(
-            final TransferringAssetStatus arg1, final TransferringAssetStatus arg2, final LocalDateTime arg3, final Pageable page);
 
     @Query( "select ae " +
             "from AssetEntity ae " +
@@ -35,24 +32,9 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
             "order by ae.updated desc")
     List<AssetEntity> findPropertyAssets( final String propertyId, final String assetTypeId, final LocalDateTime updated );
 
-    Slice<AssetEntity> findAllByTransferringAssetStatusOrTransferringAssetStatusOrTransferringAssetStatusAndUpdatedIsAfter(
-            final TransferringAssetStatus arg1, final TransferringAssetStatus arg2, final TransferringAssetStatus arg3, final LocalDateTime arg4, final Pageable page );
-
     Slice<AssetEntity> findAllByTransferringAssetStatusAndUpdatedIsAfter( final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated, final Pageable page );
 
-    List<AssetEntity> findByMalAssetIdAndAssetType(final String assetId, final MALAssetType assetType);
-
-    Optional<AssetEntity> findByMalAssetIdAndAssetTypeAndUpdatedIsAfter(final String assetId, final MALAssetType assetType, final LocalDateTime updated);
-
-    /*@Query("select mae " +
-            "from MALAssetEntity mae " +
-            "where mae.transferringAssetStatus = :arg1 or " +
-            "mae.transferringAssetStatus = :arg2" )*/
-    Slice<AssetEntity> findAllByMalAssetOperationOrMalAssetOperation(final MALAssetOperation arg1, final MALAssetOperation arg2, final Pageable arg3  );
-
     Slice<AssetEntity> findAllByMalAssetOperationAndUpdatedIsAfter( final MALAssetOperation arg1, final LocalDateTime arg2, final Pageable page );
-
-    Slice<AssetEntity> findAllByMalAssetIdAndAssetTypeAndTransferringAssetStatus( final String malAssetId, final MALAssetType malAssetType, final TransferringAssetStatus transferringAssetStatus );
 
     List<AssetEntity> findAllByMalAssetIdAndAssetType( final String malAssetId, final MALAssetType malAssetType );
 }

@@ -5,6 +5,8 @@ public enum TransferringAssetStatus {
     ASSET_OBSERVED,
     FILE_DOWNLOADING,
     FILE_DOWNLOADED,
+    GET_BM_ASSET_ID,
+    GETTING_BM_ASSET_ID,
     FILE_UPLOADING,
     FILE_UPLOADED,
     FILE_DELETING,

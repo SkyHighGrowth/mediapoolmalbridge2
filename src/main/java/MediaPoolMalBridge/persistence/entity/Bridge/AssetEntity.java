@@ -28,17 +28,21 @@ public class AssetEntity extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
+    @Expose( serialize = true, deserialize = true )
     private long id;
 
     @Column( name = "mal_asset_operation" )
     @Enumerated( EnumType.STRING )
+    @Expose( serialize = true, deserialize = true )
     private MALAssetOperation malAssetOperation;
 
     @Column(name = "mal_asset_id")
+    @Expose( serialize = true, deserialize = true )
     private String malAssetId;
 
     @Column(name = "mal_asset_type")
     @Enumerated( EnumType.STRING )
+    @Expose( serialize = true, deserialize = true )
     private MALAssetType assetType;
 
     @ManyToOne
@@ -47,69 +51,90 @@ public class AssetEntity extends AbstractEntity {
     private BMAssetIdEntity bmAssetIdEntity;
 
     @Column( name = "property_id" )
+    @Expose( serialize = true, deserialize = true )
     private String propertyId;
 
     @Column( name = "marsha_code" )
+    @Expose( serialize = true, deserialize = true )
     private String marshaCode;
 
     @Column( name = "brand_id" )
+    @Expose( serialize = true, deserialize = true )
     private String brandId;
 
     @Column( name = "mal_asset_type_id" )
+    @Expose( serialize = true, deserialize = true )
     private String assetTypeId;
 
     @Column( name = "color_id" )
+    @Expose( serialize = true, deserialize = true )
     private String colorId;
 
-    @Column(name = "caption")
+    @Column( name = "caption" )
+    @Expose( serialize = true, deserialize = true )
     private String caption;
 
     @Column( name = "file_name_on_disc" )
+    @Expose( serialize = true, deserialize = true )
     private String fileNameOnDisc;
 
     @Column( name = "file_name_in_mal" )
+    @Expose( serialize = true, deserialize = true )
     private String fileNameInMal;
 
     @Column( name = "url" )
+    @Expose( serialize = true, deserialize = true )
     private String url;
 
     @Column( name = "mal_states_repetitions" )
+    @Expose( serialize = true, deserialize = true )
     private int malStatesRepetitions = 0;
 
     @Column( name = "transferring_status" )
     @Enumerated( EnumType.STRING )
+    @Expose( serialize = true, deserialize = true )
     private TransferringAssetStatus transferringAssetStatus = TransferringAssetStatus.INVALID;
 
     @CreationTimestamp
     @Column( name = "created" )
+    @Expose( serialize = true, deserialize = true )
     private LocalDateTime created;
 
     @UpdateTimestamp
     @Column( name = "updated" )
+    @Expose( serialize = true, deserialize = true )
     private LocalDateTime updated;
 
     @Column( name = "mal_last_modified" )
+    @Expose( serialize = true, deserialize = true )
     private String malLastModified;
 
     @Column( name = "mal_created" )
+    @Expose( serialize = true, deserialize = true )
     private String malCreated;
 
     @Column( name = "mal_modified_property_photo_json", columnDefinition="LONGTEXT" )
+    @Expose( serialize = true, deserialize = true )
     private String malModifiedPropertyPhotoAssetJson;
 
     @Column( name = "mal_get_asset_json", columnDefinition="LONGTEXT" )
+    @Expose( serialize = true, deserialize = true )
     private String malGetAssetJson;
 
     @Column( name = "mal_get_unavailable_asset_json", columnDefinition="LONGTEXT" )
+    @Expose( serialize = true, deserialize = true )
     private String malGetUnavailableAssetJson;
 
     @Column(name = "bm_upload_metadata_argument", columnDefinition="LONGTEXT")
+    @Expose( serialize = true, deserialize = true )
     private String bmUploadMetadataArgumentJson;
 
     @Column( name = "mal_md5_hash" )
+    @Expose( serialize = true, deserialize = true )
     private String malMd5Hash;
 
     @Column( name = "bm_md5_hash" )
+    @Expose( serialize = true, deserialize = true )
     private String bmMd5Hash;
 
     public AssetEntity() {}

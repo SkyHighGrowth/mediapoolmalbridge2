@@ -63,7 +63,7 @@ public class MALCollectDeletedAssetsUniqueThreadSinceService extends AbstractMAL
 
     @Transactional
     protected void addAssetToDelete(final MALGetUnavailableAsset malGetUnavailableAsset, final MALAssetType assetType) {
-        final List<AssetEntity> malAssetEntities = assetRepository.findByMalAssetIdAndAssetType(malGetUnavailableAsset.getAssetId(), assetType);
+        final List<AssetEntity> malAssetEntities = assetRepository.findAllByMalAssetIdAndAssetType(malGetUnavailableAsset.getAssetId(), assetType);
         if (malAssetEntities == null || malAssetEntities.isEmpty()) {
             return;
         }
