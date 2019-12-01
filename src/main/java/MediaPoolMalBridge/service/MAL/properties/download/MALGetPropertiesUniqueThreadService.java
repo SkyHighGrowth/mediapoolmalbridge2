@@ -29,7 +29,7 @@ public class MALGetPropertiesUniqueThreadService extends AbstractMALUniqueThread
     @Override
     protected void run() {
         final MALGetPropertiesRequest request = new MALGetPropertiesRequest();
-        request.setPerPage(200);
+        request.setPerPage(appConfig.getMalPageSize());
         request.setPage(1);
         final RestResponse<MALGetPropertiesResponse> response = getPropertiesClient.download(request);
         if (!response.isSuccess() ||

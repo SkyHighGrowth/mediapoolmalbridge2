@@ -25,7 +25,7 @@ public class BMUploadAssetSchedulerController {
         bmUploadAssetSchedulerService.create();
     }
 
-    @GetMapping("/service/bm/uploadAssets")
+    @GetMapping("/service/bm/updateAssets")
     public void updateAssets() {
         bmUploadAssetSchedulerService.update();
     }

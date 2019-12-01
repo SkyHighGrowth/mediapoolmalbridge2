@@ -9,6 +9,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+
 @Component
 public class MALAssetModelsToMALAssetEntityTransformer {
 
@@ -24,32 +26,33 @@ public class MALAssetModelsToMALAssetEntityTransformer {
         final AssetEntity assetEntity = new AssetEntity();
         String fileNameOnDisc = "";
         String url = "";
+        final long instant = Instant.now().toEpochMilli();
         switch (assetType) {
             case FILE:
                 if (StringUtils.isNotBlank(malGetAsset.getXlUrl())) {
                     url = malGetAsset.getXlUrl();
-                    fileNameOnDisc = Constants.XL_FILE_PREFIX + getFileName(url, malGetAsset);
+                    fileNameOnDisc = Constants.XL_FILE_PREFIX + instant + getFileName(url, malGetAsset);
                 } else if (StringUtils.isNotBlank(malGetAsset.getLargeUrl())) {
                     url = malGetAsset.getLargeUrl();
-                    fileNameOnDisc = Constants.LARGE_FILE_PREFIX + getFileName(url, malGetAsset);
+                    fileNameOnDisc = Constants.LARGE_FILE_PREFIX + instant + getFileName(url, malGetAsset);
                 } else if (StringUtils.isNotBlank(malGetAsset.getMediumUrl())) {
                     url = malGetAsset.getMediumUrl();
-                    fileNameOnDisc = Constants.MEDIUM_FILE_PREFIX + getFileName(url, malGetAsset);
+                    fileNameOnDisc = Constants.MEDIUM_FILE_PREFIX + instant + getFileName(url, malGetAsset);
                 } else if (StringUtils.isNotBlank(malGetAsset.getThumbnailUrl())) {
                     url = malGetAsset.getThumbnailUrl();
-                    fileNameOnDisc = Constants.THUMBNAIL_FILE_PREFIX + getFileName(url, malGetAsset);
+                    fileNameOnDisc = Constants.THUMBNAIL_FILE_PREFIX + instant + getFileName(url, malGetAsset);
                 }
                 break;
             case JPG_LOGO:
                 if (StringUtils.isNotBlank(malGetAsset.getLogoJpgUrl())) {
-                    fileNameOnDisc = Constants.LOGO_JPG_FILE_PREFIX +
+                    fileNameOnDisc = Constants.LOGO_JPG_FILE_PREFIX + instant +
                             getFileNameWithExtension(malGetAsset.getLogoJpgUrl(), malGetAsset, ".jpg");
                     url = malGetAsset.getLogoJpgUrl();
                 }
                 break;
             case PNG_LOGO:
                 if (StringUtils.isNotBlank(malGetAsset.getLogoPngUrl())) {
-                    fileNameOnDisc = Constants.LOGO_PNG_FILE_PREFIX +
+                    fileNameOnDisc = Constants.LOGO_PNG_FILE_PREFIX + instant +
                             getFileNameWithExtension(malGetAsset.getLogoPngUrl(), malGetAsset, ".png");
                     url = malGetAsset.getLogoPngUrl();
                 }

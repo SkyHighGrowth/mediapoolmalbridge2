@@ -68,7 +68,7 @@ public class MALCollectDeletedAssetsUniqueThreadSinceService extends AbstractMAL
             return;
         }
         final AssetEntity assetEntity = new AssetEntity();
-        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_OBSERVED_DELETION);
+        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_OBSERVED);
         assetEntity.setMalAssetOperation( MALAssetOperation.MAL_DELETED );
         assetEntity.setBmAssetIdEntity( malAssetEntities.get( 0 ).getBmAssetIdEntity() );
         assetRepository.save(assetEntity);

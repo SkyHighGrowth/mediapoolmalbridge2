@@ -22,8 +22,6 @@ public class BMDeleteAssetService extends AbstractBMNonUniqueThreadService<Asset
     @Override
     protected void run(final AssetEntity assetEntity) {
         assetEntity.increaseMalStatesRepetitions();
-        final TransferringAssetStatus transferringAssetStatus = assetEntity.getTransferringAssetStatus();
-        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.FILE_DELETING );
         if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
             final String message = String.format( "Max retries for delete asset achieved for asset id [%s]", assetEntity.getBmAssetId() );
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
@@ -34,10 +32,10 @@ public class BMDeleteAssetService extends AbstractBMNonUniqueThreadService<Asset
         final DeleteMediaResponse deleteMediaResponse = bmDeleteAssetClient.delete( assetEntity );
         if (deleteMediaResponse.isStatus()) {
             assetEntity.setMalStatesRepetitions( 0 );
-            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DELETED);
+            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.DONE);
         } else {
             reportErrorOnResponse(assetEntity.getBmAssetId(), deleteMediaResponse);
-            assetEntity.setTransferringAssetStatus(transferringAssetStatus);
+            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_OBSERVED);
         }
         assetRepository.save(assetEntity);
     }

@@ -19,6 +19,6 @@ public class MALGetUnavailablePropertiesClient extends MALSingleResponseClient<M
 
     public RestResponse<MALGetUnavailabelPropertiesResponse> download(final MALGetUnavailablePropertiesRequest request) {
         final MultiValueMap<String, String> params = request.transformToGetParams();
-        return exchange(urlSegment, null, HttpMethod.GET, params);
+        return exchange(urlSegment, request, HttpMethod.GET, params);
     }
 }

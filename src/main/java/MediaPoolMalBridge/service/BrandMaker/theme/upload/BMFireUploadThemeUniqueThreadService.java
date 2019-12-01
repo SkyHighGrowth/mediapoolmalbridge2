@@ -30,8 +30,11 @@ public class BMFireUploadThemeUniqueThreadService extends AbstractBMUniqueThread
             final BMTheme bmTheme = new BMTheme();
             bmTheme.setThemeId(301);
             bmTheme.setThemePath(malKit);
-            if( taskExecutorWrapper.getQueueSize() < appConfig.getThreadexecutorQueueLengthMax() ) {
-                taskExecutorWrapper.getTaskExecutor().execute(() -> bmUploadThemeService.start(bmTheme)); }
+            synchronized ( taskExecutorWrapper ) {
+                if (taskExecutorWrapper.getQueueSize() < appConfig.getThreadexecutorQueueLengthMax()) {
+                    taskExecutorWrapper.getTaskExecutor().execute(() -> bmUploadThemeService.start(bmTheme));
+                }
+            }
         });
     }
 }

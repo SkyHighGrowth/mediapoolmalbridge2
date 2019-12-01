@@ -1,21 +1,10 @@
 package MediaPoolMalBridge.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.sql.DataSource;
-import java.util.Properties;
-
-@Configuration
-@EnableTransactionManagement
+//@Configuration
+//@EnableTransactionManagement
 class PersistenceContextConfig {
 
-    @Bean
+    /*@Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(final DataSource dataSource,
                                                                        final AppConfig appConfig) {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -42,5 +31,5 @@ class PersistenceContextConfig {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory( entityManagerFactory( dataSource, appConfig ).getObject() );
         return transactionManager;
-    }
+    }*/
 }

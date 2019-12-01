@@ -9,6 +9,7 @@ import MediaPoolMalBridge.persistence.entity.BM.BMAssetIdEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.MALAssetOperation;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import com.brandmaker.webservices.mediapool.UploadMetadataArgument;
+import com.google.gson.annotations.Expose;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -41,8 +42,8 @@ public class AssetEntity extends AbstractEntity {
     private MALAssetType assetType;
 
     @ManyToOne
-    @MapsId
-    @JoinColumn( name = "id", nullable = false )
+    @JoinColumn( name = "bm_asset_id", nullable = false )
+    @Expose( serialize = false, deserialize = false )
     private BMAssetIdEntity bmAssetIdEntity;
 
     @Column( name = "property_id" )

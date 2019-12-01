@@ -32,7 +32,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                         return;
                     }
                     final List<String[]> rows = new ArrayList<>();
-                    final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findByBrandAndUpdatedIsAfter( brandName, getTodayMidnight() );
+                    final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findByBrandAndUpdatedIsAfter( brandName, getMidnight() );
                     malPropertyEntities.forEach( malPropertyEntity -> {
                         String addressField01 = propertyVariant.getAddressField01();
                         String addressField02 = propertyVariant.getAddressField02();
@@ -85,42 +85,42 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                                 addressField05 = addressField05.replace("{" + field + "}", replacement);
                             }
                         }
-                        List<AssetEntity> logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "ko", TransferringAssetStatus.DONE, getTodayMidnight() );
+                        List<AssetEntity> logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "ko", TransferringAssetStatus.DONE, getMidnight() );
                         String propertyLogo1c = "";
                         if( logo != null && !logo.isEmpty() ) {
                             propertyLogo1c = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "cmyk", TransferringAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "cmyk", TransferringAssetStatus.DONE, getMidnight() );
                         String propertyLogo4c = "";
                         if( logo != null && !logo.isEmpty() ) {
                             propertyLogo4c = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "cmyk-B", TransferringAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "cmyk-B", TransferringAssetStatus.DONE, getMidnight() );
                         String propertyLogo4cb = "";
                         if( logo != null && !logo.isEmpty() ) {
                             propertyLogo4cb = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE, getMidnight() );
                         String propertyLogolcBlack = "";
                         if( logo != null && !logo.isEmpty() ) {
                             propertyLogolcBlack = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "pms", TransferringAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "pms", TransferringAssetStatus.DONE, getMidnight() );
                         String propertyLogoPMS = "";
                         if( logo != null && !logo.isEmpty() ) {
                             propertyLogoPMS = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "pms-c", TransferringAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "pms-c", TransferringAssetStatus.DONE, getMidnight() );
                         String propertyLogoPMSC = "";
                         if( logo != null && !logo.isEmpty() ) {
                             propertyLogoPMSC = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "cmyk-C", TransferringAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "cmyk-C", TransferringAssetStatus.DONE, getMidnight() );
                         String propertyLogo4cc = "";
                         if( logo != null && !logo.isEmpty() ) {
                             propertyLogo4cc = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
                         }
-                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "ko-D", TransferringAssetStatus.DONE, getTodayMidnight() );
+                        logo = assetRepository.findAssetDetails( malPropertyEntity.getPropertyId(), "2", "ko-D", TransferringAssetStatus.DONE, getMidnight() );
                         String propertyLogolcd = "";
                         if( logo != null && !logo.isEmpty() ) {
                             propertyLogolcd = "[MD5_HASH=" + logo.get( 0 ).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get( 0 ).getBmAssetId() + ";]";
@@ -174,7 +174,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                         row[ 44 ] = malPropertyEntity.getPropertyId();
                         rows.add( row );
 
-                        List<AssetEntity> assetEntities = assetRepository.findPropertyAssets( malPropertyEntity.getPropertyId(), "1", getTodayMidnight() );
+                        List<AssetEntity> assetEntities = assetRepository.findPropertyAssets( malPropertyEntity.getPropertyId(), "1", getMidnight() );
                         if( assetEntities != null && !assetEntities.isEmpty() ) {
                             assetEntities.forEach( assetEntity ->
                                 addRow( rows, assetEntity, propertyVariant.getSubName(), malPropertyEntity.getPropertyId() ) );
@@ -185,7 +185,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                         mapColors[ 1 ] = "Mla";
                         mapColors[ 2 ] = "Mrm";
                         for( final String mapColor : mapColors ) {
-                            assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "5", mapColor, TransferringAssetStatus.DONE, getTodayMidnight());
+                            assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "5", mapColor, TransferringAssetStatus.DONE, getMidnight());
                             if (assetEntities != null && !assetEntities.isEmpty()) {
                                 assetEntities.forEach(assetEntity ->
                                     addRow( rows, assetEntity, propertyVariant.getSubNameMaps(), malPropertyEntity.getPropertyId() ) );
@@ -196,7 +196,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                         floorTypes[ 0 ] = "Fmt";
                         floorTypes[ 1 ] = "Fgr";
                         for( final String floorType : floorTypes ) {
-                            assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "5", floorType, TransferringAssetStatus.DONE, getTodayMidnight());
+                            assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "5", floorType, TransferringAssetStatus.DONE, getMidnight());
                             if (assetEntities != null && !assetEntities.isEmpty()) {
                                 assetEntities.forEach(assetEntity ->
                                     addRow( rows, assetEntity, propertyVariant.getSubNameFloorPlans(), malPropertyEntity.getPropertyId() ) );

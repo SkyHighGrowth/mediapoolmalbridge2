@@ -50,7 +50,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                 response.getResponse().getAssets() == null) {
             return;
         }
-
+        logger.debug( "reponse asset created, modified {}", GSON.toJson(response));
         final int totalPages;
         try {
             totalPages = Integer.parseInt(response.getResponse().getTotalPages());
@@ -102,6 +102,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                             StringUtils.isNotBlank(malGetAsset.getXlUrl())) {
                         final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.FILE);
                         if( assetEntity != null ) {
+                            bmAssetIdRepository.save( assetEntity.getBmAssetIdEntity());
                             assetRepository.save( assetEntity );
                         }
                     }
@@ -109,6 +110,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                     if (StringUtils.isNotBlank(malGetAsset.getLogoJpgUrl())) {
                         final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.JPG_LOGO);
                         if( assetEntity != null ) {
+                            bmAssetIdRepository.save( assetEntity.getBmAssetIdEntity());
                             assetRepository.save( assetEntity );
                         }
                     }
@@ -116,6 +118,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                     if (StringUtils.isNotBlank(malGetAsset.getLogoPngUrl())) {
                         final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.PNG_LOGO);
                         if( assetEntity != null ) {
+                            bmAssetIdRepository.save( assetEntity.getBmAssetIdEntity());
                             assetRepository.save( assetEntity );
                         }
                     }
@@ -134,21 +137,20 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                 if( StringUtils.isNotBlank( aE.getMalLastModified() ) &&
                         aE.getMalLastModified().equals( malGetAsset.getLastModified() ) &&
                         malMd5Hash.equals( aE.getMalMd5Hash() ) ) {
-                    logger.error( "Duplicate entry {}, {}", aE.getMalAssetId(), aE.getAssetType());
+                    logger.debug( "Duplicate entry {}, {}", aE.getMalAssetId(), aE.getAssetType());
                     return null;
                 }
             }
             assetEntity = assetModelsToMALAssetEntityTransformer.fromMALGetAsset( malGetAsset, assetType );
             assetEntity.setBmAssetIdEntity( dbAssetEntities.get( 0 ).getBmAssetIdEntity() );
             assetEntity.setMalAssetOperation( MALAssetOperation.MAL_MODIFIED );
-            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ASSET_OBSERVED_MODIFICATION );
+            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ASSET_OBSERVED );
         } else {
             assetEntity = assetModelsToMALAssetEntityTransformer.fromMALGetAsset( malGetAsset, assetType );
             final BMAssetIdEntity bmAssetIdEntity = new BMAssetIdEntity( "CREATING_" + malGetAsset.getAssetId() );
-            bmAssetIdRepository.save( bmAssetIdEntity );
             assetEntity.setBmAssetIdEntity( bmAssetIdEntity );
             assetEntity.setMalAssetOperation( MALAssetOperation.MAL_CREATED );
-            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ASSET_OBSERVED_CREATION );
+            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ASSET_OBSERVED );
         }
         assetEntity.setMalMd5Hash( malMd5Hash );
         assetEntity.setBmUploadMetadataArgument( malToBMTransformer.transformToUploadMetadataArgument( malGetAsset ) );

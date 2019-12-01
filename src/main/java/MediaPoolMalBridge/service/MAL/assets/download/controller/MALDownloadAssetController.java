@@ -2,6 +2,7 @@ package MediaPoolMalBridge.service.MAL.assets.download.controller;
 
 import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAssetsRequest;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
+import MediaPoolMalBridge.persistence.entity.enums.asset.MALAssetOperation;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
 import MediaPoolMalBridge.service.MAL.assets.download.MALDownloadAssetService;
@@ -49,14 +50,16 @@ public class MALDownloadAssetController {
         malGetAssetsDev.start(request);
         boolean condition = true;
         for (int page = 0; condition; ++page) {
-            final Slice<AssetEntity> assetEntities = assetRepository.findAllByTransferringAssetStatusOrTransferringAssetStatusAndUpdatedIsAfter(
-                    TransferringAssetStatus.ASSET_OBSERVED_CREATION, TransferringAssetStatus.FILE_DOWNLOADING, getTodayMidnight(), PageRequest.of(page, 1000));
+            final Slice<AssetEntity> assetEntities = assetRepository.findAllByTransferringAssetStatusAndUpdatedIsAfter(
+                    TransferringAssetStatus.ASSET_OBSERVED, getTodayMidnight(), PageRequest.of(page, 1000));
             logger.error( "page {} num of assets {}", page, assetEntities.getNumberOfElements());
             condition = assetEntities.hasNext();
             assetEntities.forEach(assetEntity -> {
                 if (taskExecutorWrapper.getQueueSize() < 9000) {
                     logger.error( "hitted it" );
-                    taskExecutorWrapper.getTaskExecutor().execute(() -> malDownloadAssetService.start(assetEntity));
+                    if(MALAssetOperation.MAL_CREATED.equals(assetEntity.getMalAssetOperation())) {
+                        taskExecutorWrapper.getTaskExecutor().execute(() -> malDownloadAssetService.start(assetEntity));
+                    }
                 } else {
                     logger.error( "missed it" );
                 }

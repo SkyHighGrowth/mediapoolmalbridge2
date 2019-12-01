@@ -20,12 +20,12 @@ public class MALToBMAssetMapTransferSchedulerController {
         this.bridgeDeleteFilesSchedulerService = bridgeDeleteFilesSchedulerService;
     }
 
-    @GetMapping("/app/kitsToTheme")
+    @GetMapping("/service/app/kitsToTheme")
     public void transferKits() {
         bridgeTransferThemeSchedulerService.scheduled();
     }
 
-    @GetMapping("/app/deleteFiles")
+    @GetMapping("/service/app/deleteFiles")
     public void deleteFile() {
         bridgeDeleteFilesSchedulerService.scheduled();
     }

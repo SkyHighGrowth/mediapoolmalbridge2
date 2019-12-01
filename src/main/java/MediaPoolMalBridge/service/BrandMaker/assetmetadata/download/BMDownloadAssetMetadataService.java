@@ -23,8 +23,6 @@ public class BMDownloadAssetMetadataService extends AbstractBMNonUniqueThreadSer
     @Override
     protected void run(AssetEntity assetEntity) {
         assetEntity.increaseMalStatesRepetitions();
-        final TransferringAssetStatus transferringAssetStatus = assetEntity.getTransferringAssetStatus();
-        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.METADATA_DOWNLOADING );
         if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
             final String message = String.format( "Max retries for metadata downloading achieved for asset id [%s]", assetEntity.getBmAssetId() );
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
@@ -34,11 +32,11 @@ public class BMDownloadAssetMetadataService extends AbstractBMNonUniqueThreadSer
         }
         final DownloadMediaDetailsResponse downloadMediaDetailsResponse = downloadMediaDetailsClient.download( assetEntity );
         if (!downloadMediaDetailsResponse.isStatus() ) {
-            assetEntity.setTransferringAssetStatus( transferringAssetStatus );
+            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.METADATA_UPLOADED );
             reportErrorOnResponse(assetEntity.getBmAssetId(), downloadMediaDetailsResponse);
         } else {
             assetEntity.setMalStatesRepetitions( 0 );
-            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.METADATA_DOWNLOADED );
+            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.DONE );
             assetEntity.setBmMd5Hash( downloadMediaDetailsResponse.getGetMediaDetailsResult().getMediaHash() );
         }
         assetRepository.save(assetEntity);

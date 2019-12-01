@@ -34,7 +34,7 @@ public class MALGetPropertiesDeletedUniqueThreadSinceService extends AbstractMAL
         }
 
         response.getResponse().getProperties().forEach(property -> {
-            final Optional<MALPropertyEntity> optionalMALPropertyEntity = malPropertyRepository.findByPropertyIdAndUpdatedIsAfter(property.getPropertyId(), getTodayMidnight());
+            final Optional<MALPropertyEntity> optionalMALPropertyEntity = malPropertyRepository.findByPropertyIdAndUpdatedIsAfter(property.getPropertyId(), getMidnight());
             if (!optionalMALPropertyEntity.isPresent()) {
                 return;
             }

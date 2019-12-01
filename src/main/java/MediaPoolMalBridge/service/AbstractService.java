@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 
 import java.time.Instant;
@@ -19,7 +20,9 @@ public class AbstractService {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected static final Gson GSON = new Gson();
+    @Autowired
+    @Qualifier( "GsonSerializer" )
+    protected Gson GSON;
 
     @Autowired
     protected AppConfig appConfig;
@@ -40,10 +43,11 @@ public class AbstractService {
     @Autowired
     protected ReportsRepository reportsRepository;
 
-    protected LocalDateTime getTodayMidnight() {
+    protected LocalDateTime getMidnight() {
         return Instant.ofEpochMilli(System.currentTimeMillis())
                 .atOffset(ZoneOffset.UTC)
                 .toLocalDateTime()
+                .minusDays(appConfig.getBridgeLookInThePastDays())
                 .withHour(0)
                 .withMinute(0)
                 .withSecond(0);

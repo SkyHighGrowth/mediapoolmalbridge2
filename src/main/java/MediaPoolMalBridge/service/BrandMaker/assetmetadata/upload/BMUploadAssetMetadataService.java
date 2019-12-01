@@ -22,8 +22,6 @@ public class BMUploadAssetMetadataService extends AbstractBMNonUniqueThreadServi
     @Override
     protected void run(final AssetEntity assetEntity) {
         assetEntity.increaseMalStatesRepetitions();
-        final TransferringAssetStatus transferringAssetStatus = assetEntity.getTransferringAssetStatus();
-        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.METADATA_UPLOADING );
         if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
             final String message = String.format( "Max retries for metadata uploading achieved for asset id [%s]", assetEntity.getBmAssetId() );
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
@@ -37,7 +35,7 @@ public class BMUploadAssetMetadataService extends AbstractBMNonUniqueThreadServi
             assetEntity.setTransferringAssetStatus( TransferringAssetStatus.METADATA_UPLOADED );
         } else {
             reportErrorOnResponse(assetEntity.getBmAssetId(), uploadMetadataStatus);
-            assetEntity.setTransferringAssetStatus( transferringAssetStatus );
+            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.FILE_UPLOADED );
         }
         assetRepository.save(assetEntity);
     }

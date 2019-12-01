@@ -345,4 +345,12 @@ public class AppConfig {
     public int getHikariMaximumPoolSize() {
         return appConfigData.getHikariMaximumPoolSize();
     }
+
+    public int getDatabasePageSize() {
+        return appConfigData.getDatabasePageSize();
+    }
+
+    public int getMalPageSize() {
+        return appConfigData.getMalPageSize();
+    }
 }

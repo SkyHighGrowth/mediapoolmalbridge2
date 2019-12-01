@@ -58,6 +58,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
             if (!file.delete()) {
                 final String message = String.format("Can not delete file [%s]", fileEntity.getFilename());
                 final ReportsEntity reportsEntity = new ReportsEntity(ReportType.WARNING, getClass().getName(), message, ReportTo.BM, null, null, null);
+                reportsRepository.save(reportsEntity);
                 logger.error(message);
             } else {
                 fileEntity.setDeleted(true);

@@ -39,8 +39,8 @@ public class BridgeSendMailUniqueThreadService extends AbstractUniqueThreadServi
 
     @Override
     protected void run() {
-        sendToBM( getTodayMidnight() );
-        sendToMAL( getTodayMidnight() );
+        sendToBM( getMidnight() );
+        sendToMAL( getMidnight() );
     }
 
     private void sendToBM( final LocalDateTime since )

@@ -16,7 +16,7 @@ public class MALCollectCreatedAssetsUniqueThreadSinceService extends AbstractMAL
     protected void run() {
         final MALGetAssetsRequest request = new MALGetAssetsRequest();
         request.setDateCreatedStart(getSince());
-        request.setPerPage(2000);
+        request.setPerPage(appConfig.getMalPageSize());
         downloadAssets(request);
     }
 }

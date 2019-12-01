@@ -34,9 +34,16 @@ public class BridgeUploadExcelFilesUniqueThreadService extends AbstractUniqueThr
     {
         try {
             final File[] files = new File(appConfig.getExcelDir() ).listFiles();
-            for (final File file : files) {
-                if (file.isFile()) {
-                    taskExecutorWrapper.getTaskExecutor().execute( () -> bridgeJScpClient.uploadFile( file.getAbsolutePath() ) );
+            if(files == null || files.length == 0 ) {
+                return;
+            }
+            synchronized (taskExecutorWrapper) {
+                for (final File file : files) {
+                    if (file.isFile()) {
+                        if( taskExecutorWrapper.getQueueSize() < appConfig.getThreadexecutorQueueLengthMax() ) {
+                            taskExecutorWrapper.getTaskExecutor().execute( () -> bridgeJScpClient.uploadFile( file.getAbsolutePath() ) );
+                        }
+                    }
                 }
             }
         } catch (final Exception e) {

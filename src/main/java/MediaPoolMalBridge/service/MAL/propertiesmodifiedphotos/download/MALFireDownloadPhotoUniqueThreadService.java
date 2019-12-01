@@ -28,7 +28,7 @@ public class MALFireDownloadPhotoUniqueThreadService extends AbstractMALUniqueTh
         boolean condition = true;
         for (int page = 0; condition; ++page) {
             final Slice<AssetEntity> assetEntities = assetRepository.findAllByMalAssetOperationAndUpdatedIsAfter(
-                    MALAssetOperation.MAL_PHOTO_UPDATED, getTodayMidnight(), PageRequest.of(page, pageSize));
+                    MALAssetOperation.MAL_PHOTO_UPDATED, getMidnight(), PageRequest.of(page, pageSize));
             condition = assetEntities.hasNext();
             assetEntities.forEach( assetEntity -> {
                 if( taskExecutorWrapper.getQueueSize() < appConfig.getThreadexecutorQueueLengthMax() ) {

@@ -19,6 +19,6 @@ public class MALGetPropertiesClient extends MALSingleResponseClient<MALGetProper
 
     public RestResponse<MALGetPropertiesResponse> download(final MALGetPropertiesRequest request) {
         final MultiValueMap<String, String> queryParameters = request.transformToGetParams();
-        return exchange(urlSegment, null, HttpMethod.GET, queryParameters);
+        return exchange(urlSegment, request, HttpMethod.GET, queryParameters);
     }
 }

@@ -36,7 +36,7 @@ public class MALGetPropertiesSchedulerService extends AbstractSchedulerService {
         final String since = Instant.ofEpochMilli(System.currentTimeMillis())
                 .atOffset(ZoneOffset.UTC)
                 .toLocalDateTime()
-                .minusDays( appConfig.getMalLookInThePastDays() )
+                .minusDays(300)
                 .format(DATE_TIME_FORMATTER);
         getPropertiesService.start();
         getPropertiesDeletedSinceService.setUnavailableSince( since );

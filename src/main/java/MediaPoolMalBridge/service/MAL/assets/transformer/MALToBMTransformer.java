@@ -109,7 +109,7 @@ public class MALToBMTransformer {
         uploadMetadataArgument.getFreeField4().add(languageItem);
 
         languageItem = new LanguageItem();
-        languageItem.setDescription(String.valueOf(malGetAsset.isLimitedRights()));
+        languageItem.setDescription(toZeroAndOne(malGetAsset.isLimitedRights()));
         languageItem.setLangCode("EN");
         uploadMetadataArgument.getFreeField5().add(languageItem);
 
@@ -124,10 +124,16 @@ public class MALToBMTransformer {
         uploadMetadataArgument.getFreeField7().add(languageItem);
 
         languageItem = new LanguageItem();
-        languageItem.setDescription(String.valueOf(malGetAsset.isRightsManaged()));
+        languageItem.setDescription(toZeroAndOne(malGetAsset.isRightsManaged()));
         languageItem.setLangCode("EN");
         uploadMetadataArgument.getFreeField8().add(languageItem);
 
         return uploadMetadataArgument;
+    }
+
+    private String toZeroAndOne( final boolean value )
+    {
+        //return value ? "1" : "0";
+        return "";
     }
 }

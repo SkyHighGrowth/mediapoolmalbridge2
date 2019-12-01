@@ -78,6 +78,10 @@ public class AppConfigData {
     private int malLookInThePastDays;
     @Value( "${bridge.look.in.the.past.days:2}")
     private int bridgeLookInThePastDays;
+    @Value( "${bridge.database.page.size:2000}" )
+    private int databasePageSize;
+    @Value( "${mal.page.size:2000}" )
+    private int malPageSize;
 
     @Value( "${scheduler.bmexchange.cron.expression:0 0 */1 * * *}" )
     private String bmExchangeSchedulerCronExpression;
@@ -268,6 +272,14 @@ public class AppConfigData {
         return malLookInThePastDays;
     }
 
+    public int getDatabasePageSize() {
+        return databasePageSize;
+    }
+
+    public int getMalPageSize() {
+        return malPageSize;
+    }
+
     public int getBridgeLookInThePastDays() {
         return bridgeLookInThePastDays;
     }
@@ -383,4 +395,6 @@ public class AppConfigData {
     public int getHikariMaximumPoolSize() {
         return hikariMaximumPoolSize;
     }
+
+
 }

@@ -28,8 +28,6 @@ public class BMUploadAssetService extends AbstractBMNonUniqueThreadService<Asset
     @Override
     protected void run(final AssetEntity assetEntity) {
         assetEntity.increaseMalStatesRepetitions();
-        final TransferringAssetStatus transferringAssetStatus = assetEntity.getTransferringAssetStatus();
-        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.FILE_UPLOADING );
         if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
             final String message = String.format( "Max retries for uploading asset achieved for asset id [%s]", assetEntity.getBmAssetId() );
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
@@ -44,7 +42,7 @@ public class BMUploadAssetService extends AbstractBMNonUniqueThreadService<Asset
             uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
         } else {
             reportErrorOnResponse(assetEntity.getBmAssetId(), uploadStatus);
-            assetEntity.setTransferringAssetStatus(transferringAssetStatus);
+            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
         }
         assetRepository.save(assetEntity);
     }
