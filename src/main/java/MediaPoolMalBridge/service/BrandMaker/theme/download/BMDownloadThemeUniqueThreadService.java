@@ -26,7 +26,7 @@ public class BMDownloadThemeUniqueThreadService extends AbstractBMUniqueThreadSe
     @Override
     protected void run() {
         final BMTheme bmTheme = new BMTheme();
-        bmTheme.setThemeId(1);
+        bmTheme.setThemeId(301);
         final DownloadFullThemeTreeResponse response = downloadThemeIdClient.downloadFullThemeTree(bmTheme);
         if (!response.isStatus() )
         {
