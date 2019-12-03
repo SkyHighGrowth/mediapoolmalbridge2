@@ -112,3 +112,9 @@ sourceSets {
         java.srcDirs += "${projectDir}/generated-sources/"
     }
 }
+
+task javadocs( type: Javadoc ) {
+    source = sourceSets.main.allJava
+    //classpath = configurations.compile
+    exclude "${projectDir}/generated-sources/"
+}

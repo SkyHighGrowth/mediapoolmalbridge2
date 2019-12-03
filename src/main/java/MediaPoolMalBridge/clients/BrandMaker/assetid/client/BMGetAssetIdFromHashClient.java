@@ -5,6 +5,9 @@ import MediaPoolMalBridge.clients.BrandMaker.assetid.client.model.GetAssetIdFrom
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import org.springframework.stereotype.Component;
 
+/**
+ * Client which wraps MediapoolWebServicePort.getMediaByGuidByHash
+ */
 @Component
 public class BMGetAssetIdFromHashClient extends BrandMakerSoapClient {
 

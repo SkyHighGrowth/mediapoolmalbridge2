@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.subjects.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of {@link MALGetSubjectsResponse}
+ */
 public class Subject {
 
     @SerializedName("subject_id")

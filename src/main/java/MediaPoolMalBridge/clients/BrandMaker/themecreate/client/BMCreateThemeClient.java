@@ -7,9 +7,15 @@ import MediaPoolMalBridge.clients.BrandMaker.themecreate.tranformer.request.BMTh
 import com.brandmaker.webservices.theme.ThemeResult;
 import org.springframework.stereotype.Component;
 
+/**
+ * Client that wraps calls to MediapoolWebThemePort.createTheme
+ */
 @Component
 public class BMCreateThemeClient extends BrandMakerSoapClient {
 
+    /**
+     * Tramsformer from BmTheme to com.brandmaker.webservices.theme.Theme
+     */
     private final BMThemeTransformer transformer;
 
     public BMCreateThemeClient(final BMThemeTransformer transformer) {

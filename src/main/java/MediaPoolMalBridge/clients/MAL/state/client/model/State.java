@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.state.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of {@link MALGetStatesResponse}
+ */
 public class State {
 
     @SerializedName("state_id")

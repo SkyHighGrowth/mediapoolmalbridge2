@@ -7,6 +7,9 @@ import org.springframework.util.MultiValueMap;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * MAL server assets request for the client {@link MediaPoolMalBridge.clients.MAL.asset.client.MALGetAssetsClient}
+ */
 public class MALGetAssetsRequest {
 
     //(array) asset IDs you want info on.
@@ -24,7 +27,7 @@ public class MALGetAssetsRequest {
     //(array) destination ids to only return assets that are associated with the given destinations
     private List<String> destinationIds = new ArrayList<>();
 
-    //(array) property ids to filter assets by. Pass ‘*’ to only return assets associated with any property.
+    //(array) property ids to filter assets by. Pass '*' to only return assets associated with any property.
     private List<String> propertyIds = new ArrayList<>();
 
     //(array) marsha_codes to filter assets by.

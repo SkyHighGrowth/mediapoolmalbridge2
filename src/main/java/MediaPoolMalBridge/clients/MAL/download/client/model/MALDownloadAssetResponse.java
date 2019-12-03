@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.download.client.model;
 
 import MediaPoolMalBridge.clients.MAL.singleresponse.MALAbstractResponse;
 
+/**
+ * Response of {@link MediaPoolMalBridge.clients.MAL.download.client.MALDownloadAssetClient}
+ */
 public class MALDownloadAssetResponse extends MALAbstractResponse {
 
     private String absoluteFilePath;

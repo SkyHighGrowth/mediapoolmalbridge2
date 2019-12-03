@@ -6,7 +6,9 @@ import MediaPoolMalBridge.clients.rest.RestResponse;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * Client that wraps call to MAL server list_collections.json
+ */
 @Component
 public class MALGetCollectionsClient extends MALSingleResponseClient<Object, MALGetCollectionsResponse> {
 

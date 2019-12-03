@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table( name = "mal_asset",
+@Table( name = "asset",
         indexes = { @Index( columnList = "mal_asset_id, mal_asset_type" ),
                     @Index( columnList = "transferring_status"),
                     @Index( columnList = "transferring_status, mal_asset_operation, updated") } )

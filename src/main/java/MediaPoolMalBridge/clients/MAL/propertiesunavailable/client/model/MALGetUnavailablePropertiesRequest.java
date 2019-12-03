@@ -4,6 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+/**
+ * Request of {@link MediaPoolMalBridge.clients.MAL.propertiesunavailable.client.MALGetUnavailablePropertiesClient}
+ */
 public class MALGetUnavailablePropertiesRequest {
 
     private String unavailableSince = null;

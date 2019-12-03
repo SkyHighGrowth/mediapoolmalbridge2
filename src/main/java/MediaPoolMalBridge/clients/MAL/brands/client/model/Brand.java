@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.brands.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of {@link MALGetBrandsResponse}
+ */
 public class Brand {
 
     @SerializedName("brand_id")

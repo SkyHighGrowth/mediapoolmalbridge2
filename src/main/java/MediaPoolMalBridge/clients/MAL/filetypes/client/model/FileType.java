@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.filetypes.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of {@link MALGetFileTypesResponse}
+ */
 public class FileType {
 
     @SerializedName("file_type_id")

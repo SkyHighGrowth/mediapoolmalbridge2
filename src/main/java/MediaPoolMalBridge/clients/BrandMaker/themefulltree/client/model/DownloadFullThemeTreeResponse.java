@@ -3,6 +3,9 @@ package MediaPoolMalBridge.clients.BrandMaker.themefulltree.client.model;
 import MediaPoolMalBridge.clients.BrandMaker.model.response.AbstractBMResponse;
 import com.brandmaker.webservices.theme.ThemesResult;
 
+/**
+ * Class that wraps response from MediapoolWebThemePort.downaloadFullThemeTree
+ */
 public class DownloadFullThemeTreeResponse extends AbstractBMResponse {
 
 

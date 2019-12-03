@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.propertytypes.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of {@link MALGetPropertyTypesResponse}
+ */
 public class MALPropertyType {
 
     @SerializedName("property_type_id")

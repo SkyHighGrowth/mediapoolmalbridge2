@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.propertiesunavailable.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of {@link MALGetUnavailabelPropertiesResponse}
+ */
 public class Property {
 
     @SerializedName("property_id")

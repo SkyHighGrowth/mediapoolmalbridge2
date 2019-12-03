@@ -7,6 +7,10 @@ import com.brandmaker.webservices.mediapool.GetMediaDetailsArgument;
 import com.brandmaker.webservices.mediapool.GetMediaDetailsResult;
 import org.springframework.stereotype.Component;
 
+/**
+ * Client that wrapps MediapoolWebService.getMedaiDetails, it wraps expections into
+ * {@link DownloadMediaDetailsResponse}
+ */
 @Component
 public class BMDownloadMediaDetailsClient extends BrandMakerSoapClient {
 

@@ -5,6 +5,9 @@ import com.brandmaker.webservices.theme.Theme;
 import com.brandmaker.webservices.theme.ThemeName;
 import org.springframework.stereotype.Component;
 
+/**
+ * Transform {@link BMTheme} to com.brandmaker.webservices.theme.Theme
+ */
 @Component
 public class BMThemeTransformer {
 

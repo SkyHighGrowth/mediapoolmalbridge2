@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Response of {@link MediaPoolMalBridge.clients.MAL.properties.client.MALGetPropertiesClient}
+ */
 public class MALGetPropertiesResponse extends MALAbstractResponse {
 
     private String page;
@@ -20,6 +23,9 @@ public class MALGetPropertiesResponse extends MALAbstractResponse {
     private String totalPages;
 
 
+    /**
+     * List of {@link MALProperty} objects
+     */
     private List<MALProperty> properties;
 
     public MALGetPropertiesResponse() {

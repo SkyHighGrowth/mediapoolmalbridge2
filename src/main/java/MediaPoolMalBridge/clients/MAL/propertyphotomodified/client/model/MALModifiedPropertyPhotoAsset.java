@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.propertyphotomodified.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of {@link MALGetModifiedPropertyPhotoResponse}
+ */
 public class MALModifiedPropertyPhotoAsset {
 
     @SerializedName("asset_id")

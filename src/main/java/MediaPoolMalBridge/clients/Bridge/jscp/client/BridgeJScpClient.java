@@ -15,14 +15,24 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 
+/**
+ * Client that performs sftp
+ */
 @Component
 public class BridgeJScpClient {
 
     private static Logger logger = LoggerFactory.getLogger(BridgeJScpClient.class);
 
+    /**
+     * application configuration
+     */
     private AppConfig appConfig;
 
+    /**
+     * Reports repository
+     */
     private ReportsRepository reportsRepository;
+
 
     public BridgeJScpClient(final AppConfig appConfig,
                             final ReportsRepository reportsRepository)
@@ -31,6 +41,10 @@ public class BridgeJScpClient {
         this.reportsRepository = reportsRepository;
     }
 
+    /**
+     * uploads file to given server using sftp
+     * @param absoluteFileName
+     */
     public void uploadFile( final String absoluteFileName )
     {
         FileInputStream fileInputStream = null;

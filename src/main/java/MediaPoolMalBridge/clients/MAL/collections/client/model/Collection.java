@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.collections.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of {@link MALGetCollectionsResponse}
+ */
 public class Collection {
 
     @SerializedName("collection_id")

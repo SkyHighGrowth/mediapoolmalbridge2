@@ -1,5 +1,8 @@
-package MediaPoolMalBridge.clients.MAL.multiresponse.model.response;
+package MediaPoolMalBridge.clients.rest;
 
+/**
+ * Class which respresents model of error response
+ */
 public class ErrorResponse {
 
     private String result;

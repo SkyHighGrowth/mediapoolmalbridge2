@@ -3,6 +3,9 @@ package MediaPoolMalBridge.clients.BrandMaker.themecreate.client.model;
 import MediaPoolMalBridge.clients.BrandMaker.model.response.AbstractBMResponse;
 import com.brandmaker.webservices.theme.ThemeResult;
 
+/**
+ * Wraps response of MediapoolWebServiceTheme.createTheme
+ */
 public class CreateThemeResponse extends AbstractBMResponse {
 
     private ThemeResult themeResult;

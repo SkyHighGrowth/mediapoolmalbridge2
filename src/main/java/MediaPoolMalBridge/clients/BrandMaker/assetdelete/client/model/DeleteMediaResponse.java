@@ -3,10 +3,20 @@ package MediaPoolMalBridge.clients.BrandMaker.assetdelete.client.model;
 import MediaPoolMalBridge.clients.BrandMaker.model.response.AbstractBMResponse;
 import com.brandmaker.webservices.mediapool.DeleteMediaResult;
 
+/**
+ * Class that represents response of {@link MediaPoolMalBridge.clients.BrandMaker.assetdelete.client.BMDeleteAssetClient}
+ */
 public class DeleteMediaResponse extends AbstractBMResponse {
 
+    /**
+     * Class which represents response of MediapoolWebServicePost.deleteMedia
+     */
     private DeleteMediaResult deleteMediaResult;
 
+    /**
+     * Constructs object form DeleteMediaResult feel it with data needed
+     * @param deleteMediaResult
+     */
     public DeleteMediaResponse(final DeleteMediaResult deleteMediaResult) {
         this.status = deleteMediaResult.isSuccess();
         if (!deleteMediaResult.isSuccess()) {
@@ -16,6 +26,12 @@ public class DeleteMediaResponse extends AbstractBMResponse {
         this.deleteMediaResult = deleteMediaResult;
     }
 
+
+    /**
+     * Error condition constructor
+     * @param status - practically always false
+     * @param error - error message
+     */
     public DeleteMediaResponse(final boolean status, final String error) {
         this.status = status;
         errors.add(error);

@@ -8,6 +8,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
+/**
+ * Client that wraps calls to list_asset.json end point to fetch assets modification, appearence
+ */
 @Component
 public class MALGetAssetsClient extends MALSingleResponseClient<MALGetAssetsRequest, MALGetAssetsResponse> {
 

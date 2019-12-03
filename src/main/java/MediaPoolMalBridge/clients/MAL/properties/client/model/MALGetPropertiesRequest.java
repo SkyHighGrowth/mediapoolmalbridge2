@@ -7,6 +7,9 @@ import org.springframework.util.MultiValueMap;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Request body of {@link MediaPoolMalBridge.clients.MAL.properties.client.MALGetPropertiesClient}
+ */
 public class MALGetPropertiesRequest {
 
     //(string) words to search by

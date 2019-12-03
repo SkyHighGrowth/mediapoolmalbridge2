@@ -3,12 +3,24 @@ package MediaPoolMalBridge.clients.BrandMaker.model.response;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents common fields in MediaWebServicePort method responses
+ */
 public abstract class AbstractBMResponse {
 
+    /**
+     * indicates success of the response
+     */
     protected boolean status;
 
+    /**
+     * holds error list in the response
+     */
     protected List<String> errors = new ArrayList<>();
 
+    /**
+     * holds warning list of the response
+     */
     protected List<String> warnings = new ArrayList<>();
 
     public boolean isStatus() {

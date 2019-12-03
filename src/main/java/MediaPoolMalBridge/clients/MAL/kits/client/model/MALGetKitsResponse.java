@@ -4,8 +4,14 @@ import MediaPoolMalBridge.clients.MAL.singleresponse.MALAbstractResponse;
 
 import java.util.List;
 
+/**
+ * Response of {@link MediaPoolMalBridge.clients.MAL.kits.client.MALGetKitsClient}
+ */
 public class MALGetKitsResponse extends MALAbstractResponse {
 
+    /**
+     * List of {@link MALGetKit} objects
+     */
     private List<MALGetKit> kits;
 
     public List<MALGetKit> getKits() {

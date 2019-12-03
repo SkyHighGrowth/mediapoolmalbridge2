@@ -5,8 +5,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * Response of {@link MediaPoolMalBridge.clients.MAL.propertyphotos.client.MALGetPropertyPhotosClient}
+ */
 public class MALGetPropertyTypesResponse extends MALAbstractResponse {
 
+    /**
+     * List of {@link MALPropertyType} objects
+     */
     @SerializedName("property_types")
     private List<MALPropertyType> propertyTypes;
 

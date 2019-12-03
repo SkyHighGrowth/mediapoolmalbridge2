@@ -6,8 +6,15 @@ import com.brandmaker.webservices.mediapool.UploadMetadataResult;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Wraps response of MediapoolWebServicePort.uploadMetaData
+ */
 public class UploadMetadataStatus extends AbstractBMResponse {
 
+    /**
+     * Constructs from UploadMetadataResult, i.e. correct response
+     * @param uploadMetadataResult
+     */
     public UploadMetadataStatus(final UploadMetadataResult uploadMetadataResult) {
         status = uploadMetadataResult.isSuccess();
         errors = new ArrayList<>();
@@ -22,6 +29,11 @@ public class UploadMetadataStatus extends AbstractBMResponse {
         }
     }
 
+    /**
+     * Constructs from erroneous response
+     * @param status - always false
+     * @param error
+     */
     public UploadMetadataStatus(final boolean status, final String error) {
         this.status = status;
         errors = Collections.singletonList(error);

@@ -7,6 +7,9 @@ import com.brandmaker.webservices.theme.Theme;
 import com.brandmaker.webservices.theme.ThemeName;
 import org.springframework.stereotype.Component;
 
+/**
+ * Wraps calls to MediapoolWebThemePort.receiveThemeInformationByPath
+ */
 @Component
 public class BMDownloadThemeIdClient extends BrandMakerSoapClient {
 

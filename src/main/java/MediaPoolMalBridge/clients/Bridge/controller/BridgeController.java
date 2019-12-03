@@ -6,12 +6,21 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller that triggers sftp file upload
+ */
 @RestController
 @Profile("dev")
 public class BridgeController {
 
+    /**
+     * Client that wraps file upload operation
+     */
     private final BridgeJScpClient bridgeJScpClient;
 
+    /**
+     * Application configuration
+     */
     private final AppConfig appConfig;
 
     public BridgeController( final BridgeJScpClient bridgeJScpClient,
@@ -21,6 +30,9 @@ public class BridgeController {
         this.appConfig = appConfig;
     }
 
+    /**
+     * triggers upload file in {@link BridgeJScpClient}
+     */
     @GetMapping( "/service/app/uploadFile" )
     public void uploadFile()
     {

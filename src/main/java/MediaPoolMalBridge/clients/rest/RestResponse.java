@@ -1,15 +1,21 @@
 package MediaPoolMalBridge.clients.rest;
 
-import MediaPoolMalBridge.clients.MAL.multiresponse.model.response.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
+/**
+ * Class which models rest response
+ * @param <RESPONSE> - response
+ */
 public class RestResponse<RESPONSE> {
 
     private HttpStatus httpStatus;
 
     private HttpHeaders httpHeaders;
 
+    /**
+     * {@link ErrorResponse}
+     */
     private ErrorResponse errorResponse;
 
     private RESPONSE response;

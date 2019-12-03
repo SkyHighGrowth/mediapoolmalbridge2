@@ -12,6 +12,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+/**
+ * Class that holds common fields and mothods of MAL server clients
+ */
 public abstract class MALClient {
 
     protected static final Gson GSON = new Gson();

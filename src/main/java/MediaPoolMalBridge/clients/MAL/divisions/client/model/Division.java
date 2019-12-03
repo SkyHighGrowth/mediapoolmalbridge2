@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.divisions.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of {@link MALGetDivisionsResponse}
+ */
 public class Division {
 
     @SerializedName("division_id")

@@ -19,25 +19,46 @@ import javax.xml.ws.BindingProvider;
 import java.util.Arrays;
 import java.util.Map;
 
+/**
+ * Abstract class that collects all fields needed to run Mediapool SOAP clients
+ */
 public abstract class BrandMakerSoapClient {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
+    /**
+     * Represents application configuration
+     */
     @Autowired
     private AppConfig appConfig;
 
+    /**
+     * Application environment
+     */
     @Autowired
     private Environment environment;
 
+    /**
+     * Bean representing MediapoolWebServicePort factory
+     */
     @Autowired
     private MediaPoolService mediaPoolService;
 
+    /**
+     * Bean representing MediapoolWebThemePort factory
+     */
     @Autowired
     private ThemeService themeService;
 
+    /**
+     * Reports repository
+     */
     @Autowired
     protected ReportsRepository reportsRepository;
 
+    /**
+     * Asset repository
+     */
     @Autowired
     protected AssetRepository assetRepository;
 

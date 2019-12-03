@@ -6,6 +6,9 @@ import MediaPoolMalBridge.clients.BrandMaker.themefulltree.client.model.Download
 import com.brandmaker.webservices.theme.ThemesResult;
 import org.springframework.stereotype.Component;
 
+/**
+ * Client that wraps calls to MediapoolWebThemeService.getFullThemeTree
+ */
 @Component
 public class BMDownloadFullThemeTreeClient extends BrandMakerSoapClient {
 

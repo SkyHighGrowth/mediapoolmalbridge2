@@ -52,6 +52,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller that enables calls to clients which points to MAL server, please note
+ * that if called this end points will have no effect on database. Class is available only
+ * when dev profile is active
+ */
 @RestController
 @Profile("dev")
 public class MALClientController {
@@ -119,96 +124,178 @@ public class MALClientController {
         this.getSubjectsClient = getSubjectsClient;
     }
 
+    /**
+     * Call to {@link MALGetUnavailableAssetsClient}
+     * @param request - {@link MALGetUnavailableAssetsRequest} as body
+     * @return - {@link MALGetUnavailableAssetsResponse}
+     */
     @PostMapping(value = "/client/mal/getUnavailableAssets", consumes = "application/json")
     public MALGetUnavailableAssetsResponse getUnavailableAssets(@RequestBody final MALGetUnavailableAssetsRequest request) {
         return getUnavailableAssetsClient.download(request).getResponse();
     }
 
+    /**
+     * Call to {@link MALGetAssetsClient}
+     * @param request - {@link MALGetAssetsRequest}
+     * @return - {@link MALGetAssetsResponse}
+     */
     @PostMapping(value = "/client/mal/getAssets", consumes = "application/json")
     public MALGetAssetsResponse getAssets(@RequestBody final MALGetAssetsRequest request) {
         return getAssetsClient.download(request).getResponse();
     }
 
+    /**
+     * Call to {@link MALGetAssetTypesClient}
+     * @return - {@link MALGetAssetTypesResponse}
+     */
     @GetMapping("/client/mal/getAssetTypes")
     public MALGetAssetTypesResponse getAssetTypes() {
         return getAssetTypesClient.download().getResponse();
     }
 
+    /**
+     * Call to {@link MALGetBrandsClient}
+     * @return - {@link MALGetBrandsResponse}
+     */
     @GetMapping("/client/mal/getBrands")
     public MALGetBrandsResponse getBrands() {
         return getBrandsClient.download().getResponse();
     }
 
+    /**
+     * Call to {@link MALGetCollectionsClient}
+     * @return - {@link MALGetCollectionsResponse}
+     */
     @GetMapping("/client/mal/getCollections")
     public MALGetCollectionsResponse getCollections() {
         return getCollectionsClient.download().getResponse();
     }
 
+    /**
+     * Call to {@link MALGetColorsClient}
+     * @return - {@link MALGetColorsResponse}
+     */
     @GetMapping("/client/mal/getColors")
     public MALGetColorsResponse getColors() {
         return getColorsClient.download().getResponse();
     }
 
+    /**
+     * Call to {@link MALGetCountryClient}
+     * @return - {@link MALGetCountryResponse}
+     */
     @GetMapping("/client/mal/getCountry")
     public MALGetCountryResponse getCountry() {
         return getCountryClient.download().getResponse();
     }
 
+    /**
+     * Call to {@link MALGetDestinationsClient}
+     * @return - {@link MALGetDestinationsResponse}
+     */
     @GetMapping("/client/mal/getDestinations")
     public MALGetDestinationsResponse getDestinations() {
         return getDestinationsClient.download().getResponse();
     }
 
+    /**
+     * Call to {@link MALGetDivisionsClient}
+     * @return - {@link MALGetDivisionsResponse}
+     */
     @GetMapping("/client/mal/getDivisions")
     public MALGetDivisionsResponse getDivisions() {
         return getDivisionsClient.download().getResponse();
     }
 
+    /**
+     * Call to {@link MALGetFileTypesClient}
+     * @return - {@link MALGetFileTypesResponse}
+     */
     @GetMapping("/client/mal/getFileTypes")
     public MALGetFileTypesResponse getFileTypes() {
         return getFileTypesClient.download().getResponse();
     }
 
+    /**
+     * Call to {@link MALGetKitsClient}
+     * @return - {@link MALGetKitsResponse}
+     */
     @GetMapping("/client/mal/getKits")
     public MALGetKitsResponse getKits() {
         return getKitsClient.download().getResponse();
     }
 
+    /**
+     * Call to {@link MALGetPropertiesClient}
+     * @param request - {@link MALGetPropertiesRequest}
+     * @return - {@link MALGetPropertiesResponse}
+     */
     @PostMapping(value = "/client/mal/getProperties", consumes = "application/json")
     public MALGetPropertiesResponse getProperties(@RequestBody final MALGetPropertiesRequest request) {
         return getPropertiesClient.download(request).getResponse();
     }
 
+    /**
+     * Call to {@link MALGetUnavailablePropertiesClient}
+     * @param request - {@link MALGetUnavailablePropertiesRequest}
+     * @return - {@link MALGetUnavailabelPropertiesResponse}
+     */
     @PostMapping(value = "/client/mal/getUnavailableProperties", consumes = "application/json")
     public MALGetUnavailabelPropertiesResponse getUnavailableProperties(@RequestBody final MALGetUnavailablePropertiesRequest request) {
         return getUnavailablePropertiesClient.download(request).getResponse();
     }
 
+    /**
+     * Call to {@link MALGetPropertiesWithRelatedAssetsClient}
+     * @return - {@link MALGetPropertiesWithRelatedAssetsResponse}
+     */
     @GetMapping("/client/mal/getPropertiesWithRelatedAssets")
     public MALGetPropertiesWithRelatedAssetsResponse getPropertiesWithUnavailableAssets() {
         return getPropertiesWithRelatedAssetsClient.download().getResponse();
     }
 
+    /**
+     * Call to {@link MALGetModifiedPropertyPhotoClient}
+     * @param request - {@link MALGetModifiedPropertyPhotoRequest}
+     * @return - {@link MALGetModifiedPropertyPhotoResponse}
+     */
     @PostMapping(value = "/client/mal/getModifiedPropertiesPhotos", consumes = "application/json")
     public MALGetModifiedPropertyPhotoResponse getModifiedPropertyPhotos(@RequestBody final MALGetModifiedPropertyPhotoRequest request) {
         return getModifiedPropertyPhotoClient.download(request).getResponse();
     }
 
+    /**
+     * Call to {@link MALGetPropertyPhotosClient}
+     * @param request - {@link MALGetPropertyPhotosRequest}
+     * @return - {@link MALGetPropertyPhotosResponse}
+     */
     @PostMapping(value = "/client/mal/getPropertiesPhotos", consumes = "application/json")
     public MALGetPropertyPhotosResponse getPropertyPhotos(@RequestBody final MALGetPropertyPhotosRequest request) {
         return getPropertyPhotosClient.download(request).getResponse();
     }
 
+    /**
+     * Call to {@link MALGetPropertyTypesClient}
+     * @return - {@link MALGetPropertyTypesResponse}
+     */
     @GetMapping("/client/mal/getPropertiesTypes")
     public MALGetPropertyTypesResponse getPropertyTypes() {
         return getPropertyTypesClient.download().getResponse();
     }
 
+    /**
+     * Call to {@link MALGetStatesClient}
+     * @return - {@link MALGetStatesResponse}
+     */
     @GetMapping("/client/mal/getStates")
     public MALGetStatesResponse getStates() {
         return getStatesClient.download().getResponse();
     }
 
+    /**
+     * Call to {@link MALGetSubjectsClient}
+     * @return - {@link MALGetSubjectsResponse}
+     */
     @GetMapping("/client/mal/getSubjects")
     public MALGetSubjectsResponse getSubjects() {
         return getSubjectsClient.download().getResponse();

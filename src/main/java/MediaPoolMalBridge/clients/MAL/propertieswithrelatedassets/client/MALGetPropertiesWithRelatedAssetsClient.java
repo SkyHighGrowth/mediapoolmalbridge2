@@ -6,6 +6,9 @@ import MediaPoolMalBridge.clients.rest.RestResponse;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
+/**
+ * Client that wraps calls to MAL server /list_properties_with_related_assets.json
+ */
 @Component
 public class MALGetPropertiesWithRelatedAssetsClient extends MALSingleResponseClient<Object, MALGetPropertiesWithRelatedAssetsResponse> {
 

@@ -2,108 +2,219 @@ package MediaPoolMalBridge.clients.MAL.asset.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Class that wraps MAL server single asset response structure
+ */
 public class MALGetAsset {
 
+    /**
+     * MAL asset id
+     */
     @SerializedName("asset_id")
     private String assetId;
 
+    /**
+     * MAL asset type id
+     */
     @SerializedName("asset_type_id")
     private String assetTypeId;
 
+    /**
+     * MAL associations
+     */
     private String association;
 
+    /**
+     * MAL file file name that represents asset
+     */
     private String filename;
 
+    /**
+     * MAL asset brand id
+     */
     // will be null if asset is a property asset
     @SerializedName("brand_id")
     private String brandId;
 
+    /**
+     * MAL asset property id
+     */
     // will be null if asset is a brand asset
     @SerializedName("property_id")
     private String propertyId;
 
+    /**
+     * MAL asset marsha code
+     */
     // will be null if asset is a brand asset
     @SerializedName("marsha_code")
     private String marshaCode;
 
+    /**
+     * MAL asset name
+     */
     private String name;
 
+    /**
+     * MAL asset caption
+     */
     private String caption;
 
+    /**
+     * MAL asset description
+     */
     private String description;
 
+    /**
+     * MAL asset limited rights
+     */
     @SerializedName("limited_rights")
     private boolean limitedRights;
 
+    /**
+     * MAL asset rights managed
+     */
     @SerializedName("rights_managed")
     private boolean rightsManaged;
 
+    /**
+     * MAL asset usage description
+     */
     @SerializedName("usageDescription")
     private String usageDescription;
 
+    /**
+     * MAL asset instructions
+     */
     private String instructions;
 
+    /**
+     * MAL asset collection id
+     */
     @SerializedName("collection_id")
     private String collectionId;
 
+    /**
+     * MAL asset destination id
+     */
     @SerializedName("destination_id")
     private String destionationId;
 
+    /**
+     * MAL asset subject id
+     */
     @SerializedName("subject_id")
     private String subjectId;
 
+    /**
+     * MAL asset color id
+     */
     @SerializedName("color_id")
     private String colorId;
 
+    /**
+     * MAL asset file type id
+     */
     @SerializedName("file_type_id")
     private String fileTypeId;
 
+    /**
+     * MAL asset zipped
+     */
     private boolean zipped;
 
+    /**
+     * MAL asset status
+     */
     //valid values: active, inactive, deactivated, report_card
     private String status;
 
+    /**
+     * MAL asset date created
+     */
     //"2011-02-03 05:14:01",
     @SerializedName("date_created")
     private String dateCreated;
 
+    /**
+     * MAL asset date modified
+     */
     //"2011-05-25 13:49:31",
     @SerializedName("last_modified")
     private String lastModified;
 
+    /**
+     * MAL asset metadata
+     */
     private String metadata;
 
+    /**
+     * MAL asset thumbnail url
+     */
     @SerializedName("thumbnail_url")
     private String thumbnailUrl;
 
+    /**
+     * MAL asset medium url
+     */
     @SerializedName("medium_url")
     private String mediumUrl;
 
+    /**
+     * MAL asset large url
+     */
     @SerializedName("large_url")
     private String largeUrl;
 
+    /**
+     * MAL asset logo jpg url
+     */
     @SerializedName("logo_jpg_url")
     private String logoJpgUrl;
 
+    /**
+     * MAL asset logo png url
+     */
     @SerializedName("logo_png_url")
     private String logoPngUrl;
 
+    /**
+     * MAL asset xl url
+     */
     @SerializedName("xl_url")
     private String xlUrl;
 
+    /**
+     * MAL asset offer name
+     */
     @SerializedName("offer_name")
     private String offerName;
 
+    /**
+     * MAL asset offer url
+     */
     @SerializedName("offer_url")
     private String offerUrl;
 
+    /**
+     * MAL asset width
+     */
     private int width;
 
+    /**
+     * MAL asset height
+     */
     private int height;
 
+    /**
+     * MAL asset is stock
+     */
     @SerializedName("is_stock")
     private boolean isStock;
 
+    /**
+     * MAL asset mime type
+     */
     @SerializedName("mime_type")
     private String mimeType;
 

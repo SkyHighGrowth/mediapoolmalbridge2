@@ -6,6 +6,9 @@ import MediaPoolMalBridge.clients.rest.RestResponse;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
+/**
+ * Client that wraps calls to MAL server end point list_countries.json
+ */
 @Component
 public class MALGetCountryClient extends MALSingleResponseClient<Object, MALGetCountryResponse> {
 

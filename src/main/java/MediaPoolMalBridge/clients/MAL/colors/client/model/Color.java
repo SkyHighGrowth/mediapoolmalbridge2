@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.colors.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of {@link MALGetColorsResponse}
+ */
 public class Color {
 
     @SerializedName("color_id")

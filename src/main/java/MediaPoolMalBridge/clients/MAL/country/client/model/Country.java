@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.country.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of {@link MALGetCountryResponse}
+ */
 public class Country {
 
     @SerializedName("country_id")

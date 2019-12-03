@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 
+/**
+ * Client that wraps MediapoolWebServicePort.uploadMediaAsStream
+ */
 @Component
 public class BMUploadAssetClient extends BrandMakerSoapClient {
 

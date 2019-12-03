@@ -4,8 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * Response of {@link MediaPoolMalBridge.clients.MAL.filetypes.client.MALGetFileTypesClient}
+ */
 public class MALGetFileTypesResponse {
 
+    /**
+     * List of {@link FileType} objects
+     */
     @SerializedName("file_types")
     private List<FileType> fileTypes;
 

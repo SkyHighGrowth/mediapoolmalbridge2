@@ -4,6 +4,9 @@ import MediaPoolMalBridge.clients.MAL.singleresponse.MALAbstractResponse;
 
 import java.util.List;
 
+/**
+ * Response of {@link MediaPoolMalBridge.clients.MAL.propertieswithrelatedassets.client.MALGetPropertiesWithRelatedAssetsClient]}
+ */
 public class MALGetPropertiesWithRelatedAssetsResponse extends MALAbstractResponse {
 
     private List<String> properties;

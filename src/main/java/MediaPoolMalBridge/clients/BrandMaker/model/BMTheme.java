@@ -1,9 +1,18 @@
 package MediaPoolMalBridge.clients.BrandMaker.model;
 
+/**
+ * represents Mediapool theme
+ */
 public class BMTheme {
 
+    /**
+     * represents theme id
+     */
     private int themeId;
 
+    /**
+     * represents theme path
+     */
     private String themePath;
 
     public int getThemeId() {

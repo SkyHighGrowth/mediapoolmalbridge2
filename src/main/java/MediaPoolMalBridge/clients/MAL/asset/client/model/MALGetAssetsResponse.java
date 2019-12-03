@@ -5,14 +5,26 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * MAL server get assets response for the client {@link MediaPoolMalBridge.clients.MAL.asset.client.MALGetAssetsClient}
+ */
 public class MALGetAssetsResponse extends MALAbstractResponse {
 
+    /**
+     * total assets in MAL server
+     */
     @SerializedName("total_assets")
     private String totalAssets;
 
+    /**
+     * total pages according to specified perPage attribute in request
+     */
     @SerializedName("total_pages")
     private String totalPages;
 
+    /**
+     * List representing assets obtained in response
+     */
     private List<MALGetAsset> assets;
 
     public String getTotalAssets() {

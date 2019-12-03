@@ -10,11 +10,7 @@ import java.util.List;
 
 @Entity
 @Table( name = "bm_asset",
-        indexes = { @Index( columnList = "property_id, asset_type_id, color_id, transferring_status, updated" ),
-                    @Index( columnList = "property_id, asset_type_id, updated" ),
-                    @Index( columnList = "transferring_status, updated" ),
-                    @Index( columnList = "mal_asset_id, asset_type" ),
-                    @Index( columnList = "mal_asset_operation, updated" ) } )
+        indexes = {  } )
 public class BMAssetIdEntity {
 
     @Id

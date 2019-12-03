@@ -7,9 +7,18 @@ import com.brandmaker.webservices.mediapool.DeleteMediaArgument;
 import com.brandmaker.webservices.mediapool.DeleteMediaResult;
 import org.springframework.stereotype.Component;
 
+/**
+ * Delete asset client class which encloses MediapoolWebServicePort.deleteMedia call
+ * and transforms data
+ */
 @Component
 public class BMDeleteAssetClient extends BrandMakerSoapClient {
 
+    /**
+     * Performs the call catches the exception and convert it to {@link DeleteMediaResponse} object
+     * @param asset
+     * @return
+     */
     public DeleteMediaResponse delete(final AssetEntity asset) {
         try {
             final DeleteMediaArgument request = new DeleteMediaArgument();

@@ -4,9 +4,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+/**
+ * Class that represents request for {@link MediaPoolMalBridge.clients.MAL.assetsunavailable.client.MALGetUnavailableAssetsClient}
+ */
 public class MALGetUnavailableAssetsRequest {
 
-    //unavailable_since
+    /**
+     * datetime point for which want unavailable assets
+     */
     private String unavailableSince = null;
 
     public String getUnavailableSince() {
@@ -17,6 +22,10 @@ public class MALGetUnavailableAssetsRequest {
         this.unavailableSince = unavailableSince;
     }
 
+    /**
+     * Class representation to get request parameters
+     * @return
+     */
     public MultiValueMap<String, String> transformToGetParams() {
         final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         if (StringUtils.isNotBlank(unavailableSince)) {

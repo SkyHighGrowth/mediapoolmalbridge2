@@ -4,6 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+/**
+ * Request of {@link MediaPoolMalBridge.clients.MAL.propertyphotos.client.MALGetPropertyPhotosClient}
+ */
 public class MALGetPropertyPhotosRequest {
 
     //The property to list the assets for

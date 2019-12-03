@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.assetsunavailable.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of the {@link MALGetUnavailableAsset}
+ */
 public class Urls {
 
     @SerializedName("thumbnail_url")

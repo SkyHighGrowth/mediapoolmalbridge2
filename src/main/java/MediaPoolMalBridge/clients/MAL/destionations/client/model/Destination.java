@@ -2,6 +2,9 @@ package MediaPoolMalBridge.clients.MAL.destionations.client.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Part of {@link MALGetDestinationsResponse}
+ */
 public class Destination {
 
     @SerializedName("destination_id")
