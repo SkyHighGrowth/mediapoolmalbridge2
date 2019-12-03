@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * Service which downloads Kits from MAL server
+ */
 @Service
 public class BridgeTransferThemeSchedulerService extends AbstractSchedulerService {
 

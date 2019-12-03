@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * Scheduler service that triggers exeuction of {@link BridgeSendMailUniqueThreadService}
+ */
 @Service
 public class BridgeSendMailSchedulerService extends AbstractSchedulerService {
 

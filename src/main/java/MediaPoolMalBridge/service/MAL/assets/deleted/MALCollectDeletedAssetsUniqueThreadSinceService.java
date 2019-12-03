@@ -18,11 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Service that collects unavailable assets from MAL server and stores them to {@link AssetEntity}
+ */
 @Service
 public class MALCollectDeletedAssetsUniqueThreadSinceService extends AbstractMALUniqueThreadService {
 
     private final MALGetUnavailableAssetsClient getUnavailableAssetsClient;
 
+    /**
+     * Point in time for which we are collecting
+     */
     private String since;
 
     public MALCollectDeletedAssetsUniqueThreadSinceService(final MALGetUnavailableAssetsClient getUnavailableAssetsClient) {
@@ -61,8 +67,7 @@ public class MALCollectDeletedAssetsUniqueThreadSinceService extends AbstractMAL
                 });
     }
 
-    @Transactional
-    protected void addAssetToDelete(final MALGetUnavailableAsset malGetUnavailableAsset, final MALAssetType assetType) {
+    private void addAssetToDelete(final MALGetUnavailableAsset malGetUnavailableAsset, final MALAssetType assetType) {
         final List<AssetEntity> malAssetEntities = assetRepository.findAllByMalAssetIdAndAssetType(malGetUnavailableAsset.getAssetId(), assetType);
         if (malAssetEntities == null || malAssetEntities.isEmpty()) {
             return;

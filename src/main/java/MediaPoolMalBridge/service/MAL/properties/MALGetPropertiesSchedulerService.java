@@ -11,6 +11,9 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Scheduler service that triggers properties update and delete from MAL server
+ */
 @Service
 public class MALGetPropertiesSchedulerService extends AbstractSchedulerService {
 
@@ -36,7 +39,7 @@ public class MALGetPropertiesSchedulerService extends AbstractSchedulerService {
         final String since = Instant.ofEpochMilli(System.currentTimeMillis())
                 .atOffset(ZoneOffset.UTC)
                 .toLocalDateTime()
-                .minusDays(300)
+                .minusDays(appConfig.getMalLookInThePastDays())
                 .format(DATE_TIME_FORMATTER);
         getPropertiesService.start();
         getPropertiesDeletedSinceService.setUnavailableSince( since );

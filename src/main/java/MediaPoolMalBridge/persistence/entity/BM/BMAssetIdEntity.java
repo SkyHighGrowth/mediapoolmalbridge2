@@ -8,6 +8,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Mediapool asset id table
+ */
 @Entity
 @Table( name = "bm_asset",
         indexes = {  } )

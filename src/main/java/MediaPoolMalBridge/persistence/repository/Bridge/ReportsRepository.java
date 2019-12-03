@@ -8,7 +8,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.time.LocalDateTime;
 
+/**
+ * Repository class for {@link ReportsEntity}
+ */
 public interface ReportsRepository extends PagingAndSortingRepository<ReportsEntity, Long> {
 
-    Slice<ReportsEntity> findAllByReportToAndCreatedIsAfter(final ReportTo reportTo, final LocalDateTime created, final Pageable page);
+    Slice<ReportsEntity> findAllByReportToAndSentNotAndCreatedIsAfter(final ReportTo reportTo, final boolean sent, final LocalDateTime created, final Pageable page);
 }

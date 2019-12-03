@@ -11,7 +11,16 @@ import org.hibernate.proxy.HibernateProxy;
 
 import java.io.IOException;
 
+/**
+ * Class that enables creating json objects from entities
+ */
 public class HibernateProxyTypeAdapter extends TypeAdapter<HibernateProxy> {
+
+    private final Gson context;
+
+    private HibernateProxyTypeAdapter(Gson context) {
+        this.context = context;
+    }
 
     public static final TypeAdapterFactory FACTORY = new TypeAdapterFactory() {
         @Override
@@ -20,11 +29,6 @@ public class HibernateProxyTypeAdapter extends TypeAdapter<HibernateProxy> {
             return (HibernateProxy.class.isAssignableFrom(type.getRawType()) ? (TypeAdapter<T>) new HibernateProxyTypeAdapter(gson) : null);
         }
     };
-    private final Gson context;
-
-    private HibernateProxyTypeAdapter(Gson context) {
-        this.context = context;
-    }
 
     @Override
     public HibernateProxy read(JsonReader in) throws IOException {

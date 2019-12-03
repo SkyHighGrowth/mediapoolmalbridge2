@@ -6,6 +6,10 @@ import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Class that collects common fields and properties for non unique thread services
+ * @param <RUN_ARGUMENT>
+ */
 public abstract class AbstractNonUniqueThreadService<RUN_ARGUMENT> extends AbstractService {
 
     @Autowired

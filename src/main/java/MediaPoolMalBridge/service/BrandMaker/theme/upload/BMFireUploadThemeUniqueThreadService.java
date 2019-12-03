@@ -6,6 +6,9 @@ import MediaPoolMalBridge.model.MAL.kits.MALKits;
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMUniqueThreadService;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service executes {@link BMUploadThemeService} for specific theme
+ */
 @Service
 public class BMFireUploadThemeUniqueThreadService extends AbstractBMUniqueThreadService {
 

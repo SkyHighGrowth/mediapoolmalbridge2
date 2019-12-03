@@ -2,16 +2,18 @@ package MediaPoolMalBridge.service.BrandMaker.assets.upload;
 
 import MediaPoolMalBridge.clients.BrandMaker.assetuploadversion.client.BMUploadVersionAssetClient;
 import MediaPoolMalBridge.clients.BrandMaker.assetuploadversion.client.model.UploadStatus;
+import MediaPoolMalBridge.clients.BrandMaker.model.response.AbstractBMResponse;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
-import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.UploadedFileEntity;
-import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
-import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.repository.Bridge.UploadedFileRepository;
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMNonUniqueThreadService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Service which uploads asset to Mediapool server
+ */
 @Service
 public class BMUploadAssetService extends AbstractBMNonUniqueThreadService<AssetEntity> {
 
@@ -27,26 +29,55 @@ public class BMUploadAssetService extends AbstractBMNonUniqueThreadService<Asset
 
     @Override
     protected void run(final AssetEntity assetEntity) {
-        assetEntity.increaseMalStatesRepetitions();
-        if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
-            final String message = String.format( "Max retries for uploading asset achieved for asset id [%s]", assetEntity.getBmAssetId() );
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
-            reportsRepository.save( reportsEntity );
-            logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
-            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ERROR );
-            assetRepository.save( assetEntity );
-            uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
+        if( !isGateOpen( assetEntity, "uploading asset" ) ) {
             return;
         }
         final UploadStatus uploadStatus = bmUploadVersionAssetClient.upload( assetEntity );
         if (uploadStatus.isStatus()) {
-            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_UPLOADED);
-            assetEntity.setMalStatesRepetitions( 0 );
-            uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
+            onSuccess( assetEntity );
         } else {
-            reportErrorOnResponse(assetEntity.getBmAssetId(), uploadStatus);
+            onFailure( assetEntity, uploadStatus );
+        }
+    }
+
+    @Transactional
+    protected void onSuccess( final AssetEntity assetEntity ) {
+        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_UPLOADED);
+        assetEntity.setMalStatesRepetitions( 0 );
+        assetRepository.save( assetEntity );
+        uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
+    }
+
+    @Transactional
+    protected void onFailure(final AssetEntity assetEntity, final AbstractBMResponse abstractBMResponse) {
+        boolean duplicated = false;
+        for( final String error : abstractBMResponse.getErrors() ) {
+            if ("Duplicated media!".equals(error.trim())) {
+                duplicated = true;
+                break;
+            }
+        }
+        reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
+        if( duplicated ) {
+            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ERROR);
+        } else {
             assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
         }
-        assetRepository.save(assetEntity);
+        assetRepository.save( assetEntity );
+    }
+
+    @Transactional
+    protected void onFailure( ) {
+
+    }
+
+    @Override
+    @Transactional
+    protected boolean isGateOpen( final AssetEntity assetEntity, final String serviceDescprition ) {
+        if( super.isGateOpen( assetEntity, serviceDescprition ) ) {
+            return true;
+        }
+        uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
+        return false;
     }
 }

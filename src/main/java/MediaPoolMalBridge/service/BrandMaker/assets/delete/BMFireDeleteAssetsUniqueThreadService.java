@@ -5,6 +5,9 @@ import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMUniqueThreadService;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service which executes {@link BMDeleteAssetService} for specific asset
+ */
 @Service
 public class BMFireDeleteAssetsUniqueThreadService extends AbstractBMUniqueThreadService {
 
@@ -16,7 +19,7 @@ public class BMFireDeleteAssetsUniqueThreadService extends AbstractBMUniqueThrea
     protected void run() {
         executeTransition( TransferringAssetStatus.ASSET_OBSERVED,
                 TransferringAssetStatus.FILE_DELETING,
-                TransferringAssetStatus.FILE_DELETED,
+                TransferringAssetStatus.DONE,
                 MALAssetOperation.MAL_DELETED);
     }
 }

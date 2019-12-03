@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
+/**
+ * Service that downloads asset brands form MAL server
+ */
 @Service
 public class MALGetAssetBrandUniqueThreadService extends AbstractMALUniqueThreadService {
 

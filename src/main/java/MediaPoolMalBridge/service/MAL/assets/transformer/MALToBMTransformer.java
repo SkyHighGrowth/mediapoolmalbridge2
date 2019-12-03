@@ -8,6 +8,9 @@ import com.brandmaker.webservices.mediapool.UploadMetadataArgument;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+/**
+ * Transformer that transforms {@link MALGetAsset} into {@link UploadMetadataArgument}
+ */
 @Component
 public class MALToBMTransformer {
 
@@ -20,7 +23,7 @@ public class MALToBMTransformer {
     public UploadMetadataArgument transformToUploadMetadataArgument(final MALGetAsset malGetAsset ) {
 
         final UploadMetadataArgument uploadMetadataArgument = new UploadMetadataArgument();
-        //TODO set Media number
+
         uploadMetadataArgument.setAddAssociations( false );
         uploadMetadataArgument.setVirtualDbName( "Standard" );
         uploadMetadataArgument.setShow( "SHOW_ALWAYS" );
@@ -108,32 +111,39 @@ public class MALToBMTransformer {
         languageItem.setLangCode("EN");
         uploadMetadataArgument.getFreeField4().add(languageItem);
 
-        languageItem = new LanguageItem();
-        languageItem.setDescription(toZeroAndOne(malGetAsset.isLimitedRights()));
-        languageItem.setLangCode("EN");
-        uploadMetadataArgument.getFreeField5().add(languageItem);
+        if( malGetAsset.isLimitedRights() ) {
+            languageItem = new LanguageItem();
+            languageItem.setDescription(toZeroAndOne(malGetAsset.isLimitedRights()));
+            languageItem.setLangCode("EN");
+            uploadMetadataArgument.getFreeField5().add(languageItem);
+        }
 
-        languageItem = new LanguageItem();
-        languageItem.setDescription(String.valueOf(malGetAsset.getUsageDescription()));
-        languageItem.setLangCode("EN");
-        uploadMetadataArgument.getFreeField6().add(languageItem);
+        if( StringUtils.isNotBlank( malGetAsset.getUsageDescription() ) ) {
+            languageItem = new LanguageItem();
+            languageItem.setDescription(String.valueOf(malGetAsset.getUsageDescription()));
+            languageItem.setLangCode("EN");
+            uploadMetadataArgument.getFreeField6().add(languageItem);
+        }
 
-        languageItem = new LanguageItem();
-        languageItem.setDescription(String.valueOf(malGetAsset.getInstructions()));
-        languageItem.setLangCode("EN");
-        uploadMetadataArgument.getFreeField7().add(languageItem);
+        if( StringUtils.isNotBlank( malGetAsset.getInstructions() ) ) {
+            languageItem = new LanguageItem();
+            languageItem.setDescription(String.valueOf(malGetAsset.getInstructions()));
+            languageItem.setLangCode("EN");
+            uploadMetadataArgument.getFreeField7().add(languageItem);
+        }
 
-        languageItem = new LanguageItem();
-        languageItem.setDescription(toZeroAndOne(malGetAsset.isRightsManaged()));
-        languageItem.setLangCode("EN");
-        uploadMetadataArgument.getFreeField8().add(languageItem);
+        if( malGetAsset.isRightsManaged() ) {
+            languageItem = new LanguageItem();
+            languageItem.setDescription(toZeroAndOne(malGetAsset.isRightsManaged()));
+            languageItem.setLangCode("EN");
+            uploadMetadataArgument.getFreeField8().add(languageItem);
+        }
 
         return uploadMetadataArgument;
     }
 
     private String toZeroAndOne( final boolean value )
     {
-        //return value ? "1" : "0";
-        return "";
+        return value ? "1" : "0";
     }
 }

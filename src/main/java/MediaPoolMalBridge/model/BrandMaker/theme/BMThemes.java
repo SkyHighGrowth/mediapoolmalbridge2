@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Class that holds themes from Mediapool server
+ */
 @Component
 public class BMThemes extends ConcurrentHashMap<String, String> {
 

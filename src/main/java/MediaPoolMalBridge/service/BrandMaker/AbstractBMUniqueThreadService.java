@@ -6,6 +6,9 @@ import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.service.AbstractUniqueThreadService;
 
+/**
+ * Base class for services that submit task to {@link org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor}
+ */
 public abstract class AbstractBMUniqueThreadService extends AbstractUniqueThreadService {
 
     protected void reportErrorOnResponse(final String assetId, final AbstractBMResponse abstractBMResponse) {

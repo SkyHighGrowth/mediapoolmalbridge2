@@ -13,6 +13,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Arrays;
 
+/**
+ * Application configuration
+ */
 @Component
 public class AppConfig {
 
@@ -289,14 +292,6 @@ public class AppConfig {
 
     public String getMalPropertiesCronExpression() {
         return appConfigData.getMalPropertiesCronExpression();
-    }
-
-    public String getMalGetPhotosCronExpression() {
-        return appConfigData.getMalGetPhotosCronExpression();
-    }
-
-    public String getMalPhotoCronExpression() {
-        return appConfigData.getMalPhotoCronExpression();
     }
 
     public String getDatasourceUrlDev() {

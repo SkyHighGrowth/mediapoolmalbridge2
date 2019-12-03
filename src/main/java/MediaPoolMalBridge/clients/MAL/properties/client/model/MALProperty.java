@@ -14,9 +14,6 @@ public class MALProperty {
 
     private String address;
 
-    @SerializedName("address_2")
-    private String address2;
-
     private String state;
 
     private String zip;
@@ -25,29 +22,24 @@ public class MALProperty {
 
     private String country;
 
+    private String telephone;
+
     private String url;
 
     @SerializedName("vanity_url")
     private String vanityUrl;
 
-    private String telephone;
+    private String latitude;
+
+    private String longitude;
 
     private String brand;
 
     @SerializedName("parent_brand")
     private String parentBrand;
 
-    private String latitude;
-
-    private String longitude;
-
     @SerializedName("primary_property_image")
     private int primaryPropertyImage;
-
-    @SerializedName("md5_checksum")
-    private String md5Checksum;
-
-    private String status;
 
 
     public String getPropertyId() {
@@ -72,14 +64,6 @@ public class MALProperty {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
     }
 
     public String getState() {
@@ -177,22 +161,4 @@ public class MALProperty {
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
-
-    public String getMd5Checksum() {
-        return md5Checksum;
-    }
-
-    public void setMd5Checksum(String md5Checksum) {
-        this.md5Checksum = md5Checksum;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-
 }

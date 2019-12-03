@@ -4,6 +4,9 @@ import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus
 import MediaPoolMalBridge.service.MAL.AbstractMALUniqueThreadService;
 import org.springframework.stereotype.Service;
 
+/**
+ * Scheduler service that triggers execution of {@link MALDownloadAssetService}
+ */
 @Service
 public class MALFireDownloadAssetsUniqueThreadService extends AbstractMALUniqueThreadService {
 

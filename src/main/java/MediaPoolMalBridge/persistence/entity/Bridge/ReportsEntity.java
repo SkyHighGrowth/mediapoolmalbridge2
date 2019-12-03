@@ -7,10 +7,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Table where reports on error conditions are stored
+ */
 @Entity
 @Table( name = "reports",
         indexes = { @Index( columnList = "report_to" ),
-                    @Index( columnList = "report_to, created")})
+                    @Index( columnList = "report_to, created"),
+                    @Index( columnList = "created" ) } )
 public class ReportsEntity {
 
     @Id
@@ -41,6 +45,9 @@ public class ReportsEntity {
     @Enumerated( EnumType.STRING )
     private ReportTo reportTo;
 
+    @Column( name = "sent" )
+    private boolean sent;
+
     @CreationTimestamp
     @Column( name = "created" )
     private LocalDateTime created;
@@ -55,6 +62,7 @@ public class ReportsEntity {
         this.jsonedObject01 = jsonedObject01;
         this.jsonedObject02 = jsonedObject02;
         this.jsonedObject03 = jsonedObject03;
+        this.sent = false;
     }
 
     public long getId() {
@@ -119,6 +127,14 @@ public class ReportsEntity {
 
     public void setReportTo(ReportTo reportTo) {
         this.reportTo = reportTo;
+    }
+
+    public boolean isSent() {
+        return sent;
+    }
+
+    public void setSent(boolean sent) {
+        this.sent = sent;
     }
 
     public LocalDateTime getCreated() {

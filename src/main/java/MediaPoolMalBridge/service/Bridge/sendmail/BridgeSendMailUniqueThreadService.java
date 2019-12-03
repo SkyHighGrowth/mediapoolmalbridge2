@@ -11,10 +11,14 @@ import org.springframework.data.domain.Slice;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Service that sends mail messages
+ */
 @Service
 public class BridgeSendMailUniqueThreadService extends AbstractUniqueThreadService {
 
@@ -48,13 +52,14 @@ public class BridgeSendMailUniqueThreadService extends AbstractUniqueThreadServi
         boolean condition = true;
         for( int page = 0; condition; ++page ) {
             try {
-                Slice<ReportsEntity> reports = reportsRepository.findAllByReportToAndCreatedIsAfter(ReportTo.BM, since, PageRequest.of(page, pageSize));
+                Slice<ReportsEntity> reports = reportsRepository.findAllByReportToAndSentNotAndCreatedIsAfter(ReportTo.BM, false, since, PageRequest.of(page, pageSize));
                 condition = reports.hasNext();
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo(appConfig.getMailBmAddress());
-                message.setSubject( "Automatic daily report for MALToBMBridge" );
+                message.setSubject( "Automatic report from MALToBMBridge" );
                 message.setText( bmMailFormat.transform( reports ) );
                 emailSender.send(message);
+                markAsSent( reports );
             } catch( final Exception e ) {
                 final String message = String.format( "Can not send mail reports for page [%s] on date [%s] to mail address [%s] with error [%s]", page, since.format(DATE_TIME_FORMATTER), appConfig.getMailBmAddress(), e.getMessage() );
                 final ReportsEntity report = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null );
@@ -69,13 +74,14 @@ public class BridgeSendMailUniqueThreadService extends AbstractUniqueThreadServi
         boolean condition = true;
         for( int page = 0; condition; ++page ) {
             try {
-                Slice<ReportsEntity> reports = reportsRepository.findAllByReportToAndCreatedIsAfter(ReportTo.MAL, since, PageRequest.of(page, pageSize));
+                Slice<ReportsEntity> reports = reportsRepository.findAllByReportToAndSentNotAndCreatedIsAfter(ReportTo.MAL, false, since, PageRequest.of(page, pageSize));
                 condition = reports.hasNext();
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo(appConfig.getMailMalAddress());
-                message.setSubject( "Automatic daily report for MALToBMBridge" );
+                message.setSubject( "Automatic report from MALToBMBridge" );
                 message.setText( malMailFormat.transform( reports ) );
                 emailSender.send(message);
+                markAsSent( reports );
             } catch( final Exception e ) {
                 final String message = String.format( "Can not send mail reports for page [%s] on date [%s] to mail address [%s] with error [%s]", page, since.format(DATE_TIME_FORMATTER), appConfig.getMailMalAddress(), e.getMessage() );
                 final ReportsEntity report = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, null, null, null );
@@ -83,5 +89,14 @@ public class BridgeSendMailUniqueThreadService extends AbstractUniqueThreadServi
                 logger.error( message, e );
             }
         }
+    }
+
+    @Transactional
+    protected void markAsSent( final Slice<ReportsEntity> reports )
+    {
+        reports.forEach( reportsEntity -> {
+            reportsEntity.setSent( true );
+            reportsRepository.save( reportsEntity );
+        } );
     }
 }

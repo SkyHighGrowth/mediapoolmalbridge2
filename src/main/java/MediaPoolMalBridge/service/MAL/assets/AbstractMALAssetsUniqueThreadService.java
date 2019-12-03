@@ -25,6 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Class that collects common fields and methods of services that collects data from MAL server
+ */
 public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUniqueThreadService {
 
     @Autowired
@@ -68,7 +71,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
         transformPagesIntoAssets(request, totalPages);
     }
 
-    protected void transformPagesIntoAssets(final MALGetAssetsRequest request, final int totalPages) {
+    private void transformPagesIntoAssets(final MALGetAssetsRequest request, final int totalPages) {
         for (int page = 0; page < totalPages; ++page) {
             try {
                 request.setPage(page + 1);
@@ -83,7 +86,6 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
             }
             catch( final Exception e )
             {
-                //entityManager.getTransaction().rollback();
                 final String message = String.format( "Problem storing page [%s] to database with message [%s]", page, e.getMessage() );
                 final ReportsEntity reportsEntity = new ReportsEntity( ReportType.WARNING, getClass().getName(), message, ReportTo.BM, null, null, null );
                 reportsRepository.save( reportsEntity );

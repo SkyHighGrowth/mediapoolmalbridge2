@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * Scheduler service which triggers execution of {@link BridgeUploadExcelFilesSchedulerService}
+ */
 @Service
 public class BridgeUploadExcelFilesSchedulerService extends AbstractSchedulerService {
 

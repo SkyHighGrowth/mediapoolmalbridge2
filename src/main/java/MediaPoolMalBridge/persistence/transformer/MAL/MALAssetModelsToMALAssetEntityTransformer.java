@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 
+/**
+ * Transforms models between MAL server and {@link AssetEntity}
+ */
 @Component
 public class MALAssetModelsToMALAssetEntityTransformer {
 
@@ -21,6 +24,12 @@ public class MALAssetModelsToMALAssetEntityTransformer {
         this.assetStructures = assetStructures;
     }
 
+    /**
+     * Creates {@link AssetEntity} from {@link MALGetAsset}
+     * @param malGetAsset
+     * @param assetType
+     * @return
+     */
     public AssetEntity fromMALGetAsset( final MALGetAsset malGetAsset, final MALAssetType assetType )
     {
         final AssetEntity assetEntity = new AssetEntity();
@@ -81,6 +90,13 @@ public class MALAssetModelsToMALAssetEntityTransformer {
         return assetEntity;
     }
 
+    /**
+     * Finds file name with extension of file which is going to be downloaded from MAL server
+     * @param url
+     * @param malGetAsset
+     * @param extension
+     * @return
+     */
     private String getFileNameWithExtension(final String url, final MALGetAsset malGetAsset, final String extension) {
         final String fileName = StringUtils.substringBefore(url, "?");
         if (StringUtils.isNotBlank(fileName)) {
@@ -93,6 +109,12 @@ public class MALAssetModelsToMALAssetEntityTransformer {
         return RandomStringUtils.randomAlphabetic(30) + extension;
     }
 
+    /**
+     * Finds file name of the file which is going to be downloaded from MAL server
+     * @param url
+     * @param malGetAsset
+     * @return
+     */
     private String getFileName(final String url, final MALGetAsset malGetAsset) {
         final String fileName = StringUtils.substringBefore(url, "?");
         if (StringUtils.isNotBlank(fileName)) {
@@ -105,6 +127,11 @@ public class MALAssetModelsToMALAssetEntityTransformer {
         return malGetAsset.getAssetId() + getFileExtension(malGetAsset.getFileTypeId());
     }
 
+    /**
+     * Finds extension of file which is going to be downloaded from MAL server
+     * @param fileTypeId
+     * @return
+     */
     private String getFileExtension(final String fileTypeId) {
         String fileExtension = assetStructures.getFileTypes().get(fileTypeId);
         if (!StringUtils.isBlank(fileExtension) &&

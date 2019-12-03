@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 
+/**
+ * Service which uploads excel files using sftp protocol
+ */
 @Service
 public class BridgeUploadExcelFilesUniqueThreadService extends AbstractUniqueThreadService {
 

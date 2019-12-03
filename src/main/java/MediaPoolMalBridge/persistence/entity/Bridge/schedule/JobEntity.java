@@ -6,8 +6,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Job entity table where scheduler services logs their execution
+ */
 @Entity
-@Table( name = "scheduled_jobs" )
+@Table( name = "scheduled_jobs",
+        indexes  = @Index( columnList = "created" ) )
 public class JobEntity {
 
     @Id

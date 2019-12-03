@@ -1,10 +1,11 @@
 package MediaPoolMalBridge.persistence.entity.enums.asset;
 
+/**
+ * Enumeration that represents asset operation observed on MAL server
+ */
 public enum MALAssetOperation {
     INVALID,
     MAL_DELETED,
     MAL_MODIFIED,
-    MAL_CREATED,
-    MAL_PHOTO_UPDATED,
-    MAL_PHOTO_DELETED
+    MAL_CREATED
 }

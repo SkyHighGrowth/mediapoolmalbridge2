@@ -2,6 +2,7 @@ package MediaPoolMalBridge.persistence.entity.MAL;
 
 import MediaPoolMalBridge.clients.MAL.properties.client.model.MALProperty;
 import MediaPoolMalBridge.persistence.entity.AbstractEntity;
+import MediaPoolMalBridge.persistence.entity.enums.property.MALPropertyStatus;
 import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -9,6 +10,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Table which holds MAL server properties
+ */
 @Entity
 @Table( name = "mal_property",
         indexes = { @Index( columnList = "property_id, updated" ),
@@ -76,11 +80,12 @@ public class MALPropertyEntity extends AbstractEntity {
     @Column(name = "longitude")
     private String longitude;
 
-    @Column(name = "md5_checksum")
-    private String md5Checksum;
+    @Column(name = "md5_hash")
+    private String md5Hash;
 
-    @Column(name = "status")
-    private String status = "1";
+    @Column(name = "mal_property_status")
+    @Enumerated( EnumType.STRING )
+    private MALPropertyStatus malPropertyStatus;
 
     @Column(name = "primary_property_photo")
     private int primaryPropertyImage;
@@ -97,11 +102,10 @@ public class MALPropertyEntity extends AbstractEntity {
     public MALPropertyEntity() {
     }
 
-    public MALPropertyEntity(final MALProperty malProperty) {
+    public MALPropertyEntity(final MALProperty malProperty, final String md5Hash, final MALPropertyStatus malPropertyStatus) {
         this.propertyId = malProperty.getPropertyId();
         this.name = malProperty.getName();
         this.address = malProperty.getAddress();
-        this.address2 = malProperty.getAddress2();
         this.state = malProperty.getState();
         this.zip = malProperty.getZip();
         this.city = malProperty.getCity();
@@ -114,14 +118,13 @@ public class MALPropertyEntity extends AbstractEntity {
         this.latitude = malProperty.getLatitude();
         this.longitude = malProperty.getLongitude();
         this.primaryPropertyImage = malProperty.getPrimaryPropertyImage();
-        this.md5Checksum = malProperty.getMd5Checksum();
-        this.status = malProperty.getStatus();
+        this.md5Hash = md5Hash;
+        this.malPropertyStatus = malPropertyStatus;
     }
 
-    public void update(final MALProperty malProperty) {
+    public void update(final MALProperty malProperty, final String md5Hash, final MALPropertyStatus malPropertyStatus ) {
         this.name = malProperty.getName();
         this.address = malProperty.getAddress();
-        this.address2 = malProperty.getAddress2();
         this.state = malProperty.getState();
         this.zip = malProperty.getZip();
         this.city = malProperty.getCity();
@@ -134,8 +137,8 @@ public class MALPropertyEntity extends AbstractEntity {
         this.latitude = malProperty.getLatitude();
         this.longitude = malProperty.getLongitude();
         this.primaryPropertyImage = malProperty.getPrimaryPropertyImage();
-        this.md5Checksum = malProperty.getMd5Checksum();
-        this.status = malProperty.getStatus();
+        this.md5Hash = md5Hash;
+        this.malPropertyStatus = malPropertyStatus;
     }
 
     public long getId() {
@@ -258,20 +261,20 @@ public class MALPropertyEntity extends AbstractEntity {
         this.longitude = longitude;
     }
 
-    public String getMd5Checksum() {
-        return md5Checksum;
+    public String getMd5Hash() {
+        return md5Hash;
     }
 
-    public void setMd5Checksum(String md5Checksum) {
-        this.md5Checksum = md5Checksum;
+    public void setMd5Hash(String md5Hash) {
+        this.md5Hash = md5Hash;
     }
 
-    public String getStatus() {
-        return status;
+    public MALPropertyStatus getMalPropertyStatus() {
+        return malPropertyStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setMalPropertyStatus(MALPropertyStatus malPropertyStatus) {
+        this.malPropertyStatus = malPropertyStatus;
     }
 
     public String getVanityUrl() {

@@ -5,6 +5,9 @@ import com.brandmaker.webservices.theme.ThemeService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * SOAP configuration bean
+ */
 @Configuration
 public class SOAPBrandMakerConfig {
 

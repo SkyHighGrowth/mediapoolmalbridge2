@@ -2,14 +2,16 @@ package MediaPoolMalBridge.service.BrandMaker.assetmetadata.download;
 
 import MediaPoolMalBridge.clients.BrandMaker.assetgetmediadetails.client.BMDownloadMediaDetailsClient;
 import MediaPoolMalBridge.clients.BrandMaker.assetgetmediadetails.client.model.DownloadMediaDetailsResponse;
+import MediaPoolMalBridge.clients.BrandMaker.model.response.AbstractBMResponse;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
-import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
-import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
-import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMNonUniqueThreadService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Service for downloading Mediapool asset metadata
+ */
 @Service
 public class BMDownloadAssetMetadataService extends AbstractBMNonUniqueThreadService<AssetEntity> {
 
@@ -22,25 +24,31 @@ public class BMDownloadAssetMetadataService extends AbstractBMNonUniqueThreadSer
 
     @Override
     protected void run(AssetEntity assetEntity) {
-        assetEntity.increaseMalStatesRepetitions();
-        if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
-            final String message = String.format( "Max retries for metadata downloading achieved for asset id [%s]", assetEntity.getBmAssetId() );
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
-            reportsRepository.save( reportsEntity );
-            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ERROR );
-            assetRepository.save( assetEntity );
-            logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
+        if( !isGateOpen( assetEntity, "metadata downloading" ) ) {
             return;
         }
         final DownloadMediaDetailsResponse downloadMediaDetailsResponse = downloadMediaDetailsClient.download( assetEntity );
         if (!downloadMediaDetailsResponse.isStatus() ) {
-            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.METADATA_UPLOADED );
-            reportErrorOnResponse(assetEntity.getBmAssetId(), downloadMediaDetailsResponse);
+            onFailure( assetEntity, downloadMediaDetailsResponse );
         } else {
-            assetEntity.setMalStatesRepetitions( 0 );
-            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.DONE );
-            assetEntity.setBmMd5Hash( downloadMediaDetailsResponse.getGetMediaDetailsResult().getMediaHash() );
+            onSuccess( assetEntity, downloadMediaDetailsResponse.getGetMediaDetailsResult().getMediaHash() );
         }
+    }
+
+    @Transactional
+    public void onSuccess( final AssetEntity assetEntity, final String bmMd5Hash )
+    {
+        assetEntity.setMalStatesRepetitions( 0 );
+        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.DONE );
+        assetEntity.setBmMd5Hash( bmMd5Hash );
         assetRepository.save(assetEntity);
+    }
+
+    @Transactional
+    public void onFailure(final AssetEntity assetEntity, final AbstractBMResponse abstractBMResponse )
+    {
+        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.METADATA_UPLOADED );
+        reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
+        assetRepository.save( assetEntity );
     }
 }

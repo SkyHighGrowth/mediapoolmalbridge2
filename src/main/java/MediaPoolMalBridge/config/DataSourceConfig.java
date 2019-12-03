@@ -9,9 +9,17 @@ import org.springframework.context.annotation.Profile;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * Datasource configuration bean
+ */
 @Configuration
 public class DataSourceConfig {
 
+    /**
+     * dev profile
+     * @param appConfig
+     * @return
+     */
     @Bean( "DataSource" )
     @Profile( {"dev", "!production"})
     public DataSource getDataSourceDev(final AppConfig appConfig)
@@ -33,6 +41,11 @@ public class DataSourceConfig {
 
     }
 
+    /**
+     * production profile
+     * @param appConfig
+     * @return
+     */
     @Bean( "DataSource" )
     @Profile( {"production", "!dev"} )
     public DataSource getDataSourceProduction(final AppConfig appConfig)

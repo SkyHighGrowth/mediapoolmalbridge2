@@ -5,9 +5,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Table where files to be deleted are stored
+ */
 @Entity
 @Table( name = "files_to_be_deleted",
-        indexes = { @Index( columnList = "deleted" ) } )
+        indexes = { @Index( columnList = "deleted" ),
+                    @Index( columnList = "created" ) } )
 public class UploadedFileEntity {
 
     @Id

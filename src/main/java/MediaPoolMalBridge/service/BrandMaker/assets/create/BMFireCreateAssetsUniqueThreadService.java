@@ -5,6 +5,9 @@ import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMUniqueThreadService;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service that execute {@link BMCreateAssetService} for the given asset
+ */
 @Service
 public class BMFireCreateAssetsUniqueThreadService extends AbstractBMUniqueThreadService {
 

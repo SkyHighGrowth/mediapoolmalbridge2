@@ -17,7 +17,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
+/**
+ * Table where asset entities are stored
+ */
 @Entity
 @Table( name = "asset",
         indexes = { @Index( columnList = "mal_asset_id, mal_asset_type" ),

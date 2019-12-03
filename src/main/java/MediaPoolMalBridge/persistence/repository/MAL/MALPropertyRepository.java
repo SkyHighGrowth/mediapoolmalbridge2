@@ -7,13 +7,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repository class for {@link MALPropertyEntity}
+ */
 public interface MALPropertyRepository extends PagingAndSortingRepository<MALPropertyEntity, Long> {
 
-    public Optional<MALPropertyEntity> findByPropertyIdAndUpdatedIsAfter(final String propertyId, final LocalDateTime updated);
+    Optional<MALPropertyEntity> findByPropertyIdAndUpdatedIsAfter(final String propertyId, final LocalDateTime updated);
 
-    public Optional<MALPropertyEntity> findByPropertyId(final String propertyId);
+    Optional<MALPropertyEntity> findByPropertyId(final String propertyId);
 
-    public List<MALPropertyEntity> findByBrandAndUpdatedIsAfter( final String brand, final LocalDateTime updated );
+    List<MALPropertyEntity> findByBrandAndUpdatedIsAfter( final String brand, final LocalDateTime updated );
 
-    public List<MALPropertyEntity> findAllByUpdatedIsAfter( final LocalDateTime updated );
+    List<MALPropertyEntity> findAllByUpdatedIsAfter( final LocalDateTime updated );
 }

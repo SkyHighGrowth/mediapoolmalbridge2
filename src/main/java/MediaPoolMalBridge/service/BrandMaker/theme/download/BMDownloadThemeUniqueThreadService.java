@@ -10,6 +10,9 @@ import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMUniqueThreadService;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service which downloads themes form MAL server
+ */
 @Service
 public class BMDownloadThemeUniqueThreadService extends AbstractBMUniqueThreadService {
 

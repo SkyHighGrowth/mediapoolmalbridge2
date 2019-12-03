@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * persistence context bean
+ */
 @Configuration
 @EnableTransactionManagement
 class PersistenceContextConfig {

@@ -4,6 +4,9 @@ import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAssetsRequest;
 import MediaPoolMalBridge.service.MAL.assets.AbstractMALAssetsUniqueThreadService;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service that collects modified assets from MAL server
+ */
 @Service
 public class MALCollectModifiedAssetUniqueThreadSinceService extends AbstractMALAssetsUniqueThreadService {
 

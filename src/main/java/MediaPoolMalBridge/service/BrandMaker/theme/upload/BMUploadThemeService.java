@@ -6,6 +6,9 @@ import MediaPoolMalBridge.clients.BrandMaker.themecreate.client.model.CreateThem
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMNonUniqueThreadService;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service which uploads theme to Mediapool service
+ */
 @Service
 public class BMUploadThemeService extends AbstractBMNonUniqueThreadService<BMTheme> {
 

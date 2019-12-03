@@ -2,19 +2,21 @@ package MediaPoolMalBridge.service.BrandMaker.assets.create;
 
 import MediaPoolMalBridge.clients.BrandMaker.assetupload.client.BMUploadAssetClient;
 import MediaPoolMalBridge.clients.BrandMaker.assetuploadversion.client.model.UploadStatus;
+import MediaPoolMalBridge.clients.BrandMaker.model.response.AbstractBMResponse;
 import MediaPoolMalBridge.persistence.entity.BM.BMAssetIdEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
-import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.UploadedFileEntity;
-import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
-import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.repository.BM.BMAssetIdRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.UploadedFileRepository;
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMNonUniqueThreadService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Service which creates asset on Mediapool service
+ */
 @Service
 public class BMCreateAssetService extends AbstractBMNonUniqueThreadService<AssetEntity> {
 
@@ -35,36 +37,52 @@ public class BMCreateAssetService extends AbstractBMNonUniqueThreadService<Asset
 
     @Override
     protected void run(final AssetEntity assetEntity) {
-        assetEntity.increaseMalStatesRepetitions();
-        if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
-            final String message = String.format( "Max retries for create asset achieved for asset id [%s]", assetEntity.getBmAssetId() );
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
-            reportsRepository.save( reportsEntity );
-            logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
-            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ERROR );
-            assetRepository.save( assetEntity );
-            uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
+        if( !isGateOpen( assetEntity, "create asset" ) ) {
             return;
         }
         final UploadStatus uploadStatus = bmUploadAssetClient.upload( assetEntity );
         if (uploadStatus.isStatus()) {
-            final BMAssetIdEntity bmAssetIdEntity = assetEntity.getBmAssetIdEntity();
-            bmAssetIdEntity.setBmAssetId( uploadStatus.getBmAsset() );
-            bmAssetIdRepository.save( bmAssetIdEntity );
-            assetEntity.getBmAssetIdEntity().setBmAssetId( uploadStatus.getBmAsset() );
-            assetEntity.setMalStatesRepetitions( 0 );
-            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_UPLOADED);
-            uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
+            onSuccess( assetEntity, uploadStatus.getBmAsset() );
         } else {
-            if( !triggerBMAssetIdDownloadFormHashIfPossible( assetEntity, uploadStatus ) ) {
-                reportErrorOnResponse(assetEntity.getBmAssetId(), uploadStatus);
-                assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
-            }
+            onFailure( assetEntity, uploadStatus );
         }
-        assetRepository.save(assetEntity);
     }
 
-    private boolean triggerBMAssetIdDownloadFormHashIfPossible( final AssetEntity assetEntity, final UploadStatus uploadStatus ) {
+
+
+    @Transactional
+    public void onSuccess( final AssetEntity assetEntity, final String bmAssetId ) {
+        final BMAssetIdEntity bmAssetIdEntity = assetEntity.getBmAssetIdEntity();
+        bmAssetIdEntity.setBmAssetId( bmAssetId );
+        bmAssetIdRepository.save( bmAssetIdEntity );
+        assetEntity.setBmAssetIdEntity( bmAssetIdEntity );
+        assetEntity.setMalStatesRepetitions( 0 );
+        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_UPLOADED);
+        assetRepository.save( assetEntity );
+        uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
+    }
+
+    @Override
+    @Transactional
+    protected boolean isGateOpen( final AssetEntity assetEntity, final String serviceDescription ) {
+        if( super.isGateOpen( assetEntity, serviceDescription ) ) {
+            return true;
+        }
+        uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
+        return false;
+    }
+
+    @Transactional
+    protected void onFailure(final AssetEntity assetEntity, final AbstractBMResponse abstractBMResponse ) {
+        if( !triggerBMAssetIdDownloadFormHashIfPossible( assetEntity, abstractBMResponse ) ) {
+            reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
+            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
+        }
+        assetRepository.save( assetEntity );
+    }
+
+    @Transactional
+    protected boolean triggerBMAssetIdDownloadFormHashIfPossible( final AssetEntity assetEntity, final AbstractBMResponse uploadStatus ) {
         if( uploadStatus.getErrors() == null ||
             uploadStatus.getErrors().isEmpty() ) {
             return false;

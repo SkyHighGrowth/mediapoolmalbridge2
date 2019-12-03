@@ -5,11 +5,15 @@ import MediaPoolMalBridge.clients.MAL.propertiesunavailable.client.model.MALGetU
 import MediaPoolMalBridge.clients.MAL.propertiesunavailable.client.model.MALGetUnavailablePropertiesRequest;
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
+import MediaPoolMalBridge.persistence.entity.enums.property.MALPropertyStatus;
 import MediaPoolMalBridge.service.MAL.AbstractMALUniqueThreadService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Service for collecting deleted properties from MAL server
+ */
 @Service
 public class MALGetPropertiesDeletedUniqueThreadSinceService extends AbstractMALUniqueThreadService {
 
@@ -39,7 +43,7 @@ public class MALGetPropertiesDeletedUniqueThreadSinceService extends AbstractMAL
                 return;
             }
             final MALPropertyEntity malPropertyEntity = optionalMALPropertyEntity.get();
-            malPropertyEntity.setStatus( "0" );
+            malPropertyEntity.setMalPropertyStatus(MALPropertyStatus.DELETED );
             malPropertyRepository.save(malPropertyEntity);
         });
     }

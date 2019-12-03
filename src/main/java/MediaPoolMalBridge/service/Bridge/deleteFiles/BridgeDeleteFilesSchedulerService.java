@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import java.io.File;
 
+/**
+ * Scheduler service which deletes files from {@link UploadedFileEntity} table
+ */
 @Service
 public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService {
 

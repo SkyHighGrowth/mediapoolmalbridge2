@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
 
+/**
+ * Class that collects common fields and methods for services
+ */
 public class AbstractService {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());

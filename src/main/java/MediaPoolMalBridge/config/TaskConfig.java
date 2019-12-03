@@ -9,6 +9,9 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
+/**
+ * Scheduler and Executor beans
+ */
 @Configuration
 public class TaskConfig {
 

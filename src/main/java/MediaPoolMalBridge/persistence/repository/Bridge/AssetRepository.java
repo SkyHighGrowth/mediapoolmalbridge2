@@ -12,6 +12,9 @@ import org.springframework.data.repository.CrudRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Reposiotory class for {@link AssetEntity}
+ */
 public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
 
     @Query( "select ae " +

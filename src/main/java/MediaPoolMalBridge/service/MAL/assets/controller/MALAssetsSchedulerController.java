@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Rest controller that triggers {@link MALAssetsSchedulerService} and {@link MALDownloadAssetSchedulerService}
- * servises, calling get methods only trigger only oxecution of this schedulers using current no {@link MediaPoolMalBridge.tasks.TaskSchedulerWrapper}
+ * servises, calling get methods only trigger enly oxecution of this schedulers using current no {@link MediaPoolMalBridge.tasks.TaskSchedulerWrapper}
  * is involved
  */
 @RestController

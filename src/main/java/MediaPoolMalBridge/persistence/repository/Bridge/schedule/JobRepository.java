@@ -1,7 +1,10 @@
 package MediaPoolMalBridge.persistence.repository.Bridge.schedule;
 
 import MediaPoolMalBridge.persistence.entity.Bridge.schedule.JobEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface JobRepository extends CrudRepository<JobEntity, Long> {
+/**
+ * Repository class for {@link JobEntity}
+ */
+public interface JobRepository extends PagingAndSortingRepository<JobEntity, Long> {
 }

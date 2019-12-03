@@ -5,6 +5,9 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * Wrapper class for ThreadPoolTaskExecutor
+ */
 public class TaskExecutorWrapper implements DisposableBean {
 
     private final ThreadPoolTaskExecutor taskExecutor;

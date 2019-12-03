@@ -18,6 +18,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
 
+/**
+ * Class that collects common fields and methods for scheduler services
+ */
 public abstract class AbstractSchedulerService {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());

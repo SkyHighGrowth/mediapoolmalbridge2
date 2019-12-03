@@ -12,6 +12,9 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class that collects common fields and methods for MAL Scheduling services
+ */
 @Service
 public class MALAssetsSchedulerService extends AbstractSchedulerService {
 

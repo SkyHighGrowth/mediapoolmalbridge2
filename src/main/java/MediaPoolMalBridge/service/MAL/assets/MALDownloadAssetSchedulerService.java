@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * Scheduler service which triggers {@link MALFireDownloadAssetsUniqueThreadService}
+ */
 @Service
 public class MALDownloadAssetSchedulerService extends AbstractSchedulerService {
 

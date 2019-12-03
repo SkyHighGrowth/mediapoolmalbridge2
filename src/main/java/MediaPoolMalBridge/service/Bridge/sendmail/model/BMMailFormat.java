@@ -9,6 +9,9 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Mail formatter for Brandmaker
+ */
 @Component
 public class BMMailFormat {
 

@@ -3,143 +3,325 @@ package MediaPoolMalBridge.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * Application configuration data which is collected from
+ */
 @Component
 public class AppConfigData {
 
+    /**
+     * sftp server username
+     */
     @Value( "${bridge.jscp.username.dev:root}")
     private String sftpUsername;
+    /**
+     * sftp server password
+     */
     @Value( "${bridge.jscp.password.dev:password}")
     private String sftpPassword;
+    /**
+     * sftp hostname
+     */
     @Value( "${bridge.jscp.hostname.dev:147.91.27.84}")
     private String sftpHostname;
+    /**
+     * sftp port
+     */
     @Value( "${bridge.jscp.port.dev:22}")
     private int sftpPort;
+    /**
+     * sftp public key, for example ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDXlGvJ+ncOhx8r97QFsjDJzZffY20puG7/Lql5wxXqv3AKFBciaBjEzVeLxE60dgLSOLJLyfjijKXyhH+PlISlFuXN3V/w8bJZw46bGPUJQJR+3R0pHV7SSza6qhoJVVQKV+xNs0hL85yLEyMGK38Rg1Mu2a3ciJlrDrIN8qtG6xLu8jylVLUbAGjMOl4b9rzTzi3Q6OooLJrwWB29Xxs4uaY9IbsWAEKGLD3T4AB2GE2Sw6ZUsRxsuyUYOKNj4vZn3km7sQV8fTWxb+TsDcuPHf1vYNGE27AVc3C2sO1J6H4ZaXLl6F4bBssLCrq6upcLW4OWMv9tEq66sQAJJuxn
+     */
     @Value( "${server.ssh.public.key.dev:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDXlGvJ+ncOhx8r97QFsjDJzZffY20puG7/Lql5wxXqv3AKFBciaBjEzVeLxE60dgLSOLJLyfjijKXyhH+PlISlFuXN3V/w8bJZw46bGPUJQJR+3R0pHV7SSza6qhoJVVQKV+xNs0hL85yLEyMGK38Rg1Mu2a3ciJlrDrIN8qtG6xLu8jylVLUbAGjMOl4b9rzTzi3Q6OooLJrwWB29Xxs4uaY9IbsWAEKGLD3T4AB2GE2Sw6ZUsRxsuyUYOKNj4vZn3km7sQV8fTWxb+TsDcuPHf1vYNGE27AVc3C2sO1J6H4ZaXLl6F4bBssLCrq6upcLW4OWMv9tEq66sQAJJuxn}")
     private String sftpPublicKey;
 
+    /**
+     * MAL host name
+     */
     @Value( "${mal.hostname:https://api.starwoodassetlibrary.com/}" )
     private String malHostname;
+    /**
+     * MAL login name
+     */
     @Value( "${mal.login:robert.scholten@brandmaker.com}")
     private String malLogin;
+    /**
+     * MAL api key
+     */
     @Value( "${mal.apiKey:4ee54a12d9e6f1d4a535248142856a3e}")
     private String malApiKey;
 
+    /**
+     * Mediapool username for dev profile
+     */
     @Value( "${mediapool.username.dev:tsupport.de}")
     private String mediapoolUsernameDev;
+    /**
+     * Medaipool password for dev profile
+     */
     @Value( "${mediapool.password.dev:de!SuPPort$4}" )
     private String mediapoolPasswordDev;
+    /**
+     * Mediapool server url for dev profile
+     */
     @Value( "${mediapool.url.dev:https://qamarriott.brandmakerinc.com/webservices/MediaPool/}" )
     private String mediapoolUrlDev;
+    /**
+     * Mediapool theme server url for dev profile
+     */
     @Value( "${theme.url.dev:https://qamarriott.brandmakerinc.com/webservices/Theme/}" )
     private String themeUrlDev;
 
+    /**
+     * Mediapool username production profile
+     */
     @Value( "${mediapool.username.production:tsupport.de}")
     private String mediapoolUsernameProduction;
+    /**
+     * Mediapool passoword production profile
+     */
     @Value( "${mediapool.password.production:de!SuPPort$4}")
     private String mediapoolPasswordProduction;
+    /**
+     * Mediapool server url production profile
+     */
     @Value( "${mediapool.url.production:https://qamarriott.brandmakerinc.com/webservices/MediaPool/}" )
     private String mediapoolUrlProduction;
+    /**
+     * Mediapool server url production profile
+     */
     @Value( "${theme.url.production:https://qamarriott.brandmakerinc.com/webservices/Theme/}" )
     private String themeUrlProduction;
 
+    /**
+     * scheduler pool size
+     */
     @Value( "${threadscheduler.pool.size:20}" )
     private int threadschedulerPoolSize;
+    /**
+     * executor pool size
+     */
     @Value( "${threadexecutor.pool.size:100}" )
     private int threadexecutorPoolSize;
+    /**
+     * executor waiting queue size
+     */
     @Value( "${threadexecutor.queue.size:10000}" )
     private int threadexecutorQueueSize;
+    /**
+     * executor queue maximal allowed length
+     */
     @Value( "${threadexecutor.queue.length.max:9000}" )
     private int threadexecutorQueueLengthMax;
 
+    /**
+     * mail server name
+     */
     @Value( "${mail.hostname:smtp.gmail.com}" )
     private String mailHostname;
+    /**
+     * mail server port
+     */
     @Value( "${mail.port:587}" )
     private int mailPort;
+    /**
+     * mail server username
+     */
     @Value( "${mail.username:coacoacoa}" )
     private String mailUsername;
+    /**
+     * mail server password
+     */
     @Value( "${mail.password:password}" )
     private String mailPassword;
+    /**
+     * mail server transport protocol
+     */
     @Value( "${mail.transport.protocol:smtp}" )
     private String mailTransportProtocol;
+    /**
+     * mail server smtp authorization
+     */
     @Value( "${mail.smtp.auth:true}" )
     private boolean mailSmtpAuth;
+    /**
+     * mail server server start tls enabled
+     */
     @Value( "${mail.smtp.starttls.enable:true}" )
     private boolean mailSmtpStarttlsEnable;
+    /**
+     * mail server debug output
+     */
     @Value( "${mail.debug:true}" )
     private boolean mailDebug;
+    /**
+     * Mediapool mail address
+     */
     @Value( "${mail.bm.address:bm@bm.com}" )
     private String mailBmAddress;
+    /**
+     * MAL mail address
+     */
     @Value( "${mail.mal.address:mal@mal.com}" )
     private String mailMalAddress;
 
+    /**
+     * maximum allowed repetition of being in the same state
+     */
     @Value( "${asset.state.repetition.max:4}" )
     private int assetStateRepetitionMax;
+    /**
+     * datetime used to execute queries on MAL server is today minus number of days given by this field
+     */
     @Value( "${mal.look.in.the.past.days:14}" )
     private int malLookInThePastDays;
+    /**
+     * datetime used to look in the past in the database table expressed in days
+     */
     @Value( "${bridge.look.in.the.past.days:2}")
     private int bridgeLookInThePastDays;
+    /**
+     * database querries page size
+     */
     @Value( "${bridge.database.page.size:2000}" )
     private int databasePageSize;
+    /**
+     * MAL server querries page size
+     */
     @Value( "${mal.page.size:2000}" )
     private int malPageSize;
 
+    /**
+     * Mediapool metadata exchange scheduler cron expression
+     */
     @Value( "${scheduler.bmexchange.cron.expression:0 0 */1 * * *}" )
     private String bmExchangeSchedulerCronExpression;
+    /**
+     * Mediapool upload asset scheduler cron expression
+     */
     @Value( "${scheduler.bmupload.cron.expression:0 0 */1 * * *}" )
     private String bmUploadSchedulerCronExpression;
+    /**
+     *
+     */
     @Value( "${scheduler.bridgeexchangeassets.cron.expression:0 0 */1 * * *}" )
     private String bridgeExchangeAssetsCronExpression;
+    /**
+     * delete temporary files scheduler cron expression
+     */
     @Value( "${scheduler.bridgedeletefiles.cron.expression:0 0 */1 * * *}" )
     private String bridgeDeleteFileCronExpression;
+    /**
+     * excel file creation scheduler cron expression
+     */
     @Value( "${scheduler.bridgecreateexcelfiles.cron.expression:0 30 23 * * *}" )
     private String bridgeExcelFilesCronExpression;
+    /**
+     * upload excel file scheduler cron expression
+     */
     @Value( "${scheduler.bridgeuploadexcelfiles.cron.expression:0 0 0 * * *}" )
     private String bridgeUploadExcelFilesCronExpression;
+    /**
+     * theme transfer scheduler cron expression
+     */
     @Value( "${scheduler.bridgetransfertheme.cron.expression:0 0 */1 * * *}" )
     private String bridgeTransferThemeCronExpression;
+    /**
+     * send mail scheduler cron expression
+     */
     @Value( "${scheduler.bridgesendmail.cron.expression: 0 0 0 * * *}" )
     private String bridgeSendMailCronExpression;
+    /**
+     * MAL server collect assets scheduler cron expression
+     */
     @Value( "${scheduler.malasset.cron.expression: 0 0 */1 * * *}" )
     private String assetCronExpression;
+    /**
+     * MAL server download files scheduler cron expression
+     */
     @Value( "${scheduler.maldownloadasset.cron.expression: 0 0 */1 * * *}" )
     private String malDownloadAssetCronExpression;
+    /**
+     * MAL asset structure scheduler cron expression
+     */
     @Value( "${scheduler.malassetstructures.cron.expression:0 0 */1 * * *}" )
     private String assetStructureCronExpression;
+    /**
+     * MAL properties scheduler cron expression
+     */
     @Value( "${scheduler.malproperties.cron.expression:0 0 */1 * * *}" )
     private String malPropertiesCronExpression;
-    @Value( "${scheduler.malgetphotos.cron.expression:0 0 */1 * * *}" )
-    private String malGetPhotosCronExpression;
-    @Value( "${scheduler.malphoto.cron.expression: 0 0 */1 * * *}" )
-    private String malPhotoCronExpression;
 
+    /**
+     * datasource url for dev profile
+     */
     @Value( "${datasource.url.dev:jdbc:mysql://localhost:3306/maltobmbridge?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false&autoReconnect=true}")
     private String datasourceUrlDev;
+    /**
+     * datasource username for dev profile
+     */
     @Value( "${database.user.dev}" )
     private String datasourceUsernameDev;
+    /**
+     * datasource password for dev profile
+     */
     @Value( "${database.password.dev}" )
     private String datasourcePasswordDev;
+    /**
+     * datasource url for production profile
+     */
     @Value( "${datasource.url.production:jdbc:mysql://localhost:3306/maltobmbridge?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false&autoReconnect=true}")
     private String datasourceUrlProduction;
+    /**
+     * datasource username for production profile
+     */
     @Value( "${database.user.production}" )
     private String datasourceUsernameProduction;
+    /**
+     * datasource password for production profile
+     */
     @Value( "${database.password.production}" )
     private String datasourcePasswordProduction;
 
+    /**
+     * hibernate dialect
+     */
     @Value( "${jpa.properties.hibernate.dialect:org.hibernate.dialect.MySQL55Dialect}" )
     private String hibernateDialect;
+    /**
+     * logs sql
+     */
     @Value( "${jpa.show-sql:false}" )
     private boolean hibernateShowSql;
+    /**
+     * will update database on boot
+     */
     @Value( "${jpa.properties.hibernate.hbm2ddl.auto:update}" )
     private String hibernateHbm2dlAuto;
 
+    /**
+     * database pool connection timeout
+     */
     @Value( "${datasource.hikari.connectionTimeout:30000}")
     private int hikariConnectionTimeout;
+    /**
+     * database idle timeout
+     */
     @Value( "${datasource.hikari.idleTimeout:600000}")
     private int hikariIdleTimeout;
+    /**
+     * database pool max life time
+     */
     @Value( "${datasource.hikari.maxLifetime:1800000}")
     private int hikariMaxLifeTime;
+    /**
+     * database pool auto commit
+     */
     @Value( "${datasource.hikari.auto-commit:false}" )
     private boolean hikariAutoCommit;
+    /**
+     * database pool maximum pool size
+     */
     @Value( "${datasource.hikari.maximum-pool-size:10000}" )
     private int hikariMaximumPoolSize;
 
@@ -330,14 +512,6 @@ public class AppConfigData {
 
     public String getMalPropertiesCronExpression() {
         return malPropertiesCronExpression;
-    }
-
-    public String getMalGetPhotosCronExpression() {
-        return malGetPhotosCronExpression;
-    }
-
-    public String getMalPhotoCronExpression() {
-        return malPhotoCronExpression;
     }
 
     public String getDatasourceUrlDev() {

@@ -16,6 +16,9 @@ import org.springframework.data.domain.Slice;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Class that collect common fields and methods for unique thread services
+ */
 public abstract class AbstractUniqueThreadService extends AbstractService {
 
     @Autowired
@@ -69,6 +72,7 @@ public abstract class AbstractUniqueThreadService extends AbstractService {
                     if( malAssetOperation == null || malAssetOperation.equals(assetEntity.getMalAssetOperation() ) ) {
                         if (taskExecutorWrapper.getQueueSize() < appConfig.getThreadexecutorQueueLengthMax()) {
                             assetEntity.setTransferringAssetStatus(intermediateStatus);
+                            assetRepository.save( assetEntity );
                             taskExecutorWrapper.getTaskExecutor().execute(() -> assetService.start(assetEntity));
                         }
                     }

@@ -6,8 +6,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Table where services log their execution
+ */
 @Entity
-@Table( name = "service_execution" )
+@Table( name = "service_execution",
+        indexes  = @Index( columnList = "created" ) )
 public class ServiceEntity {
 
     @Id

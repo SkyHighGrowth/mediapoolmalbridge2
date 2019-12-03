@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
+/**
+ * Service that collects asset types from MAL service
+ */
 @Service
 public class MALGetAssetTypeUniqueThreadService extends AbstractMALUniqueThreadService {
 

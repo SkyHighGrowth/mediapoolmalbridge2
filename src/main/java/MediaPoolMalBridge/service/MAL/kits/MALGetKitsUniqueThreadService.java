@@ -10,6 +10,9 @@ import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.service.MAL.AbstractMALUniqueThreadService;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service that downloads kits from MAL server
+ */
 @Service
 public class MALGetKitsUniqueThreadService extends AbstractMALUniqueThreadService {
 

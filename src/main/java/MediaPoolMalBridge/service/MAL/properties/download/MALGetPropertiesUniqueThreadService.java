@@ -9,14 +9,18 @@ import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
+import MediaPoolMalBridge.persistence.entity.enums.property.MALPropertyStatus;
 import MediaPoolMalBridge.service.MAL.AbstractMALUniqueThreadService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service that collects properties from MAL server
+ */
 @Service
 public class MALGetPropertiesUniqueThreadService extends AbstractMALUniqueThreadService {
 
@@ -57,31 +61,33 @@ public class MALGetPropertiesUniqueThreadService extends AbstractMALUniqueThread
 
     private void transformPagesIntoProperties(final MALGetPropertiesRequest request, final int totalPages) {
         for (int page = 0; page < totalPages; ++page) {
-            request.setPage(page + 1);
+            request.setPage(page);
             final RestResponse<MALGetPropertiesResponse> response = getPropertiesClient.download(request);
             if (!response.isSuccess() ||
                     response.getResponse() == null ||
                     response.getResponse().getProperties() == null ) {
                 continue;
             }
-
             transformPageIntoProperties( response.getResponse().getProperties() );
         }
     }
 
-    @Transactional
-    protected void transformPageIntoProperties(final List<MALProperty> malProperties )
+    private void transformPageIntoProperties(final List<MALProperty> malProperties )
     {
         malProperties.forEach(malProperty -> {
+                    final String propertyMs5Hash = DigestUtils.md5Hex( GSON.toJson( malProperty ) );
                     final Optional<MALPropertyEntity> optionalMALPropertyEntity = malPropertyRepository.findByPropertyId(malProperty.getPropertyId());
-                    if (!optionalMALPropertyEntity.isPresent()) {
-                        final MALPropertyEntity malPropertyEntity = new MALPropertyEntity(malProperty);
+                    if (optionalMALPropertyEntity.isPresent()) {
+                        final MALPropertyEntity malPropertyEntity = optionalMALPropertyEntity.get();
+                        if( propertyMs5Hash.equals( malPropertyEntity.getMd5Hash() ) ) {
+                            return;
+                        }
+                        malPropertyEntity.update(malProperty, propertyMs5Hash, MALPropertyStatus.OBSERVED );
                         malPropertyRepository.save(malPropertyEntity);
-                        return;
+                    } else {
+                        final MALPropertyEntity malPropertyEntity = new MALPropertyEntity(malProperty, propertyMs5Hash, MALPropertyStatus.OBSERVED );
+                        malPropertyRepository.save(malPropertyEntity);
                     }
-                    final MALPropertyEntity malPropertyEntity = optionalMALPropertyEntity.get();
-                    malPropertyEntity.update(malProperty);
-                    malPropertyRepository.save(malPropertyEntity);
                 });
     }
 }
