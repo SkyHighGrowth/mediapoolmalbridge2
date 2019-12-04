@@ -85,7 +85,7 @@ apply plugin: 'java'
 task wsimport(type: uk.co.boothen.gradle.wsimport.WsImport) {
 
     wsdlSourceRoot = "/src/main/resources/wsdl"
-    generatedSourceRoot = "/../generate-sources"
+    generatedSourceRoot = "/../generated-sources"
     generatedClassesRoot = ""
 
     keep = true

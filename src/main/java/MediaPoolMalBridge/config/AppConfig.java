@@ -254,6 +254,10 @@ public class AppConfig {
         return appConfigData.getBmUploadSchedulerCronExpression();
     }
 
+    public String getBmGetThemeIdCronExpression() {
+        return appConfigData.getBmGetThemeIdCronExpression();
+    }
+
     public String getBridgeExchangeAssetsCronExpression() {
         return appConfigData.getBridgeExchangeAssetsCronExpression();
     }

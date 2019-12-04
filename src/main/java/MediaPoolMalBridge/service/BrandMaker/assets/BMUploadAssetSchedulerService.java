@@ -5,6 +5,7 @@ import MediaPoolMalBridge.service.BrandMaker.assets.create.BMFireCreateAssetsUni
 import MediaPoolMalBridge.service.BrandMaker.assets.delete.BMFireDeleteAssetsUniqueThreadService;
 import MediaPoolMalBridge.service.BrandMaker.assets.getassetid.BMFireGetAssetIdFromHashUniqueThreadService;
 import MediaPoolMalBridge.service.BrandMaker.assets.upload.BMFireUploadAssetsUniqueThreadService;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import javax.annotation.PostConstruct;
  * Scheduler service for creating, modifying, deleting and obtaining asset id from Mediapool server
  */
 @Service
+@DependsOn( "BridgeDatabaseNormalizerService" )
 public class BMUploadAssetSchedulerService extends AbstractSchedulerService {
 
     private final BMFireCreateAssetsUniqueThreadService bmFireCreateAssetsUniqueThreadService;

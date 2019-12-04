@@ -26,6 +26,7 @@ public abstract class AbstractMALNonUniqueThreadService<RUN_ARGUMENT> extends Ab
             assetRepository.save( assetEntity );
             return false;
         }
+        assetRepository.save( assetEntity );
         return true;
     }
 

@@ -41,13 +41,13 @@ public abstract class MALSingleResponseClient<REQUEST, RESPONSE> extends MALClie
 
     protected RestResponse<RESPONSE> exchange(final URI url, final REQUEST request, final HttpMethod httpMethod) {
         final HttpEntity<String> requestEntity = new HttpEntity<>(serializeRequestBody(request), new HttpHeaders());
-        logger.error( "REQUEST" + GSON.toJson( requestEntity) );//delete
+        logger.error( "REQUEST url {} headers {}", url, GSON.toJson( requestEntity) );//delete
         try {
             final ResponseEntity<String> response = restTemplate.exchange(url, httpMethod, requestEntity, String.class);
             logger.debug("REST RESPONSE {}", response);
-            logger.error( "RESPONSE" + GSON.toJson( response ) );//delete
+            //logger.error( "RESPONSE" + GSON.toJson( response ) );//delete
             final RESPONSE fromJson = GSON.fromJson(response.getBody(), responseType);
-            logger.error( "FROM JSON" + GSON.toJson( fromJson ) );//delete
+            //logger.error( "FROM JSON" + GSON.toJson( fromJson ) );//delete
             return new RestResponse<>(response.getStatusCode(), response.getHeaders(), fromJson);
         } catch (final Exception e) {
             final String message = String.format("While requesting from url [%s], with http method [%s], with http entity [%s], exception occured with message [%s]", httpMethod.name(), url.toString(), GSON.toJson(requestEntity), e.getMessage());

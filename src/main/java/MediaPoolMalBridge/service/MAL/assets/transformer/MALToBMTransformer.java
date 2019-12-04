@@ -2,6 +2,7 @@ package MediaPoolMalBridge.service.MAL.assets.transformer;
 
 import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAsset;
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
+import MediaPoolMalBridge.service.BrandMaker.theme.themeid.model.BMThemePathToId;
 import com.brandmaker.webservices.mediapool.LanguageItem;
 import com.brandmaker.webservices.mediapool.ThemeDto;
 import com.brandmaker.webservices.mediapool.UploadMetadataArgument;
@@ -16,8 +17,12 @@ public class MALToBMTransformer {
 
     private MALAssetStructures assetStructures;
 
-    public MALToBMTransformer(final MALAssetStructures assetStructures) {
+    private BMThemePathToId bmThemePathToId;
+
+    public MALToBMTransformer(final MALAssetStructures assetStructures,
+                              final BMThemePathToId bmThemePathToId ) {
         this.assetStructures = assetStructures;
+        this.bmThemePathToId = bmThemePathToId;
     }
 
     public UploadMetadataArgument transformToUploadMetadataArgument(final MALGetAsset malGetAsset ) {
@@ -54,7 +59,9 @@ public class MALToBMTransformer {
 
         if (StringUtils.isNotEmpty( malGetAsset.getDestionationId() ) ) {
             themeDto = new ThemeDto();
-            themeDto.setName( "Destinations/" + assetStructures.getDestinations().get( malGetAsset.getDestionationId() ) );
+            final String path = "Destinations/" + assetStructures.getDestinations().get( malGetAsset.getDestionationId() );
+            bmThemePathToId.addThemePath( path );
+            themeDto.setName( path );
             uploadMetadataArgument.getAssociations().add( themeDto );
         }
 

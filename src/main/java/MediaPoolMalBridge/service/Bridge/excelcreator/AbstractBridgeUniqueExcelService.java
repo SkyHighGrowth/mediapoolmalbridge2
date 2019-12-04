@@ -39,6 +39,7 @@ public abstract class AbstractBridgeUniqueExcelService extends AbstractUniqueThr
             "VALUE_MEDIA_33", "VALUE_RICHTEXT_34", "VALUE_RICHTEXT_35", "VALUE_RICHTEXT_36",
             "VALUE_RICHTEXT_37", "VALUE_RICHTEXT_38", "AFFILIATE"};
 
+
     protected void writeToFile( final String fileName, final List<String[]> rows) {
         try {
             WritableWorkbook workbook = Workbook.createWorkbook(new File(appConfig.getExcelDir() + fileName));

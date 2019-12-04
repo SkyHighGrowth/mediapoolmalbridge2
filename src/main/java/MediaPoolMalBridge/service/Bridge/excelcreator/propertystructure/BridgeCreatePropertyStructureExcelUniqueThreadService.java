@@ -1,6 +1,7 @@
 package MediaPoolMalBridge.service.Bridge.excelcreator.propertystructure;
 
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
+import MediaPoolMalBridge.model.MAL.propertyvariants.MALPropertyVariant;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
@@ -40,6 +41,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                             return;
                         }
                         final List<String[]> rows = new ArrayList<>();
+                        addHeaderForPorpertyVariant( rows, propertyVariant );
                         final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findByBrandAndUpdatedIsAfter(brandName, getMidnight());
                         malPropertyEntities.forEach(malPropertyEntity -> {
                             String addressField01 = propertyVariant.getAddressField01();
@@ -134,7 +136,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                                 propertyLogolcd = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
                             }
 
-                            String[] row = new String[45];
+                            String[] row = new String[44];
                             row[0] = propertyVariant.getStructureName();
                             row[1] = malPropertyEntity.getPropertyId();
                             row[2] = malPropertyEntity.getPropertyId() + " - " + malPropertyEntity.getName();
@@ -143,18 +145,18 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                             row[5] = malPropertyEntity.getName();
                             row[6] = malPropertyEntity.getPropertyId();
                             row[7] = malPropertyEntity.getState();
-                            row[8] = malPropertyEntity.getState();
-                            row[9] = malPropertyEntity.getAddress2();
-                            row[10] = malPropertyEntity.getAddress();
-                            row[11] = malPropertyEntity.getZip();
-                            row[12] = malPropertyEntity.getCity();
-                            row[13] = malPropertyEntity.getCountry();
-                            row[14] = malPropertyEntity.getUrl();
-                            row[15] = malPropertyEntity.getTelephone();
-                            row[16] = malPropertyEntity.getBrand();
-                            row[17] = malPropertyEntity.getParentBrand();
-                            row[18] = malPropertyEntity.getLatitude();
-                            row[19] = malPropertyEntity.getLongitude();
+                            row[8] = malPropertyEntity.getAddress2();
+                            row[9] = malPropertyEntity.getAddress();
+                            row[10] = malPropertyEntity.getZip();
+                            row[11] = malPropertyEntity.getCity();
+                            row[12] = malPropertyEntity.getCountry();
+                            row[13] = malPropertyEntity.getUrl();
+                            row[14] = malPropertyEntity.getTelephone();
+                            row[15] = malPropertyEntity.getBrand();
+                            row[16] = malPropertyEntity.getParentBrand();
+                            row[17] = malPropertyEntity.getLatitude();
+                            row[18] = malPropertyEntity.getLongitude();
+                            row[19] = "";
                             row[20] = "";
                             row[21] = "";
                             row[22] = "";
@@ -163,23 +165,22 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                             row[25] = "";
                             row[26] = "";
                             row[27] = "";
-                            row[28] = "";
-                            row[29] = propertyLogo1c;
-                            row[30] = propertyLogo4c;
-                            row[31] = propertyLogo4cb;
-                            row[32] = propertyLogolcBlack;
-                            row[33] = propertyLogoPMS;
-                            row[34] = propertyLogoPMSC;
-                            row[35] = propertyLogo4cc;
-                            row[36] = propertyLogolcd;
+                            row[28] = propertyLogo1c;
+                            row[29] = propertyLogo4c;
+                            row[30] = propertyLogo4cb;
+                            row[31] = propertyLogolcBlack;
+                            row[32] = propertyLogoPMS;
+                            row[33] = propertyLogoPMSC;
+                            row[34] = propertyLogo4cc;
+                            row[35] = propertyLogolcd;
+                            row[36] = "";
                             row[37] = "";
-                            row[38] = "";
-                            row[39] = addressField01;
-                            row[40] = addressField02;
-                            row[41] = addressField03;
-                            row[42] = addressField04;
-                            row[43] = addressField05;
-                            row[44] = malPropertyEntity.getPropertyId();
+                            row[38] = addressField01;
+                            row[39] = addressField02;
+                            row[40] = addressField03;
+                            row[41] = addressField04;
+                            row[42] = addressField05;
+                            row[43] = malPropertyEntity.getPropertyId();
                             rows.add(row);
 
                             List<AssetEntity> assetEntities = assetRepository.findPropertyAssets(malPropertyEntity.getPropertyId(), "1", getMidnight());
@@ -224,7 +225,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
 
     private void addRow( final List<String[]> rows, final AssetEntity assetEntity, final String subName, final String propertyId )
     {
-        final String[] row_ = new String[45];
+        final String[] row_ = new String[44];
         row_[0] = subName;
         row_[1] = assetEntity.getMalAssetId();
         row_[2] = assetEntity.getMalAssetId() + " - " + assetEntity.getCaption();
@@ -268,8 +269,11 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
         row_[40] = "";
         row_[41] = "";
         row_[42] = "";
-        row_[43] = "";
-        row_[44] = propertyId;
+        row_[43] = propertyId;
         rows.add(row_);
+    }
+
+    private void addHeaderForPorpertyVariant(final List<String[]> rows, final MALPropertyVariant propertyVariant) {
+        final String[] row = new String[45];
     }
 }

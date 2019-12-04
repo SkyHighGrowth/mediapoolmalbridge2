@@ -3,6 +3,7 @@ package MediaPoolMalBridge.service.BrandMaker.assetmetadata;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
 import MediaPoolMalBridge.service.BrandMaker.assetmetadata.download.BMFireDownloadAssetsMetadataUniqueThreadService;
 import MediaPoolMalBridge.service.BrandMaker.assetmetadata.upload.BMFireUploadAssetsMetadataUniqueThreadService;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import javax.annotation.PostConstruct;
  * Scheduler service for metadata exchange between Mediapool server and MALToMediapoolBridge
  */
 @Service
+@DependsOn( "BridgeDatabaseNormalizerService" )
 public class BMExchangeAssetMetadataSchedulerService extends AbstractSchedulerService {
 
     private BMFireUploadAssetsMetadataUniqueThreadService bmFireUploadAssetsMetadataUniqueThreadService;

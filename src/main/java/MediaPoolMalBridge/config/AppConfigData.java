@@ -202,6 +202,11 @@ public class AppConfigData {
     @Value( "${scheduler.bmupload.cron.expression:0 0 */1 * * *}" )
     private String bmUploadSchedulerCronExpression;
     /**
+     * Mediapool get theme id cron expression
+     */
+    @Value( "${scheduler.bmgetthemeid.cron.expression:0 0 */1 * * *}" )
+    private String bmGetThemeIdCronExpression;
+    /**
      *
      */
     @Value( "${scheduler.bridgeexchangeassets.cron.expression:0 0 */1 * * *}" )
@@ -473,6 +478,8 @@ public class AppConfigData {
     public String getBmUploadSchedulerCronExpression() {
         return bmUploadSchedulerCronExpression;
     }
+
+    public String getBmGetThemeIdCronExpression() { return bmGetThemeIdCronExpression; }
 
     public String getBridgeExchangeAssetsCronExpression() {
         return bridgeExchangeAssetsCronExpression;
