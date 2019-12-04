@@ -1,0 +1,514 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://brandmaker.com/webservices/Theme/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ThemeService" targetNamespace="http://brandmaker.com/webservices/Theme/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://brandmaker.com/webservices/Theme/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://brandmaker.com/webservices/Theme/">
+            <xs:element name="createSortedTheme" type="tns:createSortedTheme"/>
+            <xs:element name="createSortedThemeResponse" type="tns:createSortedThemeResponse"/>
+            <xs:element name="createTheme" type="tns:createTheme"/>
+            <xs:element name="createThemeResponse" type="tns:createThemeResponse"/>
+            <xs:element name="deleteThemeById" type="tns:deleteThemeById"/>
+            <xs:element name="deleteThemeByIdResponse" type="tns:deleteThemeByIdResponse"/>
+            <xs:element name="getDetailedSortedThemeTree" type="tns:getDetailedSortedThemeTree"/>
+            <xs:element name="getDetailedSortedThemeTreeResponse" type="tns:getDetailedSortedThemeTreeResponse"/>
+            <xs:element name="getSortedThemeTree" type="tns:getSortedThemeTree"/>
+            <xs:element name="getSortedThemeTreeResponse" type="tns:getSortedThemeTreeResponse"/>
+            <xs:element name="receiveFullThemeTree" type="tns:receiveFullThemeTree"/>
+            <xs:element name="receiveFullThemeTreeInformation" type="tns:receiveFullThemeTreeInformation"/>
+            <xs:element name="receiveFullThemeTreeInformationResponse" type="tns:receiveFullThemeTreeInformationResponse"/>
+            <xs:element name="receiveFullThemeTreeResponse" type="tns:receiveFullThemeTreeResponse"/>
+            <xs:element name="receiveThemeInformationById" type="tns:receiveThemeInformationById"/>
+            <xs:element name="receiveThemeInformationByIdResponse" type="tns:receiveThemeInformationByIdResponse"/>
+            <xs:element name="receiveThemeInformationByPath" type="tns:receiveThemeInformationByPath"/>
+            <xs:element name="receiveThemeInformationByPathResponse" type="tns:receiveThemeInformationByPathResponse"/>
+            <xs:element name="updateSortedTheme" type="tns:updateSortedTheme"/>
+            <xs:element name="updateSortedThemeResponse" type="tns:updateSortedThemeResponse"/>
+            <xs:element name="updateThemeById" type="tns:updateThemeById"/>
+            <xs:element name="updateThemeByIdResponse" type="tns:updateThemeByIdResponse"/>
+            <xs:complexType name="getSortedThemeTree">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="themeId" type="tns:themeId"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="themeId">
+                <xs:restriction base="xs:int"/>
+            </xs:simpleType>
+            <xs:complexType name="getSortedThemeTreeResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="theme" type="tns:themesResult"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="themesResult">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="themes">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="theme" type="tns:theme"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="theme">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="id" type="xs:int"/>
+                    <xs:element minOccurs="0" name="parentId" type="xs:int"/>
+                    <xs:element minOccurs="0" name="names">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="name" type="tns:themeName"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="order">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="position" type="tns:themePosition"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="subThemesOrder">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="order" type="tns:subThemesOrder"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="description" type="xs:string"/>
+                    <xs:element minOccurs="0" name="mediaGuid" type="xs:int"/>
+                    <xs:element minOccurs="0" name="mediaVersion" type="xs:int"/>
+                    <xs:element minOccurs="0" name="modules">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="module" type="tns:themeModule"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="userAccess">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="userId" type="xs:int"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="organizationalAccess">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="divisionId" type="xs:int"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="themes">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="theme" type="tns:theme"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="themeName">
+                <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                        <xs:attribute name="languageKey" type="xs:string"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="themePosition">
+                <xs:simpleContent>
+                    <xs:extension base="tns:themeName"/>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="subThemesOrder">
+                <xs:simpleContent>
+                    <xs:extension base="tns:themeName"/>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="themeModule">
+                <xs:simpleContent>
+                    <xs:extension base="xs:boolean">
+                        <xs:attribute name="name" type="xs:string"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="createSortedTheme">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="theme" type="tns:theme"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createSortedThemeResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="result" type="tns:themeResult"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="themeResult">
+                <xs:sequence>
+                    <xs:element name="result" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="id" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getDetailedSortedThemeTree">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="themeId" type="tns:themeId"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getDetailedSortedThemeTreeResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="theme" type="tns:themesResult"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createTheme">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="theme" type="tns:theme"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createThemeResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="result" type="tns:themeResult"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateThemeById">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="theme" type="tns:theme"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateThemeByIdResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" name="result" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="receiveThemeInformationByPath">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="themeName" type="tns:themeName"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="receiveThemeInformationByPathResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="theme" type="tns:theme"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="receiveFullThemeTree">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="themeId" type="tns:themeId"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="receiveFullThemeTreeResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:themesResult"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateSortedTheme">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="theme" type="tns:theme"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateSortedThemeResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" name="result" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="deleteThemeById">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="themeId" type="tns:themeId"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="deleteThemeByIdResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" name="result" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="receiveFullThemeTreeInformation">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="themeId" type="tns:themeId"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="receiveFullThemeTreeInformationResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:themesResult"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="receiveThemeInformationById">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="themeId" type="tns:themeId"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="receiveThemeInformationByIdResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="theme" type="tns:theme"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ThemeWebServiceFault" type="tns:ThemeWebServiceFault"/>
+            <xs:complexType name="ThemeWebServiceFault">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="usedMediaIds" type="xs:string"/>
+                    <xs:element minOccurs="0" name="web2printIds" type="xs:string"/>
+                    <xs:element minOccurs="0" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getSortedThemeTree">
+        <wsdl:part element="tns:getSortedThemeTree" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createSortedTheme">
+        <wsdl:part element="tns:createSortedTheme" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="receiveThemeInformationByPathResponse">
+        <wsdl:part element="tns:receiveThemeInformationByPathResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ThemeWebServiceFault">
+        <wsdl:part element="tns:ThemeWebServiceFault" name="ThemeWebServiceFault"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteThemeByIdResponse">
+        <wsdl:part element="tns:deleteThemeByIdResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getDetailedSortedThemeTreeResponse">
+        <wsdl:part element="tns:getDetailedSortedThemeTreeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateThemeById">
+        <wsdl:part element="tns:updateThemeById" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="receiveThemeInformationByIdResponse">
+        <wsdl:part element="tns:receiveThemeInformationByIdResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="receiveThemeInformationByPath">
+        <wsdl:part element="tns:receiveThemeInformationByPath" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateThemeByIdResponse">
+        <wsdl:part element="tns:updateThemeByIdResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateSortedThemeResponse">
+        <wsdl:part element="tns:updateSortedThemeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createThemeResponse">
+        <wsdl:part element="tns:createThemeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="receiveFullThemeTreeInformationResponse">
+        <wsdl:part element="tns:receiveFullThemeTreeInformationResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="receiveFullThemeTreeInformation">
+        <wsdl:part element="tns:receiveFullThemeTreeInformation" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createSortedThemeResponse">
+        <wsdl:part element="tns:createSortedThemeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getSortedThemeTreeResponse">
+        <wsdl:part element="tns:getSortedThemeTreeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getDetailedSortedThemeTree">
+        <wsdl:part element="tns:getDetailedSortedThemeTree" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createTheme">
+        <wsdl:part element="tns:createTheme" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="receiveFullThemeTreeResponse">
+        <wsdl:part element="tns:receiveFullThemeTreeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="receiveFullThemeTree">
+        <wsdl:part element="tns:receiveFullThemeTree" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateSortedTheme">
+        <wsdl:part element="tns:updateSortedTheme" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteThemeById">
+        <wsdl:part element="tns:deleteThemeById" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="receiveThemeInformationById">
+        <wsdl:part element="tns:receiveThemeInformationById" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="ThemeWebServicePort">
+        <wsdl:operation name="getSortedThemeTree">
+            <wsdl:input message="tns:getSortedThemeTree" name="getSortedThemeTree"> </wsdl:input>
+            <wsdl:output message="tns:getSortedThemeTreeResponse" name="getSortedThemeTreeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:ThemeWebServiceFault" name="ThemeWebServiceFault"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createSortedTheme">
+            <wsdl:input message="tns:createSortedTheme" name="createSortedTheme"> </wsdl:input>
+            <wsdl:output message="tns:createSortedThemeResponse" name="createSortedThemeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:ThemeWebServiceFault" name="ThemeWebServiceFault"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDetailedSortedThemeTree">
+            <wsdl:input message="tns:getDetailedSortedThemeTree" name="getDetailedSortedThemeTree"> </wsdl:input>
+            <wsdl:output message="tns:getDetailedSortedThemeTreeResponse" name="getDetailedSortedThemeTreeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:ThemeWebServiceFault" name="ThemeWebServiceFault"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createTheme">
+            <wsdl:input message="tns:createTheme" name="createTheme"> </wsdl:input>
+            <wsdl:output message="tns:createThemeResponse" name="createThemeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:ThemeWebServiceFault" name="ThemeWebServiceFault"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateThemeById">
+            <wsdl:input message="tns:updateThemeById" name="updateThemeById"> </wsdl:input>
+            <wsdl:output message="tns:updateThemeByIdResponse" name="updateThemeByIdResponse"> </wsdl:output>
+            <wsdl:fault message="tns:ThemeWebServiceFault" name="ThemeWebServiceFault"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="receiveThemeInformationByPath">
+            <wsdl:input message="tns:receiveThemeInformationByPath" name="receiveThemeInformationByPath"> </wsdl:input>
+            <wsdl:output message="tns:receiveThemeInformationByPathResponse" name="receiveThemeInformationByPathResponse"> </wsdl:output>
+            <wsdl:fault message="tns:ThemeWebServiceFault" name="ThemeWebServiceFault"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="receiveFullThemeTree">
+            <wsdl:input message="tns:receiveFullThemeTree" name="receiveFullThemeTree"> </wsdl:input>
+            <wsdl:output message="tns:receiveFullThemeTreeResponse" name="receiveFullThemeTreeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:ThemeWebServiceFault" name="ThemeWebServiceFault"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateSortedTheme">
+            <wsdl:input message="tns:updateSortedTheme" name="updateSortedTheme"> </wsdl:input>
+            <wsdl:output message="tns:updateSortedThemeResponse" name="updateSortedThemeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:ThemeWebServiceFault" name="ThemeWebServiceFault"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="deleteThemeById">
+            <wsdl:input message="tns:deleteThemeById" name="deleteThemeById"> </wsdl:input>
+            <wsdl:output message="tns:deleteThemeByIdResponse" name="deleteThemeByIdResponse"> </wsdl:output>
+            <wsdl:fault message="tns:ThemeWebServiceFault" name="ThemeWebServiceFault"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="receiveFullThemeTreeInformation">
+            <wsdl:input message="tns:receiveFullThemeTreeInformation" name="receiveFullThemeTreeInformation"> </wsdl:input>
+            <wsdl:output message="tns:receiveFullThemeTreeInformationResponse" name="receiveFullThemeTreeInformationResponse"> </wsdl:output>
+            <wsdl:fault message="tns:ThemeWebServiceFault" name="ThemeWebServiceFault"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="receiveThemeInformationById">
+            <wsdl:input message="tns:receiveThemeInformationById" name="receiveThemeInformationById"> </wsdl:input>
+            <wsdl:output message="tns:receiveThemeInformationByIdResponse" name="receiveThemeInformationByIdResponse"> </wsdl:output>
+            <wsdl:fault message="tns:ThemeWebServiceFault" name="ThemeWebServiceFault"> </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ThemeServiceSoapBinding" type="tns:ThemeWebServicePort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getSortedThemeTree">
+            <soap:operation soapAction="getSortedThemeTree" style="document"/>
+            <wsdl:input name="getSortedThemeTree">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getSortedThemeTreeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ThemeWebServiceFault">
+                <soap:fault name="ThemeWebServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createSortedTheme">
+            <soap:operation soapAction="createSortedTheme" style="document"/>
+            <wsdl:input name="createSortedTheme">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="createSortedThemeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ThemeWebServiceFault">
+                <soap:fault name="ThemeWebServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDetailedSortedThemeTree">
+            <soap:operation soapAction="getDetailedSortedThemeTree" style="document"/>
+            <wsdl:input name="getDetailedSortedThemeTree">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getDetailedSortedThemeTreeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ThemeWebServiceFault">
+                <soap:fault name="ThemeWebServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createTheme">
+            <soap:operation soapAction="createTheme" style="document"/>
+            <wsdl:input name="createTheme">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="createThemeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ThemeWebServiceFault">
+                <soap:fault name="ThemeWebServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateThemeById">
+            <soap:operation soapAction="updateThemeById" style="document"/>
+            <wsdl:input name="updateThemeById">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateThemeByIdResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ThemeWebServiceFault">
+                <soap:fault name="ThemeWebServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="receiveThemeInformationByPath">
+            <soap:operation soapAction="receiveThemeInformationByPath" style="document"/>
+            <wsdl:input name="receiveThemeInformationByPath">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="receiveThemeInformationByPathResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ThemeWebServiceFault">
+                <soap:fault name="ThemeWebServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="receiveFullThemeTree">
+            <soap:operation soapAction="receiveFullThemeTree" style="document"/>
+            <wsdl:input name="receiveFullThemeTree">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="receiveFullThemeTreeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ThemeWebServiceFault">
+                <soap:fault name="ThemeWebServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateSortedTheme">
+            <soap:operation soapAction="updateSortedTheme" style="document"/>
+            <wsdl:input name="updateSortedTheme">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateSortedThemeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ThemeWebServiceFault">
+                <soap:fault name="ThemeWebServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="deleteThemeById">
+            <soap:operation soapAction="deleteThemeById" style="document"/>
+            <wsdl:input name="deleteThemeById">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="deleteThemeByIdResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ThemeWebServiceFault">
+                <soap:fault name="ThemeWebServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="receiveFullThemeTreeInformation">
+            <soap:operation soapAction="receiveFullThemeTreeInformation" style="document"/>
+            <wsdl:input name="receiveFullThemeTreeInformation">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="receiveFullThemeTreeInformationResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ThemeWebServiceFault">
+                <soap:fault name="ThemeWebServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="receiveThemeInformationById">
+            <soap:operation soapAction="receiveThemeInformationById" style="document"/>
+            <wsdl:input name="receiveThemeInformationById">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="receiveThemeInformationByIdResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ThemeWebServiceFault">
+                <soap:fault name="ThemeWebServiceFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ThemeService">
+        <wsdl:port binding="tns:ThemeServiceSoapBinding" name="ThemePort">
+            <soap:address location="https://qastarwood.brandmakerinc.com/webservices/Theme/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
