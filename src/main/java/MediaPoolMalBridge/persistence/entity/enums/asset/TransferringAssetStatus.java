@@ -6,6 +6,7 @@ package MediaPoolMalBridge.persistence.entity.enums.asset;
 public enum TransferringAssetStatus {
     INVALID,
     ASSET_OBSERVED,
+    ASSET_ONBOARDED,
     FILE_DOWNLOADING,
     FILE_DOWNLOADED,
     GET_BM_ASSET_ID,

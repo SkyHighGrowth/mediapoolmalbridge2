@@ -1,10 +1,14 @@
 package MediaPoolMalBridge.clients.MAL.properties.client.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Part of {@link MALGetPropertiesResponse}
  */
+@JsonPropertyOrder( { "propertyId", "name", "address", "state", "address", "state", "zip",
+        "city", "country", "telephone", "url", "vanityUrl", "latitude", "longitude", "brand",
+        "parentBrand", "primaryPropertyImage" })
 public class MALProperty {
 
     @SerializedName("property_id")

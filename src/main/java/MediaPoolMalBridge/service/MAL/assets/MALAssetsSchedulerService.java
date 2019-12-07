@@ -1,6 +1,6 @@
 package MediaPoolMalBridge.service.MAL.assets;
 
-import MediaPoolMalBridge.service.AbstractSchedulerService;
+import MediaPoolMalBridge.service.MAL.AbstractMALSchedulerService;
 import MediaPoolMalBridge.service.MAL.assets.created.MALCollectCreatedAssetsUniqueThreadSinceService;
 import MediaPoolMalBridge.service.MAL.assets.deleted.MALCollectDeletedAssetsUniqueThreadSinceService;
 import MediaPoolMalBridge.service.MAL.assets.modified.MALCollectModifiedAssetUniqueThreadSinceService;
@@ -8,17 +8,12 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Class that collects common fields and methods for MAL Scheduling services
  */
 @Service
-public class MALAssetsSchedulerService extends AbstractSchedulerService {
-
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd+HH:mm:ss");
+public class MALAssetsSchedulerService extends AbstractMALSchedulerService {
 
     private final MALCollectCreatedAssetsUniqueThreadSinceService malCollectCreatedAssetsUniqueThreadSinceService;
 
@@ -41,11 +36,7 @@ public class MALAssetsSchedulerService extends AbstractSchedulerService {
 
     @Override
     public void scheduled() {
-        final String since = Instant.ofEpochMilli(System.currentTimeMillis())
-                .atOffset(ZoneOffset.UTC)
-                .toLocalDateTime()
-                .minusDays( appConfig.getMalLookInThePastDays() )
-                .format(DATE_TIME_FORMATTER);
+        final String since = getMidnightMalLookInThePast();
 
         malCollectCreatedAssetsUniqueThreadSinceService.setSince( since );
         malCollectCreatedAssetsUniqueThreadSinceService.start();

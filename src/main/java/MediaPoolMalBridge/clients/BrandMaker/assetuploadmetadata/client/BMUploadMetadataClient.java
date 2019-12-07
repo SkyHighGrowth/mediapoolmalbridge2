@@ -3,6 +3,7 @@ package MediaPoolMalBridge.clients.BrandMaker.assetuploadmetadata.client;
 import MediaPoolMalBridge.clients.BrandMaker.BrandMakerSoapClient;
 import MediaPoolMalBridge.clients.BrandMaker.assetuploadmetadata.client.model.UploadMetadataStatus;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetJsonedValuesEntity;
 import com.brandmaker.webservices.mediapool.UploadMetadataArgument;
 import com.brandmaker.webservices.mediapool.UploadMetadataResult;
 import org.springframework.stereotype.Component;
@@ -16,8 +17,10 @@ public class BMUploadMetadataClient extends BrandMakerSoapClient {
 
     public UploadMetadataStatus upload(final AssetEntity asset) {
         try {
-            final UploadMetadataArgument uploadMetadataArgument = asset.getBmUploadMetadataArgument();
-            if( StringUtils.isEmpty(asset.getBmAssetId() ) || asset.getBmAssetId().startsWith( "CREATING_" ) ) {
+            final UploadMetadataArgument uploadMetadataArgument = getUploadMetadataArgument( asset );
+            if( StringUtils.isEmpty(asset.getBmAssetId() ) ||
+                asset.getBmAssetId().startsWith( "CREATING_" ) ||
+                uploadMetadataArgument == null ) {
                 return new UploadMetadataStatus( false, "Asset id " + asset.getBmAssetId() + " is not valid" );
             }
             uploadMetadataArgument.setMediaGuid( asset.getBmAssetId() );
@@ -28,6 +31,14 @@ public class BMUploadMetadataClient extends BrandMakerSoapClient {
             reportErrorOnException(asset.getBmAssetId(), e);
             return new UploadMetadataStatus(false, e.getMessage());
         }
+    }
+
+    private UploadMetadataArgument getUploadMetadataArgument(final AssetEntity assetEntity ) {
+        final AssetJsonedValuesEntity assetJsonedValuesEntity = assetEntity.getAssetJsonedValuesEntity();
+        if (assetJsonedValuesEntity.getBmUploadMetadataArgumentJson() != null) {
+            return GSON.fromJson(assetJsonedValuesEntity.getBmUploadMetadataArgumentJson(), UploadMetadataArgument.class);
+        }
+        return null;
     }
 
     private String toZeroAndOne( final String v )

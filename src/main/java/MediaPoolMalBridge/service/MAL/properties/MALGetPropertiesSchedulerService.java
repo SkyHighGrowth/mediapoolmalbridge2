@@ -1,23 +1,18 @@
 package MediaPoolMalBridge.service.MAL.properties;
 
-import MediaPoolMalBridge.service.AbstractSchedulerService;
+import MediaPoolMalBridge.service.MAL.AbstractMALSchedulerService;
 import MediaPoolMalBridge.service.MAL.properties.deleted.MALGetPropertiesDeletedUniqueThreadSinceService;
 import MediaPoolMalBridge.service.MAL.properties.download.MALGetPropertiesUniqueThreadService;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Scheduler service that triggers properties update and delete from MAL server
  */
 @Service
-public class MALGetPropertiesSchedulerService extends AbstractSchedulerService {
-
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd+HH:mm:ss");
+public class MALGetPropertiesSchedulerService extends AbstractMALSchedulerService {
 
     private MALGetPropertiesUniqueThreadService getPropertiesService;
 
@@ -36,11 +31,8 @@ public class MALGetPropertiesSchedulerService extends AbstractSchedulerService {
 
     @Override
     public void scheduled() {
-        final String since = Instant.ofEpochMilli(System.currentTimeMillis())
-                .atOffset(ZoneOffset.UTC)
-                .toLocalDateTime()
-                .minusDays(appConfig.getMalLookInThePastDays())
-                .format(DATE_TIME_FORMATTER);
+        final String since = getMidnightMalLookInThePast();
+
         getPropertiesService.start();
         getPropertiesDeletedSinceService.setUnavailableSince( since );
         getPropertiesDeletedSinceService.start();

@@ -3,7 +3,7 @@ package MediaPoolMalBridge.service;
 import MediaPoolMalBridge.config.AppConfig;
 import MediaPoolMalBridge.persistence.repository.Bridge.ReportsRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.schedule.ServiceRepository;
-import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 /**
  * Class that collects common fields and methods for services
  */
-public class AbstractService {
+public abstract class AbstractService {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -28,13 +28,13 @@ public class AbstractService {
     protected Gson GSON;
 
     @Autowired
+    protected ObjectMapper objectMapper;
+
+    @Autowired
     protected AppConfig appConfig;
 
     @Autowired
     protected Environment environment;
-
-    @Autowired
-    protected TaskExecutorWrapper taskExecutorWrapper;
 
     protected boolean isRunService() {
         return !Arrays.asList(environment.getActiveProfiles()).contains("no service");
@@ -46,7 +46,7 @@ public class AbstractService {
     @Autowired
     protected ReportsRepository reportsRepository;
 
-    protected LocalDateTime getMidnight() {
+    protected LocalDateTime getMidnightBridgeLookInThePast() {
         return Instant.ofEpochMilli(System.currentTimeMillis())
                 .atOffset(ZoneOffset.UTC)
                 .toLocalDateTime()
@@ -55,5 +55,4 @@ public class AbstractService {
                 .withMinute(0)
                 .withSecond(0);
     }
-
 }

@@ -1,10 +1,19 @@
 package MediaPoolMalBridge.clients.MAL.asset.client.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Class that wraps MAL server single asset response structure
  */
+@JsonPropertyOrder({ "assetId", "assetTypeId", "associations", "filename",
+                    "brandId", "propertyId", "marshaCode", "name", "caption",
+                    "description", "limitedRights", "rightsManaged", "usageDescription",
+                    "instructions", "collectionId", "destionationId", "subjectId",
+                    "colorId", "fileTypeId", "zipped", "status", "dateCreated",
+                    "lastModified", "metadata", "thumbnailUrl", "mediumUrl",
+                    "largeUrl", "logoJpgUrl", "logoPngUrl", "xlUrl", "offerName",
+                    "offerUrl", "width", "height", "isStock", "mimeType" })
 public class MALGetAsset {
 
     /**
@@ -80,7 +89,7 @@ public class MALGetAsset {
     /**
      * MAL asset usage description
      */
-    @SerializedName("usageDescription")
+    @SerializedName("usage_description")
     private String usageDescription;
 
     /**

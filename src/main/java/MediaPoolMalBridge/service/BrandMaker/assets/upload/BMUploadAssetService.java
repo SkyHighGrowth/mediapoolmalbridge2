@@ -29,6 +29,9 @@ public class BMUploadAssetService extends AbstractBMNonUniqueThreadService<Asset
 
     @Override
     protected void run(final AssetEntity assetEntity) {
+        if( assetEntity.getBmAssetId().startsWith( "CREATING_ ") ) {
+            return;
+        }
         if( !isGateOpen( assetEntity, "uploading asset" ) ) {
             return;
         }

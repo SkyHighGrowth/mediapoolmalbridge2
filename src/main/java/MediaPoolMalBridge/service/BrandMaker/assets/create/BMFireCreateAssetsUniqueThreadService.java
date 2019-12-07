@@ -21,6 +21,6 @@ public class BMFireCreateAssetsUniqueThreadService extends AbstractBMUniqueThrea
         executeTransition( TransferringAssetStatus.FILE_DOWNLOADED,
                 TransferringAssetStatus.FILE_UPLOADING,
                 TransferringAssetStatus.FILE_UPLOADED,
-                MALAssetOperation.MAL_CREATED);
+                MALAssetOperation.MAL_CREATED::equals );
     }
 }

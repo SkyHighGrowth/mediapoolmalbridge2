@@ -1,22 +1,15 @@
-package MediaPoolMalBridge.service.MAL;
+package MediaPoolMalBridge.service.Bridge;
 
-import MediaPoolMalBridge.persistence.repository.MAL.MALPropertyRepository;
 import MediaPoolMalBridge.service.AbstractUniqueThreadService;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-/**
- * Class that implements common fields and properties for MAL server unique thread services
- */
-public abstract class AbstractMALUniqueThreadService extends AbstractUniqueThreadService {
+public abstract class AbstractBridgeUniqueThreadService extends AbstractUniqueThreadService  {
 
     @Autowired
     @Qualifier( "MALTaskExecutorWrapper" )
-    private TaskExecutorWrapper taskExecutorWrapper;
-
-    @Autowired
-    protected MALPropertyRepository malPropertyRepository;
+    protected TaskExecutorWrapper taskExecutorWrapper;
 
     @Override
     protected TaskExecutorWrapper getTaskExecutorWrapper() {

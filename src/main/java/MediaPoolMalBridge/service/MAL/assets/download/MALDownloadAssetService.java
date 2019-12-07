@@ -9,6 +9,7 @@ import MediaPoolMalBridge.persistence.entity.Bridge.UploadedFileEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
+import MediaPoolMalBridge.persistence.repository.Bridge.AssetJsonedValuesRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.UploadedFileRepository;
 import MediaPoolMalBridge.service.MAL.AbstractMALNonUniqueThreadService;
 import org.springframework.stereotype.Service;
@@ -26,11 +27,15 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
 
     private final MALDownloadAssetClient malDownloadAssetClient;
 
+    private final AssetJsonedValuesRepository assetJsonedValuesRepository;
+
     private final UploadedFileRepository uploadedFileRepository;
 
     public MALDownloadAssetService(final MALDownloadAssetClient malDownloadAssetClient,
+                                   final AssetJsonedValuesRepository assetJsonedValuesRepository,
                                    final UploadedFileRepository uploadedFileRepository) {
         this.malDownloadAssetClient = malDownloadAssetClient;
+        this.assetJsonedValuesRepository = assetJsonedValuesRepository;
         this.uploadedFileRepository = uploadedFileRepository;
     }
 
@@ -56,7 +61,7 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
     @Transactional
     protected void onFailure( final AssetEntity assetEntity, final MALAbstractResponse malAbstractResponse, final Exception e ) {
         uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
-        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ASSET_OBSERVED );
+        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ASSET_ONBOARDED );
         assetRepository.save(assetEntity);
         final String message;
         if( e == null ) {
@@ -64,7 +69,7 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
         } else {
             message = String.format("Problem downloading asset with id [%s] and url [%s], with message [%s]", assetEntity.getMalAssetId(), assetEntity.getUrl(), e.getMessage() );
         }
-        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, assetEntity.getMalGetAssetJson(), GSON.toJson( assetEntity ), null );
+        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.NONE, GSON.toJson( assetEntity ), null, null );
         reportsRepository.save( reportsEntity );
     }
 

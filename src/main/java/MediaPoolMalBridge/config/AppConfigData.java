@@ -101,18 +101,33 @@ public class AppConfigData {
     /**
      * executor pool size
      */
-    @Value( "${threadexecutor.pool.size:100}" )
-    private int threadexecutorPoolSize;
+    @Value( "${malthreadexecutor.pool.size:100}" )
+    private int malThreadexecutorPoolSize;
     /**
      * executor waiting queue size
      */
-    @Value( "${threadexecutor.queue.size:10000}" )
-    private int threadexecutorQueueSize;
+    @Value( "${malthreadexecutor.queue.size:10000}" )
+    private int malThreadexecutorQueueSize;
     /**
      * executor queue maximal allowed length
      */
-    @Value( "${threadexecutor.queue.length.max:9000}" )
-    private int threadexecutorQueueLengthMax;
+    @Value( "${malthreadexecutor.queue.length.max:9000}" )
+    private int malThreadexecutorQueueLengthMax;
+    /**
+     * executor pool size
+     */
+    @Value( "${bmthreadexecutor.pool.size:10}" )
+    private int bmThreadexecutorPoolSize;
+    /**
+     * executor waiting queue size
+     */
+    @Value( "${bmthreadexecutor.queue.size:10000}" )
+    private int bmThreadexecutorQueueSize;
+    /**
+     * executor queue maximal allowed length
+     */
+    @Value( "${bmthreadexecutor.queue.length.max:9000}" )
+    private int bmThreadexecutorQueueLengthMax;
 
     /**
      * mail server name
@@ -237,10 +252,15 @@ public class AppConfigData {
     @Value( "${scheduler.bridgesendmail.cron.expression: 0 0 0 * * *}" )
     private String bridgeSendMailCronExpression;
     /**
+     * Asset on boarding cron expression
+     */
+    @Value( "${scheduler.bridgeassetonboarding.cron.expression:0 10 * * * *}" )
+    private String bridgeAssetOnBoardingCronExpression;
+    /**
      * MAL server collect assets scheduler cron expression
      */
     @Value( "${scheduler.malasset.cron.expression: 0 0 */1 * * *}" )
-    private String assetCronExpression;
+    private String malAssetCronExpression;
     /**
      * MAL server download files scheduler cron expression
      */
@@ -250,7 +270,7 @@ public class AppConfigData {
      * MAL asset structure scheduler cron expression
      */
     @Value( "${scheduler.malassetstructures.cron.expression:0 0 */1 * * *}" )
-    private String assetStructureCronExpression;
+    private String malAssetStructureCronExpression;
     /**
      * MAL properties scheduler cron expression
      */
@@ -399,16 +419,28 @@ public class AppConfigData {
         return threadschedulerPoolSize;
     }
 
-    public int getThreadexecutorPoolSize() {
-        return threadexecutorPoolSize;
+    public int getMalThreadexecutorPoolSize() {
+        return malThreadexecutorPoolSize;
     }
 
-    public int getThreadexecutorQueueSize() {
-        return threadexecutorQueueSize;
+    public int getMalThreadexecutorQueueSize() {
+        return malThreadexecutorQueueSize;
     }
 
-    public int getThreadexecutorQueueLengthMax() {
-        return threadexecutorQueueLengthMax;
+    public int getMalThreadexecutorQueueLengthMax() {
+        return malThreadexecutorQueueLengthMax;
+    }
+
+    public int getBmThreadexecutorPoolSize() {
+        return bmThreadexecutorPoolSize;
+    }
+
+    public int getBmThreadexecutorQueueSize() {
+        return bmThreadexecutorQueueSize;
+    }
+
+    public int getBmThreadexecutorQueueLengthMax() {
+        return bmThreadexecutorQueueLengthMax;
     }
 
     public String getMailHostname() {
@@ -505,8 +537,10 @@ public class AppConfigData {
         return bridgeSendMailCronExpression;
     }
 
+    public String getBridgeAssetOnBoardingCronExpression() { return bridgeAssetOnBoardingCronExpression; }
+
     public String getMalAssetCronExpression() {
-        return assetCronExpression;
+        return malAssetCronExpression;
     }
 
     public String getMalDownloadAssetCronExpression() {
@@ -514,7 +548,7 @@ public class AppConfigData {
     }
 
     public String getMalAssetStructureCronExpression() {
-        return assetStructureCronExpression;
+        return malAssetStructureCronExpression;
     }
 
     public String getMalPropertiesCronExpression() {
@@ -576,6 +610,4 @@ public class AppConfigData {
     public int getHikariMaximumPoolSize() {
         return hikariMaximumPoolSize;
     }
-
-
 }

@@ -3,6 +3,7 @@ package MediaPoolMalBridge.service;
 import MediaPoolMalBridge.persistence.entity.Bridge.schedule.ServiceEntity;
 import MediaPoolMalBridge.persistence.entity.enums.schedule.ServiceState;
 import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
+import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +18,11 @@ public abstract class AbstractNonUniqueThreadService<RUN_ARGUMENT> extends Abstr
 
     protected abstract void run( final RUN_ARGUMENT run_argument );
 
+    protected abstract TaskExecutorWrapper getTaskExecutorWrapper();
+
     public void start( final RUN_ARGUMENT runArgument )
     {
+        final TaskExecutorWrapper taskExecutorWrapper = getTaskExecutorWrapper();
         storeServiceEntity( new ServiceEntity( ServiceState.SERVICE_START, getClass().getCanonicalName(), Thread.currentThread().getName(), taskExecutorWrapper.getTaskExecutor().getActiveCount(), taskExecutorWrapper.getQueueSize() ) );
 
         if( isRunService() ) {

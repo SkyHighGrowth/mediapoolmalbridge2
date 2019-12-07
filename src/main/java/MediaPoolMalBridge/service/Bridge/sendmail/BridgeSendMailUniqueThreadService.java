@@ -3,11 +3,10 @@ package MediaPoolMalBridge.service.Bridge.sendmail;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
-import MediaPoolMalBridge.service.AbstractUniqueThreadService;
+import MediaPoolMalBridge.service.Bridge.AbstractBridgeUniqueThreadService;
 import MediaPoolMalBridge.service.Bridge.sendmail.model.BMMailFormat;
 import MediaPoolMalBridge.service.Bridge.sendmail.model.MALMailFormat;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -15,16 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * Service that sends mail messages
  */
 @Service
-public class BridgeSendMailUniqueThreadService extends AbstractUniqueThreadService {
+public class BridgeSendMailUniqueThreadService extends AbstractBridgeUniqueThreadService {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-    private final int pageSize = 200;
 
     private final JavaMailSender emailSender;
 
@@ -43,8 +41,8 @@ public class BridgeSendMailUniqueThreadService extends AbstractUniqueThreadServi
 
     @Override
     protected void run() {
-        sendToBM( getMidnight() );
-        sendToMAL( getMidnight() );
+        sendToBM( getMidnightBridgeLookInThePast() );
+        sendToMAL( getMidnightBridgeLookInThePast() );
     }
 
     private void sendToBM( final LocalDateTime since )
@@ -52,8 +50,10 @@ public class BridgeSendMailUniqueThreadService extends AbstractUniqueThreadServi
         boolean condition = true;
         for( int page = 0; condition; ++page ) {
             try {
-                Slice<ReportsEntity> reports = reportsRepository.findAllByReportToAndSentNotAndCreatedIsAfter(ReportTo.BM, false, since, PageRequest.of(page, pageSize));
-                condition = reports.hasNext();
+                List<ReportsEntity> reports = reportsRepository.findAllByReportToAndSentNotAndCreatedIsAfter(ReportTo.BM, false, since, PageRequest.of(0, appConfig.getDatabasePageSize()));
+                if( reports.isEmpty() || page > 1000 ) {
+                    break;
+                }
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo(appConfig.getMailBmAddress());
                 message.setSubject( "Automatic report from MALToBMBridge" );
@@ -74,8 +74,10 @@ public class BridgeSendMailUniqueThreadService extends AbstractUniqueThreadServi
         boolean condition = true;
         for( int page = 0; condition; ++page ) {
             try {
-                Slice<ReportsEntity> reports = reportsRepository.findAllByReportToAndSentNotAndCreatedIsAfter(ReportTo.MAL, false, since, PageRequest.of(page, pageSize));
-                condition = reports.hasNext();
+                List<ReportsEntity> reports = reportsRepository.findAllByReportToAndSentNotAndCreatedIsAfter(ReportTo.MAL, false, since, PageRequest.of(0, appConfig.getDatabasePageSize()));
+                if( reports.isEmpty() || page > 1000 ) {
+                    break;
+                }
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo(appConfig.getMailMalAddress());
                 message.setSubject( "Automatic report from MALToBMBridge" );
@@ -92,7 +94,7 @@ public class BridgeSendMailUniqueThreadService extends AbstractUniqueThreadServi
     }
 
     @Transactional
-    protected void markAsSent( final Slice<ReportsEntity> reports )
+    protected void markAsSent( final List<ReportsEntity> reports )
     {
         reports.forEach( reportsEntity -> {
             reportsEntity.setSent( true );

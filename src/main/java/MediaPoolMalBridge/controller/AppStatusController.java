@@ -1,5 +1,6 @@
 package MediaPoolMalBridge.controller;
 
+import MediaPoolMalBridge.controller.model.ThreadPoolsStatuses;
 import MediaPoolMalBridge.model.BrandMaker.theme.BMThemes;
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
 import MediaPoolMalBridge.model.MAL.kits.MALKits;
@@ -10,8 +11,10 @@ import MediaPoolMalBridge.persistence.repository.Bridge.ReportsRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.schedule.JobRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.schedule.ServiceRepository;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import MediaPoolMalBridge.tasks.TaskSchedulerWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,7 +36,11 @@ public class AppStatusController {
     private final MALKits malKits;
     private final BMThemes bmThemes;
     private final MALAssetStructures assetStructures;
-    private final TaskExecutorWrapper taskExecutorWrapper;
+    @Qualifier( "MALThreadExcutorWrapper" )
+    private TaskExecutorWrapper malTaskExecutorWrapper;
+    @Qualifier( "BMThreadExcutorWrapper" )
+    private TaskExecutorWrapper bmTaskExecutorWrapper;
+    private TaskSchedulerWrapper taskSchedulerWrapper;
     private final JobRepository jobRepository;
     private final ServiceRepository serviceRepository;
     private final ReportsRepository reportsRepository;
@@ -41,14 +48,20 @@ public class AppStatusController {
     public AppStatusController(final MALKits malKits,
                                final BMThemes bmThemes,
                                final MALAssetStructures assetStructures,
-                               final TaskExecutorWrapper taskExecutorWrapper,
+                               @Qualifier( "MALTaskExecutorWrapper" )
+                               final TaskExecutorWrapper malTaskExecutorWrapper,
+                               @Qualifier( "BMTaskExecutorWrapper" )
+                               final TaskExecutorWrapper bmTaskExecutorWrapper,
+                               final TaskSchedulerWrapper taskSchedulerWrapper,
                                final JobRepository jobRepository,
                                final ServiceRepository serviceRepository,
                                final ReportsRepository reportsRepository) {
         this.malKits = malKits;
         this.bmThemes = bmThemes;
         this.assetStructures = assetStructures;
-        this.taskExecutorWrapper = taskExecutorWrapper;
+        this.malTaskExecutorWrapper = malTaskExecutorWrapper;
+        this.bmTaskExecutorWrapper = bmTaskExecutorWrapper;
+        this.taskSchedulerWrapper = taskSchedulerWrapper;
         this.jobRepository = jobRepository;
         this.serviceRepository = serviceRepository;
         this.reportsRepository = reportsRepository;
@@ -148,10 +161,22 @@ public class AppStatusController {
      * returns queue size from MAL server
      * @return
      */
-    @GetMapping("/appStatus/app/queueSize" )
-    public int getQueueSize()
+    @GetMapping("/appStatus/app/getThreadPoolsInfo" )
+    public ThreadPoolsStatuses getMalQueueSize()
     {
-        return taskExecutorWrapper.getQueueSize();
+        return new ThreadPoolsStatuses( taskSchedulerWrapper.getTaskScheduler().getPoolSize(),
+                taskSchedulerWrapper.getTaskScheduler().getScheduledThreadPoolExecutor().getQueue().size(),
+                taskSchedulerWrapper.getTaskScheduler().getActiveCount(),
+                malTaskExecutorWrapper.getTaskExecutor().getPoolSize(),
+                malTaskExecutorWrapper.getQueueSize(),
+                malTaskExecutorWrapper.getMaximalQueueSize(),
+                malTaskExecutorWrapper.getTaskExecutor().getActiveCount(),
+                malTaskExecutorWrapper.getLockCount(),
+                bmTaskExecutorWrapper.getTaskExecutor().getPoolSize(),
+                bmTaskExecutorWrapper.getQueueSize(),
+                bmTaskExecutorWrapper.getMaximalQueueSize(),
+                bmTaskExecutorWrapper.getTaskExecutor().getActiveCount(),
+                bmTaskExecutorWrapper.getLockCount() );
     }
 
     /**

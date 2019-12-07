@@ -17,9 +17,9 @@ public class BMFireDeleteAssetsUniqueThreadService extends AbstractBMUniqueThrea
 
     @Override
     protected void run() {
-        executeTransition( TransferringAssetStatus.ASSET_OBSERVED,
+        executeTransition( TransferringAssetStatus.ASSET_ONBOARDED,
                 TransferringAssetStatus.FILE_DELETING,
                 TransferringAssetStatus.DONE,
-                MALAssetOperation.MAL_DELETED);
+                MALAssetOperation.MAL_DELETED::equals );
     }
 }

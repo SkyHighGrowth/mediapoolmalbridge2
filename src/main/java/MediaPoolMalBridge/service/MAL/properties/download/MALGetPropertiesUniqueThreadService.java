@@ -75,19 +75,24 @@ public class MALGetPropertiesUniqueThreadService extends AbstractMALUniqueThread
     private void transformPageIntoProperties(final List<MALProperty> malProperties )
     {
         malProperties.forEach(malProperty -> {
-                    final String propertyMs5Hash = DigestUtils.md5Hex( GSON.toJson( malProperty ) );
-                    final Optional<MALPropertyEntity> optionalMALPropertyEntity = malPropertyRepository.findByPropertyId(malProperty.getPropertyId());
-                    if (optionalMALPropertyEntity.isPresent()) {
-                        final MALPropertyEntity malPropertyEntity = optionalMALPropertyEntity.get();
-                        if( propertyMs5Hash.equals( malPropertyEntity.getMd5Hash() ) ) {
-                            return;
-                        }
-                        malPropertyEntity.update(malProperty, propertyMs5Hash, MALPropertyStatus.OBSERVED );
-                        malPropertyRepository.save(malPropertyEntity);
-                    } else {
-                        final MALPropertyEntity malPropertyEntity = new MALPropertyEntity(malProperty, propertyMs5Hash, MALPropertyStatus.OBSERVED );
-                        malPropertyRepository.save(malPropertyEntity);
-                    }
-                });
+            final String propertyMd5Hash;
+            try {
+                propertyMd5Hash = DigestUtils.md5Hex(objectMapper.writeValueAsString(malProperty));
+            } catch ( final Exception e ) {
+                return;
+            }
+            final Optional<MALPropertyEntity> optionalMALPropertyEntity = malPropertyRepository.findByPropertyId(malProperty.getPropertyId());
+            if (optionalMALPropertyEntity.isPresent()) {
+                final MALPropertyEntity malPropertyEntity = optionalMALPropertyEntity.get();
+                if( propertyMd5Hash.equals( malPropertyEntity.getMd5Hash() ) ) {
+                    return;
+                }
+                malPropertyEntity.update(malProperty, propertyMd5Hash, MALPropertyStatus.OBSERVED );
+                malPropertyRepository.save(malPropertyEntity);
+            } else {
+                final MALPropertyEntity malPropertyEntity = new MALPropertyEntity(malProperty, propertyMd5Hash, MALPropertyStatus.OBSERVED );
+                malPropertyRepository.save(malPropertyEntity);
+            }
+        });
     }
 }

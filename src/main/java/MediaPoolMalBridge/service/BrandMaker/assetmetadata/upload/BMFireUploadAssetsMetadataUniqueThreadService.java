@@ -1,8 +1,12 @@
 package MediaPoolMalBridge.service.BrandMaker.assetmetadata.upload;
 
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMUniqueThreadService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Service which executes {@link BMUploadAssetMetadataService} on the given asset
@@ -19,6 +23,11 @@ public class BMFireUploadAssetsMetadataUniqueThreadService extends AbstractBMUni
         executeTransition( TransferringAssetStatus.FILE_UPLOADED,
                 TransferringAssetStatus.METADATA_UPLOADING,
                 TransferringAssetStatus.METADATA_UPLOADED,
-                null);
+                x -> true );
+    }
+
+    protected List<AssetEntity> getAssetEntities( final TransferringAssetStatus fromStatus ) {
+        return assetRepository.findAllByTransferringAssetStatusAndUpdatedIsAfterFetch(
+                fromStatus, getMidnightBridgeLookInThePast(), PageRequest.of(0, appConfig.getDatabasePageSize()));
     }
 }

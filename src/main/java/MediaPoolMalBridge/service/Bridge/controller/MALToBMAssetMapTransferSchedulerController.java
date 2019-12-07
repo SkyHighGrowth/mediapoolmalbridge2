@@ -1,5 +1,6 @@
 package MediaPoolMalBridge.service.Bridge.controller;
 
+import MediaPoolMalBridge.service.Bridge.database.assetunlocker.BridgeDatabaseUnlockerSchedulerService;
 import MediaPoolMalBridge.service.Bridge.deleteFiles.BridgeDeleteFilesSchedulerService;
 import MediaPoolMalBridge.service.Bridge.excelcreator.BridgeCreateExcelFileSchedulerService;
 import MediaPoolMalBridge.service.Bridge.exceluploader.BridgeUploadExcelFilesSchedulerService;
@@ -26,16 +27,20 @@ public class MALToBMAssetMapTransferSchedulerController {
 
     private BridgeSendMailSchedulerService bridgeSendMailSchedulerService;
 
+    private BridgeDatabaseUnlockerSchedulerService bridgeDatabaseUnlockerSchedulerService;
+
     public MALToBMAssetMapTransferSchedulerController(final BridgeTransferThemeSchedulerService bridgeTransferThemeSchedulerService,
                                                       final BridgeDeleteFilesSchedulerService bridgeDeleteFilesSchedulerService,
                                                       final BridgeCreateExcelFileSchedulerService bridgeCreateExcelFileSchedulerService,
                                                       final BridgeUploadExcelFilesSchedulerService bridgeUploadExcelFilesSchedulerService,
-                                                      final BridgeSendMailSchedulerService bridgeSendMailSchedulerService) {
+                                                      final BridgeSendMailSchedulerService bridgeSendMailSchedulerService,
+                                                      final BridgeDatabaseUnlockerSchedulerService bridgeDatabaseUnlockerSchedulerService) {
         this.bridgeTransferThemeSchedulerService = bridgeTransferThemeSchedulerService;
         this.bridgeDeleteFilesSchedulerService = bridgeDeleteFilesSchedulerService;
         this.bridgeCreateExcelFileSchedulerService = bridgeCreateExcelFileSchedulerService;
         this.bridgeUploadExcelFilesSchedulerService = bridgeUploadExcelFilesSchedulerService;
         this.bridgeSendMailSchedulerService = bridgeSendMailSchedulerService;
+        this.bridgeDatabaseUnlockerSchedulerService = bridgeDatabaseUnlockerSchedulerService;
     }
 
     /**
@@ -79,5 +84,11 @@ public class MALToBMAssetMapTransferSchedulerController {
     public void sendMail()
     {
         bridgeSendMailSchedulerService.scheduled();
+    }
+
+    @GetMapping( "/service/app/assetOnBoarding" )
+    public void assetOnBoarding()
+    {
+        bridgeDatabaseUnlockerSchedulerService.scheduled();
     }
 }

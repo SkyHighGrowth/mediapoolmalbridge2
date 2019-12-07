@@ -45,13 +45,11 @@ public abstract class MALSingleResponseClient<REQUEST, RESPONSE> extends MALClie
         try {
             final ResponseEntity<String> response = restTemplate.exchange(url, httpMethod, requestEntity, String.class);
             logger.debug("REST RESPONSE {}", response);
-            //logger.error( "RESPONSE" + GSON.toJson( response ) );//delete
             final RESPONSE fromJson = GSON.fromJson(response.getBody(), responseType);
-            //logger.error( "FROM JSON" + GSON.toJson( fromJson ) );//delete
             return new RestResponse<>(response.getStatusCode(), response.getHeaders(), fromJson);
         } catch (final Exception e) {
             final String message = String.format("While requesting from url [%s], with http method [%s], with http entity [%s], exception occured with message [%s]", httpMethod.name(), url.toString(), GSON.toJson(requestEntity), e.getMessage());
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, null, null, null );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.NONE, null, null, null );
             reportsRepository.save( reportsEntity );
             logger.error(message, e);
             return new RestResponse<>(e.getMessage());

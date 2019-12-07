@@ -8,13 +8,13 @@ import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.repository.Bridge.UploadedFileRepository;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.util.List;
 
 /**
  * Scheduler service which deletes files from {@link UploadedFileEntity} table
@@ -33,7 +33,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
     }
 
     @PostConstruct
-    public void scheduledFileDelete() {
+    public void init() {
         taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getBridgeDeleteFileCronExpression()));
     }
 
@@ -42,8 +42,10 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
         boolean condition = true;
         try {
             for (int page = 0; condition; ++page) {
-                final Slice<UploadedFileEntity> fileEntities = uploadedFileRepository.findAllByDeleted(false, PageRequest.of(page, 1000));
-                condition = fileEntities.hasNext();
+                final List<UploadedFileEntity> fileEntities = uploadedFileRepository.findAllByDeleted(false, PageRequest.of(page, appConfig.getDatabasePageSize()));
+                if( fileEntities.isEmpty() || page > 1000 ) {
+                    break;
+                }
                 deletePage(fileEntities);
             }
         } catch( final Exception e ) {
@@ -54,7 +56,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
     }
 
     @Transactional
-    protected void deletePage( final Slice<UploadedFileEntity> fileEntities )
+    protected void deletePage( final List<UploadedFileEntity> fileEntities )
     {
         fileEntities.forEach(fileEntity -> {
             final File file = new File(appConfig.getTempDir() + fileEntity.getFilename());

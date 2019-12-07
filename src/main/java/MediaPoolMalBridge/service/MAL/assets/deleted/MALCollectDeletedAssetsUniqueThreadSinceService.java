@@ -68,13 +68,21 @@ public class MALCollectDeletedAssetsUniqueThreadSinceService extends AbstractMAL
     }
 
     private void addAssetToDelete(final MALGetUnavailableAsset malGetUnavailableAsset, final MALAssetType assetType) {
-        final List<AssetEntity> malAssetEntities = assetRepository.findAllByMalAssetIdAndAssetType(malGetUnavailableAsset.getAssetId(), assetType);
+        final List<AssetEntity> malAssetEntities = assetRepository.findAllByMalAssetIdAndAssetTypeAndUpdatedIsAfter(malGetUnavailableAsset.getAssetId(), assetType, getMidnightBridgeLookInThePast());
         if (malAssetEntities == null || malAssetEntities.isEmpty()) {
             return;
+        }
+        for( final AssetEntity assetEntity : malAssetEntities ) {
+            if( MALAssetOperation.MAL_DELETED.equals( assetEntity.getMalAssetOperation() ) ) {
+                return;
+            }
         }
         final AssetEntity assetEntity = new AssetEntity();
         assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_OBSERVED);
         assetEntity.setMalAssetOperation( MALAssetOperation.MAL_DELETED );
+        assetEntity.setAssetType( assetType );
+        assetEntity.setMalAssetId( malGetUnavailableAsset.getAssetId() );
+        assetEntity.setPropertyId( malGetUnavailableAsset.getPropertyId() );
         assetEntity.setBmAssetIdEntity( malAssetEntities.get( 0 ).getBmAssetIdEntity() );
         assetRepository.save(assetEntity);
     }

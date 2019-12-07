@@ -1,13 +1,13 @@
 package MediaPoolMalBridge.service.Bridge.sendmail.model;
 
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
 
 import java.io.StringWriter;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * Mail formatter for Brandmaker
@@ -19,7 +19,7 @@ public class BMMailFormat {
 
     private static final String NEW_LINE = System.getProperty( "line.separator" );
 
-    public String transform(final Slice<ReportsEntity> reports )
+    public String transform(final List<ReportsEntity> reports )
     {
         final StringWriter stringWriter = new StringWriter();
         for (ReportsEntity report : reports) {

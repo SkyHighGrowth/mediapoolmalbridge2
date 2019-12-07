@@ -31,7 +31,7 @@ public class BMAssetIdEntity {
     @Expose( serialize = true, deserialize = true )
     private LocalDateTime created;
 
-    @OneToMany( mappedBy = "bmAssetIdEntity")
+    @OneToMany( mappedBy = "bmAssetIdEntity", fetch = FetchType.LAZY )
     @Expose( serialize = false, deserialize = false )
     private List<AssetEntity> assetEntities;
 

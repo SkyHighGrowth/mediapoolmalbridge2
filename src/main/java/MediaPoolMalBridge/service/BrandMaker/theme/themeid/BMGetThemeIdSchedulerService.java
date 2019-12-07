@@ -11,8 +11,6 @@ import MediaPoolMalBridge.service.BrandMaker.theme.themeid.model.BMThemePathToId
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-
 /**
  * Scheduler service that downloads theme ids for given theme path from Mediapool server
  */
@@ -30,7 +28,7 @@ public class BMGetThemeIdSchedulerService extends AbstractSchedulerService {
         this.bmThemePathToId = bmThemePathToId;
     }
 
-    @PostConstruct
+    //@PostConstruct
     public void init() {
         taskSchedulerWrapper.getTaskScheduler().schedule( this::scheduled, new CronTrigger( appConfig.getBmGetThemeIdCronExpression() ) );
     }

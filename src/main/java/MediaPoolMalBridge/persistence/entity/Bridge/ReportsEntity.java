@@ -45,6 +45,9 @@ public class ReportsEntity {
     @Enumerated( EnumType.STRING )
     private ReportTo reportTo;
 
+    @Column( name = "thread_name" )
+    private String threadName;
+
     @Column( name = "sent" )
     private boolean sent;
 
@@ -63,6 +66,7 @@ public class ReportsEntity {
         this.jsonedObject02 = jsonedObject02;
         this.jsonedObject03 = jsonedObject03;
         this.sent = false;
+        this.threadName = Thread.currentThread().getName();
     }
 
     public long getId() {
@@ -127,6 +131,14 @@ public class ReportsEntity {
 
     public void setReportTo(ReportTo reportTo) {
         this.reportTo = reportTo;
+    }
+
+    public String getThreadName() {
+        return threadName;
+    }
+
+    public void setThreadName(String threadName) {
+        this.threadName = threadName;
     }
 
     public boolean isSent() {

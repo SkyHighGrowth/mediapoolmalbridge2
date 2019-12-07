@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import java.nio.file.Paths;
 
 /**
  * Client that wraps calls to MediapoolWebServicePort.uploadMediaVersionAsStream
@@ -18,6 +19,7 @@ public class BMUploadVersionAssetClient extends BrandMakerSoapClient {
     public UploadStatus upload(final AssetEntity asset) {
         try {
             final String absoluteFilePath = getAppConfig().getTempDir() + asset.getFileNameOnDisc();
+            fileExists( absoluteFilePath );
             final FileDataSource fileDataSource = new FileDataSource(absoluteFilePath);
             final DataHandler dataHandler = new DataHandler(fileDataSource);
             final UploadMediaVersionResult result = getMediaPoolPort().uploadMediaVersionAsStream(asset.getBmAssetId(), "uploaded from MediaPoolSyncTool", asset.getFileNameOnDisc(), dataHandler);
@@ -25,6 +27,13 @@ public class BMUploadVersionAssetClient extends BrandMakerSoapClient {
         } catch (final Exception e) {
             reportErrorOnException(asset.getBmAssetId(), e);
             return new UploadStatus(false, e.getMessage(), asset.getBmAssetId());
+        }
+    }
+
+    private void fileExists( final String absoluteFilePath ) throws Exception {
+        if( !Paths.get( absoluteFilePath ).toFile().isFile() ) {
+            final String message = String.format( "File [%s] does not exists", absoluteFilePath );
+            throw new Exception( message );
         }
     }
 }

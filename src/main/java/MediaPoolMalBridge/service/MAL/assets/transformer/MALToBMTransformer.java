@@ -35,45 +35,54 @@ public class MALToBMTransformer {
         uploadMetadataArgument.setCreatorName( "Soap Api" );
         uploadMetadataArgument.setDesignationType( "3" );
 
+        if( StringUtils.isBlank( malGetAsset.getPropertyId() ) ) {
+            uploadMetadataArgument.setSelectedAffiliate(malGetAsset.getPropertyId());
+        }
+
         ThemeDto themeDto = new ThemeDto();
         themeDto.setName( "Implementation/Pictures" );
         uploadMetadataArgument.getAssociations().add( themeDto );
 
-        if (StringUtils.isNotEmpty( malGetAsset.getAssetTypeId() ) ) {
+        String temp = assetStructures.getAssetTypes().get( malGetAsset.getAssetTypeId() );
+        if ( StringUtils.isNotBlank( temp ) ) {
             themeDto = new ThemeDto();
-            themeDto.setName( "Asset Types/" + assetStructures.getAssetTypes().get( malGetAsset.getAssetTypeId() ) );
+            themeDto.setName( "Asset Types/" +  temp );
             uploadMetadataArgument.getAssociations().add( themeDto );
         }
 
-        if (StringUtils.isNotEmpty( malGetAsset.getBrandId() ) ) {
+        temp = assetStructures.getBrands().get( malGetAsset.getBrandId() );
+        if (StringUtils.isNotEmpty( temp ) ) {
             themeDto = new ThemeDto();
-            themeDto.setName( "Brands/" + assetStructures.getBrands().get( malGetAsset.getBrandId() ) );
+            themeDto.setName( "Brands/" + temp );
             uploadMetadataArgument.getAssociations().add( themeDto );
         }
 
-        if (StringUtils.isNotEmpty( malGetAsset.getCollectionId() ) ) {
+        temp = assetStructures.getCollections().get( malGetAsset.getCollectionId() );
+        if (StringUtils.isNotEmpty( temp ) ) {
             themeDto = new ThemeDto();
-            themeDto.setName( "Collections/" + assetStructures.getCollections().get( malGetAsset.getCollectionId() ) );
+            themeDto.setName( "Collections/" + temp );
             uploadMetadataArgument.getAssociations().add( themeDto );
         }
 
-        if (StringUtils.isNotEmpty( malGetAsset.getDestionationId() ) ) {
+        temp = assetStructures.getDestinations().get( malGetAsset.getDestionationId() );
+        if (StringUtils.isNotEmpty( temp ) ) {
             themeDto = new ThemeDto();
-            final String path = "Destinations/" + assetStructures.getDestinations().get( malGetAsset.getDestionationId() );
-            bmThemePathToId.addThemePath( path );
-            themeDto.setName( path );
+            bmThemePathToId.addThemePath( "Destinations/" + temp );
+            themeDto.setName( temp );
             uploadMetadataArgument.getAssociations().add( themeDto );
         }
 
-        if (StringUtils.isNotEmpty( malGetAsset.getSubjectId() ) ) {
+        temp = assetStructures.getSubjects().get( malGetAsset.getSubjectId() );
+        if (StringUtils.isNotEmpty( temp ) ) {
             themeDto = new ThemeDto();
-            themeDto.setName( "Subjects/" + assetStructures.getSubjects().get( malGetAsset.getSubjectId() ) );
+            themeDto.setName( "Subjects/" + temp );
             uploadMetadataArgument.getAssociations().add( themeDto );
         }
 
-        if (StringUtils.isNotEmpty( malGetAsset.getColorId() ) ) {
+        temp = assetStructures.getColors().get( malGetAsset.getColorId() );
+        if (StringUtils.isNotEmpty( temp ) ) {
             themeDto = new ThemeDto();
-            themeDto.setName( "Colors/" + assetStructures.getColors().get( malGetAsset.getColorId() ) );
+            themeDto.setName( "Colors/" + temp );
             uploadMetadataArgument.getAssociations().add( themeDto );
         }
 

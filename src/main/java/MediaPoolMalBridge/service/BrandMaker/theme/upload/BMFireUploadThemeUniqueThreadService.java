@@ -29,15 +29,22 @@ public class BMFireUploadThemeUniqueThreadService extends AbstractBMUniqueThread
     @Override
     protected void run() {
         bmThemes.keySet().forEach(malKits::remove);
-        malKits.keySet().forEach(malKit -> {
-            final BMTheme bmTheme = new BMTheme();
-            bmTheme.setThemeId(301);
-            bmTheme.setThemePath(malKit);
-            synchronized ( taskExecutorWrapper ) {
-                if (taskExecutorWrapper.getQueueSize() < appConfig.getThreadexecutorQueueLengthMax()) {
-                    taskExecutorWrapper.getTaskExecutor().execute(() -> bmUploadThemeService.start(bmTheme));
-                }
-            }
-        });
+        taskExecutorWrapper.lock();
+        try {
+            malKits.keySet().forEach(malKit -> {
+                final BMTheme bmTheme = new BMTheme();
+                bmTheme.setThemeId(301);
+                bmTheme.setThemePath(malKit);
+
+                    if ( taskExecutorWrapper.canAcceptNewTask() ) {
+                        taskExecutorWrapper.getTaskExecutor().execute(() -> bmUploadThemeService.start(bmTheme));
+                    }
+
+            });
+        } catch( final Exception e ) {
+            logger.error( "Exception occurred during putting load on task executor in {}", getClass().getName(), e );
+        } finally {
+            taskExecutorWrapper.unlock();
+        }
     }
 }
