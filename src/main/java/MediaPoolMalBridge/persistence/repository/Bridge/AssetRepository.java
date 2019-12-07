@@ -45,8 +45,8 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
 
     List<AssetEntity> findAllByMalAssetOperationAndUpdatedIsAfter( final MALAssetOperation arg1, final LocalDateTime arg2, final Pageable page );
 
-    Long countByMalAssetIdAndAssetTypeAndTransferringAssetStatusNotAndUpdatedIsBeforeAndUpdatedIsAfter(
-            final String assetId, final MALAssetType assetType, final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updatedAssetTimeStamp, final LocalDateTime updated);
+    Long countByMalAssetIdAndAssetTypeAndTransferringAssetStatusNotAndTransferringAssetStatusNotAndUpdatedIsBeforeAndUpdatedIsAfter(
+            final String assetId, final MALAssetType assetType, final TransferringAssetStatus transferringAssetStatus01, final TransferringAssetStatus transferringAssetStatus02, final LocalDateTime updatedAssetTimeStamp, final LocalDateTime updated);
 
     List<AssetEntity> findAllByUpdatedIsAfter(final LocalDateTime updated, final Pageable page );
 

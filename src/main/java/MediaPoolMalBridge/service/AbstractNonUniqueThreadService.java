@@ -1,6 +1,9 @@
 package MediaPoolMalBridge.service;
 
+import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.schedule.ServiceEntity;
+import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
+import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.entity.enums.schedule.ServiceState;
 import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
@@ -26,7 +29,14 @@ public abstract class AbstractNonUniqueThreadService<RUN_ARGUMENT> extends Abstr
         storeServiceEntity( new ServiceEntity( ServiceState.SERVICE_START, getClass().getCanonicalName(), Thread.currentThread().getName(), taskExecutorWrapper.getTaskExecutor().getActiveCount(), taskExecutorWrapper.getQueueSize() ) );
 
         if( isRunService() ) {
-            run( runArgument );
+            try {
+                run(runArgument);
+            } catch( final Exception e ) {
+                final String message = String.format( "Service [%s] exited with an exception, with message [%s]", getClass().getName(), e.getMessage() );
+                logger.error( message, e );
+                final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null );
+                reportsRepository.save( reportsEntity );
+            }
         }
 
         storeServiceEntity( new ServiceEntity( ServiceState.SERVICE_FINISHED, getClass().getCanonicalName(), Thread.currentThread().getName(), taskExecutorWrapper.getTaskExecutor().getActiveCount(), taskExecutorWrapper.getQueueSize() ));

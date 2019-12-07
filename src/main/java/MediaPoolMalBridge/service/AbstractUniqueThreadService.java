@@ -73,30 +73,34 @@ public abstract class AbstractUniqueThreadService extends AbstractService {
                                      final TransferringAssetStatus toStatus,
                                      final Predicate<MALAssetOperation> predicate)
     {
-        final TaskExecutorWrapper taskExecutorWrapper = getTaskExecutorWrapper();
-        boolean condition = true;
-        for (int page = 0; condition; ++page) {
-            final List<AssetEntity> assetEntities = getAssetEntities( fromStatus );
+        try {
+            final TaskExecutorWrapper taskExecutorWrapper = getTaskExecutorWrapper();
+            boolean condition = true;
+            for (int page = 0; condition; ++page) {
+                final List<AssetEntity> assetEntities = getAssetEntities(fromStatus);
 
-            if( assetEntities.isEmpty() || page > getTaskExecutorQueueSize()/appConfig.getDatabasePageSize() ) {
-                break;
-            }
-            taskExecutorWrapper.lock();
-            try {
-                assetEntities.forEach(assetEntity -> {
-                    if( predicate.test( assetEntity.getMalAssetOperation() ) ) {
-                        if ( taskExecutorWrapper.canAcceptNewTask() ) {
-                            assetEntity.setTransferringAssetStatus(intermediateStatus);
-                            assetRepository.save( assetEntity );
-                            getTaskExecutorWrapper().getTaskExecutor().execute(() -> assetService.start(assetEntity));
+                if (assetEntities.isEmpty() || page > getTaskExecutorQueueSize() / appConfig.getDatabasePageSize()) {
+                    break;
+                }
+                taskExecutorWrapper.lock();
+                try {
+                    assetEntities.forEach(assetEntity -> {
+                        if (predicate.test(assetEntity.getMalAssetOperation())) {
+                            if (taskExecutorWrapper.canAcceptNewTask()) {
+                                assetEntity.setTransferringAssetStatus(intermediateStatus);
+                                assetRepository.save(assetEntity);
+                                getTaskExecutorWrapper().getTaskExecutor().execute(() -> assetService.start(assetEntity));
+                            }
                         }
-                    }
-                });
-            } catch ( final Exception e ) {
-                logger.error( "Exception occurred during putting load on task executor in {}", getClass().getName(), e );
-            } finally {
-                getTaskExecutorWrapper().unlock();
+                    });
+                } catch (final Exception e) {
+                    logger.error("Exception occurred during putting load on task executor in {}", getClass().getName(), e);
+                } finally {
+                    getTaskExecutorWrapper().unlock();
+                }
             }
+        } catch( final Exception e ) {
+            logger.error( "Service {} exited with error message {}", getClass().getName(), e.getMessage(), e );
         }
     }
 }

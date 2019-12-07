@@ -1,5 +1,6 @@
 package MediaPoolMalBridge.persistence.entity.Bridge;
 
+import MediaPoolMalBridge.persistence.entity.enums.FileStateOnDisc;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table( name = "files_to_be_deleted",
         indexes = { @Index( columnList = "deleted" ),
+                    @Index( columnList = "file_state_on_disc" ),
                     @Index( columnList = "created" ) } )
 public class UploadedFileEntity {
 
@@ -29,12 +31,20 @@ public class UploadedFileEntity {
     @Column( name = "deleted" )
     private boolean deleted;
 
-    public UploadedFileEntity() { }
+    @Column( name = "file_state_on_disc" )
+    @Enumerated( EnumType.STRING )
+    private FileStateOnDisc fileStateOnDisc;
+
+    public UploadedFileEntity() {
+        deleted = false;
+        fileStateOnDisc = FileStateOnDisc.NO_ERROR;
+    }
 
     public UploadedFileEntity( final String filename )
     {
         this.filename = filename;
         deleted = false;
+        fileStateOnDisc = FileStateOnDisc.NO_ERROR;
     }
 
     public long getId() {
@@ -67,5 +77,13 @@ public class UploadedFileEntity {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public FileStateOnDisc getFileStateOnDisc() {
+        return fileStateOnDisc;
+    }
+
+    public void setFileStateOnDisc(FileStateOnDisc fileStateOnDisc) {
+        this.fileStateOnDisc = fileStateOnDisc;
     }
 }

@@ -32,8 +32,8 @@ public class BridgeDatabaseUnlockerUniqueThreadService extends AbstractBridgeUni
             if( !TransferringAssetStatus.ASSET_OBSERVED.equals( assetEntity.getTransferringAssetStatus() ) ) {
                 return;
             }
-            final long notDone = assetRepository.countByMalAssetIdAndAssetTypeAndTransferringAssetStatusNotAndUpdatedIsBeforeAndUpdatedIsAfter(
-                    assetEntity.getMalAssetId(), assetEntity.getAssetType(), TransferringAssetStatus.DONE, assetEntity.getUpdated(), getMidnightBridgeLookInThePast());
+            final long notDone = assetRepository.countByMalAssetIdAndAssetTypeAndTransferringAssetStatusNotAndTransferringAssetStatusNotAndUpdatedIsBeforeAndUpdatedIsAfter(
+                    assetEntity.getMalAssetId(), assetEntity.getAssetType(), TransferringAssetStatus.DONE, TransferringAssetStatus.ERROR, assetEntity.getUpdated(), getMidnightBridgeLookInThePast());
             if (notDone == 0) {
                 assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_ONBOARDED);
             }
