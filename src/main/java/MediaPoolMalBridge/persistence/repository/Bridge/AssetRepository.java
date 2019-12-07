@@ -5,7 +5,6 @@ import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.MALAssetOperation;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -35,9 +34,21 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
             "order by ae.updated desc")
     List<AssetEntity> findPropertyAssets( final String propertyId, final String assetTypeId, final LocalDateTime updated );
 
-    Slice<AssetEntity> findAllByTransferringAssetStatusAndUpdatedIsAfter( final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated, final Pageable page );
+    List<AssetEntity> findAllByTransferringAssetStatusAndUpdatedIsAfter( final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated, final Pageable page );
 
-    Slice<AssetEntity> findAllByMalAssetOperationAndUpdatedIsAfter( final MALAssetOperation arg1, final LocalDateTime arg2, final Pageable page );
+    @Query( "select ae " +
+            "from AssetEntity ae " +
+            "join fetch ae.assetJsonedValuesEntity ajve " +
+            "where ae.transferringAssetStatus = :transferringAssetStatus " +
+            "and ae.updated > :updated" )
+    List<AssetEntity> findAllByTransferringAssetStatusAndUpdatedIsAfterFetch( final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated, final Pageable page );
 
-    List<AssetEntity> findAllByMalAssetIdAndAssetType( final String malAssetId, final MALAssetType malAssetType );
+    List<AssetEntity> findAllByMalAssetOperationAndUpdatedIsAfter( final MALAssetOperation arg1, final LocalDateTime arg2, final Pageable page );
+
+    Long countByMalAssetIdAndAssetTypeAndTransferringAssetStatusNotAndTransferringAssetStatusNotAndUpdatedIsBeforeAndUpdatedIsAfter(
+            final String assetId, final MALAssetType assetType, final TransferringAssetStatus transferringAssetStatus01, final TransferringAssetStatus transferringAssetStatus02, final LocalDateTime updatedAssetTimeStamp, final LocalDateTime updated);
+
+    List<AssetEntity> findAllByUpdatedIsAfter(final LocalDateTime updated, final Pageable page );
+
+    List<AssetEntity> findAllByMalAssetIdAndAssetTypeAndUpdatedIsAfter(final String malAssetId, final MALAssetType malAssetType, final LocalDateTime updated );
 }

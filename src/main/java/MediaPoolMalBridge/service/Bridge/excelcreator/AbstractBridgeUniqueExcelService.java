@@ -6,7 +6,7 @@ import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
 import MediaPoolMalBridge.persistence.repository.MAL.MALPropertyRepository;
-import MediaPoolMalBridge.service.AbstractUniqueThreadService;
+import MediaPoolMalBridge.service.Bridge.AbstractBridgeUniqueThreadService;
 import jxl.Workbook;
 import jxl.write.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Class which
  */
-public abstract class AbstractBridgeUniqueExcelService extends AbstractUniqueThreadService {
+public abstract class AbstractBridgeUniqueExcelService extends AbstractBridgeUniqueThreadService {
 
     @Autowired
     protected MALPropertyRepository malPropertyRepository;

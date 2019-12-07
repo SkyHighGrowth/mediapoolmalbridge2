@@ -1,16 +1,12 @@
 package MediaPoolMalBridge.persistence.entity.Bridge;
 
-import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAsset;
-import MediaPoolMalBridge.clients.MAL.assetsunavailable.client.model.MALGetUnavailableAsset;
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
-import MediaPoolMalBridge.clients.MAL.propertyphotomodified.client.model.MALModifiedPropertyPhotoAsset;
 import MediaPoolMalBridge.persistence.entity.AbstractEntity;
 import MediaPoolMalBridge.persistence.entity.BM.BMAssetIdEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.MALAssetOperation;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
-import com.brandmaker.webservices.mediapool.UploadMetadataArgument;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -48,8 +44,9 @@ public class AssetEntity extends AbstractEntity {
     private MALAssetType assetType;
 
     @ManyToOne
-    @JoinColumn( name = "bm_asset_id", nullable = false )
+    @JoinColumn( name = "bm_asset_id", referencedColumnName = "id", nullable = false )
     @Expose( serialize = false, deserialize = false )
+    @JsonIgnore
     private BMAssetIdEntity bmAssetIdEntity;
 
     @Column( name = "property_id" )
@@ -115,21 +112,10 @@ public class AssetEntity extends AbstractEntity {
     @Expose( serialize = true, deserialize = true )
     private String malCreated;
 
-    @Column( name = "mal_modified_property_photo_json", columnDefinition="LONGTEXT" )
-    @Expose( serialize = true, deserialize = true )
-    private String malModifiedPropertyPhotoAssetJson;
-
-    @Column( name = "mal_get_asset_json", columnDefinition="LONGTEXT" )
-    @Expose( serialize = true, deserialize = true )
-    private String malGetAssetJson;
-
-    @Column( name = "mal_get_unavailable_asset_json", columnDefinition="LONGTEXT" )
-    @Expose( serialize = true, deserialize = true )
-    private String malGetUnavailableAssetJson;
-
-    @Column(name = "bm_upload_metadata_argument", columnDefinition="LONGTEXT")
-    @Expose( serialize = true, deserialize = true )
-    private String bmUploadMetadataArgumentJson;
+    @OneToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+    @JoinColumn(name = "asset_jsoned_values_id", referencedColumnName = "id", nullable = false)
+    @Expose( serialize = false, deserialize = false )
+    private AssetJsonedValuesEntity assetJsonedValuesEntity;
 
     @Column( name = "mal_md5_hash" )
     @Expose( serialize = true, deserialize = true )
@@ -149,91 +135,60 @@ public class AssetEntity extends AbstractEntity {
         this.id = id;
     }
 
-    public String getMalModifiedPropertyPhotoAssetJson() {
-        return malModifiedPropertyPhotoAssetJson;
-    }
-
-    public void setMalModifiedPropertyPhotoAssetJson(String malModifiedPropertyPhotoAssetJson) {
-        this.malModifiedPropertyPhotoAssetJson = malModifiedPropertyPhotoAssetJson;
-    }
-
-    public String getMalGetAssetJson() {
-        return malGetAssetJson;
-    }
-
-    public void setMalGetAssetJson(String malGetAssetJson) {
-        this.malGetAssetJson = malGetAssetJson;
+    /*public String getMalGetAssetJson() {
+        return assetJsonedValuesEntity.getMalGetAssetJson();
     }
 
     public String getMalGetUnavailableAssetJson() {
-        return malGetUnavailableAssetJson;
-    }
-
-    public void setMalGetUnavailableAssetJson(String malGetUnavailableAssetJson) {
-        this.malGetUnavailableAssetJson = malGetUnavailableAssetJson;
-    }
-
-    public MALModifiedPropertyPhotoAsset getMALModifiedPropertyPhotoAsset() {
-        if (malModifiedPropertyPhotoAssetJson != null) {
-            return GSON.fromJson(malModifiedPropertyPhotoAssetJson, MALModifiedPropertyPhotoAsset.class);
-        }
-        return null;
-    }
-
-    public void setMALModifiedPropertyPhotoAsset(final MALModifiedPropertyPhotoAsset malModifiedPropertyPhotoAsset) {
-        this.malModifiedPropertyPhotoAssetJson = GSON.toJson(malModifiedPropertyPhotoAsset);
-        this.malMd5Hash = DigestUtils.md5Hex( malModifiedPropertyPhotoAssetJson );
+        return assetJsonedValuesEntity.getMalGetUnavailableAssetJson();
     }
 
     public MALGetAsset getMALGetAsset() {
-        if (malGetAssetJson != null) {
-            return GSON.fromJson(this.malGetAssetJson, MALGetAsset.class);
+        if (assetJsonedValuesEntity.getMalGetAssetJson() != null) {
+            try {
+                return OBJECT_MAPPER.readValue(assetJsonedValuesEntity.getMalGetAssetJson(), MALGetAsset.class);
+            } catch ( final Exception e ) {
+                return null;
+            }
         }
         return null;
     }
 
     public void setMALGetAsset(final MALGetAsset malGetAsset) {
-        this.malGetAssetJson = GSON.toJson(malGetAsset);
-        this.malMd5Hash = DigestUtils.md5Hex( malGetAssetJson );
+        try {
+            final String json = OBJECT_MAPPER.writeValueAsString(malGetAsset);
+            assetJsonedValuesEntity.setMalGetAssetJson( json );
+            this.malMd5Hash = DigestUtils.md5Hex( json );
+        } catch( final Exception e ) {
+
+        }
     }
 
     public MALGetUnavailableAsset getMALGetUnavailableAsset() {
-        if (malGetUnavailableAssetJson != null) {
-            return GSON.fromJson(malGetUnavailableAssetJson, MALGetUnavailableAsset.class);
+        if (assetJsonedValuesEntity.getMalGetUnavailableAssetJson() != null) {
+            try {
+                return GSON.fromJson(assetJsonedValuesEntity.getMalGetUnavailableAssetJson(), MALGetUnavailableAsset.class);
+            } catch ( final Exception e ) {
+                return null;
+            }
         }
         return null;
     }
 
     public void setMALGetUnavailableAsset(final MALGetUnavailableAsset malGetUnavailableAsset) {
-        this.malGetUnavailableAssetJson = GSON.toJson(malGetUnavailableAsset);
-    }
-
-    public static AssetEntity fromMALGetModifiedPropertyPhotos(final MALModifiedPropertyPhotoAsset malModifiedPropertyPhotoAsset, final MALAssetType assetType) {
-        final AssetEntity asset = new AssetEntity();
-        asset.setMalAssetId(malModifiedPropertyPhotoAsset.getAssetId());
-        asset.setAssetType(assetType);
-        asset.setMALModifiedPropertyPhotoAsset(malModifiedPropertyPhotoAsset);
-        return asset;
-    }
-
-    public AssetEntity fromMALGetUnavailableAsset(final MALGetUnavailableAsset malGetUnavailableAsset, final MALAssetType assetType) {
-        final AssetEntity asset = new AssetEntity();
-        asset.setMalAssetId(malGetUnavailableAsset.getAssetId());
-        asset.setAssetType(assetType);
-        asset.setMALGetUnavailableAsset(malGetUnavailableAsset);
-        return asset;
+        assetJsonedValuesEntity.setMalGetUnavailableAssetJson( GSON.toJson(malGetUnavailableAsset) );
     }
 
     public void setBmUploadMetadataArgument(final UploadMetadataArgument bmUploadMetadataArgument) {
-        bmUploadMetadataArgumentJson = GSON.toJson(bmUploadMetadataArgument);
+        assetJsonedValuesEntity.setBmUploadMetadataArgumentJson( GSON.toJson(bmUploadMetadataArgument) );
     }
 
     public UploadMetadataArgument getBmUploadMetadataArgument() {
-        if (bmUploadMetadataArgumentJson != null) {
-            return GSON.fromJson(bmUploadMetadataArgumentJson, UploadMetadataArgument.class);
+        if (assetJsonedValuesEntity.getBmUploadMetadataArgumentJson() != null) {
+            return GSON.fromJson(assetJsonedValuesEntity.getBmUploadMetadataArgumentJson(), UploadMetadataArgument.class);
         }
         return null;
-    }
+    }*/
 
     public MALAssetType getAssetType() {
         return assetType;
@@ -389,11 +344,19 @@ public class AssetEntity extends AbstractEntity {
     }
 
     public String getBmUploadMetadataArgumentJson() {
-        return bmUploadMetadataArgumentJson;
+        return assetJsonedValuesEntity.getBmUploadMetadataArgumentJson();
     }
 
     public void setBmUploadMetadataArgumentJson(String bmUploadMetadataArgumentJson) {
-        this.bmUploadMetadataArgumentJson = bmUploadMetadataArgumentJson;
+        assetJsonedValuesEntity.setBmUploadMetadataArgumentJson( bmUploadMetadataArgumentJson );
+    }
+
+    public AssetJsonedValuesEntity getAssetJsonedValuesEntity() {
+        return assetJsonedValuesEntity;
+    }
+
+    public void setAssetJsonedValuesEntity(AssetJsonedValuesEntity assetJsonedValuesEntity) {
+        this.assetJsonedValuesEntity = assetJsonedValuesEntity;
     }
 
     public String getMalMd5Hash() {

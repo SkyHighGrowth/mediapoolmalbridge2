@@ -4,6 +4,7 @@ import MediaPoolMalBridge.config.AppConfig;
 import MediaPoolMalBridge.clients.Bridge.jscp.client.BridgeJScpClient;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -33,9 +34,9 @@ public class BridgeController {
     /**
      * triggers upload file in {@link BridgeJScpClient}
      */
-    @GetMapping( "/service/app/uploadFile" )
-    public void uploadFile()
+    @GetMapping( "/service/app/uploadFile/{fileName}" )
+    public void uploadFile(@RequestParam final String fileName)
     {
-        bridgeJScpClient.uploadFile( appConfig.getExcelDir() + "aca.txt" );
+        bridgeJScpClient.uploadFile( appConfig.getExcelDir() + fileName );
     }
 }

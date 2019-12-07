@@ -55,7 +55,7 @@ public class BMGetAssetFromHashService extends AbstractBMNonUniqueThreadService<
     @Transactional
     protected void onFailure(final AssetEntity assetEntity, final AbstractBMResponse abstractBMResponse) {
         reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
-        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_OBSERVED);
+        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_ONBOARDED);
         assetRepository.save(assetEntity);
     }
 }

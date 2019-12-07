@@ -9,12 +9,14 @@ import MediaPoolMalBridge.persistence.entity.enums.asset.MALAssetOperation;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.entity.enums.schedule.ServiceState;
 import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
+import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
 
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Predicate;
 
 /**
  * Class that collect common fields and methods for unique thread services
@@ -30,8 +32,13 @@ public abstract class AbstractUniqueThreadService extends AbstractService {
 
     protected abstract void run( );
 
+    protected abstract TaskExecutorWrapper getTaskExecutorWrapper();
+
+    protected abstract int getTaskExecutorQueueSize();
+
     public void start( )
     {
+        final TaskExecutorWrapper taskExecutorWrapper = getTaskExecutorWrapper();
         serviceRepository.save( new ServiceEntity( ServiceState.SERVICE_START, getClass().getCanonicalName(), Thread.currentThread().getName(), taskExecutorWrapper.getTaskExecutor().getActiveCount(), taskExecutorWrapper.getQueueSize() ) );
 
         if (lock.tryLock()) {
@@ -56,29 +63,44 @@ public abstract class AbstractUniqueThreadService extends AbstractService {
         serviceRepository.save( new ServiceEntity( ServiceState.SERVICE_FINISHED, getClass().getCanonicalName(), Thread.currentThread().getName(), taskExecutorWrapper.getTaskExecutor().getActiveCount(), taskExecutorWrapper.getQueueSize() ) );
     }
 
+    protected List<AssetEntity> getAssetEntities( final TransferringAssetStatus fromStatus ) {
+        return assetRepository.findAllByTransferringAssetStatusAndUpdatedIsAfter(
+                fromStatus, getMidnightBridgeLookInThePast(), PageRequest.of(0, appConfig.getDatabasePageSize()));
+    }
+
     protected void executeTransition(final TransferringAssetStatus fromStatus,
                                      final TransferringAssetStatus intermediateStatus,
                                      final TransferringAssetStatus toStatus,
-                                     final MALAssetOperation malAssetOperation)
+                                     final Predicate<MALAssetOperation> predicate)
     {
-        boolean condition = true;
-        for (int page = 0; condition; ++page) {
-            final Slice<AssetEntity> assetEntities = assetRepository.findAllByTransferringAssetStatusAndUpdatedIsAfter(
-                        fromStatus, getMidnight(), PageRequest.of(page, appConfig.getDatabasePageSize()));
+        try {
+            final TaskExecutorWrapper taskExecutorWrapper = getTaskExecutorWrapper();
+            boolean condition = true;
+            for (int page = 0; condition; ++page) {
+                final List<AssetEntity> assetEntities = getAssetEntities(fromStatus);
 
-            condition = assetEntities.hasNext();
-            synchronized (taskExecutorWrapper) {
-                assetEntities.forEach(assetEntity -> {
-                    if( malAssetOperation == null || malAssetOperation.equals(assetEntity.getMalAssetOperation() ) ) {
-                        if (taskExecutorWrapper.getQueueSize() < appConfig.getThreadexecutorQueueLengthMax()) {
-                            assetEntity.setTransferringAssetStatus(intermediateStatus);
-                            assetRepository.save( assetEntity );
-                            taskExecutorWrapper.getTaskExecutor().execute(() -> assetService.start(assetEntity));
+                if (assetEntities.isEmpty() || page > getTaskExecutorQueueSize() / appConfig.getDatabasePageSize()) {
+                    break;
+                }
+                taskExecutorWrapper.lock();
+                try {
+                    assetEntities.forEach(assetEntity -> {
+                        if (predicate.test(assetEntity.getMalAssetOperation())) {
+                            if (taskExecutorWrapper.canAcceptNewTask()) {
+                                assetEntity.setTransferringAssetStatus(intermediateStatus);
+                                assetRepository.save(assetEntity);
+                                getTaskExecutorWrapper().getTaskExecutor().execute(() -> assetService.start(assetEntity));
+                            }
                         }
-                    }
-                });
+                    });
+                } catch (final Exception e) {
+                    logger.error("Exception occurred during putting load on task executor in {}", getClass().getName(), e);
+                } finally {
+                    getTaskExecutorWrapper().unlock();
+                }
             }
-
+        } catch( final Exception e ) {
+            logger.error( "Service {} exited with error message {}", getClass().getName(), e.getMessage(), e );
         }
     }
 }

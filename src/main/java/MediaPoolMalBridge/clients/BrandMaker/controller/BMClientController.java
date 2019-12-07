@@ -19,10 +19,14 @@ import MediaPoolMalBridge.clients.BrandMaker.themefulltree.client.model.Download
 import MediaPoolMalBridge.clients.BrandMaker.themeid.client.BMDownloadThemeIdClient;
 import MediaPoolMalBridge.clients.BrandMaker.themeid.client.model.DownloadThemeIdResponse;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
+import com.brandmaker.webservices.mediapool.*;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.xml.ws.BindingProvider;
+import java.util.Map;
 
 /**
  * Controller that exposes calls to clients directly skipping services, note that calls to this
@@ -112,6 +116,26 @@ public class BMClientController {
     @PostMapping("/client/bm/uploadMetadata")
     public UploadMetadataStatus uploadMetadata(@RequestBody() final AssetEntity asset) {
         return bmUploadMetadataClient.upload(asset);
+    }
+
+    @PostMapping("/client/soap/bm/uploadMetadata")
+    public UploadMetadataResult uploadMetadata(@RequestBody() final UploadMetadataArgument uploadMetadataArgument) {
+        final MediaPoolWebServicePort port = (new MediaPoolService()).getMediaPoolPort();
+        Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
+        reqContext.put(BindingProvider.USERNAME_PROPERTY, "tsupport.de" );
+        reqContext.put(BindingProvider.PASSWORD_PROPERTY, "de!SuPPort$4" );
+        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://qamarriott.brandmakerinc.com/webservices/MediaPool/");
+        return port.uploadMetaData(uploadMetadataArgument);
+    }
+
+    @PostMapping("/client/soap/bm/downloadMetadata")
+    public GetMediaDetailsResult downloadMetadata(@RequestBody() final GetMediaDetailsArgument uploadMetadataArgument) {
+        final MediaPoolWebServicePort port = (new MediaPoolService()).getMediaPoolPort();
+        Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
+        reqContext.put(BindingProvider.USERNAME_PROPERTY, "tsupport.de" );
+        reqContext.put(BindingProvider.PASSWORD_PROPERTY, "de!SuPPort$4" );
+        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://qamarriott.brandmakerinc.com/webservices/MediaPool/");
+        return port.getMediaDetails(uploadMetadataArgument);
     }
 
     /**

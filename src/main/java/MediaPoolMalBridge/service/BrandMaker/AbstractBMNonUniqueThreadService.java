@@ -7,6 +7,9 @@ import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.service.AbstractNonUniqueThreadService;
+import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -15,6 +18,15 @@ import org.springframework.transaction.annotation.Transactional;
  * @param <RUN_ARGUMENT> - argument that should be given when execution is triggered
  */
 public abstract class AbstractBMNonUniqueThreadService<RUN_ARGUMENT> extends AbstractNonUniqueThreadService<RUN_ARGUMENT> {
+
+    @Autowired
+    @Qualifier( "BMTaskExecutorWrapper" )
+    protected TaskExecutorWrapper taskExecutorWrapper;
+
+    @Override
+    protected TaskExecutorWrapper getTaskExecutorWrapper() {
+        return taskExecutorWrapper;
+    }
 
     @Transactional
     protected boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription ) {
@@ -34,7 +46,7 @@ public abstract class AbstractBMNonUniqueThreadService<RUN_ARGUMENT> extends Abs
     @Transactional
     protected void reportErrorOnResponse(final String assetId, final AbstractBMResponse abstractBMResponse) {
         final String message = String.format("Can not perform operation [%s] for asset with id [%s], with error message [%s] and warnings [%s]", getClass().getName(), assetId, abstractBMResponse.getErrorAsString(), abstractBMResponse.getWarningsAsString());
-        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null );
+        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.NONE, null, null, null );
         reportsRepository.save( reportsEntity );
     }
 }

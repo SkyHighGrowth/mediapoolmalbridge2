@@ -8,6 +8,7 @@ import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import MediaPoolMalBridge.persistence.entity.BM.BMAssetIdEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetJsonedValuesEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
@@ -129,17 +130,20 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
 
     private AssetEntity putIntoAssetMap(final MALGetAsset malGetAsset, final MALAssetType assetType) {
 
-        final String malMd5Hash = DigestUtils.md5Hex( GSON.toJson( malGetAsset ) );
-        final List<AssetEntity> dbAssetEntities = assetRepository.findAllByMalAssetIdAndAssetType( malGetAsset.getAssetId(), assetType );
+        final String malMd5Hash;
+        try {
+            malMd5Hash = DigestUtils.md5Hex( objectMapper.writeValueAsString( malGetAsset ) );
+        } catch ( final Exception e ) {
+            return null;
+        }
+        final List<AssetEntity> dbAssetEntities = assetRepository.findAllByMalAssetIdAndAssetTypeAndUpdatedIsAfter( malGetAsset.getAssetId(), assetType, getMidnightBridgeLookInThePast() );
 
         final AssetEntity assetEntity;
-        logger.error( "Assets from database {}", dbAssetEntities.size());
         if( !dbAssetEntities.isEmpty() ) {
             for( final AssetEntity aE : dbAssetEntities ) {
                 if( StringUtils.isNotBlank( aE.getMalLastModified() ) &&
                         aE.getMalLastModified().equals( malGetAsset.getLastModified() ) &&
                         malMd5Hash.equals( aE.getMalMd5Hash() ) ) {
-                    logger.debug( "Duplicate entry {}, {}", aE.getMalAssetId(), aE.getAssetType());
                     return null;
                 }
             }
@@ -155,7 +159,8 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
             assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ASSET_OBSERVED );
         }
         assetEntity.setMalMd5Hash( malMd5Hash );
-        assetEntity.setBmUploadMetadataArgument( malToBMTransformer.transformToUploadMetadataArgument( malGetAsset ) );
+        final AssetJsonedValuesEntity assetJsonedValuesEntity = assetEntity.getAssetJsonedValuesEntity();
+        assetJsonedValuesEntity.setBmUploadMetadataArgumentJson( GSON.toJson( malToBMTransformer.transformToUploadMetadataArgument( malGetAsset ) ) );
 
         if( StringUtils.isBlank( assetEntity.getUrl() ) )
         {

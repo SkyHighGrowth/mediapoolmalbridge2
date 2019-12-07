@@ -182,16 +182,28 @@ public class AppConfig {
         return appConfigData.getThreadschedulerPoolSize();
     }
 
-    public int getThreadexecutorPoolSize() {
-        return appConfigData.getThreadexecutorPoolSize();
+    public int getMalThreadexecutorPoolSize() {
+        return appConfigData.getMalThreadexecutorPoolSize();
     }
 
-    public int getThreadexecutorQueueSize() {
-        return appConfigData.getThreadexecutorQueueSize();
+    public int getMalThreadexecutorQueueSize() {
+        return appConfigData.getMalThreadexecutorQueueSize();
     }
 
-    public int getThreadexecutorQueueLengthMax() {
-        return appConfigData.getThreadexecutorQueueLengthMax();
+    public int getMalThreadexecutorQueueLengthMax() {
+        return appConfigData.getMalThreadexecutorQueueLengthMax();
+    }
+
+    public int getBmThreadexecutorPoolSize() {
+        return appConfigData.getBmThreadexecutorPoolSize();
+    }
+
+    public int getBmThreadexecutorQueueSize() {
+        return appConfigData.getBmThreadexecutorQueueSize();
+    }
+
+    public int getBmThreadexecutorQueueLengthMax() {
+        return appConfigData.getBmThreadexecutorQueueLengthMax();
     }
 
     public String getMailHostname() {
@@ -282,6 +294,8 @@ public class AppConfig {
         return appConfigData.getBridgeSendMailCronExpression();
     }
 
+    public String getBridgeAssetOnBoardingCronExpression() { return appConfigData.getBridgeAssetOnBoardingCronExpression(); }
+
     public String getMalAssetCronExpression() {
         return appConfigData.getMalAssetCronExpression();
     }
@@ -355,6 +369,9 @@ public class AppConfig {
     }
 
     public int getDatabasePageSize() {
+        if( appConfigData.getDatabasePageSize() <= 0 ) {
+            throw new RuntimeException( "Database page size has to be positive number" );
+        }
         return appConfigData.getDatabasePageSize();
     }
 

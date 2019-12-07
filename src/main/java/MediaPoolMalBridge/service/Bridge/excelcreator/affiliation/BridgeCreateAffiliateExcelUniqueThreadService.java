@@ -40,7 +40,7 @@ public class BridgeCreateAffiliateExcelUniqueThreadService extends AbstractBridg
                 sheet.addCell(headerLabel);
             }
 
-            for (final MALPropertyEntity malPropertyEntity : malPropertyRepository.findAllByUpdatedIsAfter( getMidnight() ) ) {
+            for (final MALPropertyEntity malPropertyEntity : malPropertyRepository.findAllByUpdatedIsAfter( getMidnightBridgeLookInThePast() ) ) {
                 ++rowIndex;
                 colIndex = 0;
                 Label headerLabel = new Label(colIndex++, rowIndex, "AFFILIATES_CODE", headerFormat);

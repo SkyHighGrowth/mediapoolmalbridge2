@@ -1,4 +1,4 @@
-package MediaPoolMalBridge.service.Bridge.databasenormalizer.model;
+package MediaPoolMalBridge.service.Bridge.database.normalizer.model;
 
 import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
 import MediaPoolMalBridge.persistence.entity.enums.property.MALPropertyStatus;

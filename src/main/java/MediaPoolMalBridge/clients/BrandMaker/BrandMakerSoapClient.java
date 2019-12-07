@@ -10,6 +10,7 @@ import com.brandmaker.webservices.mediapool.MediaPoolService;
 import com.brandmaker.webservices.mediapool.MediaPoolWebServicePort;
 import com.brandmaker.webservices.theme.ThemeService;
 import com.brandmaker.webservices.theme.ThemeWebServicePort;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import java.util.Map;
 public abstract class BrandMakerSoapClient {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
+
+    protected final static Gson GSON = new Gson();
 
     /**
      * Represents application configuration
@@ -107,7 +110,7 @@ public abstract class BrandMakerSoapClient {
 
     protected void reportErrorOnException(final String assetId, final Exception e) {
         final String message = String.format("Can not perform operation [%s] asset with id [%s], with exception message [%s]", getClass().getName(), assetId, e.getMessage());
-        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null );
+        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.NONE, null, null, null );
         reportsRepository.save( reportsEntity );
         logger.error(message, e);
     }

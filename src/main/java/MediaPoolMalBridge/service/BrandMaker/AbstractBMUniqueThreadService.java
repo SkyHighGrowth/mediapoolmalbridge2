@@ -5,11 +5,28 @@ import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.service.AbstractUniqueThreadService;
+import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * Base class for services that submit task to {@link org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor}
  */
 public abstract class AbstractBMUniqueThreadService extends AbstractUniqueThreadService {
+
+    @Autowired
+    @Qualifier( "BMTaskExecutorWrapper" )
+    protected TaskExecutorWrapper taskExecutorWrapper;
+
+    @Override
+    protected TaskExecutorWrapper getTaskExecutorWrapper() {
+        return taskExecutorWrapper;
+    }
+
+    @Override
+    protected int getTaskExecutorQueueSize() {
+        return taskExecutorWrapper.getQueueSize();
+    }
 
     protected void reportErrorOnResponse(final String assetId, final AbstractBMResponse abstractBMResponse) {
         final String message = String.format("Can not perform operation [%s] for asset with id [%s], with error message [%s] and warnings [%s]", getClass().getName(), assetId, abstractBMResponse.getErrorAsString(), abstractBMResponse.getWarningsAsString());

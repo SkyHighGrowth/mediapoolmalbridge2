@@ -21,6 +21,6 @@ public class BMFireDownloadAssetsMetadataUniqueThreadService extends AbstractBMU
         executeTransition( TransferringAssetStatus.METADATA_UPLOADED,
                 TransferringAssetStatus.METADATA_DOWNLOADING,
                 TransferringAssetStatus.DONE,
-                null);
+                x -> true );
     }
 }

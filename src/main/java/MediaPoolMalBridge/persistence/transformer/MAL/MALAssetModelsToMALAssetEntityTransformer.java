@@ -5,6 +5,9 @@ import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
 import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetJsonedValuesEntity;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -18,6 +21,8 @@ import java.time.Instant;
 public class MALAssetModelsToMALAssetEntityTransformer {
 
     private final MALAssetStructures assetStructures;
+
+    private final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public MALAssetModelsToMALAssetEntityTransformer(final MALAssetStructures assetStructures)
     {
@@ -85,7 +90,17 @@ public class MALAssetModelsToMALAssetEntityTransformer {
         assetEntity.setPropertyId( malGetAsset.getPropertyId() );
         assetEntity.setMarshaCode( malGetAsset.getMarshaCode() );
         assetEntity.setBrandId( malGetAsset.getBrandId() );
-        assetEntity.setMALGetAsset( malGetAsset );
+
+        String json = "";
+        try {
+            json = OBJECT_MAPPER.writeValueAsString(malGetAsset);
+        } catch( final Exception e ) {
+
+        }
+        assetEntity.setMalMd5Hash( DigestUtils.md5Hex( json ) );
+        final AssetJsonedValuesEntity assetJsonedValuesEntity = new AssetJsonedValuesEntity();
+        assetJsonedValuesEntity.setMalGetAssetJson( json );
+        assetEntity.setAssetJsonedValuesEntity( assetJsonedValuesEntity );
 
         return assetEntity;
     }

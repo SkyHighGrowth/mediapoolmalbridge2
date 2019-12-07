@@ -20,6 +20,6 @@ public class BMFireGetAssetIdFromHashUniqueThreadService extends AbstractBMUniqu
         executeTransition( TransferringAssetStatus.GET_BM_ASSET_ID,
                 TransferringAssetStatus.GETTING_BM_ASSET_ID,
                 TransferringAssetStatus.FILE_UPLOADED,
-                MALAssetOperation.MAL_CREATED);
+                MALAssetOperation.MAL_CREATED::equals );
     }
 }

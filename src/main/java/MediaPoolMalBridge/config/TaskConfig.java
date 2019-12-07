@@ -21,16 +21,32 @@ public class TaskConfig {
         this.appConfig = appConfig;
     }
 
-    @Bean
-    public TaskExecutorWrapper taskExecutorWrapper() {
+    @Bean( "MALTaskExecutorWrapper" )
+    public TaskExecutorWrapper malTaskExecutorWrapper() {
         final ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor.setThreadNamePrefix("task-executor-");
-        threadPoolTaskExecutor.setCorePoolSize(appConfig.getThreadexecutorPoolSize());
-        threadPoolTaskExecutor.setMaxPoolSize(appConfig.getThreadexecutorPoolSize());
-        threadPoolTaskExecutor.setQueueCapacity(appConfig.getThreadexecutorQueueSize());
+        threadPoolTaskExecutor.setThreadNamePrefix("mal-task-executor-");
+        threadPoolTaskExecutor.setCorePoolSize(appConfig.getMalThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setMaxPoolSize(appConfig.getMalThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setQueueCapacity(appConfig.getMalThreadexecutorQueueSize());
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
-        return new TaskExecutorWrapper(threadPoolTaskExecutor);
+        final TaskExecutorWrapper taskExecutorWrapper = new TaskExecutorWrapper(threadPoolTaskExecutor);
+        taskExecutorWrapper.setMaximalQueueSize( appConfig.getMalThreadexecutorQueueLengthMax() );
+        return taskExecutorWrapper;
+    }
+
+    @Bean( "BMTaskExecutorWrapper" )
+    public TaskExecutorWrapper bmTaskExecutorWrapper() {
+        final ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
+        threadPoolTaskExecutor.setThreadNamePrefix("bm-task-executor-");
+        threadPoolTaskExecutor.setCorePoolSize(appConfig.getBmThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setMaxPoolSize(appConfig.getBmThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setQueueCapacity(appConfig.getBmThreadexecutorQueueSize());
+        threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
+        final TaskExecutorWrapper taskExecutorWrapper = new TaskExecutorWrapper(threadPoolTaskExecutor);
+        taskExecutorWrapper.setMaximalQueueSize( appConfig.getBmThreadexecutorQueueLengthMax() );
+        return taskExecutorWrapper;
     }
 
     @Bean
