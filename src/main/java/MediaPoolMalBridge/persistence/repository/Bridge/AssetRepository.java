@@ -5,6 +5,7 @@ import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.MALAssetOperation;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -51,4 +52,9 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
     List<AssetEntity> findAllByUpdatedIsAfter(final LocalDateTime updated, final Pageable page );
 
     List<AssetEntity> findAllByMalAssetIdAndAssetTypeAndUpdatedIsAfter(final String malAssetId, final MALAssetType malAssetType, final LocalDateTime updated );
+
+    List<AssetEntity> findAllByMalAssetIdAndAssetType(final String malAssetId, final MALAssetType malAssetType );
+
+    List<AssetEntity> findAllByUpdatedIsAfterAndUpdatedIsBeforeAndTransferringAssetStatus(
+            final LocalDateTime from, final LocalDateTime to, final TransferringAssetStatus transferringAssetStatus, final Sort sort );
 }

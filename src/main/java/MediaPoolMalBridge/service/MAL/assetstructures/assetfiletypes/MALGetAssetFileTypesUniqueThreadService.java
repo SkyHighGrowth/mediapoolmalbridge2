@@ -36,7 +36,7 @@ public class MALGetAssetFileTypesUniqueThreadService extends AbstractMALUniqueTh
                 response.getResponse() == null ||
                 response.getResponse().getFileTypes() == null) {
             final String message = String.format("Invalid File Types response [%s]", GSON.toJson(response));
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, null, null, null );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, null, null, null );
             reportsRepository.save( reportsEntity );
             logger.error(message);
             return;

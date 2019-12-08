@@ -115,6 +115,7 @@ public class AssetEntity extends AbstractEntity {
     @OneToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     @JoinColumn(name = "asset_jsoned_values_id", referencedColumnName = "id", nullable = false)
     @Expose( serialize = false, deserialize = false )
+    @JsonIgnore
     private AssetJsonedValuesEntity assetJsonedValuesEntity;
 
     @Column( name = "mal_md5_hash" )
@@ -123,6 +124,7 @@ public class AssetEntity extends AbstractEntity {
 
     @Column( name = "bm_md5_hash" )
     @Expose( serialize = true, deserialize = true )
+    @JsonIgnore
     private String bmMd5Hash;
 
     public AssetEntity() {}

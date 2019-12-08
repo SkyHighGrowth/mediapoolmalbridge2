@@ -1,16 +1,14 @@
 package MediaPoolMalBridge.config;
 
 import MediaPoolMalBridge.constants.Constants;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.Arrays;
 
 /**
@@ -23,14 +21,14 @@ public class AppConfig {
 
     private AppConfigData appConfigData;
 
-    private Environment environment;
-
-    public AppConfig( final AppConfigData appConfigData, final Environment environment )
+    public AppConfig( final AppConfigData appConfigData,
+                      final Environment environment,
+                      final ObjectMapper objectMapper )
     {
         if(Arrays.asList( environment.getActiveProfiles() ).contains( "dev" ) &&
            Arrays.asList( environment.getActiveProfiles() ).contains( "production" ) ) {
             logger.error( "Can not start with profiles dev and production set at the same time" );
-            throw new RuntimeException();
+            throw new RuntimeException( "Can not start with profiles dev and production set at the same time" );
         }
         this.appConfigData = appConfigData;
         File file = new File(System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR);
@@ -67,41 +65,19 @@ public class AppConfig {
         final String filePath = System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
         file = new File( filePath );
         if( file.exists() ) {
-            FileReader reader = null;
             try {
-                reader = new FileReader(file);
-                this.appConfigData = (new Gson()).fromJson(new JsonReader(reader), AppConfigData.class);
-                reader.close();
-                logger.info( "App config data loaded {}", (new Gson()).toJson(appConfigData) );
+                this.appConfigData = objectMapper.readValue( file, AppConfigData.class);
+                logger.info( "App config data loaded {}", (new Gson()).toJson(this.appConfigData) );
             } catch (final Exception e) {
                 logger.error( "Fatal: Can not parse application.properties.json", e );
-                throw new RuntimeException();
-            } finally {
-                if( reader != null )
-                {
-                    try {
-                        reader.close();
-                    } catch( final Exception e )
-                    {
-
-                    }
-                }
+                throw new RuntimeException( "Fatal: Can not parse application.properties.json" );
             }
         } else {
-            FileWriter writer = null;
             try {
-                writer = new FileWriter(file, false);
-                writer.write((new Gson()).toJson(appConfigData));
+                objectMapper.writerWithDefaultPrettyPrinter()
+                        .writeValue(file, appConfigData);
             } catch (final Exception e) {
                 logger.error("Can not write to file {}", file.getAbsolutePath(), e);
-            } finally {
-                if (writer != null) {
-                    try {
-                        writer.close();
-                    } catch (final Exception e) {
-
-                    }
-                }
             }
         }
     }

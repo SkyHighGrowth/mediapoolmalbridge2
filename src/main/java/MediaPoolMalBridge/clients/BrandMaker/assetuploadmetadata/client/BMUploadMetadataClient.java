@@ -4,6 +4,7 @@ import MediaPoolMalBridge.clients.BrandMaker.BrandMakerSoapClient;
 import MediaPoolMalBridge.clients.BrandMaker.assetuploadmetadata.client.model.UploadMetadataStatus;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetJsonedValuesEntity;
+import MediaPoolMalBridge.persistence.repository.Bridge.AssetJsonedValuesRepository;
 import com.brandmaker.webservices.mediapool.UploadMetadataArgument;
 import com.brandmaker.webservices.mediapool.UploadMetadataResult;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,12 @@ import org.springframework.util.StringUtils;
  */
 @Component
 public class BMUploadMetadataClient extends BrandMakerSoapClient {
+
+    final AssetJsonedValuesRepository assetJsonedValuesRepository;
+
+    public BMUploadMetadataClient( final AssetJsonedValuesRepository assetJsonedValuesRepository ) {
+        this.assetJsonedValuesRepository = assetJsonedValuesRepository;
+    }
 
     public UploadMetadataStatus upload(final AssetEntity asset) {
         try {
@@ -34,7 +41,7 @@ public class BMUploadMetadataClient extends BrandMakerSoapClient {
     }
 
     private UploadMetadataArgument getUploadMetadataArgument(final AssetEntity assetEntity ) {
-        final AssetJsonedValuesEntity assetJsonedValuesEntity = assetEntity.getAssetJsonedValuesEntity();
+        final AssetJsonedValuesEntity assetJsonedValuesEntity = assetJsonedValuesRepository.findByAssetEntity( assetEntity );
         if (assetJsonedValuesEntity.getBmUploadMetadataArgumentJson() != null) {
             return GSON.fromJson(assetJsonedValuesEntity.getBmUploadMetadataArgumentJson(), UploadMetadataArgument.class);
         }

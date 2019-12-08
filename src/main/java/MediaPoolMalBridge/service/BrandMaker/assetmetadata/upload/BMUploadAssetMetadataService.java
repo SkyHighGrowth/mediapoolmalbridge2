@@ -23,9 +23,6 @@ public class BMUploadAssetMetadataService extends AbstractBMNonUniqueThreadServi
 
     @Override
     protected void run(final AssetEntity assetEntity) {
-        if( !isGateOpen( assetEntity, "metadata uploading" ) ) {
-            return;
-        }
         final UploadMetadataStatus uploadMetadataStatus = bmUploadMetadataClient.upload( assetEntity );
         if (uploadMetadataStatus.isStatus()) {
             onSuccess( assetEntity );
@@ -35,18 +32,18 @@ public class BMUploadAssetMetadataService extends AbstractBMNonUniqueThreadServi
     }
 
     @Transactional
-    public void onSuccess( final AssetEntity assetEntity )
-    {
+    public void onSuccess( final AssetEntity assetEntity ) {
         assetEntity.setMalStatesRepetitions( 0 );
         assetEntity.setTransferringAssetStatus( TransferringAssetStatus.METADATA_UPLOADED );
         assetRepository.save(assetEntity);
     }
 
     @Transactional
-    public void onFailure(final AssetEntity assetEntity, final AbstractBMResponse abstractBMResponse)
-    {
-        reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
-        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.FILE_UPLOADED );
-        assetRepository.save(assetEntity);
+    public void onFailure(final AssetEntity assetEntity, final AbstractBMResponse abstractBMResponse) {
+        if( isGateOpen( assetEntity, "metadata uploading", abstractBMResponse ) ) {
+            reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
+            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.FILE_UPLOADED );
+            assetRepository.save(assetEntity);
+        }
     }
 }

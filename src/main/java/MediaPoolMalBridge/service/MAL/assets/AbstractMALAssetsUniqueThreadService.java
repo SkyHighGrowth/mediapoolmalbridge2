@@ -63,7 +63,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                     since,
                     response.getHttpStatus(),
                     GSON.toJson(response.getResponse()));
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, null, null, null );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, null, null, null );
             reportsRepository.save( reportsEntity );
             logger.error(message, e);
             return;
@@ -88,7 +88,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
             catch( final Exception e )
             {
                 final String message = String.format( "Problem storing page [%s] to database with message [%s]", page, e.getMessage() );
-                final ReportsEntity reportsEntity = new ReportsEntity( ReportType.WARNING, getClass().getName(), message, ReportTo.BM, null, null, null );
+                final ReportsEntity reportsEntity = new ReportsEntity( ReportType.WARNING, getClass().getName(), null, message, ReportTo.BM, null, null, null );
                 reportsRepository.save( reportsEntity );
                 logger.error( message );
             }
@@ -165,7 +165,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
         if( StringUtils.isBlank( assetEntity.getUrl() ) )
         {
             final String message = String.format( "Found asset with id [%s] with invalid download url", malGetAsset.getAssetId() );
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, (new Gson()).toJson( malGetAsset), null, null);
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), assetEntity.getMalAssetId(), message, ReportTo.MAL, (new Gson()).toJson( malGetAsset), null, null);
             reportsRepository.save( reportsEntity );
             assetEntity.setMalAssetOperation( MALAssetOperation.INVALID );
         }

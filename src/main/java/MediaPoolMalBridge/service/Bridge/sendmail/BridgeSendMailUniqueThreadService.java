@@ -62,7 +62,7 @@ public class BridgeSendMailUniqueThreadService extends AbstractBridgeUniqueThrea
                 markAsSent( reports );
             } catch( final Exception e ) {
                 final String message = String.format( "Can not send mail reports for page [%s] on date [%s] to mail address [%s] with error [%s]", page, since.format(DATE_TIME_FORMATTER), appConfig.getMailBmAddress(), e.getMessage() );
-                final ReportsEntity report = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null );
+                final ReportsEntity report = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null );
                 reportsRepository.save( report );
                 logger.error( message, e );
             }
@@ -86,7 +86,7 @@ public class BridgeSendMailUniqueThreadService extends AbstractBridgeUniqueThrea
                 markAsSent( reports );
             } catch( final Exception e ) {
                 final String message = String.format( "Can not send mail reports for page [%s] on date [%s] to mail address [%s] with error [%s]", page, since.format(DATE_TIME_FORMATTER), appConfig.getMailMalAddress(), e.getMessage() );
-                final ReportsEntity report = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, null, null, null );
+                final ReportsEntity report = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, null, null, null );
                 reportsRepository.save( report );
                 logger.error( message, e );
             }

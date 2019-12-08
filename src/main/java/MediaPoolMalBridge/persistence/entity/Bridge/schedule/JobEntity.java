@@ -37,6 +37,8 @@ public class JobEntity {
     @Column(name = "task_queue_size")
     private int taskQueueSize;
 
+    public JobEntity() {}
+
     public JobEntity(final JobState jobState, final String clazz, final String threadId, final int taskActiveCount, final int taskQueueSize) {
         this.jobState = jobState;
         this.clazz = clazz;

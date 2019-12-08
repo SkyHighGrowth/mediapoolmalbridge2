@@ -110,7 +110,7 @@ public abstract class BrandMakerSoapClient {
 
     protected void reportErrorOnException(final String assetId, final Exception e) {
         final String message = String.format("Can not perform operation [%s] asset with id [%s], with exception message [%s]", getClass().getName(), assetId, e.getMessage());
-        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.NONE, null, null, null );
+        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), assetId, message, ReportTo.NONE, null, null, null );
         reportsRepository.save( reportsEntity );
         logger.error(message, e);
     }

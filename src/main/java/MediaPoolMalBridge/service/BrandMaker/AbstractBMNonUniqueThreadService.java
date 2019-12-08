@@ -29,24 +29,25 @@ public abstract class AbstractBMNonUniqueThreadService<RUN_ARGUMENT> extends Abs
     }
 
     @Transactional
-    protected boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription ) {
+    protected boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription, AbstractBMResponse abstractBMResponse ) {
         assetEntity.increaseMalStatesRepetitions();
         if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
-            final String message = String.format( "Max retries for %s for asset id [%s]", serviceDescription, assetEntity.getBmAssetId() );
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
+            final String message = String.format( "Max retries for %s for asset id [%s], with messages [%s] and warnings [%s]", serviceDescription, assetEntity.getBmAssetId(), abstractBMResponse.getErrorAsString(), abstractBMResponse.getWarningsAsString() );
+            logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), assetEntity.getMalAssetId(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
             reportsRepository.save( reportsEntity );
             assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ERROR );
             assetRepository.save( assetEntity );
-            logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
             return false;
         }
+        assetRepository.save( assetEntity );
         return true;
     }
 
     @Transactional
     protected void reportErrorOnResponse(final String assetId, final AbstractBMResponse abstractBMResponse) {
         final String message = String.format("Can not perform operation [%s] for asset with id [%s], with error message [%s] and warnings [%s]", getClass().getName(), assetId, abstractBMResponse.getErrorAsString(), abstractBMResponse.getWarningsAsString());
-        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.NONE, null, null, null );
+        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), assetId, message, ReportTo.NONE, null, null, null );
         reportsRepository.save( reportsEntity );
     }
 }

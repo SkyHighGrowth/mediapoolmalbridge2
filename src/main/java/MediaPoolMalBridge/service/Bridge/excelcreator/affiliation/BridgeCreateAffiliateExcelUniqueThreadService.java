@@ -167,7 +167,7 @@ public class BridgeCreateAffiliateExcelUniqueThreadService extends AbstractBridg
             workbook.close();
         } catch (final Exception e) {
             final String message = String.format("Can not create file [%s]", fileName);
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null);
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null);
             reportsRepository.save( reportsEntity );
             logger.error(message, e);
         }

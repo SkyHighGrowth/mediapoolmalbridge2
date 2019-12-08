@@ -24,9 +24,6 @@ public class BMDownloadAssetMetadataService extends AbstractBMNonUniqueThreadSer
 
     @Override
     protected void run(AssetEntity assetEntity) {
-        if( !isGateOpen( assetEntity, "metadata downloading" ) ) {
-            return;
-        }
         final DownloadMediaDetailsResponse downloadMediaDetailsResponse = downloadMediaDetailsClient.download( assetEntity );
         if (!downloadMediaDetailsResponse.isStatus() ) {
             onFailure( assetEntity, downloadMediaDetailsResponse );
@@ -45,10 +42,11 @@ public class BMDownloadAssetMetadataService extends AbstractBMNonUniqueThreadSer
     }
 
     @Transactional
-    public void onFailure(final AssetEntity assetEntity, final AbstractBMResponse abstractBMResponse )
-    {
-        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.METADATA_UPLOADED );
-        reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
-        assetRepository.save( assetEntity );
+    public void onFailure(final AssetEntity assetEntity, final AbstractBMResponse abstractBMResponse ) {
+        if( isGateOpen( assetEntity, "metadata downloading", abstractBMResponse ) ) {
+            reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
+            assetEntity.setTransferringAssetStatus( TransferringAssetStatus.METADATA_UPLOADED );
+            assetRepository.save( assetEntity );
+        }
     }
 }

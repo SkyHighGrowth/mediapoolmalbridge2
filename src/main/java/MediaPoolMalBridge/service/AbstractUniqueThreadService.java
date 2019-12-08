@@ -50,7 +50,7 @@ public abstract class AbstractUniqueThreadService extends AbstractService {
                 }
             } catch ( final Exception e ) {
                 final String message = String.format("Error occured while executing service [%s], with message [%s]", getClass().getName(), e.getMessage());
-                final ReportsEntity reportsEntity = new ReportsEntity(ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null);
+                final ReportsEntity reportsEntity = new ReportsEntity(ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null);
                 reportsRepository.save(reportsEntity);
                 logger.error(message, e);
             } finally {

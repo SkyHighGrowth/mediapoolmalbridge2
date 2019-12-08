@@ -136,7 +136,7 @@ public class BridgeJScpClient {
         }
         catch( final Exception e ){
             final String message = String.format( "Can not upload file [%s] to host [%s:%s]", localFileName, appConfig.getSftpHostname(), appConfig.getSftpPort());
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null,  null );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null,  null );
             reportsRepository.save( reportsEntity );
             logger.error( message, e );
             try{

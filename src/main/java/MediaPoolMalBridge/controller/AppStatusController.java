@@ -7,21 +7,28 @@ import MediaPoolMalBridge.model.MAL.kits.MALKits;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.schedule.JobEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.schedule.ServiceEntity;
+import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
+import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.ReportsRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.schedule.JobRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.schedule.ServiceRepository;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
 import MediaPoolMalBridge.tasks.TaskSchedulerWrapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -44,6 +51,8 @@ public class AppStatusController {
     private final JobRepository jobRepository;
     private final ServiceRepository serviceRepository;
     private final ReportsRepository reportsRepository;
+    private final AssetRepository assetRepository;
+    private final ObjectMapper objectMapper;
 
     public AppStatusController(final MALKits malKits,
                                final BMThemes bmThemes,
@@ -55,7 +64,9 @@ public class AppStatusController {
                                final TaskSchedulerWrapper taskSchedulerWrapper,
                                final JobRepository jobRepository,
                                final ServiceRepository serviceRepository,
-                               final ReportsRepository reportsRepository) {
+                               final ReportsRepository reportsRepository,
+                               final AssetRepository assetRepository,
+                               final ObjectMapper objectMapper) {
         this.malKits = malKits;
         this.bmThemes = bmThemes;
         this.assetStructures = assetStructures;
@@ -65,6 +76,8 @@ public class AppStatusController {
         this.jobRepository = jobRepository;
         this.serviceRepository = serviceRepository;
         this.reportsRepository = reportsRepository;
+        this.assetRepository = assetRepository;
+        this.objectMapper = objectMapper;
     }
 
     /**
@@ -167,11 +180,13 @@ public class AppStatusController {
         return new ThreadPoolsStatuses( taskSchedulerWrapper.getTaskScheduler().getPoolSize(),
                 taskSchedulerWrapper.getTaskScheduler().getScheduledThreadPoolExecutor().getQueue().size(),
                 taskSchedulerWrapper.getTaskScheduler().getActiveCount(),
+                malTaskExecutorWrapper.getTaskExecutor().getMaxPoolSize(),
                 malTaskExecutorWrapper.getTaskExecutor().getPoolSize(),
                 malTaskExecutorWrapper.getQueueSize(),
                 malTaskExecutorWrapper.getMaximalQueueSize(),
                 malTaskExecutorWrapper.getTaskExecutor().getActiveCount(),
                 malTaskExecutorWrapper.getLockCount(),
+                bmTaskExecutorWrapper.getTaskExecutor().getMaxPoolSize(),
                 bmTaskExecutorWrapper.getTaskExecutor().getPoolSize(),
                 bmTaskExecutorWrapper.getQueueSize(),
                 bmTaskExecutorWrapper.getMaximalQueueSize(),
@@ -185,9 +200,9 @@ public class AppStatusController {
      * @return
      */
     @GetMapping( "/appStatus/app/jobsScheduled/{page}")
-    public Page<JobEntity> getJobs(@RequestParam final int page)
+    public Page<JobEntity> getJobs(@PathVariable final int page)
     {
-        return jobRepository.findAll( PageRequest.of( page, 200 ) );
+        return jobRepository.findAll( PageRequest.of( page, 200, Sort.by( Sort.Direction.DESC, "created") ) );
     }
 
     /**
@@ -196,9 +211,9 @@ public class AppStatusController {
      * @return
      */
     @GetMapping( "/appStatus/app/serviceExecution/{page}")
-    public Page<ServiceEntity> getServices(@RequestParam final int page)
+    public Page<ServiceEntity> getServices(@PathVariable final int page)
     {
-        return serviceRepository.findAll( PageRequest.of( page, 200 ) );
+        return serviceRepository.findAll( PageRequest.of( page, 200, Sort.by( Sort.Direction.DESC, "created" ) ) );
     }
 
     /**
@@ -207,8 +222,28 @@ public class AppStatusController {
      * @return
      */
     @GetMapping( "/appStatus/app/reports/{page}" )
-    public Page<ReportsEntity> getReports(@RequestParam final int page)
+    public Page<ReportsEntity> getReports(@PathVariable final int page)
     {
-        return reportsRepository.findAll( PageRequest.of( page, 200 ) );
+        return reportsRepository.findAll( PageRequest.of( page, 200, Sort.by( Sort.Direction.DESC, "created") ) );
+    }
+
+    /**
+     * Returns assets which has updated timestamp if before from and after to with given transferring asset status
+     * @param from
+     * @param to
+     * @param transferringAssetStatus
+     * @return
+     */
+    @GetMapping( "/appStatus/app/assets/" )
+    public String getAssets(@RequestParam( "from" ) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) final LocalDateTime from,
+                                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam( "to" ) final LocalDateTime to,
+                                       @RequestParam( "transferringAssetStatus" ) TransferringAssetStatus transferringAssetStatus) {
+        try {
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(
+                    assetRepository.findAllByUpdatedIsAfterAndUpdatedIsBeforeAndTransferringAssetStatus(
+                            from, to, transferringAssetStatus, Sort.by(Sort.Direction.DESC, "updated")));
+        } catch( final Exception e ) {
+            return "Can not serialize database response " + e.getMessage();
+        }
     }
 }

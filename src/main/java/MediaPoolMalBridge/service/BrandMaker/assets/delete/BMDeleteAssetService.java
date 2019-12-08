@@ -23,9 +23,6 @@ public class BMDeleteAssetService extends AbstractBMNonUniqueThreadService<Asset
 
     @Override
     protected void run(final AssetEntity assetEntity) {
-        if( !isGateOpen( assetEntity, "delete asset" ) ) {
-            return;
-        }
         final DeleteMediaResponse deleteMediaResponse = bmDeleteAssetClient.delete( assetEntity );
         if (deleteMediaResponse.isStatus()) {
             onSucces( assetEntity );
@@ -44,8 +41,10 @@ public class BMDeleteAssetService extends AbstractBMNonUniqueThreadService<Asset
 
     @Transactional
     protected void onFailure(final AssetEntity assetEntity, final AbstractBMResponse abstractBMResponse) {
-        reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
-        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_ONBOARDED);
-        assetRepository.save( assetEntity );
+        if( isGateOpen( assetEntity, "delete asset", abstractBMResponse ) ) {
+            reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
+            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_ONBOARDED);
+            assetRepository.save( assetEntity );
+        }
     }
 }

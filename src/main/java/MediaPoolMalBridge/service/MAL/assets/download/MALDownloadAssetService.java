@@ -41,9 +41,6 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
 
     @Override
     protected void run( final AssetEntity assetEntity ) {
-        if( !isGateOpen( assetEntity, "asset download" ) ) {
-            return;
-        }
         try {
             final MALDownloadAssetResponse response = malDownloadAssetClient.download(decode(assetEntity.getUrl()), assetEntity.getFileNameOnDisc());
             //logger.error( "RESPONSE {}", response);//delete
@@ -58,8 +55,17 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
         assetRepository.save(assetEntity);
     }
 
+    private void onSuccess( final AssetEntity assetEntity ) {
+        assetEntity.setMalStatesRepetitions( 0 );
+        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
+        assetRepository.save(assetEntity);
+    }
+
     @Transactional
     protected void onFailure( final AssetEntity assetEntity, final MALAbstractResponse malAbstractResponse, final Exception e ) {
+        if( !isGateOpen( assetEntity, "asset download", malAbstractResponse, e ) ) {
+            return;
+        }
         uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
         assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ASSET_ONBOARDED );
         assetRepository.save(assetEntity);
@@ -69,21 +75,14 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
         } else {
             message = String.format("Problem downloading asset with id [%s] and url [%s], with message [%s]", assetEntity.getMalAssetId(), assetEntity.getUrl(), e.getMessage() );
         }
-        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.NONE, GSON.toJson( assetEntity ), null, null );
+        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), assetEntity.getMalAssetId(), message, ReportTo.NONE, GSON.toJson( assetEntity ), null, null );
         reportsRepository.save( reportsEntity );
-    }
-
-    private void onSuccess( final AssetEntity assetEntity ) {
-        assetEntity.setMalStatesRepetitions( 0 );
-        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
-        assetRepository.save(assetEntity);
     }
 
     @Override
     @Transactional
-    protected boolean isGateOpen( final AssetEntity assetEntity, final String serviceDescription )
-    {
-        if( super.isGateOpen( assetEntity, serviceDescription ) ) {
+    protected boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription, final MALAbstractResponse malAbstractResponse, final Exception e ) {
+        if( super.isGateOpen( assetEntity, serviceDescription, malAbstractResponse, e ) ) {
             return true;
         }
         uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
