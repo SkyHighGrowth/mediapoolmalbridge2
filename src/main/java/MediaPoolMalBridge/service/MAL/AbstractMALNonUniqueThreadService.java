@@ -1,5 +1,6 @@
 package MediaPoolMalBridge.service.MAL;
 
+import MediaPoolMalBridge.clients.MAL.singleresponse.MALAbstractResponse;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
@@ -26,11 +27,16 @@ public abstract class AbstractMALNonUniqueThreadService<RUN_ARGUMENT> extends Ab
         return taskExecutorWrapper;
     }
 
-    protected boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription ) {
+    protected boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription, final MALAbstractResponse malAbstractResponse, final Exception e ) {
         assetEntity.increaseMalStatesRepetitions();
         if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
-            final String message = String.format( "Max retries for %s achieved for asset id [%s]", serviceDescription, assetEntity.getMalAssetId() );
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, GSON.toJson( assetEntity ), null, null );
+            final String message;
+            if( malAbstractResponse == null ) {
+                message = String.format( "Max retries for %s achieved for asset id [%s], with message [%s]", serviceDescription, assetEntity.getMalAssetId(), e.getMessage() );
+            } else {
+                message = String.format( "Max retries for %s achieved for asset id [%s], with message [%s]", serviceDescription, assetEntity.getMalAssetId(), malAbstractResponse.getMessage() );
+            }
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), assetEntity.getMalAssetId(), message, ReportTo.MAL, GSON.toJson( assetEntity ), null, null );
             reportsRepository.save( reportsEntity );
             logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
             assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ERROR );

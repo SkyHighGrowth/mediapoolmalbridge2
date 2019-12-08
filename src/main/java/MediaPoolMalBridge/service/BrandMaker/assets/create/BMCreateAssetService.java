@@ -37,9 +37,6 @@ public class BMCreateAssetService extends AbstractBMNonUniqueThreadService<Asset
 
     @Override
     protected void run(final AssetEntity assetEntity) {
-        if( !isGateOpen( assetEntity, "create asset" ) ) {
-            return;
-        }
         final UploadStatus uploadStatus = bmUploadAssetClient.upload( assetEntity );
         if (uploadStatus.isStatus()) {
             onSuccess( assetEntity, uploadStatus.getBmAsset() );
@@ -47,8 +44,6 @@ public class BMCreateAssetService extends AbstractBMNonUniqueThreadService<Asset
             onFailure( assetEntity, uploadStatus );
         }
     }
-
-
 
     @Transactional
     public void onSuccess( final AssetEntity assetEntity, final String bmAssetId ) {
@@ -62,23 +57,26 @@ public class BMCreateAssetService extends AbstractBMNonUniqueThreadService<Asset
         uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
     }
 
-    @Override
-    @Transactional
-    protected boolean isGateOpen( final AssetEntity assetEntity, final String serviceDescription ) {
-        if( super.isGateOpen( assetEntity, serviceDescription ) ) {
-            return true;
-        }
-        uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
-        return false;
-    }
-
     @Transactional
     protected void onFailure(final AssetEntity assetEntity, final AbstractBMResponse abstractBMResponse ) {
+        if( !isGateOpen( assetEntity, "create asset", abstractBMResponse ) ) {
+            return;
+        }
         if( !triggerBMAssetIdDownloadFormHashIfPossible( assetEntity, abstractBMResponse ) ) {
             reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
             assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
         }
         assetRepository.save( assetEntity );
+    }
+
+    @Override
+    @Transactional
+    protected boolean isGateOpen( final AssetEntity assetEntity, final String serviceDescription, final AbstractBMResponse abstractBMResponse ) {
+        if( super.isGateOpen( assetEntity, serviceDescription, abstractBMResponse ) ) {
+            return true;
+        }
+        uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
+        return false;
     }
 
     @Transactional

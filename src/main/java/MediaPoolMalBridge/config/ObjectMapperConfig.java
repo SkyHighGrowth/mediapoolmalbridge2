@@ -5,11 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class JacksonConfig {
+public class ObjectMapperConfig {
 
-    @Bean( name = "ObjectMapper" )
-    public ObjectMapper getObjectMapper()
-    {
+    @Bean( "JacksonSerializer" )
+    public ObjectMapper getObjectMapper() {
         return new ObjectMapper();
     }
 }

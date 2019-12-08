@@ -55,11 +55,15 @@ public class ReportsEntity {
     @Column( name = "created" )
     private LocalDateTime created;
 
+    @Column( name = "mal_asset_id" )
+    private String malAssetId;
+
     public ReportsEntity( ) { }
 
-    public ReportsEntity( final ReportType reportType, final String loggerName, final String message, final ReportTo reportTo, final String jsonedObject01, final String jsonedObject02, final String jsonedObject03 ) {
+    public ReportsEntity( final ReportType reportType, final String loggerName, final String malAssetId, final String message, final ReportTo reportTo, final String jsonedObject01, final String jsonedObject02, final String jsonedObject03 ) {
         this.reportType = reportType;
         this.loggerName = loggerName;
+        this.malAssetId = malAssetId;
         this.message = message;
         this.reportTo = reportTo;
         this.jsonedObject01 = jsonedObject01;
@@ -155,5 +159,13 @@ public class ReportsEntity {
 
     public void setCreated(LocalDateTime created) {
         this.created = created;
+    }
+
+    public String getMalAssetId() {
+        return malAssetId;
+    }
+
+    public void setMalAssetId(String malAssetId) {
+        this.malAssetId = malAssetId;
     }
 }

@@ -33,7 +33,7 @@ public class MALGetPropertyTypesUniqueThreadService extends AbstractMALUniqueThr
                 response.getResponse() == null ||
                 response.getResponse().getPropertyTypes() == null) {
             final String message = String.format("Invalid Property Types response [%s]", GSON.toJson(response));
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, null, null, null );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, null, null, null );
             reportsRepository.save( reportsEntity );
             logger.error(message);
             return;

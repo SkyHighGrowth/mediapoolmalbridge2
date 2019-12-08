@@ -36,7 +36,7 @@ public class MALGetAssetTypeUniqueThreadService extends AbstractMALUniqueThreadS
                 response.getResponse() == null ||
                 response.getResponse().getAssetTypes() == null) {
             final String message = String.format("Invalid Asset Types response [%s]", GSON.toJson(response));
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, null, null, null );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, null, null, null );
             reportsRepository.save( reportsEntity );
             logger.error(message);
             return;

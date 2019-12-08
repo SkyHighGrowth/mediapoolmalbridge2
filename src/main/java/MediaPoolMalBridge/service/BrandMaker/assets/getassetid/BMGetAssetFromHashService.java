@@ -30,9 +30,6 @@ public class BMGetAssetFromHashService extends AbstractBMNonUniqueThreadService<
 
     @Override
     protected void run(final AssetEntity assetEntity) {
-        if( !isGateOpen(assetEntity, "getting asset id from hash") ) {
-            return;
-        }
         final GetAssetIdFromMediaHashResponse response = bmGetAssetIdFromHashClient.getAssetId( assetEntity );
         if (response.isStatus()) {
             onSuccess( assetEntity, response.getAssetId() );
@@ -48,14 +45,16 @@ public class BMGetAssetFromHashService extends AbstractBMNonUniqueThreadService<
         bmAssetIdRepository.save( bmAssetIdEntity );
         assetEntity.setMalAssetOperation( MALAssetOperation.MAL_MODIFIED );
         assetEntity.setMalStatesRepetitions( 0 );
-        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
+        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_UPLOADED);
         assetRepository.save( assetEntity );
     }
 
     @Transactional
     protected void onFailure(final AssetEntity assetEntity, final AbstractBMResponse abstractBMResponse) {
-        reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
-        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_ONBOARDED);
-        assetRepository.save(assetEntity);
+        if( isGateOpen(assetEntity, "getting asset id from hash", abstractBMResponse ) ) {
+            reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
+            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_ONBOARDED);
+            assetRepository.save(assetEntity);
+        }
     }
 }

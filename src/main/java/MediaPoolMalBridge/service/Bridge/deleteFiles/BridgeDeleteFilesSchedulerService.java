@@ -93,7 +93,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
             }
         } catch( final Exception e ) {
             final String message = String.format( "Error deleting files with message [%s]", e.getMessage() );
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null );
             reportsRepository.save( reportsEntity );
             logger.error( message, e );
         }
@@ -109,7 +109,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
                 logger.error(message);
                 fileEntity.setFileStateOnDisc( FileStateOnDisc.ERROR );
                 uploadedFileRepository.save( fileEntity );
-                final ReportsEntity reportsEntity = new ReportsEntity(ReportType.WARNING, getClass().getName(), message, ReportTo.BM, null, null, null);
+                final ReportsEntity reportsEntity = new ReportsEntity(ReportType.WARNING, getClass().getName(), null, message, ReportTo.BM, null, null, null);
                 reportsRepository.save(reportsEntity);
             } else {
                 fileEntity.setDeleted(true);

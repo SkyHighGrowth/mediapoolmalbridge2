@@ -43,7 +43,7 @@ public class BMGetThemeIdSchedulerService extends AbstractSchedulerService {
                 bmThemePathToId.put( themePath, String.valueOf( response.getTheme().getId() ) );
             } else {
                 final String message = String.format( "Can not download theme id from theme path [%s], with messages [%s] and warnings [%s]", themePath, response.getErrorAsString(), response.getWarningsAsString() );
-                final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null );
+                final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null );
                 reportsRepository.save( reportsEntity );
                 logger.error( message );
             }

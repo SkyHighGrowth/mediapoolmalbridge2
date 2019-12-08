@@ -216,7 +216,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                         writeToFile(propertyVariant.getStructureName() + ".xls", rows);
                     } catch( final Exception e ) {
                         final String message = String.format( "Can not create Excel file for property variant [%s] with message [%s]", propertyVariant.getStructureName(), e.getMessage() );
-                        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, GSON.toJson( propertyVariant), null, null );
+                        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, GSON.toJson( propertyVariant), null, null );
                         reportsRepository.save( reportsEntity );
                         logger.error( message, e );
                     }

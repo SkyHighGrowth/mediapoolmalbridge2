@@ -8,6 +8,8 @@ public class ThreadPoolsStatuses {
 
     private int schedulerActiveCount;
 
+    private int malMaximalPoolSize;
+
     private int malPoolSize;
 
     private int malQueueSize;
@@ -17,6 +19,8 @@ public class ThreadPoolsStatuses {
     private int malActiveCount;
 
     private int malLockCount;
+
+    private int bmMaximalPoolSize;
 
     private int bmPoolSize;
 
@@ -29,16 +33,18 @@ public class ThreadPoolsStatuses {
     private int bmLockCount;
 
     public ThreadPoolsStatuses(final int schdulerPoolSize, final int schedulerQueueSize, final int schedulerActiveCount,
-                               final int malPoolSize, final int malQueueSize, final int malMaximalQueueSize, final int malActiveCount, final int malLockCount,
-                               final int bmPoolSize, final int bmQueueSize, final int bmMaximalQueueSize, final int bmActiveCount, final int bmLockCount) {
+                               final int malMaximalPoolSize, final int malPoolSize, final int malQueueSize, final int malMaximalQueueSize, final int malActiveCount, final int malLockCount,
+                               final int bmMaximalPoolSize, final int bmPoolSize, final int bmQueueSize, final int bmMaximalQueueSize, final int bmActiveCount, final int bmLockCount) {
         this.schdulerPoolSize = schdulerPoolSize;
         this.schedulerQueueSize = schedulerQueueSize;
         this.schedulerActiveCount = schedulerActiveCount;
+        this.malMaximalPoolSize = malMaximalPoolSize;
         this.malPoolSize = malPoolSize;
         this.malQueueSize = malQueueSize;
         this.malMaximalQueueSize = malMaximalQueueSize;
         this.malActiveCount = malActiveCount;
         this.malLockCount = malLockCount;
+        this.bmMaximalPoolSize = bmMaximalPoolSize;
         this.bmPoolSize = bmPoolSize;
         this.bmQueueSize = bmQueueSize;
         this.bmMaximalQueueSize = bmMaximalQueueSize;
@@ -110,6 +116,14 @@ public class ThreadPoolsStatuses {
         this.malLockCount = malLockCount;
     }
 
+    public int getMalMaximalPoolSize() {
+        return malMaximalPoolSize;
+    }
+
+    public void setMalMaximalPoolSize(int malMaximalPoolSize) {
+        this.malMaximalPoolSize = malMaximalPoolSize;
+    }
+
     public int getBmPoolSize() {
         return bmPoolSize;
     }
@@ -148,5 +162,13 @@ public class ThreadPoolsStatuses {
 
     public void setBmLockCount(int bmLockCount) {
         this.bmLockCount = bmLockCount;
+    }
+
+    public int getBmMaximalPoolSize() {
+        return bmMaximalPoolSize;
+    }
+
+    public void setBmMaximalPoolSize(int bmMaximalPoolSize) {
+        this.bmMaximalPoolSize = bmMaximalPoolSize;
     }
 }

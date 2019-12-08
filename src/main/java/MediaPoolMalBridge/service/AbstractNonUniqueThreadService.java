@@ -34,7 +34,7 @@ public abstract class AbstractNonUniqueThreadService<RUN_ARGUMENT> extends Abstr
             } catch( final Exception e ) {
                 final String message = String.format( "Service [%s] exited with an exception, with message [%s]", getClass().getName(), e.getMessage() );
                 logger.error( message, e );
-                final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null );
+                final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null );
                 reportsRepository.save( reportsEntity );
             }
         }

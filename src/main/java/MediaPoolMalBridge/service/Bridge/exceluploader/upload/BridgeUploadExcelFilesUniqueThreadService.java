@@ -50,7 +50,7 @@ public class BridgeUploadExcelFilesUniqueThreadService extends AbstractBridgeUni
             }
         } catch (final Exception e) {
             final String message = String.format( "Can not transfer file using sftp, with message [%s]", e.getMessage() );
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null);
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null);
             reportsRepository.save( reportsEntity );
             logger.error( message, e );
         } finally {

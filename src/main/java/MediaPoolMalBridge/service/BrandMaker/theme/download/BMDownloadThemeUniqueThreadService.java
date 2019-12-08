@@ -37,7 +37,7 @@ public class BMDownloadThemeUniqueThreadService extends AbstractBMUniqueThreadSe
         }
         if( response.getThemesResult() == null) {
             final String message = String.format("Download full theme tree resulted in empty themes list theme [%s]", GSON.toJson(bmTheme));
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.WARNING, getClass().getName(), message, ReportTo.BM, null, null, null );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.WARNING, getClass().getName(), null,  message, ReportTo.BM, null, null, null );
             reportsRepository.save( reportsEntity );
             logger.error(message);
             return;

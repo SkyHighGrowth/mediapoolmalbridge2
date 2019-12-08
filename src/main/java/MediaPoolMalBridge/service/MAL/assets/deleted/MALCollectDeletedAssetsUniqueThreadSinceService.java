@@ -48,7 +48,7 @@ public class MALCollectDeletedAssetsUniqueThreadSinceService extends AbstractMAL
             final String message = String.format("Can not download list of unavailable assets since [%s] with response [%s]",
                     since,
                     GSON.toJson(response.getResponse()));
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.MAL, null, null, null );
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, null, null, null );
             reportsRepository.save( reportsEntity );
             logger.error(message);
             return;
@@ -68,7 +68,7 @@ public class MALCollectDeletedAssetsUniqueThreadSinceService extends AbstractMAL
     }
 
     private void addAssetToDelete(final MALGetUnavailableAsset malGetUnavailableAsset, final MALAssetType assetType) {
-        final List<AssetEntity> malAssetEntities = assetRepository.findAllByMalAssetIdAndAssetTypeAndUpdatedIsAfter(malGetUnavailableAsset.getAssetId(), assetType, getMidnightBridgeLookInThePast());
+        final List<AssetEntity> malAssetEntities = assetRepository.findAllByMalAssetIdAndAssetType(malGetUnavailableAsset.getAssetId(), assetType);
         if (malAssetEntities == null || malAssetEntities.isEmpty()) {
             return;
         }

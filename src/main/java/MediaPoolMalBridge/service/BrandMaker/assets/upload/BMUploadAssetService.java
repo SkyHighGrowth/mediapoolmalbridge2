@@ -32,9 +32,6 @@ public class BMUploadAssetService extends AbstractBMNonUniqueThreadService<Asset
         if( assetEntity.getBmAssetId().startsWith( "CREATING_ ") ) {
             return;
         }
-        if( !isGateOpen( assetEntity, "uploading asset" ) ) {
-            return;
-        }
         final UploadStatus uploadStatus = bmUploadVersionAssetClient.upload( assetEntity );
         if (uploadStatus.isStatus()) {
             onSuccess( assetEntity );
@@ -62,22 +59,20 @@ public class BMUploadAssetService extends AbstractBMNonUniqueThreadService<Asset
         }
         reportErrorOnResponse(assetEntity.getBmAssetId(), abstractBMResponse);
         if( duplicated ) {
-            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ERROR);
+            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_UPLOADED);
+            assetRepository.save( assetEntity );
         } else {
-            assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
+            if( isGateOpen( assetEntity, "uploading asset", abstractBMResponse ) ) {
+                assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
+                assetRepository.save(assetEntity);
+            }
         }
-        assetRepository.save( assetEntity );
-    }
-
-    @Transactional
-    protected void onFailure( ) {
-
     }
 
     @Override
     @Transactional
-    protected boolean isGateOpen( final AssetEntity assetEntity, final String serviceDescprition ) {
-        if( super.isGateOpen( assetEntity, serviceDescprition ) ) {
+    protected boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription, final AbstractBMResponse abstractBMResponse ) {
+        if( super.isGateOpen( assetEntity, serviceDescription, abstractBMResponse ) ) {
             return true;
         }
         uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );

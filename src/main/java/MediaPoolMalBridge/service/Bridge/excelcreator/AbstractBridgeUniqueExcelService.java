@@ -67,7 +67,7 @@ public abstract class AbstractBridgeUniqueExcelService extends AbstractBridgeUni
             workbook.close();
         } catch (final Exception e) {
             final String message = String.format("Can not save excel file [%s]", fileName);
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), message, ReportTo.BM, null, null, null);
+            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null);
             reportsRepository.save( reportsEntity );
             logger.error(message, e);
         }
