@@ -7,6 +7,7 @@ import MediaPoolMalBridge.clients.MAL.assetsunavailable.client.model.MALGetUnava
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
 import MediaPoolMalBridge.clients.rest.RestResponse;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetJsonedValuesEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
@@ -77,6 +78,8 @@ public class MALCollectDeletedAssetsUniqueThreadSinceService extends AbstractMAL
                 return;
             }
         }
+        final AssetJsonedValuesEntity assetJsonedValuesEntity = new AssetJsonedValuesEntity();
+        assetJsonedValuesEntity.setMalGetUnavailableAssetJson( GSON.toJson( malGetUnavailableAsset ) );
         final AssetEntity assetEntity = new AssetEntity();
         assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_OBSERVED);
         assetEntity.setMalAssetOperation( MALAssetOperation.MAL_DELETED );
@@ -84,6 +87,7 @@ public class MALCollectDeletedAssetsUniqueThreadSinceService extends AbstractMAL
         assetEntity.setMalAssetId( malGetUnavailableAsset.getAssetId() );
         assetEntity.setPropertyId( malGetUnavailableAsset.getPropertyId() );
         assetEntity.setBmAssetIdEntity( malAssetEntities.get( 0 ).getBmAssetIdEntity() );
+        assetEntity.setAssetJsonedValuesEntity( assetJsonedValuesEntity );
         assetRepository.save(assetEntity);
     }
 

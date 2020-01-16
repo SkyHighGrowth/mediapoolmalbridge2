@@ -14,7 +14,7 @@ plugins {
 	id 'idea'
 	id 'org.springframework.boot' version '2.0.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.7.RELEASE'
-    id "uk.co.boothen.gradle.wsimport" version "0.10"
+    //id "uk.co.boothen.gradle.wsimport" version "0.10"
 }
 
 sourceCompatibility = '1.8'
@@ -83,10 +83,51 @@ application {
 }
 
 apply plugin: 'idea'
-apply plugin: 'uk.co.boothen.gradle.wsimport'
+//apply plugin: 'uk.co.boothen.gradle.wsimport'
 apply plugin: 'java'
 
-task wsimport(type: uk.co.boothen.gradle.wsimport.WsImport) {
+configurations {
+    jaxws
+}
+
+dependencies {
+    jaxws 'com.sun.xml.ws:jaxws-tools:2.1.4'
+}
+
+task wsimport {
+    ext.destDir = file("${projectDir}/generated-sources")
+    doLast {
+        ant {
+            sourceSets.main.output.classesDirs.inits()
+            destDir.mkdirs()
+            taskdef(name: 'wsimport',
+                    classname: 'com.sun.tools.ws.ant.WsImport',
+                    classpath: configurations.jaxws.asPath
+            )
+            wsimport(keep: true,
+                    sourcedestdir: 'generated-sources',
+                    package: "",
+                    wsdl: 'src/main/resources/wsdl/MediaPool.wsdl',
+                    wsdlLocation: 'classpath:wsdl/MediaPool.wsdl') {
+                xjcarg(value: "-XautoNameResolution")
+            }
+            wsimport(keep: true,
+                    sourcedestdir: 'generated-sources',
+                    package: "",
+                    wsdl: 'src/main/resources/wsdl/Theme.wsdl',
+                    wsdlLocation: 'classpath:wsdl/Theme.wsdl') {
+                xjcarg(value: "-XautoNameResolution")
+            }
+        }
+    }
+}
+
+compileJava {
+    dependsOn wsimport
+    source wsimport.destDir
+}
+
+/*task wsimport(type: uk.co.boothen.gradle.wsimport.WsImport) {
 
     wsdlSourceRoot = "/src/main/resources/wsdl"
     generatedSourceRoot = "/../generated-sources"
@@ -100,16 +141,17 @@ task wsimport(type: uk.co.boothen.gradle.wsimport.WsImport) {
     xnocompile = true
 
 
-    wsdl("MediaPool.wsdl") {
+    wsdl("wsdl/MediaPool.wsdl") {
         xjcarg("-XautoNameResolution")
         //packageName("brandmaker.mediapool")
-        //wsdlLocation("MediaPool.wsdl")
+        wsdlLocation("classpath:wsdl/MediaPool.wsdl")
     }
 
-    wsdl("Theme.wsdl") {
+    wsdl("wsdl/Theme.wsdl") {
         xjcarg("-XautoNameResolution")
+        wsdlLocation("classpath:wsdl/Theme.wsdl")
     }
-}
+}*/
 
 sourceSets {
     main {
