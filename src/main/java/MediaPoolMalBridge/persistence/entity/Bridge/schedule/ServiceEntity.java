@@ -29,7 +29,6 @@ public class ServiceEntity {
     @Column( name = "thread_id" )
     private String threadId;
 
-    @Version
     @CreationTimestamp
     @Column( name = "created")
     private LocalDateTime created;

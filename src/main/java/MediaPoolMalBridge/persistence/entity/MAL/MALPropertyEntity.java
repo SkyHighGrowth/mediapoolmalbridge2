@@ -16,8 +16,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table( name = "mal_property",
         indexes = { @Index( columnList = "property_id, updated" ),
-                    @Index( columnList = "property_id" ),
-                    @Index( columnList = "brand, updated")},
+                    @Index( columnList = "property_id"),
+                    @Index( columnList = "brand, updated" ),
+                    @Index( columnList = "updated" ) },
         uniqueConstraints = { @UniqueConstraint(columnNames = { "property_id" } ) } )
 public class MALPropertyEntity extends AbstractEntity {
 
@@ -94,7 +95,6 @@ public class MALPropertyEntity extends AbstractEntity {
     @CreationTimestamp
     private LocalDateTime created;
 
-    @Version
     @Column( name = "updated" )
     @UpdateTimestamp
     private LocalDateTime updated;

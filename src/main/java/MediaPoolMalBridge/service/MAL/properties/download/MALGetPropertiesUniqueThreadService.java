@@ -34,7 +34,7 @@ public class MALGetPropertiesUniqueThreadService extends AbstractMALUniqueThread
     protected void run() {
         final MALGetPropertiesRequest request = new MALGetPropertiesRequest();
         request.setPerPage(appConfig.getMalPageSize());
-        request.setPage(1);
+        request.setPage(0);
         final RestResponse<MALGetPropertiesResponse> response = getPropertiesClient.download(request);
         if (!response.isSuccess() ||
                 response.getResponse() == null ||
@@ -87,10 +87,10 @@ public class MALGetPropertiesUniqueThreadService extends AbstractMALUniqueThread
                 if( propertyMd5Hash.equals( malPropertyEntity.getMd5Hash() ) ) {
                     return;
                 }
-                malPropertyEntity.update(malProperty, propertyMd5Hash, MALPropertyStatus.OBSERVED );
+                malPropertyEntity.update( malProperty, propertyMd5Hash, MALPropertyStatus.OBSERVED );
                 malPropertyRepository.save(malPropertyEntity);
             } else {
-                final MALPropertyEntity malPropertyEntity = new MALPropertyEntity(malProperty, propertyMd5Hash, MALPropertyStatus.OBSERVED );
+                final MALPropertyEntity malPropertyEntity = new MALPropertyEntity( malProperty, propertyMd5Hash, MALPropertyStatus.OBSERVED );
                 malPropertyRepository.save(malPropertyEntity);
             }
         });
