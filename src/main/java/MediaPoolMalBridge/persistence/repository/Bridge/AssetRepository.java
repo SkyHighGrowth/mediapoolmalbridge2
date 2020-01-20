@@ -2,7 +2,6 @@ package MediaPoolMalBridge.persistence.repository.Bridge;
 
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
-import MediaPoolMalBridge.persistence.entity.enums.asset.MALAssetOperation;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,7 +20,7 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
             "from AssetEntity ae " +
             "where ae.propertyId = :propertyId " +
             "and ae.assetTypeId = :assetTypeId " +
-            "and ae.colorId like ':colorId%' " +
+            "and ae.colorId = :colorId " +
             "and ae.transferringAssetStatus = :transferringAssetStatus " +
             "and ae.updated > :arg5 " +
             "order by ae.updated desc")
@@ -37,6 +36,7 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
 
     List<AssetEntity> findAllByTransferringAssetStatusAndUpdatedIsAfter( final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated, final Pageable page );
 
+    /*
     @Query( "select ae " +
             "from AssetEntity ae " +
             "join fetch ae.assetJsonedValuesEntity ajve " +
@@ -45,6 +45,7 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
     List<AssetEntity> findAllByTransferringAssetStatusAndUpdatedIsAfterFetch( final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated, final Pageable page );
 
     List<AssetEntity> findAllByMalAssetOperationAndUpdatedIsAfter( final MALAssetOperation arg1, final LocalDateTime arg2, final Pageable page );
+    */
 
     Long countByMalAssetIdAndAssetTypeAndTransferringAssetStatusNotAndTransferringAssetStatusNotAndUpdatedIsBeforeAndUpdatedIsAfter(
             final String assetId, final MALAssetType assetType, final TransferringAssetStatus transferringAssetStatus01, final TransferringAssetStatus transferringAssetStatus02, final LocalDateTime updatedAssetTimeStamp, final LocalDateTime updated);

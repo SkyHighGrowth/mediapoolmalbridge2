@@ -18,9 +18,14 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table( name = "asset",
-        indexes = { @Index( columnList = "mal_asset_id, mal_asset_type" ),
-                    @Index( columnList = "transferring_status"),
-                    @Index( columnList = "transferring_status, mal_asset_operation, updated") } )
+        indexes = { @Index( columnList = "property_id, mal_asset_type, color_id, transferring_status, updated" ),
+                    @Index( columnList = "property_id, mal_asset_type, updated" ),
+                    @Index( columnList = "transferring_status, updated" ),
+                    @Index( columnList = "mal_asset_id, mal_asset_type, transferring_status, updated" ),
+                    @Index( columnList = "updated" ),
+                    @Index( columnList = "mal_asset_id, mal_asset_type, updated" ),
+                    @Index( columnList = "mal_asset_id, mal_asset_type" ),
+                    @Index( columnList = "updated, transferring_status" )} )
 public class AssetEntity extends AbstractEntity {
 
     @Id
