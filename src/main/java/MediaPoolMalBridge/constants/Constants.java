@@ -30,6 +30,8 @@ public class Constants {
      */
     public final static String LOGO_PNG_FILE_PREFIX = "logoPng_";
 
+    public final static String SPLITTER = "____";
+
     /**
      * prefix appended to download file if extra large link is downloaded
      */

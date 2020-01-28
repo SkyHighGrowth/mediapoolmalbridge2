@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppConfigData {
 
+    @Value( "${bridge.jscp.usesftp}" )
+    private boolean useSftp;
     /**
      * sftp server username
      */
@@ -350,6 +352,9 @@ public class AppConfigData {
     @Value( "${datasource.hikari.maximum-pool-size:10000}" )
     private int hikariMaximumPoolSize;
 
+    public boolean isUseSftp() {
+        return useSftp;
+    }
 
     public String getSftpUsername() {
         return sftpUsername;

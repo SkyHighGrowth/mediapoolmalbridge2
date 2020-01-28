@@ -48,25 +48,25 @@ public class MALAssetModelsToMALAssetEntityTransformer {
                     fileNameOnDisc = Constants.XL_FILE_PREFIX + instant + getFileName(url, malGetAsset);
                 } else if (StringUtils.isNotBlank(malGetAsset.getLargeUrl())) {
                     url = malGetAsset.getLargeUrl();
-                    fileNameOnDisc = Constants.LARGE_FILE_PREFIX + instant + getFileName(url, malGetAsset);
+                    fileNameOnDisc = Constants.LARGE_FILE_PREFIX + instant + Constants.SPLITTER + getFileName(url, malGetAsset);
                 } else if (StringUtils.isNotBlank(malGetAsset.getMediumUrl())) {
                     url = malGetAsset.getMediumUrl();
-                    fileNameOnDisc = Constants.MEDIUM_FILE_PREFIX + instant + getFileName(url, malGetAsset);
+                    fileNameOnDisc = Constants.MEDIUM_FILE_PREFIX + instant + Constants.SPLITTER + getFileName(url, malGetAsset);
                 } else if (StringUtils.isNotBlank(malGetAsset.getThumbnailUrl())) {
                     url = malGetAsset.getThumbnailUrl();
-                    fileNameOnDisc = Constants.THUMBNAIL_FILE_PREFIX + instant + getFileName(url, malGetAsset);
+                    fileNameOnDisc = Constants.THUMBNAIL_FILE_PREFIX + instant + Constants.SPLITTER +getFileName(url, malGetAsset);
                 }
                 break;
             case JPG_LOGO:
                 if (StringUtils.isNotBlank(malGetAsset.getLogoJpgUrl())) {
-                    fileNameOnDisc = Constants.LOGO_JPG_FILE_PREFIX + instant +
+                    fileNameOnDisc = Constants.LOGO_JPG_FILE_PREFIX + instant + Constants.SPLITTER +
                             getFileNameWithExtension(malGetAsset.getLogoJpgUrl(), malGetAsset, ".jpg");
                     url = malGetAsset.getLogoJpgUrl();
                 }
                 break;
             case PNG_LOGO:
                 if (StringUtils.isNotBlank(malGetAsset.getLogoPngUrl())) {
-                    fileNameOnDisc = Constants.LOGO_PNG_FILE_PREFIX + instant +
+                    fileNameOnDisc = Constants.LOGO_PNG_FILE_PREFIX + instant + Constants.SPLITTER +
                             getFileNameWithExtension(malGetAsset.getLogoPngUrl(), malGetAsset, ".png");
                     url = malGetAsset.getLogoPngUrl();
                 }
