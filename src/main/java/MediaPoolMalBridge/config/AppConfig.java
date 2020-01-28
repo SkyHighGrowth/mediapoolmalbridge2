@@ -90,6 +90,8 @@ public class AppConfig {
         return System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR + File.separator;
     }
 
+    public boolean isUseSftp() { return appConfigData.isUseSftp(); }
+
     public String getSftpUsername() {
         return appConfigData.getSftpUsername();
     }

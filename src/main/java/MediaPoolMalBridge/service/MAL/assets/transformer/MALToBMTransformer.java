@@ -29,11 +29,12 @@ public class MALToBMTransformer {
 
         final UploadMetadataArgument uploadMetadataArgument = new UploadMetadataArgument();
 
-        uploadMetadataArgument.setAddAssociations( false );
+        uploadMetadataArgument.setAddAssociations( true );
         uploadMetadataArgument.setVirtualDbName( "Standard" );
         uploadMetadataArgument.setShow( "SHOW_ALWAYS" );
         uploadMetadataArgument.setCreatorName( "Soap Api" );
         uploadMetadataArgument.setDesignationType( "3" );
+        uploadMetadataArgument.setFileName( malGetAsset.getFilename() );
 
         if( StringUtils.isBlank( malGetAsset.getPropertyId() ) ) {
             uploadMetadataArgument.setSelectedAffiliate(malGetAsset.getPropertyId());
@@ -123,7 +124,7 @@ public class MALToBMTransformer {
         }
 
         languageItem = new LanguageItem();
-        languageItem.setDescription(malGetAsset.getName());
+        languageItem.setDescription( malGetAsset.getName() );
         languageItem.setLangCode("EN");
         uploadMetadataArgument.getFreeField4().add(languageItem);
 

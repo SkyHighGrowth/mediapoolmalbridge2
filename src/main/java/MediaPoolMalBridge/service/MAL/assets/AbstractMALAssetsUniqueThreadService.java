@@ -15,6 +15,7 @@ import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.entity.enums.asset.MALAssetOperation;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.repository.BM.BMAssetIdRepository;
+import MediaPoolMalBridge.persistence.repository.Bridge.AssetJsonedValuesRepository;
 import MediaPoolMalBridge.persistence.transformer.MAL.MALAssetModelsToMALAssetEntityTransformer;
 import MediaPoolMalBridge.service.MAL.AbstractMALUniqueThreadService;
 import MediaPoolMalBridge.service.MAL.assets.transformer.MALToBMTransformer;
@@ -36,6 +37,9 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
 
     @Autowired
     private MALAssetModelsToMALAssetEntityTransformer assetModelsToMALAssetEntityTransformer;
+
+    @Autowired
+    private AssetJsonedValuesRepository assetJsonedValuesRepository;
 
     @Autowired
     private MALToBMTransformer malToBMTransformer;
@@ -106,6 +110,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                         final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.FILE);
                         if( assetEntity != null ) {
                             bmAssetIdRepository.save( assetEntity.getBmAssetIdEntity());
+                            assetJsonedValuesRepository.save( assetEntity.getAssetJsonedValuesEntity() );
                             assetRepository.save( assetEntity );
                         }
                     }
@@ -114,6 +119,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                         final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.JPG_LOGO);
                         if( assetEntity != null ) {
                             bmAssetIdRepository.save( assetEntity.getBmAssetIdEntity());
+                            assetJsonedValuesRepository.save( assetEntity.getAssetJsonedValuesEntity() );
                             assetRepository.save( assetEntity );
                         }
                     }
@@ -122,6 +128,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                         final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.PNG_LOGO);
                         if( assetEntity != null ) {
                             bmAssetIdRepository.save( assetEntity.getBmAssetIdEntity());
+                            assetJsonedValuesRepository.save( assetEntity.getAssetJsonedValuesEntity() );
                             assetRepository.save( assetEntity );
                         }
                     }
@@ -160,7 +167,11 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
         }
         assetEntity.setMalMd5Hash( malMd5Hash );
         final AssetJsonedValuesEntity assetJsonedValuesEntity = assetEntity.getAssetJsonedValuesEntity();
-        assetJsonedValuesEntity.setBmUploadMetadataArgumentJson( GSON.toJson( malToBMTransformer.transformToUploadMetadataArgument( malGetAsset ) ) );
+        try {
+            assetJsonedValuesEntity.setBmUploadMetadataArgumentJson(objectMapper.writeValueAsString(malToBMTransformer.transformToUploadMetadataArgument(malGetAsset)));
+        } catch( final Exception e ) {
+
+        }
 
         if( StringUtils.isBlank( assetEntity.getUrl() ) )
         {

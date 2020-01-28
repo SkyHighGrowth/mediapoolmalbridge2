@@ -28,8 +28,9 @@ public class BridgeUploadExcelFilesSchedulerService extends AbstractSchedulerSer
         taskSchedulerWrapper.getTaskScheduler().schedule( this::run, new CronTrigger( appConfig.getBridgeUploadExcelFilesCronExpression() ) );
     }
 
-    public void scheduled( )
-    {
-        bridgeUploadExcelFilesUniqueThreadService.start();
+    public void scheduled( ) {
+        if ( appConfig.isUseSftp() ) {
+            bridgeUploadExcelFilesUniqueThreadService.start();
+        }
     }
 }

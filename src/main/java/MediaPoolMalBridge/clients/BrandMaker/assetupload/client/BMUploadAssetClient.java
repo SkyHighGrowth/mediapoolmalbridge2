@@ -2,8 +2,10 @@ package MediaPoolMalBridge.clients.BrandMaker.assetupload.client;
 
 import MediaPoolMalBridge.clients.BrandMaker.BrandMakerSoapClient;
 import MediaPoolMalBridge.clients.BrandMaker.assetuploadversion.client.model.UploadStatus;
+import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import com.brandmaker.webservices.mediapool.UploadMediaResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.activation.DataHandler;
@@ -22,7 +24,7 @@ public class BMUploadAssetClient extends BrandMakerSoapClient {
             fileExists( absoluteFilePath );
             final FileDataSource fileDataSource = new FileDataSource(absoluteFilePath);
             final DataHandler dataHandler = new DataHandler(fileDataSource);
-            final UploadMediaResult result = getMediaPoolPort().uploadMediaAsStream(asset.getFileNameOnDisc(), dataHandler);
+            final UploadMediaResult result = getMediaPoolPort().uploadMediaAsStream(StringUtils.substringAfter( asset.getFileNameOnDisc(), Constants.SPLITTER ), dataHandler);
             return new UploadStatus(result, asset.getBmAssetId());
         } catch (final Exception e) {
             reportErrorOnException(asset.getBmAssetId(), e);
