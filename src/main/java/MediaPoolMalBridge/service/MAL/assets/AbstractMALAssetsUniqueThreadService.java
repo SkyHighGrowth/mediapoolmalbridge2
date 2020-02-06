@@ -113,7 +113,6 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                         final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.FILE);
                         if( assetEntity != null ) {
                             bmAssetIdRepository.save( assetEntity.getBmAssetIdEntity());
-                            assetJsonedValuesRepository.save( assetEntity.getAssetJsonedValuesEntity() );
                             assetRepository.save( assetEntity );
                         }
                     }
@@ -122,7 +121,6 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                         final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.JPG_LOGO);
                         if( assetEntity != null ) {
                             bmAssetIdRepository.save( assetEntity.getBmAssetIdEntity());
-                            assetJsonedValuesRepository.save( assetEntity.getAssetJsonedValuesEntity() );
                             assetRepository.save( assetEntity );
                         }
                     }
@@ -131,7 +129,6 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                         final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.PNG_LOGO);
                         if( assetEntity != null ) {
                             bmAssetIdRepository.save( assetEntity.getBmAssetIdEntity());
-                            assetJsonedValuesRepository.save( assetEntity.getAssetJsonedValuesEntity() );
                             assetRepository.save( assetEntity );
                         }
                     }
