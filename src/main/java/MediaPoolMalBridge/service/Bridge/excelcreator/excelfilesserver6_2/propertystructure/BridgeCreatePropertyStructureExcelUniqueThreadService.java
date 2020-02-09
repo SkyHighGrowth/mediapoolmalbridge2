@@ -1,4 +1,4 @@
-package MediaPoolMalBridge.service.Bridge.excelcreator.propertystructure;
+package MediaPoolMalBridge.service.Bridge.excelcreator.excelfilesserver6_2.propertystructure;
 
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
 import MediaPoolMalBridge.model.MAL.propertyvariants.MALPropertyVariant;

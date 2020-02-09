@@ -1,8 +1,8 @@
 package MediaPoolMalBridge.service.Bridge.excelcreator;
 
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import MediaPoolMalBridge.service.Bridge.excelcreator.affiliation.BridgeCreateAffiliateExcelUniqueThreadService;
-import MediaPoolMalBridge.service.Bridge.excelcreator.propertystructure.BridgeCreatePropertyStructureExcelUniqueThreadService;
+import MediaPoolMalBridge.service.Bridge.excelcreator.excelfilesserver6_2.affiliation.BridgeCreateAffiliateExcelUniqueThreadService;
+import MediaPoolMalBridge.service.Bridge.excelcreator.excelfilesserver6_2.propertystructure.BridgeCreatePropertyStructureExcelUniqueThreadService;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;

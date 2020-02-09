@@ -1,4 +1,4 @@
-package MediaPoolMalBridge.service.Bridge.excelcreator.affiliation;
+package MediaPoolMalBridge.service.Bridge.excelcreator.excelfilesserver6_2.affiliation;
 
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
