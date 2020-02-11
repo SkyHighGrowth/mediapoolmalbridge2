@@ -32,9 +32,22 @@ public class ThreadPoolsStatuses {
 
     private int bmLockCount;
 
+    private int bmPriorityMaximalPoolSize;
+
+    private int bmPriorityPoolSize;
+
+    private int bmPriorityQueueSize;
+
+    private int bmPriorityMaximalQueueSize;
+
+    private int bmPriorityActiveCount;
+
+    private int bmPriorityLockCount;
+
     public ThreadPoolsStatuses(final int schdulerPoolSize, final int schedulerQueueSize, final int schedulerActiveCount,
                                final int malMaximalPoolSize, final int malPoolSize, final int malQueueSize, final int malMaximalQueueSize, final int malActiveCount, final int malLockCount,
-                               final int bmMaximalPoolSize, final int bmPoolSize, final int bmQueueSize, final int bmMaximalQueueSize, final int bmActiveCount, final int bmLockCount) {
+                               final int bmMaximalPoolSize, final int bmPoolSize, final int bmQueueSize, final int bmMaximalQueueSize, final int bmActiveCount, final int bmLockCount,
+                               final int bmPriorityMaximalPoolSize, final int bmPriorityPoolSize, final int bmPriorityQueueSize, final int bmPriorityMaximalQueueSize, final int bmPriorityActiveCount, final int bmPriorityLockCount) {
         this.schdulerPoolSize = schdulerPoolSize;
         this.schedulerQueueSize = schedulerQueueSize;
         this.schedulerActiveCount = schedulerActiveCount;
@@ -50,6 +63,12 @@ public class ThreadPoolsStatuses {
         this.bmMaximalQueueSize = bmMaximalQueueSize;
         this.bmActiveCount = bmActiveCount;
         this.bmLockCount = bmLockCount;
+        this.bmPriorityMaximalPoolSize = bmPriorityMaximalPoolSize;
+        this.bmPriorityPoolSize = bmPriorityPoolSize;
+        this.bmPriorityQueueSize = bmPriorityQueueSize;
+        this.bmPriorityMaximalQueueSize = bmPriorityMaximalQueueSize;
+        this.bmPriorityActiveCount = bmPriorityActiveCount;
+        this.bmPriorityLockCount = bmPriorityLockCount;
     }
 
     public int getSchdulerPoolSize() {
@@ -170,5 +189,53 @@ public class ThreadPoolsStatuses {
 
     public void setBmMaximalPoolSize(int bmMaximalPoolSize) {
         this.bmMaximalPoolSize = bmMaximalPoolSize;
+    }
+
+    public int getBmPriorityMaximalPoolSize() {
+        return bmPriorityMaximalPoolSize;
+    }
+
+    public void setBmPriorityMaximalPoolSize(int bmPriorityMaximalPoolSize) {
+        this.bmPriorityMaximalPoolSize = bmPriorityMaximalPoolSize;
+    }
+
+    public int getBmPriorityPoolSize() {
+        return bmPriorityPoolSize;
+    }
+
+    public void setBmPriorityPoolSize(int bmPriorityPoolSize) {
+        this.bmPriorityPoolSize = bmPriorityPoolSize;
+    }
+
+    public int getBmPriorityQueueSize() {
+        return bmPriorityQueueSize;
+    }
+
+    public void setBmPriorityQueueSize(int bmPriorityQueueSize) {
+        this.bmPriorityQueueSize = bmPriorityQueueSize;
+    }
+
+    public int getBmPriorityMaximalQueueSize() {
+        return bmPriorityMaximalQueueSize;
+    }
+
+    public void setBmPriorityMaximalQueueSize(int bmPriorityMaximalQueueSize) {
+        this.bmPriorityMaximalQueueSize = bmPriorityMaximalQueueSize;
+    }
+
+    public int getBmPriorityActiveCount() {
+        return bmPriorityActiveCount;
+    }
+
+    public void setBmPriorityActiveCount(int bmPriorityActiveCount) {
+        this.bmPriorityActiveCount = bmPriorityActiveCount;
+    }
+
+    public int getBmPriorityLockCount() {
+        return bmPriorityLockCount;
+    }
+
+    public void setBmPriorityLockCount(int bmPriorityLockCount) {
+        this.bmPriorityLockCount = bmPriorityLockCount;
     }
 }

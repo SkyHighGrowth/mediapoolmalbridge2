@@ -8,6 +8,7 @@ import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.service.AbstractNonUniqueThreadService;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import MediaPoolMalBridge.tasks.TaskPriorityExecutorWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 public abstract class AbstractBMNonUniqueThreadService<RUN_ARGUMENT> extends AbstractNonUniqueThreadService<RUN_ARGUMENT> {
 
     @Autowired
-    @Qualifier( "BMTaskExecutorWrapper" )
-    protected TaskExecutorWrapper taskExecutorWrapper;
+    @Qualifier( "BMTaskPriorityExecutorWrapper" )
+    protected TaskPriorityExecutorWrapper taskExecutorWrapper;
 
     @Override
     protected TaskExecutorWrapper getTaskExecutorWrapper() {

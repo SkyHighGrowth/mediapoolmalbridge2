@@ -13,6 +13,7 @@ import MediaPoolMalBridge.persistence.repository.Bridge.ReportsRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.schedule.JobRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.schedule.ServiceRepository;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import MediaPoolMalBridge.tasks.TaskPriorityExecutorWrapper;
 import MediaPoolMalBridge.tasks.TaskSchedulerWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -43,10 +44,9 @@ public class AppStatusController {
     private final MALKits malKits;
     private final BMThemes bmThemes;
     private final MALAssetStructures assetStructures;
-    @Qualifier( "MALThreadExcutorWrapper" )
     private TaskExecutorWrapper malTaskExecutorWrapper;
-    @Qualifier( "BMThreadExcutorWrapper" )
     private TaskExecutorWrapper bmTaskExecutorWrapper;
+    private TaskPriorityExecutorWrapper bmTaskPriorityExecutorWrapper;
     private TaskSchedulerWrapper taskSchedulerWrapper;
     private final JobRepository jobRepository;
     private final ServiceRepository serviceRepository;
@@ -61,6 +61,8 @@ public class AppStatusController {
                                final TaskExecutorWrapper malTaskExecutorWrapper,
                                @Qualifier( "BMTaskExecutorWrapper" )
                                final TaskExecutorWrapper bmTaskExecutorWrapper,
+                               @Qualifier( "BMTaskPriorityExecutorWrapper" )
+                               final TaskPriorityExecutorWrapper bmTaskPriorityExecutorWrapper,
                                final TaskSchedulerWrapper taskSchedulerWrapper,
                                final JobRepository jobRepository,
                                final ServiceRepository serviceRepository,
@@ -73,6 +75,7 @@ public class AppStatusController {
         this.malTaskExecutorWrapper = malTaskExecutorWrapper;
         this.bmTaskExecutorWrapper = bmTaskExecutorWrapper;
         this.taskSchedulerWrapper = taskSchedulerWrapper;
+        this.bmTaskPriorityExecutorWrapper = bmTaskPriorityExecutorWrapper;
         this.jobRepository = jobRepository;
         this.serviceRepository = serviceRepository;
         this.reportsRepository = reportsRepository;
@@ -191,7 +194,13 @@ public class AppStatusController {
                 bmTaskExecutorWrapper.getQueueSize(),
                 bmTaskExecutorWrapper.getMaximalQueueSize(),
                 bmTaskExecutorWrapper.getTaskExecutor().getActiveCount(),
-                bmTaskExecutorWrapper.getLockCount() );
+                bmTaskExecutorWrapper.getLockCount(),
+                bmTaskPriorityExecutorWrapper.getTaskExecutor().getMaxPoolSize(),
+                bmTaskPriorityExecutorWrapper.getTaskExecutor().getPoolSize(),
+                bmTaskPriorityExecutorWrapper.getQueueSize(),
+                bmTaskPriorityExecutorWrapper.getMaximalQueueSize(),
+                bmTaskPriorityExecutorWrapper.getTaskExecutor().getActiveCount(),
+                bmTaskPriorityExecutorWrapper.getLockCount() );
     }
 
     /**
