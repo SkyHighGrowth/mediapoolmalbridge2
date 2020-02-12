@@ -6,6 +6,7 @@ import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.service.AbstractUniqueThreadService;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import MediaPoolMalBridge.tasks.TaskPriorityExecutorWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -15,8 +16,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public abstract class AbstractBMUniqueThreadService extends AbstractUniqueThreadService {
 
     @Autowired
-    @Qualifier( "BMTaskExecutorWrapper" )
-    protected TaskExecutorWrapper taskExecutorWrapper;
+    @Qualifier( "BMTaskPriorityExecutorWrapper" )
+    protected TaskPriorityExecutorWrapper taskExecutorWrapper;
 
     @Override
     protected TaskExecutorWrapper getTaskExecutorWrapper() {

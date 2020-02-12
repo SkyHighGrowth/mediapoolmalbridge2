@@ -1,5 +1,6 @@
 package MediaPoolMalBridge.service;
 
+import MediaPoolMalBridge.config.MalPriorities;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.schedule.ServiceEntity;
@@ -10,6 +11,7 @@ import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus
 import MediaPoolMalBridge.persistence.entity.enums.schedule.ServiceState;
 import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import MediaPoolMalBridge.tasks.threadpoolexecutor.model.ComparableRunnableWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 
@@ -25,6 +27,9 @@ public abstract class AbstractUniqueThreadService extends AbstractService {
 
     @Autowired
     protected AssetRepository assetRepository;
+
+    @Autowired
+    protected MalPriorities malPriorities;
 
     protected AbstractNonUniqueThreadService<AssetEntity> assetService;
 
@@ -89,7 +94,8 @@ public abstract class AbstractUniqueThreadService extends AbstractService {
                             if (taskExecutorWrapper.canAcceptNewTask()) {
                                 assetEntity.setTransferringAssetStatus(intermediateStatus);
                                 assetRepository.save(assetEntity);
-                                getTaskExecutorWrapper().getTaskExecutor().execute(() -> assetService.start(assetEntity));
+                                getTaskExecutorWrapper().getTaskExecutor()
+                                        .execute( new ComparableRunnableWrapper( () -> assetService.start( assetEntity ), malPriorities.getMalPriority( assetEntity.getMarshaCode() ), assetEntity.getMalAssetId() ) );
                             }
                         }
                     });

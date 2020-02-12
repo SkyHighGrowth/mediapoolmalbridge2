@@ -1,7 +1,9 @@
 package MediaPoolMalBridge.config;
 
 import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
+import MediaPoolMalBridge.tasks.TaskPriorityExecutorWrapper;
 import MediaPoolMalBridge.tasks.TaskSchedulerWrapper;
+import MediaPoolMalBridge.tasks.threadpoolexecutor.ThreadPoolPriorityTaskExecutor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -45,6 +47,20 @@ public class TaskConfig {
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
         final TaskExecutorWrapper taskExecutorWrapper = new TaskExecutorWrapper(threadPoolTaskExecutor);
+        taskExecutorWrapper.setMaximalQueueSize( appConfig.getBmThreadexecutorQueueLengthMax() );
+        return taskExecutorWrapper;
+    }
+
+    @Bean( "BMTaskPriorityExecutorWrapper" )
+    public TaskPriorityExecutorWrapper bmTaskPriorityExecutorWrapper() {
+        final ThreadPoolPriorityTaskExecutor threadPoolTaskExecutor = new ThreadPoolPriorityTaskExecutor();
+        threadPoolTaskExecutor.setThreadNamePrefix("bm-task-priority-executor-");
+        threadPoolTaskExecutor.setCorePoolSize(appConfig.getBmThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setMaxPoolSize(appConfig.getBmThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setQueueCapacity(appConfig.getBmThreadexecutorQueueSize());
+        threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
+        final TaskPriorityExecutorWrapper taskExecutorWrapper = new TaskPriorityExecutorWrapper(threadPoolTaskExecutor);
         taskExecutorWrapper.setMaximalQueueSize( appConfig.getBmThreadexecutorQueueLengthMax() );
         return taskExecutorWrapper;
     }
