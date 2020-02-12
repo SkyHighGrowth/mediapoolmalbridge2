@@ -18,7 +18,7 @@ public class BridgeDatabaseUnlockerUniqueThreadService extends AbstractBridgeUni
 
         for( int page = 0; true; ++page ) {
             final List<AssetEntity> assetEntities = assetRepository.findAllByUpdatedIsAfter(
-                    getMidnightBridgeLookInThePast(), PageRequest.of(page, appConfig.getDatabasePageSize(), Sort.by( Sort.Direction.ASC, "updated" ) ) );
+                    getMidnightBridgeLookInThePast(), PageRequest.of(page, appConfig.getDatabasePageSize(), Sort.by( Sort.Direction.DESC, "updated" ) ) );
             if( assetEntities.isEmpty() || page > 50000 ) {
                 break;
             }

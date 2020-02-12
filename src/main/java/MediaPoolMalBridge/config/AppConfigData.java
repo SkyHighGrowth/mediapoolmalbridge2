@@ -3,6 +3,9 @@ package MediaPoolMalBridge.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Application configuration data which is collected from
  */
@@ -352,6 +355,9 @@ public class AppConfigData {
     @Value( "${datasource.hikari.maximum-pool-size:10000}" )
     private int hikariMaximumPoolSize;
 
+    @Value( "#{${mal.priorities}}" )
+    private Map<Integer, List<String>> malPriorities;
+
     public boolean isUseSftp() {
         return useSftp;
     }
@@ -614,5 +620,9 @@ public class AppConfigData {
 
     public int getHikariMaximumPoolSize() {
         return hikariMaximumPoolSize;
+    }
+
+    public Map<Integer, List<String>> getMalPriorities() {
+        return malPriorities;
     }
 }

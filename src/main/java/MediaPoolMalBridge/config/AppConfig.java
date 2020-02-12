@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Application configuration
@@ -355,5 +357,9 @@ public class AppConfig {
 
     public int getMalPageSize() {
         return appConfigData.getMalPageSize();
+    }
+
+    public Map<Integer, List<String>> getMalPriorities() {
+        return appConfigData.getMalPriorities();
     }
 }
