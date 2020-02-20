@@ -4,6 +4,7 @@ import MediaPoolMalBridge.clients.BrandMaker.model.BMTheme;
 import MediaPoolMalBridge.model.BrandMaker.theme.BMThemes;
 import MediaPoolMalBridge.model.MAL.kits.MALKits;
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMUniqueThreadService;
+import MediaPoolMalBridge.tasks.threadpoolexecutor.model.ComparableRunnableWrapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,7 +38,7 @@ public class BMFireUploadThemeUniqueThreadService extends AbstractBMUniqueThread
                 bmTheme.setThemePath(malKit);
 
                     if ( taskExecutorWrapper.canAcceptNewTask() ) {
-                        taskExecutorWrapper.getTaskExecutor().execute(() -> bmUploadThemeService.start(bmTheme));
+                        taskExecutorWrapper.getTaskExecutor().execute( new ComparableRunnableWrapper( () -> bmUploadThemeService.start(bmTheme), 1, "kits to theme" ) );
                     }
 
             });

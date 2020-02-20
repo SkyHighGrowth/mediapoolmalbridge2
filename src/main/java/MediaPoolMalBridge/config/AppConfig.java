@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import java.util.Map;
  * Application configuration
  */
 @Component
+@DependsOn( "AppConfigData" )
 public class AppConfig {
 
     private static Logger logger = LoggerFactory.getLogger(AppConfig.class);
@@ -33,14 +35,8 @@ public class AppConfig {
             throw new RuntimeException( "Can not start with profiles dev and production set at the same time" );
         }
         this.appConfigData = appConfigData;
-        File file = new File(System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR);
-        if (!file.exists()) {
-            if (!file.mkdir()) {
-                logger.info("Dir {} can not be created", file.getAbsolutePath());
-                throw new RuntimeException();
-            }
-        }
-        file = new File(System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR );
+
+        File file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR);
         if (!file.exists()) {
             if (!file.mkdir()) {
                 logger.info("Dir {} can not be created", file.getAbsolutePath());
@@ -48,7 +44,7 @@ public class AppConfig {
             }
         }
 
-        file = new File(System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + "logs" );
+        file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR );
         if (!file.exists()) {
             if (!file.mkdir()) {
                 logger.info("Dir {} can not be created", file.getAbsolutePath());
@@ -56,7 +52,7 @@ public class AppConfig {
             }
         }
 
-        file = new File(System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.ASSET_DOWNLOAD_DIR );
+        file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + "logs" );
         if (!file.exists()) {
             if (!file.mkdir()) {
                 logger.info("Dir {} can not be created", file.getAbsolutePath());
@@ -64,8 +60,17 @@ public class AppConfig {
             }
         }
 
-        final String filePath = System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
+        file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.ASSET_DOWNLOAD_DIR );
+        if (!file.exists()) {
+            if (!file.mkdir()) {
+                logger.info("Dir {} can not be created", file.getAbsolutePath());
+                throw new RuntimeException();
+            }
+        }
+
+        final String filePath = getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
         file = new File( filePath );
+        logger.info( "FILE PATH {}", file.getAbsolutePath() );
         if( file.exists() ) {
             try {
                 this.appConfigData = objectMapper.readValue( file, AppConfigData.class);
@@ -76,8 +81,7 @@ public class AppConfig {
             }
         } else {
             try {
-                objectMapper.writerWithDefaultPrettyPrinter()
-                        .writeValue(file, appConfigData);
+                objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, appConfigData);
             } catch (final Exception e) {
                 logger.error("Can not write to file {}", file.getAbsolutePath(), e);
             }
@@ -85,11 +89,11 @@ public class AppConfig {
     }
 
     public String getTempDir() {
-        return System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.ASSET_DOWNLOAD_DIR + File.separator;
+        return getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.ASSET_DOWNLOAD_DIR + File.separator;
     }
 
     public String getExcelDir() {
-        return System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR + File.separator;
+        return getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR + File.separator;
     }
 
     public boolean isUseSftp() { return appConfigData.isUseSftp(); }
@@ -361,5 +365,9 @@ public class AppConfig {
 
     public Map<Integer, List<String>> getMalPriorities() {
         return appConfigData.getMalPriorities();
+    }
+
+    public String getWorkingDirectory() {
+        return appConfigData.getWorkingDirectory();
     }
 }

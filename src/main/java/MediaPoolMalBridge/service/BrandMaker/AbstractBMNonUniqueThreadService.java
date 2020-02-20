@@ -34,7 +34,7 @@ public abstract class AbstractBMNonUniqueThreadService<RUN_ARGUMENT> extends Abs
         assetEntity.increaseMalStatesRepetitions();
         if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
             final String message = String.format( "Max retries for %s for asset id [%s], with messages [%s] and warnings [%s]", serviceDescription, assetEntity.getBmAssetId(), abstractBMResponse.getErrorAsString(), abstractBMResponse.getWarningsAsString() );
-            logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
+            //logger.error( "message {}, asset {}", message, GSON.toJson( assetEntity ) );
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), assetEntity.getMalAssetId(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
             reportsRepository.save( reportsEntity );
             assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ERROR );
