@@ -41,6 +41,8 @@ public abstract class AbstractUniqueThreadService extends AbstractService {
 
     protected abstract int getTaskExecutorQueueSize();
 
+    protected abstract int getTaskExecutorMaxQueueSize();
+
     public void start( )
     {
         final TaskExecutorWrapper taskExecutorWrapper = getTaskExecutorWrapper();
@@ -68,6 +70,16 @@ public abstract class AbstractUniqueThreadService extends AbstractService {
         serviceRepository.save( new ServiceEntity( ServiceState.SERVICE_FINISHED, getClass().getCanonicalName(), Thread.currentThread().getName(), taskExecutorWrapper.getTaskExecutor().getActiveCount(), taskExecutorWrapper.getQueueSize() ) );
     }
 
+    protected List<AssetEntity> getAssetEntitiesWithBrand( final TransferringAssetStatus fromStatus, final String brandId ) {
+        if( "null".equals(brandId) ) {
+            return assetRepository.findAllByTransferringAssetStatusAndBrandIdAndUpdatedIsAfter(
+                    fromStatus, null, getMidnightBridgeLookInThePast(), PageRequest.of(0, appConfig.getDatabasePageSize()));
+        } else {
+            return assetRepository.findAllByTransferringAssetStatusAndBrandIdAndUpdatedIsAfter(
+                    fromStatus, brandId, getMidnightBridgeLookInThePast(), PageRequest.of(0, appConfig.getDatabasePageSize()));
+        }
+    }
+
     protected List<AssetEntity> getAssetEntities( final TransferringAssetStatus fromStatus ) {
         return assetRepository.findAllByTransferringAssetStatusAndUpdatedIsAfter(
                 fromStatus, getMidnightBridgeLookInThePast(), PageRequest.of(0, appConfig.getDatabasePageSize()));
@@ -81,28 +93,35 @@ public abstract class AbstractUniqueThreadService extends AbstractService {
         try {
             final TaskExecutorWrapper taskExecutorWrapper = getTaskExecutorWrapper();
             boolean condition = true;
-            for (int page = 0; condition; ++page) {
-                final List<AssetEntity> assetEntities = getAssetEntities(fromStatus);
+            final List<Integer> orderedPriorities = malPriorities.getOrderedPriorities();
+            for( final Integer priority : orderedPriorities ) {
+                logger.error( "executing for priority {}", priority );
+                for( final String  brandId : malPriorities.getBrandIdsForPriority(priority) ) {
+                    logger.error( "executing for brandId {}", brandId );
+                    for (int page = 0; condition; ++page) {
+                        final List<AssetEntity> assetEntities = getAssetEntitiesWithBrand(fromStatus, brandId);
 
-                if (assetEntities.isEmpty() || page > getTaskExecutorQueueSize() / appConfig.getDatabasePageSize()) {
-                    break;
-                }
-                taskExecutorWrapper.lock();
-                try {
-                    assetEntities.forEach(assetEntity -> {
-                        if (predicate.test(assetEntity.getMalAssetOperation())) {
-                            if (taskExecutorWrapper.canAcceptNewTask()) {
-                                assetEntity.setTransferringAssetStatus(intermediateStatus);
-                                assetRepository.save(assetEntity);
-                                getTaskExecutorWrapper().getTaskExecutor()
-                                        .execute( new ComparableRunnableWrapper( () -> assetService.start( assetEntity ), malPriorities.getMalPriority( assetEntity.getMarshaCode() ), assetEntity.getMalAssetId() ) );
-                            }
+                        if (assetEntities.isEmpty() || page > getTaskExecutorMaxQueueSize() / appConfig.getDatabasePageSize()) {
+                            break;
                         }
-                    });
-                } catch (final Exception e) {
-                    logger.error("Exception occurred during putting load on task executor in {}", getClass().getName(), e);
-                } finally {
-                    getTaskExecutorWrapper().unlock();
+                        taskExecutorWrapper.lock();
+                        try {
+                            assetEntities.forEach(assetEntity -> {
+                                if (predicate.test(assetEntity.getMalAssetOperation())) {
+                                    if (taskExecutorWrapper.canAcceptNewTask()) {
+                                        assetEntity.setTransferringAssetStatus(intermediateStatus);
+                                        assetRepository.save(assetEntity);
+                                        getTaskExecutorWrapper().getTaskExecutor()
+                                                .execute(new ComparableRunnableWrapper(() -> assetService.start(assetEntity), malPriorities.getMalPriority(assetEntity.getBrandId()), assetEntity.getMalAssetId()));
+                                    }
+                                }
+                            });
+                        } catch (final Exception e) {
+                            logger.error("Exception occurred during putting load on task executor in {}", getClass().getName(), e);
+                        } finally {
+                            getTaskExecutorWrapper().unlock();
+                        }
+                    }
                 }
             }
         } catch( final Exception e ) {

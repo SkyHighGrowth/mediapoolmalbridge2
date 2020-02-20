@@ -36,6 +36,7 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
 
     List<AssetEntity> findAllByTransferringAssetStatusAndUpdatedIsAfter( final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated, final Pageable page );
 
+    List<AssetEntity> findAllByTransferringAssetStatusAndBrandIdAndUpdatedIsAfter( final TransferringAssetStatus transferringAssetStatus, final String brandIds, final LocalDateTime updated, final Pageable page );
     /*
     @Query( "select ae " +
             "from AssetEntity ae " +

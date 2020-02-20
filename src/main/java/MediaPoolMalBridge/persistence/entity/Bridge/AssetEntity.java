@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Table( name = "asset",
         indexes = { @Index( columnList = "property_id, mal_asset_type, color_id, transferring_status, updated" ),
                     @Index( columnList = "property_id, mal_asset_type, updated" ),
-                    @Index( columnList = "transferring_status, updated" ),
+                    @Index( columnList = "transferring_status, brand_id, updated" ),
                     @Index( columnList = "mal_asset_id, mal_asset_type, transferring_status, updated" ),
                     @Index( columnList = "updated" ),
                     @Index( columnList = "mal_asset_id, mal_asset_type, updated" ),

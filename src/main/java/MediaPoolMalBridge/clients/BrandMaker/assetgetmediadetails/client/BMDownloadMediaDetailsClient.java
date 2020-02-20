@@ -21,7 +21,7 @@ public class BMDownloadMediaDetailsClient extends BrandMakerSoapClient {
             final GetMediaDetailsResult result = getMediaPoolPort().getMediaDetails(request);
             return new DownloadMediaDetailsResponse(result);
         } catch (final Exception e) {
-            logger.error("Error downloading asset {}", asset, e);
+            //logger.error("Error downloading asset {}", asset, e);
             reportErrorOnException( asset.getBmAssetId(), e );
             return new DownloadMediaDetailsResponse(false, e.getMessage());
         }

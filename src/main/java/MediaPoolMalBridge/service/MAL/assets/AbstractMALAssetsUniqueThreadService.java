@@ -6,6 +6,7 @@ import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAssetsRequest;
 import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAssetsResponse;
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
 import MediaPoolMalBridge.clients.rest.RestResponse;
+import MediaPoolMalBridge.config.MalPriorities;
 import MediaPoolMalBridge.persistence.entity.BM.BMAssetIdEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetJsonedValuesEntity;
@@ -46,6 +47,9 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
 
     @Autowired
     private BMAssetIdRepository bmAssetIdRepository;
+
+    @Autowired
+    private MalPriorities malPriorities;
 
     private String since;
 
@@ -106,6 +110,10 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
         			if (!StringUtils.equalsIgnoreCase(malGetAsset.getStatus(), "active")) {
         				return;
         			}
+        			if( StringUtils.isNotEmpty( malGetAsset.getBrandId() ) && !malPriorities.contains( malGetAsset.getBrandId() ) ) {
+        			    //logger.error( "DOES not contain {}", malGetAsset.getBrandId() );
+        			    return;
+                    }
                     if (StringUtils.isNotBlank(malGetAsset.getThumbnailUrl()) ||
                             StringUtils.isNotBlank(malGetAsset.getMediumUrl()) ||
                             StringUtils.isNotBlank(malGetAsset.getLargeUrl()) ||

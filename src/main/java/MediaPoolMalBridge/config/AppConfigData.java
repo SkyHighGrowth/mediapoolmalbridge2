@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Application configuration data which is collected from
  */
-@Component
+@Component( "AppConfigData" )
 public class AppConfigData {
 
     @Value( "${bridge.jscp.usesftp}" )
@@ -358,6 +358,9 @@ public class AppConfigData {
     @Value( "#{${mal.priorities}}" )
     private Map<Integer, List<String>> malPriorities;
 
+    @Value( "${working.directory}" )
+    private String workingDirectory;
+
     public boolean isUseSftp() {
         return useSftp;
     }
@@ -624,5 +627,9 @@ public class AppConfigData {
 
     public Map<Integer, List<String>> getMalPriorities() {
         return malPriorities;
+    }
+
+    public String getWorkingDirectory() {
+        return workingDirectory;
     }
 }

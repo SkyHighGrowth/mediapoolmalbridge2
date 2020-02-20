@@ -27,4 +27,9 @@ public abstract class AbstractMALUniqueThreadService extends AbstractUniqueThrea
     protected int getTaskExecutorQueueSize() {
         return taskExecutorWrapper.getQueueSize();
     }
+
+    @Override
+    protected int getTaskExecutorMaxQueueSize() {
+        return taskExecutorWrapper.getMaximalQueueSize();
+    }
 }

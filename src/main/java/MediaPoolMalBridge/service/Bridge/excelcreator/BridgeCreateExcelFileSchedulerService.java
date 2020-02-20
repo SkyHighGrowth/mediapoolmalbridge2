@@ -1,8 +1,7 @@
 package MediaPoolMalBridge.service.Bridge.excelcreator;
 
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import MediaPoolMalBridge.service.Bridge.excelcreator.affiliation.BridgeCreateAffiliateExcelUniqueThreadService;
-import MediaPoolMalBridge.service.Bridge.excelcreator.propertystructure.BridgeCreatePropertyStructureExcelUniqueThreadService;
+import MediaPoolMalBridge.service.Bridge.excelcreator.excelfilesserver6_5.BridgeCreateExcelFileUniqueThreadService;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
@@ -16,15 +15,11 @@ import javax.annotation.PostConstruct;
 @DependsOn( "BridgeDatabaseNormalizerService" )
 public class BridgeCreateExcelFileSchedulerService extends AbstractSchedulerService {
 
-    private BridgeCreateAffiliateExcelUniqueThreadService bridgeCreateAffiliateExcelUniqueThreadService;
+    private final BridgeCreateExcelFileUniqueThreadService bridgeCreateExcelFileUniqueThreadService;
 
-    private BridgeCreatePropertyStructureExcelUniqueThreadService bridgeCreatePropertyStructureExcelUniqueThreadService;
-
-    public BridgeCreateExcelFileSchedulerService(final BridgeCreateAffiliateExcelUniqueThreadService bridgeCreateAffiliateExcelUniqueThreadService,
-                                        final BridgeCreatePropertyStructureExcelUniqueThreadService bridgeCreatePropertyStructureExcelUniqueThreadService)
+    public BridgeCreateExcelFileSchedulerService(final BridgeCreateExcelFileUniqueThreadService bridgeCreateExcelFileUniqueThreadService)
     {
-        this.bridgeCreateAffiliateExcelUniqueThreadService = bridgeCreateAffiliateExcelUniqueThreadService;
-        this.bridgeCreatePropertyStructureExcelUniqueThreadService = bridgeCreatePropertyStructureExcelUniqueThreadService;
+        this.bridgeCreateExcelFileUniqueThreadService = bridgeCreateExcelFileUniqueThreadService;
     }
 
     @PostConstruct
@@ -36,7 +31,6 @@ public class BridgeCreateExcelFileSchedulerService extends AbstractSchedulerServ
     @Override
     public void scheduled()
     {
-        bridgeCreateAffiliateExcelUniqueThreadService.start();
-        bridgeCreatePropertyStructureExcelUniqueThreadService.start();
+        bridgeCreateExcelFileUniqueThreadService.start();
     }
 }

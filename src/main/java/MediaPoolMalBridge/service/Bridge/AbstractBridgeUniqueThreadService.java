@@ -20,4 +20,9 @@ public abstract class AbstractBridgeUniqueThreadService extends AbstractUniqueTh
     protected int getTaskExecutorQueueSize() {
         return taskExecutorWrapper.getQueueSize();
     }
+
+    @Override
+    protected int getTaskExecutorMaxQueueSize() {
+        return taskExecutorWrapper.getMaximalQueueSize();
+    }
 }

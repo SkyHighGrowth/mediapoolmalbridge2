@@ -29,6 +29,11 @@ public abstract class AbstractBMUniqueThreadService extends AbstractUniqueThread
         return taskExecutorWrapper.getQueueSize();
     }
 
+    @Override
+    protected int getTaskExecutorMaxQueueSize() {
+        return taskExecutorWrapper.getMaximalQueueSize();
+    }
+
     protected void reportErrorOnResponse(final String assetId, final AbstractBMResponse abstractBMResponse) {
         final String message = String.format("Can not perform operation [%s] for asset with id [%s], with error message [%s] and warnings [%s]", getClass().getName(), assetId, abstractBMResponse.getErrorAsString(), abstractBMResponse.getWarningsAsString());
         final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), assetId, message, ReportTo.BM, null, null, null );

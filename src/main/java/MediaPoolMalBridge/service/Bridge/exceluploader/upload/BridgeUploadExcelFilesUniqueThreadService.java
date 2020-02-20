@@ -7,6 +7,7 @@ import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.repository.Bridge.ReportsRepository;
 import MediaPoolMalBridge.service.Bridge.AbstractBridgeUniqueThreadService;
+import MediaPoolMalBridge.tasks.threadpoolexecutor.model.ComparableRunnableWrapper;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -44,7 +45,7 @@ public class BridgeUploadExcelFilesUniqueThreadService extends AbstractBridgeUni
             for (final File file : files) {
                 if (file.isFile()) {
                     if( taskExecutorWrapper.canAcceptNewTask() ) {
-                        taskExecutorWrapper.getTaskExecutor().execute( () -> bridgeJScpClient.uploadFile( file.getAbsolutePath() ) );
+                        taskExecutorWrapper.getTaskExecutor().execute( new ComparableRunnableWrapper( () -> bridgeJScpClient.uploadFile( file.getAbsolutePath() ), 1, "excel file upload" ) );
                     }
                 }
             }
