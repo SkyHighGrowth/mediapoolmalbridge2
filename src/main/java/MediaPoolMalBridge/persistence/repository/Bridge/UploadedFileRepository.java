@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface UploadedFileRepository extends CrudRepository<UploadedFileEntity, Long> {
 
-    List<UploadedFileEntity> findAllByDeletedAndFileStateOnDiscNot(
+    List<UploadedFileEntity> findByDeletedAndFileStateOnDisc(
             final boolean deleted, final FileStateOnDisc fileStateOnDisc, final Pageable page );
 }

@@ -196,6 +196,12 @@ public class AppConfigData {
     @Value( "${mal.look.in.the.past.days:14}" )
     private int malLookInThePastDays;
     /**
+     * maximal number of days downloaded file will live on disc after which it will be deleted
+     * regardless of the fact it has been uploaded or not
+     */
+    @Value( "${bridge.asset.maximallivingdaysofassetondisc:10}")
+    private int assetFileMaximalLivingDaysOnDisc;
+    /**
      * datetime used to look in the past in the database table expressed in days
      */
     @Value( "${bridge.look.in.the.past.days:2}")
@@ -503,6 +509,10 @@ public class AppConfigData {
 
     public int getMalLookInThePastDays() {
         return malLookInThePastDays;
+    }
+
+    public int getAssetFileMaximalLivingDaysOnDisc() {
+        return assetFileMaximalLivingDaysOnDisc;
     }
 
     public int getDatabasePageSize() {
