@@ -14,13 +14,14 @@ plugins {
 	id 'idea'
 	id 'org.springframework.boot' version '2.0.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.7.RELEASE'
-    //id 'war'
+    // build war
+    id 'war'
     //id "uk.co.boothen.gradle.wsimport" version "0.10"
 }
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
-version = '0.2.0'
+version = '0.2.19'
 
 jar {
     manifest {
@@ -43,15 +44,21 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.2.1.RELEASE'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    // build war
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    // build war
+    providedRuntime 'javax.servlet:javax.servlet-api'
     implementation 'org.springframework.boot:spring-boot-starter-mail:2.1.1.RELEASE'
 
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
     compile group: 'org.hibernate', name: 'hibernate-gradle-plugin', version: '5.4.9.Final'
-    //compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.2.1.RELEASE'
 
     compile 'org.apache.httpcomponents:httpclient:4.5.3'
     compile 'org.apache.commons:commons-lang3:3.9'
+
+    compile 'org.apache.poi:poi:3.17'
+    compile 'org.apache.poi:poi-ooxml:3.17'
 
 
     compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
@@ -166,6 +173,7 @@ task javadocs( type: Javadoc ) {
     exclude "${projectDir}/generated-sources/"
 }
 
-/*war {
+// build war
+war {
     enabled=true
-}*/
+}

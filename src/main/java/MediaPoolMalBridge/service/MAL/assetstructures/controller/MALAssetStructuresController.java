@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller that triggers download of asset structures from MAL server
  */
 @RestController
-@Profile( "dev" )
+@Profile( "enable controllers" )
 public class MALAssetStructuresController {
 
     private MALGetAssetStructureSchedulerService malGetAssetStructureSchedulerService;

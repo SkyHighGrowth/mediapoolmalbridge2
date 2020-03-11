@@ -36,7 +36,10 @@ public class MALToBMTransformer {
         uploadMetadataArgument.setDesignationType( "3" );
         uploadMetadataArgument.setFileName( malGetAsset.getFilename() );
 
-        if( StringUtils.isBlank( malGetAsset.getPropertyId() ) ) {
+        if( StringUtils.isNotBlank(malGetAsset.getMarshaCode())) {
+            uploadMetadataArgument.setSelectedAffiliate(malGetAsset.getMarshaCode());
+        }
+        else if( StringUtils.isNotBlank( malGetAsset.getPropertyId() ) ) {
             uploadMetadataArgument.setSelectedAffiliate(malGetAsset.getPropertyId());
         }
 

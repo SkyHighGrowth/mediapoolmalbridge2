@@ -1,9 +1,12 @@
 package MediaPoolMalBridge.controller;
 
+import MediaPoolMalBridge.config.AppConfig;
+import MediaPoolMalBridge.config.MalPriorities;
 import MediaPoolMalBridge.controller.model.ThreadPoolsStatuses;
 import MediaPoolMalBridge.model.BrandMaker.theme.BMThemes;
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
 import MediaPoolMalBridge.model.MAL.kits.MALKits;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.schedule.JobEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.schedule.ServiceEntity;
@@ -16,6 +19,7 @@ import MediaPoolMalBridge.tasks.TaskExecutorWrapper;
 import MediaPoolMalBridge.tasks.TaskPriorityExecutorWrapper;
 import MediaPoolMalBridge.tasks.TaskSchedulerWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,18 +33,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.security.MessageDigest;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Cotroller which exposes application status, available only in dev profile
  */
 @RestController
-@Profile("dev")
+@Profile({"enable controllers"})
 public class AppStatusController {
 
     private static Logger logger = LoggerFactory.getLogger(AppStatusController.class);
 
+    private final AppConfig appConfig;
     private final MALKits malKits;
     private final BMThemes bmThemes;
     private final MALAssetStructures assetStructures;
@@ -53,22 +62,26 @@ public class AppStatusController {
     private final ReportsRepository reportsRepository;
     private final AssetRepository assetRepository;
     private final ObjectMapper objectMapper;
+    private final MalPriorities malPriorities;
 
-    public AppStatusController(final MALKits malKits,
-                               final BMThemes bmThemes,
-                               final MALAssetStructures assetStructures,
-                               @Qualifier( "MALTaskExecutorWrapper" )
-                               final TaskExecutorWrapper malTaskExecutorWrapper,
-                               @Qualifier( "BMTaskExecutorWrapper" )
-                               final TaskExecutorWrapper bmTaskExecutorWrapper,
-                               @Qualifier( "BMTaskPriorityExecutorWrapper" )
-                               final TaskPriorityExecutorWrapper bmTaskPriorityExecutorWrapper,
-                               final TaskSchedulerWrapper taskSchedulerWrapper,
-                               final JobRepository jobRepository,
-                               final ServiceRepository serviceRepository,
-                               final ReportsRepository reportsRepository,
-                               final AssetRepository assetRepository,
-                               final ObjectMapper objectMapper) {
+    public AppStatusController( final AppConfig appConfig,
+                                final MALKits malKits,
+                                final BMThemes bmThemes,
+                                final MALAssetStructures assetStructures,
+                                @Qualifier( "MALTaskExecutorWrapper" )
+                                final TaskExecutorWrapper malTaskExecutorWrapper,
+                                @Qualifier( "BMTaskExecutorWrapper" )
+                                final TaskExecutorWrapper bmTaskExecutorWrapper,
+                                @Qualifier( "BMTaskPriorityExecutorWrapper" )
+                                final TaskPriorityExecutorWrapper bmTaskPriorityExecutorWrapper,
+                                final TaskSchedulerWrapper taskSchedulerWrapper,
+                                final JobRepository jobRepository,
+                                final ServiceRepository serviceRepository,
+                                final ReportsRepository reportsRepository,
+                                final AssetRepository assetRepository,
+                                final MalPriorities malPriorities,
+                                final ObjectMapper objectMapper) {
+        this.appConfig = appConfig;
         this.malKits = malKits;
         this.bmThemes = bmThemes;
         this.assetStructures = assetStructures;
@@ -80,6 +93,7 @@ public class AppStatusController {
         this.serviceRepository = serviceRepository;
         this.reportsRepository = reportsRepository;
         this.assetRepository = assetRepository;
+        this.malPriorities = malPriorities;
         this.objectMapper = objectMapper;
     }
 
@@ -162,6 +176,15 @@ public class AppStatusController {
     @GetMapping("/appStatus/mal/assetTypes")
     public Map<String, String> getMalAssetTypes() {
         return assetStructures.getAssetTypes();
+    }
+
+    @GetMapping("/appStatus/mal/priorities")
+    public String getMalPriorities() {
+        try {
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(malPriorities);
+        } catch( final Exception e ) {
+            return "Can not serialize MalPriorities " + e.getMessage();
+        }
     }
 
     /**
@@ -253,6 +276,33 @@ public class AppStatusController {
                             from, to, transferringAssetStatus, Sort.by(Sort.Direction.DESC, "updated")));
         } catch( final Exception e ) {
             return "Can not serialize database response " + e.getMessage();
+        }
+    }
+
+    @GetMapping( "/appStatus/app/appConfigData" )
+    public String getAppConfig() {
+        try {
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString( appConfig.getAppConfigData() );
+        } catch ( final Exception e ) {
+            return "Can not serialize appConfigData" + e.getMessage();
+        }
+    }
+
+    @GetMapping( "/appStatus/calculateBmHash/{id}")
+    public String calculateBmHash(@PathVariable final Long id) {
+        final Optional<AssetEntity> assetEntity = assetRepository.findById( id );
+        if( assetEntity.isPresent() ) {
+            final File file = new File(appConfig.getTempDir() + File.separator + assetEntity.get().getFileNameOnDisc());
+            try {
+                final MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+                messageDigest.update(Files.readAllBytes(file.toPath()));
+                return "hash is [" + Base64.encodeBase64String( messageDigest.digest() ) + "]";
+            } catch (final Exception e) {
+                return "Exception " + e.getMessage();
+            }
+        }
+        else {
+            return "No such asset";
         }
     }
 }

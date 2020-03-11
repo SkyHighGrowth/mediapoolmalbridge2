@@ -8,7 +8,6 @@ import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.repository.Bridge.UploadedFileRepository;
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import com.google.gson.Gson;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
@@ -48,7 +47,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
     @Override
     public void scheduled() {
         deleteFiles();
-        listFilesInTempFolder();
+        //listFilesInTempFolder();
     }
 
     private void listFilesInTempFolder() {
@@ -58,7 +57,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
         }
         BasicFileAttributes attributes = null;
         for (final File file : files) {
-            logger.error( "DELETING list from temp folder {}", file.getAbsolutePath() );
+            //logger.error( "DELETING list from temp folder {}", file.getAbsolutePath() );
             if (file.isFile()) {
                 try
                 {
@@ -85,9 +84,9 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
         boolean condition = true;
         try {
             for (int page = 0; condition; ++page) {
-                final List<UploadedFileEntity> fileEntities = uploadedFileRepository.findByDeletedAndFileStateOnDisc(
-                        false, FileStateOnDisc.NO_ERROR, PageRequest.of(0, appConfig.getDatabasePageSize()));
-                logger.info( "DELETING FILES {} for page {}", (new Gson()).toJson(fileEntities), page);
+                final List<UploadedFileEntity> fileEntities = uploadedFileRepository.findByDeletedAndFileStateOnDiscAndCreatedIsBefore(
+                        false, FileStateOnDisc.NO_ERROR, getTodayMidnight().minusDays( appConfig.getAssetFileMaximalLivingDaysOnDisc() ), PageRequest.of(0, appConfig.getDatabasePageSize()));
+                //logger.info( "DELETING FILES {} for page {}", (new Gson()).toJson(fileEntities), page);
                 if( fileEntities.isEmpty() || page > 1000 ) {
                     break;
                 }
@@ -106,7 +105,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
     {
         fileEntities.forEach(fileEntity -> {
             final File file = new File(appConfig.getTempDir() + fileEntity.getFilename());
-            logger.info( "DELETING FILE {}", file.getAbsolutePath());
+            //logger.info( "DELETING FILE {}", file.getAbsolutePath());
             if (!file.delete()) {
                 final String message = String.format("Can not delete file [%s]", fileEntity.getFilename());
                 logger.error(message);

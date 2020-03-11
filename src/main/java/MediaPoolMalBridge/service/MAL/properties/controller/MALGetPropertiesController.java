@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller that triggers {@link MALGetPropertiesSchedulerService}
  */
 @RestController
-@Profile("dev")
+@Profile("enable controllers")
 public class MALGetPropertiesController {
 
     private MALGetPropertiesSchedulerService getPropertiesSchedulerService;

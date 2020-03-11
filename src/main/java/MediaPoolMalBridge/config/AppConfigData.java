@@ -204,8 +204,16 @@ public class AppConfigData {
     /**
      * datetime used to look in the past in the database table expressed in days
      */
-    @Value( "${bridge.look.in.the.past.days:2}")
+    @Value( "${bridge.look.in.the.past.days:2}" )
     private int bridgeLookInThePastDays;
+    /**
+     * After asset updated timestamp becomes smaller then lower biund of the time window
+     * in which asset for transitions are looked up, BridgeDatabaseAssetResolver will update
+     * their updated timestamp if transferring asset status is not DONE or ERROR
+     * and will be given a chance to perform transitions
+     */
+    @Value( "${bridge.resolver.window.days:1}")
+    private int bridgeResolverWindow;
     /**
      * database querries page size
      */
@@ -267,6 +275,12 @@ public class AppConfigData {
      */
     @Value( "${scheduler.bridgeassetonboarding.cron.expression:0 10 * * * *}" )
     private String bridgeAssetOnBoardingCronExpression;
+
+    /**
+     * Asset resolver cron expression
+     */
+    @Value( "${scheduler.bridgeassetresolver.cron.expression:0 10 * * * *}")
+    private String bridgeAssetResolverCronExpression;
     /**
      * MAL server collect assets scheduler cron expression
      */
@@ -291,7 +305,7 @@ public class AppConfigData {
     /**
      * datasource url for dev profile
      */
-    @Value( "${datasource.url.dev:jdbc:mysql://localhost:3306/maltobmbridge?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false&autoReconnect=true}")
+    @Value( "${spring.datasource.url.dev:jdbc:mysql://localhost:3306/maltobmbridge?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false&autoReconnect=true}")
     private String datasourceUrlDev;
     /**
      * datasource username for dev profile
@@ -306,7 +320,7 @@ public class AppConfigData {
     /**
      * datasource url for production profile
      */
-    @Value( "${datasource.url.production:jdbc:mysql://localhost:3306/maltobmbridge?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false&autoReconnect=true}")
+    @Value( "${spring.datasource.url.production:jdbc:mysql://localhost:3306/maltobmbridge?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false&autoReconnect=true}")
     private String datasourceUrlProduction;
     /**
      * datasource username for production profile
@@ -322,43 +336,43 @@ public class AppConfigData {
     /**
      * hibernate dialect
      */
-    @Value( "${jpa.properties.hibernate.dialect:org.hibernate.dialect.MySQL55Dialect}" )
+    @Value( "${spring.jpa.properties.hibernate.dialect:org.hibernate.dialect.MySQL55Dialect}" )
     private String hibernateDialect;
     /**
      * logs sql
      */
-    @Value( "${jpa.show-sql:false}" )
+    @Value( "${spring.jpa.show-sql:false}" )
     private boolean hibernateShowSql;
     /**
      * will update database on boot
      */
-    @Value( "${jpa.properties.hibernate.hbm2ddl.auto:update}" )
+    @Value( "${spring.jpa.properties.hibernate.hbm2ddl.auto:update}" )
     private String hibernateHbm2dlAuto;
 
     /**
      * database pool connection timeout
      */
-    @Value( "${datasource.hikari.connectionTimeout:30000}")
+    @Value( "${spring.datasource.hikari.connection-timeout:30000}")
     private int hikariConnectionTimeout;
     /**
      * database idle timeout
      */
-    @Value( "${datasource.hikari.idleTimeout:600000}")
+    @Value( "${spring.datasource.hikari.idle-timeout:600000}")
     private int hikariIdleTimeout;
     /**
      * database pool max life time
      */
-    @Value( "${datasource.hikari.maxLifetime:1800000}")
+    @Value( "${spring.datasource.hikari.max-lifetime:1800000}")
     private int hikariMaxLifeTime;
     /**
      * database pool auto commit
      */
-    @Value( "${datasource.hikari.auto-commit:false}" )
+    @Value( "${spring.datasource.hikari.auto-commit:false}" )
     private boolean hikariAutoCommit;
     /**
      * database pool maximum pool size
      */
-    @Value( "${datasource.hikari.maximum-pool-size:10000}" )
+    @Value( "${spring.datasource.hikari.maximum-pool-size:10000}" )
     private int hikariMaximumPoolSize;
 
     @Value( "#{${mal.priorities}}" )
@@ -511,6 +525,8 @@ public class AppConfigData {
         return malLookInThePastDays;
     }
 
+    public int getBridgeResolverWindow() { return bridgeResolverWindow; }
+
     public int getAssetFileMaximalLivingDaysOnDisc() {
         return assetFileMaximalLivingDaysOnDisc;
     }
@@ -562,6 +578,8 @@ public class AppConfigData {
     }
 
     public String getBridgeAssetOnBoardingCronExpression() { return bridgeAssetOnBoardingCronExpression; }
+
+    public String getBridgeAssetResolverCronExpression() { return bridgeAssetResolverCronExpression; }
 
     public String getMalAssetCronExpression() {
         return malAssetCronExpression;

@@ -36,7 +36,8 @@ public class AppConfig {
             throw new RuntimeException( "Can not start with profiles dev and production set at the same time" );
         }
 
-        File file = new File(System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR);
+        File file = new File( "/data/skyhigh" + File.separator + Constants.APPLICATION_DIR);
+        //File file = new File( "C:/Users/User" + File.separator + Constants.APPLICATION_DIR);
         if (!file.exists()) {
             if (!file.mkdir()) {
                 logger.info("Dir {} can not be created", file.getAbsolutePath());
@@ -44,7 +45,8 @@ public class AppConfig {
             }
         }
 
-        final String filePath = System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
+        final String filePath = "/data/skyhigh" + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
+        //final String filePath = "C:/Users/User" + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
         file = new File( filePath );
         logger.info( "FILE PATH {}", file.getAbsolutePath() );
         if( file.exists() ) {
@@ -62,14 +64,6 @@ public class AppConfig {
                 logger.info( "Using default app config data loaded {}", (new Gson()).toJson(this.appConfigData) );
             } catch (final Exception e) {
                 logger.error("Can not write to file {}", file.getAbsolutePath(), e);
-            }
-        }
-
-        file = new File(System.getProperty("user.home") + File.separator + Constants.APPLICATION_DIR);
-        if (!file.exists()) {
-            if (!file.mkdir()) {
-                logger.info("Dir {} can not be created", file.getAbsolutePath());
-                throw new RuntimeException();
             }
         }
 
@@ -96,6 +90,10 @@ public class AppConfig {
                 throw new RuntimeException();
             }
         }
+    }
+
+    public AppConfigData getAppConfigData() {
+        return appConfigData;
     }
 
     public String getTempDir() {
@@ -252,6 +250,10 @@ public class AppConfig {
         return appConfigData.getBridgeLookInThePastDays();
     }
 
+    public int getBridgeResolverWindow() {
+        return appConfigData.getBridgeResolverWindow();
+    }
+
     public String getBmExchangeSchedulerCronExpression() {
         return appConfigData.getBmExchangeSchedulerCronExpression();
     }
@@ -288,7 +290,13 @@ public class AppConfig {
         return appConfigData.getBridgeSendMailCronExpression();
     }
 
-    public String getBridgeAssetOnBoardingCronExpression() { return appConfigData.getBridgeAssetOnBoardingCronExpression(); }
+    public String getBridgeAssetOnBoardingCronExpression() {
+        return appConfigData.getBridgeAssetOnBoardingCronExpression();
+    }
+
+    public String getBridgeAssetResolverCronExpression() {
+        return appConfigData.getBridgeAssetResolverCronExpression();
+    }
 
     public String getMalAssetCronExpression() {
         return appConfigData.getMalAssetCronExpression();
