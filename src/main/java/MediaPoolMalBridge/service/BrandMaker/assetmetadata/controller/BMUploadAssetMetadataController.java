@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller which is used to trigger {@link BMExchangeAssetMetadataSchedulerService} scheduler service
  */
 @RestController
-@Profile( "dev" )
+@Profile( "enable controllers" )
 public class BMUploadAssetMetadataController {
 
     private BMExchangeAssetMetadataSchedulerService bmExchangeAssetMetadataSchedulerService;

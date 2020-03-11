@@ -30,9 +30,10 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
             "from AssetEntity ae " +
             "where ae.propertyId = :propertyId " +
             "and ae.assetTypeId = :assetTypeId " +
+            "and ae.transferringAssetStatus = :transferringAssetStatus " +
             "and ae.updated > :updated " +
             "order by ae.updated desc")
-    List<AssetEntity> findPropertyAssets( final String propertyId, final String assetTypeId, final LocalDateTime updated );
+    List<AssetEntity> findPropertyAssets( final String propertyId, final String assetTypeId, final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated );
 
     List<AssetEntity> findAllByTransferringAssetStatusAndUpdatedIsAfter( final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated, final Pageable page );
 
@@ -52,6 +53,9 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
             final String assetId, final MALAssetType assetType, final TransferringAssetStatus transferringAssetStatus01, final TransferringAssetStatus transferringAssetStatus02, final LocalDateTime updatedAssetTimeStamp, final LocalDateTime updated);
 
     List<AssetEntity> findAllByUpdatedIsAfter(final LocalDateTime updated, final Pageable page );
+
+    List<AssetEntity> findAllByUpdatedIsAfterAndUpdatedIsBeforeAndTransferringAssetStatusIsNotAndTransferringAssetStatusIsNot(
+            final LocalDateTime updatedIsAfter, final LocalDateTime updatedIsBefore, final TransferringAssetStatus not01, final TransferringAssetStatus not02, final Pageable page );
 
     List<AssetEntity> findAllByMalAssetIdAndAssetTypeAndUpdatedIsAfter(final String malAssetId, final MALAssetType malAssetType, final LocalDateTime updated );
 

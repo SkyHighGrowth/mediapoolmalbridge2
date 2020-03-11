@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller which triggers {@link BMUploadAssetSchedulerService}
  */
 @RestController
-@Profile("dev")
+@Profile("enable controllers")
 public class BMUploadAssetSchedulerController {
 
     private BMUploadAssetSchedulerService bmUploadAssetSchedulerService;

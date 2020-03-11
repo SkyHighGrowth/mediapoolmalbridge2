@@ -12,17 +12,19 @@ import MediaPoolMalBridge.persistence.entity.enums.property.MALPropertyStatus;
 import MediaPoolMalBridge.service.Bridge.excelcreator.AbstractBridgeUniqueExcelService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import jxl.Workbook;
-import jxl.write.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniqueExcelService {
+public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridgeUniqueExcelService {
 
     protected static final String[] STRUCTURES_COLUMN_NAMES = {"List ID * (no editable)",
             "List name *", "Type * (no editable)", "ID of Parent list", "Name of default entry",
@@ -38,28 +40,25 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
 
     private int rowIndex = 0;
 
-    private WritableCellFormat headerFormat;
-
-    public BridgeCreateExcelFileUniqueThreadService(final MALAssetStructures assetStructures )
+    public BridgeCreateExcelXSSFFileUniqueThreadService(final MALAssetStructures assetStructures )
     {
         this.assetStructures = assetStructures;
-        headerFormat = new WritableCellFormat();
-        final WritableFont font = new WritableFont(WritableFont.ARIAL, 16, WritableFont.NO_BOLD);
-        headerFormat.setFont(font);
     }
 
     @Override
     protected void run()
     {
-        writeToFile( "DataStructures.xls" );
+        writeToFile( "DataStructures.xlsx" );
     }
 
     private void writeToFile(final String fileName) {
         try {
-            final WritableWorkbook workbook = Workbook.createWorkbook(new File(appConfig.getExcelDir() + fileName));
+            final Workbook workbook = new XSSFWorkbook();
             createStructuresSheet( workbook );
             createObjectsSheet( workbook );
-            workbook.write();
+            final OutputStream fileOutputStream = new FileOutputStream( new File(appConfig.getExcelDir() + fileName) );
+            workbook.write( fileOutputStream );
+            fileOutputStream.close();
             workbook.close();
         } catch (final Exception e) {
             final String message = String.format("Can not create file [%s]", fileName);
@@ -69,15 +68,23 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
         }
     }
 
-    private void createObjectsSheet( final WritableWorkbook workbook ) throws Exception {
+    private void createObjectsSheet( final Workbook workbook ) throws Exception {
 
-        final WritableSheet sheet = workbook.createSheet( "objects", 1 );
+        final Sheet sheet = workbook.createSheet( "objects" );
+
+        final Font font = workbook.createFont();
+        font.setBold( true );
+        font.setFontHeightInPoints( (short) 16 );
+        final CellStyle headerFormat = workbook.createCellStyle();
+        headerFormat.setFont( font );
 
         int colIndex = 0;
         rowIndex = 0;
+        Row row = sheet.createRow( rowIndex++ );
         for (final String column : OBJECTS_COLUMN_NAMES) {
-            Label headerLabel = new Label(colIndex++, rowIndex, column, headerFormat);
-            sheet.addCell(headerLabel);
+            Cell cell = row.createCell( colIndex++ );
+            cell.setCellValue( column );
+            cell.setCellStyle( headerFormat );
         }
 
         MALAssetStructures.getPropertyVariants().values().forEach(
@@ -106,7 +113,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
                 });
     }
 
-    private void digestFloorTypes( final WritableSheet sheet, final MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity ) throws Exception {
+    private void digestFloorTypes(final Sheet sheet, final MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity ) throws Exception {
         final String[] floorTypes = new String[2];
         floorTypes[0] = "Fmt";
         floorTypes[1] = "Fgr";
@@ -127,7 +134,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
         }
     }
 
-    private void digestMaps( final WritableSheet sheet, final MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity ) throws Exception {
+    private void digestMaps( final Sheet sheet, final MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity ) throws Exception {
         final String[] mapColors = new String[3];
         mapColors[0] = "Mat";
         mapColors[1] = "Mla";
@@ -149,7 +156,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
         }
     }
 
-    private void digestAssets( final WritableSheet sheet, final MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity ) throws Exception {
+    private void digestAssets( final Sheet sheet, final MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity ) throws Exception {
         final List<AssetEntity> assetEntities = assetRepository.findPropertyAssets(malPropertyEntity.getPropertyId(), "1", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
         int order = 1;
         if (assetEntities != null && !assetEntities.isEmpty()) {
@@ -165,9 +172,9 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
         }
     }
 
-    private void addRow( final WritableSheet sheet, final String subName, final String propertyId, final String name, final String jsonedAttributes, final String malAssetId ) throws Exception
+    private void addRow( final Sheet sheet, final String subName, final String propertyId, final String name, final String jsonedAttributes, final String malAssetId ) throws Exception
     {
-        ++rowIndex;
+        Row row = sheet.createRow( rowIndex++ );
         int colIndex = 0;
 
         //final String[] row_ = new String[6];
@@ -216,39 +223,25 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
         //row_[42] = "";
         //row_[43] = propertyId;
         if( StringUtils.isNotBlank( malAssetId ) ) {
-            Label headerLabel = new Label(colIndex++, rowIndex, subName, headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, malAssetId, headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "{\"default\":\"" + malAssetId + " - " + name + "\"}", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, propertyId, headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "EDIT_AND_ADD", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, jsonedAttributes, headerFormat);
-            sheet.addCell(headerLabel);
+            row.createCell( colIndex++ ).setCellValue( subName );
+            row.createCell( colIndex++ ).setCellValue( malAssetId );
+            row.createCell( colIndex++ ).setCellValue( "{\"default\":\"" + malAssetId + " - " + name + "\"}" );
+            row.createCell( colIndex++ ).setCellValue( propertyId );
+            row.createCell( colIndex++ ).setCellValue( "EDIT_AND_ADD" );
+            row.createCell( colIndex++ ).setCellValue( "" );
+            row.createCell( colIndex++ ).setCellValue( jsonedAttributes );
         } else {
-            Label headerLabel = new Label(colIndex++, rowIndex, subName, headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, propertyId, headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "{\"default\":\"" + propertyId + " - " + name + "\"}", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "EDIT_AND_ADD", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, jsonedAttributes, headerFormat);
-            sheet.addCell(headerLabel);
+            row.createCell( colIndex++ ).setCellValue( subName );
+            row.createCell( colIndex++ ).setCellValue( propertyId );
+            row.createCell( colIndex++ ).setCellValue( "{\"default\":\"" + propertyId + " - " + name + "\"}" );
+            row.createCell( colIndex++ ).setCellValue( "" );
+            row.createCell( colIndex++ ).setCellValue( "EDIT_AND_ADD" );
+            row.createCell( colIndex++ ).setCellValue( "" );
+            row.createCell( colIndex++ ).setCellValue( jsonedAttributes );
         }
     }
 
-    private void digestLogos( final WritableSheet sheet, MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity, final String combinedAddressField ) throws Exception {
+    private void digestLogos( final Sheet sheet, MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity, final String combinedAddressField ) throws Exception {
         final List<Attribute> attributes = new ArrayList<>();
         List<AssetEntity> logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
         String propertyLogo1c = "";
@@ -763,7 +756,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
                 "",
                 -1,
                 "RICHTEXT",
-                new  Props( 128 ),
+                new Props( 128 ),
                 combinedAddressField ) );
         attributes.add( new Attribute( 4,
                 "ADDRESS",
@@ -931,40 +924,47 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
         return addressField01 + addressField02 + addressField03 + addressField04 +addressField05;
     }
 
-    private void createStructuresSheet( final WritableWorkbook workbook ) throws Exception {
+    private void createStructuresSheet( final Workbook workbook ) throws Exception {
 
-        final WritableSheet sheet = workbook.createSheet("structures", 0);
+        final Sheet sheet = workbook.createSheet("structures");
 
-        final WritableCellFormat headerFormat = new WritableCellFormat();
-        final WritableFont font = new WritableFont(WritableFont.ARIAL, 16, WritableFont.NO_BOLD);
-        headerFormat.setFont(font);
+        final Font font = workbook.createFont();
+        font.setBold( true );
+        font.setFontHeightInPoints( (short) 16 );
+        final CellStyle headerFormat = workbook.createCellStyle();
+        headerFormat.setFont( font );
 
         int colIndex = 0;
         int rowIndex = 0;
+        Row row = sheet.createRow( rowIndex++ );
         for (final String column : STRUCTURES_COLUMN_NAMES) {
-            Label headerLabel = new Label(colIndex++, rowIndex, column, headerFormat);
-            sheet.addCell(headerLabel);
+            Cell cell = row.createCell( colIndex++ );
+            cell.setCellValue( column );
+            cell.setCellStyle( headerFormat );
         }
 
         for( final MALPropertyVariant malPropertyVariant : MALAssetStructures.getPropertyVariants().values() ) {
             //parent
-            ++rowIndex;
+            row = sheet.createRow( rowIndex++ );
+
             colIndex = 0;
-            Label headerLabel = new Label(colIndex++, rowIndex, malPropertyVariant.getStructureName(), headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "{\"default\":\"" + malPropertyVariant.getStructureName() + "\"}", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "DEFAULT", headerFormat);
-            sheet.addCell(headerLabel);
+
+            row.createCell( colIndex++ ).setCellValue( malPropertyVariant.getStructureName() );
+
+            row.createCell( colIndex++ ).setCellValue( "{\"default\":\"" + malPropertyVariant.getStructureName() + "\"}" );
+
+            row.createCell( colIndex++ ).setCellValue( "DEFAULT" );
+
             //no parent
             //headerLabel = new Label(colIndex++, rowIndex, "DEFAULT", headerFormat);
             //sheet.addCell(headerLabel);
             colIndex++;
             colIndex++;
-            headerLabel = new Label(colIndex++, rowIndex, "MULTI_OBJECT_AFFILIATE_STRUCTURE", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "false", headerFormat);
-            sheet.addCell(headerLabel);
+
+            row.createCell( colIndex++ ).setCellValue( "MULTI_OBJECT_AFFILIATE_STRUCTURE" );
+
+            row.createCell( colIndex++ ).setCellValue( "false" );
+
             colIndex++;
 
             /*List<Attribute> attributes = new ArrayList<>();
@@ -977,25 +977,27 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             attributes.add(new Attribute(7, "CITY", "City", null, 7, "TEXT", null, null));
             attributes.add(new Attribute(8, "COUNTRY", "Country", null, 8, "TEXT", null, null));*/
 
-            headerLabel = new Label(colIndex++, rowIndex, "[{\"number\":3,\"name\":\"PropertyState\",\"label\":\"Property State\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":9,\"name\":\"PropertyURL\",\"label\":\"Property URL\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":10,\"name\":\"PropertyTelephone\",\"label\":\"Property Telephone\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":11,\"name\":\"PropertyFacsimile\",\"label\":\"Property Facsimile\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":13,\"name\":\"Latitude\",\"label\":\"Latitude\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":14,\"name\":\"Longitude\",\"label\":\"Longitude\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":24,\"name\":\"PropertyLogo1c\",\"label\":\"Property Logo 1c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"PropertyLogo4c\",\"label\":\"Property Logo 4c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"PropertyLogo4cb\",\"label\":\"Property Logo 4c-b\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"PropertyLogo1cblack\",\"label\":\"Property Logo 1c-black\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"PropertyLogopms\",\"label\":\"Property Logo pms\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":29,\"name\":\"PropertyLogopmsc\",\"label\":\"Property Logo pms-c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":30,\"name\":\"PropertyLogo4cc\",\"label\":\"Property Logo 4c-c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":31,\"name\":\"PropertyLogokod\",\"label\":\"Property Logo ko-d\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":32,\"name\":\"PropertyLogoblackK\",\"label\":\"Property Logo black-K\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":33,\"name\":\"PropertyLogo4cK\",\"label\":\"Property Logo 4c-K\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":34,\"name\":\"CombinedAddress\",\"label\":\"Combined Address\",\"comment\":\"\",\"order\":-1,\"type\":\"RICHTEXT\",\"props\":null},{\"number\":39,\"name\":\"PropertyLogoSheratonBlack\",\"label\":\"Property Logo Sheraton Black\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":40,\"name\":\"PropertyLogoSheratonDusk\",\"label\":\"Property Logo Sheraton Dusk\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":41,\"name\":\"PropertyLogoSheratonGraphiteCodedCMYK\",\"label\":\"Property Logo Sheraton Graphite Coded CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":42,\"name\":\"PropertyLogoSheratonGraphiteCodedPMS\",\"label\":\"Property Logo Sheraton Graphite Coded PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":43,\"name\":\"PropertyLogoSheratonGraphiteRGB\",\"label\":\"Property Logo Sheraton Graphite RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":44,\"name\":\"PropertyLogoSheratonGraphiteUncoatedCMYK\",\"label\":\"Property Logo Sheraton Graphite Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":45,\"name\":\"PropertyLogoSheratonGraphiteUncoatedPMS\",\"label\":\"Property Logo Sheraton Graphite Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":46,\"name\":\"PropertyLogoSheratonIvory\",\"label\":\"Property Logo Sheraton Ivory\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":47,\"name\":\"PropertyLogoSheratonKnockout\",\"label\":\"Property Logo Sheraton Knockout\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":48,\"name\":\"PropertyLogoSheratonLogoSpecs\",\"label\":\"Property Logo Sheraton Logo Specs\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":49,\"name\":\"PropertyLogoSheratonOysterCoatedCMYK\",\"label\":\"Property Logo Sheraton Oyster Coated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":50,\"name\":\"PropertyLogoSheratonOysterCoatedPMS\",\"label\":\"Property Logo Sheraton Oyster Coated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":51,\"name\":\"PropertyLogoSheratonOysterRGB\",\"label\":\"Property Logo Sheraton Oyster RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":52,\"name\":\"PropertyLogoSheratonOysterUncoatedCMYK\",\"label\":\"Property Logo Sheraton Oyster Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":53,\"name\":\"PropertyLogoSheratonOysterUncoatedPMS\",\"label\":\"Property Logo Sheraton Oyster Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":54,\"name\":\"PropertyLogoSheratonResortFrenchGrayCoatedCMYK\",\"label\":\"Property Logo Sheraton Resort French Gray Coated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":55,\"name\":\"PropertyLogoSheratonResortFrenchGrayCoatedPMS\",\"label\":\"Property Logo Sheraton Resort French Gray Coated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":56,\"name\":\"PropertyLogoSheratonResortFrenchGrayRGB\",\"label\":\"Property Logo Sheraton Resort French Gray RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":57,\"name\":\"PropertyLogoSheratonResortFrenchGrayUncoatedCMYK\",\"label\":\"Property Logo Sheraton Resort French Gray Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":58,\"name\":\"PropertyLogoSheratonResortFrenchGrayUncoatedPMS\",\"label\":\"Property Logo Sheraton Resort French Gray Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":59,\"name\":\"PropertyLogoSheratonTungstenCoatedCMYK\",\"label\":\"Property Logo Sheraton Tungsten Coated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":60,\"name\":\"PropertyLogoSheratonTungstenCoatedPMS\",\"label\":\"Property Logo Sheraton Tungsten Coated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":61,\"name\":\"PropertyLogoSheratonTungstenRGB\",\"label\":\"Property Logo Sheraton Tungsten RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":62,\"name\":\"PropertyLogoSheratonTungstenUncoatedCMYK\",\"label\":\"Property Logo Sheraton Tungsten Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":63,\"name\":\"PropertyLogoSheratonTungstenUncoatedPMS\",\"label\":\"Property Logo Sheraton Tungsten Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":64,\"name\":\"PropertyLogoUSNavy\",\"label\":\"Property Logo US Navy\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":2,\"name\":\"AFFILIATES_CODE\",\"label\":\"Property Number\",\"comment\":\"\",\"order\":1,\"type\":\"TEXT\",\"props\":null},{\"number\":1,\"name\":\"AFFILIATE_NAME\",\"label\":\"Property Name\",\"comment\":\"\",\"order\":2,\"type\":\"TEXT\",\"props\":null},{\"number\":4,\"name\":\"ADDRESS\",\"label\":\"Property Address\",\"comment\":\"\",\"order\":4,\"type\":\"TEXT\",\"props\":null},{\"number\":5,\"name\":\"STREET\",\"label\":\"Property Street\",\"comment\":\"\",\"order\":5,\"type\":\"TEXT\",\"props\":null},{\"number\":6,\"name\":\"ZIP\",\"label\":\"Property Zip Code\",\"comment\":\"\",\"order\":6,\"type\":\"TEXT\",\"props\":null},{\"number\":7,\"name\":\"CITY\",\"label\":\"Property City\",\"comment\":\"\",\"order\":7,\"type\":\"TEXT\",\"props\":null},{\"number\":8,\"name\":\"COUNTRY\",\"label\":\"Property Country\",\"comment\":\"\",\"order\":8,\"type\":\"TEXT\",\"props\":null}]", headerFormat);
-            sheet.addCell(headerLabel);
+            row.createCell( colIndex++ ).setCellValue( "[{\"number\":3,\"name\":\"PropertyState\",\"label\":\"Property State\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":9,\"name\":\"PropertyURL\",\"label\":\"Property URL\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":10,\"name\":\"PropertyTelephone\",\"label\":\"Property Telephone\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":11,\"name\":\"PropertyFacsimile\",\"label\":\"Property Facsimile\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":13,\"name\":\"Latitude\",\"label\":\"Latitude\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":14,\"name\":\"Longitude\",\"label\":\"Longitude\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":24,\"name\":\"PropertyLogo1c\",\"label\":\"Property Logo 1c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"PropertyLogo4c\",\"label\":\"Property Logo 4c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"PropertyLogo4cb\",\"label\":\"Property Logo 4c-b\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"PropertyLogo1cblack\",\"label\":\"Property Logo 1c-black\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"PropertyLogopms\",\"label\":\"Property Logo pms\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":29,\"name\":\"PropertyLogopmsc\",\"label\":\"Property Logo pms-c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":30,\"name\":\"PropertyLogo4cc\",\"label\":\"Property Logo 4c-c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":31,\"name\":\"PropertyLogokod\",\"label\":\"Property Logo ko-d\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":32,\"name\":\"PropertyLogoblackK\",\"label\":\"Property Logo black-K\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":33,\"name\":\"PropertyLogo4cK\",\"label\":\"Property Logo 4c-K\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":34,\"name\":\"CombinedAddress\",\"label\":\"Combined Address\",\"comment\":\"\",\"order\":-1,\"type\":\"RICHTEXT\",\"props\":null},{\"number\":39,\"name\":\"PropertyLogoSheratonBlack\",\"label\":\"Property Logo Sheraton Black\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":40,\"name\":\"PropertyLogoSheratonDusk\",\"label\":\"Property Logo Sheraton Dusk\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":41,\"name\":\"PropertyLogoSheratonGraphiteCodedCMYK\",\"label\":\"Property Logo Sheraton Graphite Coded CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":42,\"name\":\"PropertyLogoSheratonGraphiteCodedPMS\",\"label\":\"Property Logo Sheraton Graphite Coded PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":43,\"name\":\"PropertyLogoSheratonGraphiteRGB\",\"label\":\"Property Logo Sheraton Graphite RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":44,\"name\":\"PropertyLogoSheratonGraphiteUncoatedCMYK\",\"label\":\"Property Logo Sheraton Graphite Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":45,\"name\":\"PropertyLogoSheratonGraphiteUncoatedPMS\",\"label\":\"Property Logo Sheraton Graphite Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":46,\"name\":\"PropertyLogoSheratonIvory\",\"label\":\"Property Logo Sheraton Ivory\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":47,\"name\":\"PropertyLogoSheratonKnockout\",\"label\":\"Property Logo Sheraton Knockout\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":48,\"name\":\"PropertyLogoSheratonLogoSpecs\",\"label\":\"Property Logo Sheraton Logo Specs\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":49,\"name\":\"PropertyLogoSheratonOysterCoatedCMYK\",\"label\":\"Property Logo Sheraton Oyster Coated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":50,\"name\":\"PropertyLogoSheratonOysterCoatedPMS\",\"label\":\"Property Logo Sheraton Oyster Coated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":51,\"name\":\"PropertyLogoSheratonOysterRGB\",\"label\":\"Property Logo Sheraton Oyster RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":52,\"name\":\"PropertyLogoSheratonOysterUncoatedCMYK\",\"label\":\"Property Logo Sheraton Oyster Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":53,\"name\":\"PropertyLogoSheratonOysterUncoatedPMS\",\"label\":\"Property Logo Sheraton Oyster Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":54,\"name\":\"PropertyLogoSheratonResortFrenchGrayCoatedCMYK\",\"label\":\"Property Logo Sheraton Resort French Gray Coated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":55,\"name\":\"PropertyLogoSheratonResortFrenchGrayCoatedPMS\",\"label\":\"Property Logo Sheraton Resort French Gray Coated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":56,\"name\":\"PropertyLogoSheratonResortFrenchGrayRGB\",\"label\":\"Property Logo Sheraton Resort French Gray RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":57,\"name\":\"PropertyLogoSheratonResortFrenchGrayUncoatedCMYK\",\"label\":\"Property Logo Sheraton Resort French Gray Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":58,\"name\":\"PropertyLogoSheratonResortFrenchGrayUncoatedPMS\",\"label\":\"Property Logo Sheraton Resort French Gray Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":59,\"name\":\"PropertyLogoSheratonTungstenCoatedCMYK\",\"label\":\"Property Logo Sheraton Tungsten Coated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":60,\"name\":\"PropertyLogoSheratonTungstenCoatedPMS\",\"label\":\"Property Logo Sheraton Tungsten Coated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":61,\"name\":\"PropertyLogoSheratonTungstenRGB\",\"label\":\"Property Logo Sheraton Tungsten RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":62,\"name\":\"PropertyLogoSheratonTungstenUncoatedCMYK\",\"label\":\"Property Logo Sheraton Tungsten Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":63,\"name\":\"PropertyLogoSheratonTungstenUncoatedPMS\",\"label\":\"Property Logo Sheraton Tungsten Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":64,\"name\":\"PropertyLogoUSNavy\",\"label\":\"Property Logo US Navy\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":2,\"name\":\"AFFILIATES_CODE\",\"label\":\"Property Number\",\"comment\":\"\",\"order\":1,\"type\":\"TEXT\",\"props\":null},{\"number\":1,\"name\":\"AFFILIATE_NAME\",\"label\":\"Property Name\",\"comment\":\"\",\"order\":2,\"type\":\"TEXT\",\"props\":null},{\"number\":4,\"name\":\"ADDRESS\",\"label\":\"Property Address\",\"comment\":\"\",\"order\":4,\"type\":\"TEXT\",\"props\":null},{\"number\":5,\"name\":\"STREET\",\"label\":\"Property Street\",\"comment\":\"\",\"order\":5,\"type\":\"TEXT\",\"props\":null},{\"number\":6,\"name\":\"ZIP\",\"label\":\"Property Zip Code\",\"comment\":\"\",\"order\":6,\"type\":\"TEXT\",\"props\":null},{\"number\":7,\"name\":\"CITY\",\"label\":\"Property City\",\"comment\":\"\",\"order\":7,\"type\":\"TEXT\",\"props\":null},{\"number\":8,\"name\":\"COUNTRY\",\"label\":\"Property Country\",\"comment\":\"\",\"order\":8,\"type\":\"TEXT\",\"props\":null}]" );
 
             //floorplans
-            ++rowIndex;
+            row = sheet.createRow( rowIndex++ );
+
             colIndex = 0;
-            headerLabel = new Label(colIndex++, rowIndex, malPropertyVariant.getSubNameFloorPlans(), headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "{\"default\":\"" + malPropertyVariant.getSubNameFloorPlans() + "\"}", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "DEFAULT", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, malPropertyVariant.getStructureName(), headerFormat);
-            sheet.addCell(headerLabel);
+
+            row.createCell( colIndex++ ).setCellValue( malPropertyVariant.getSubNameFloorPlans() );
+
+            row.createCell( colIndex++ ).setCellValue( "{\"default\":\"" + malPropertyVariant.getSubNameFloorPlans() + "\"}" );
+
+            row.createCell( colIndex++ ).setCellValue( "DEFAULT" );
+
+            row.createCell( colIndex++ ).setCellValue( malPropertyVariant.getStructureName() );
+
             colIndex++;
-            headerLabel = new Label(colIndex++, rowIndex, "NON_AFFILIATE_STRUCTURE", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "false", headerFormat);
-            sheet.addCell(headerLabel);
+
+            row.createCell( colIndex++ ).setCellValue( "NON_AFFILIATE_STRUCTURE" );
+
+            row.createCell( colIndex++ ).setCellValue( "false" );
+
             colIndex++;
 
             /*attributes = new ArrayList<>();
@@ -1008,25 +1010,27 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             attributes.add(new Attribute(7, "CITY", "City", null, 7, "TEXT", null, null));
             attributes.add(new Attribute(8, "COUNTRY", "Country", null, 8, "TEXT", null, null));*/
 
-            headerLabel = new Label(colIndex++, rowIndex, "[{\"number\":24,\"name\":\"Floorplan1\",\"label\":\"Floorplan 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Floorplan2\",\"label\":\"Floorplan 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Floorplan3\",\"label\":\"Floorplan 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Floorplan4\",\"label\":\"Floorplan 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Floorplan5\",\"label\":\"Floorplan 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]", headerFormat);
-            sheet.addCell(headerLabel);
+            row.createCell( colIndex++ ).setCellValue( "[{\"number\":24,\"name\":\"Floorplan1\",\"label\":\"Floorplan 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Floorplan2\",\"label\":\"Floorplan 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Floorplan3\",\"label\":\"Floorplan 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Floorplan4\",\"label\":\"Floorplan 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Floorplan5\",\"label\":\"Floorplan 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]" );
 
             //maps
-            ++rowIndex;
+            row = sheet.createRow( rowIndex++ );
+
             colIndex = 0;
-            headerLabel = new Label(colIndex++, rowIndex, malPropertyVariant.getSubNameMaps(), headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "{\"default\":\"" + malPropertyVariant.getSubNameMaps() + "\"}", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "DEFAULT", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, malPropertyVariant.getStructureName(), headerFormat);
-            sheet.addCell(headerLabel);
+
+            row.createCell( colIndex++ ).setCellValue( malPropertyVariant.getSubNameMaps() );
+
+            row.createCell( colIndex++ ).setCellValue( "{\"default\":\"" + malPropertyVariant.getSubNameMaps() + "\"}" );
+
+            row.createCell( colIndex++ ).setCellValue( "DEFAULT" );
+
+            row.createCell( colIndex++ ).setCellValue( malPropertyVariant.getStructureName() );
+
             colIndex++;
-            headerLabel = new Label(colIndex++, rowIndex, "NON_AFFILIATE_STRUCTURE", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "false", headerFormat);
-            sheet.addCell(headerLabel);
+
+            row.createCell( colIndex++ ).setCellValue( "NON_AFFILIATE_STRUCTURE" );
+
+            row.createCell( colIndex++ ).setCellValue( "false" );
+
             colIndex++;
 
             /*attributes = new ArrayList<>();
@@ -1039,25 +1043,27 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             attributes.add(new Attribute(7, "CITY", "City", null, 7, "TEXT", null, null));
             attributes.add(new Attribute(8, "COUNTRY", "Country", null, 8, "TEXT", null, null));*/
 
-            headerLabel = new Label(colIndex++, rowIndex, "[{\"number\":24,\"name\":\"Map1\",\"label\":\"Map 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Map2\",\"label\":\"Map 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Map3\",\"label\":\"Map 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Map4\",\"label\":\"Map 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Map5\",\"label\":\"Map 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]", headerFormat);
-            sheet.addCell(headerLabel);
+            row.createCell( colIndex++ ).setCellValue( "[{\"number\":24,\"name\":\"Map1\",\"label\":\"Map 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Map2\",\"label\":\"Map 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Map3\",\"label\":\"Map 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Map4\",\"label\":\"Map 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Map5\",\"label\":\"Map 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]" );
 
             //images
-            ++rowIndex;
+            row = sheet.createRow( rowIndex++ );
+
             colIndex = 0;
-            headerLabel = new Label(colIndex++, rowIndex, malPropertyVariant.getSubName(), headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "{\"default\":\"" + malPropertyVariant.getSubName() + "\"}", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "DEFAULT", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, malPropertyVariant.getStructureName(), headerFormat);
-            sheet.addCell(headerLabel);
+
+            row.createCell( colIndex++ ).setCellValue( malPropertyVariant.getSubName() );
+
+            row.createCell( colIndex++ ).setCellValue( "{\"default\":\"" + malPropertyVariant.getSubName() + "\"}" );
+
+            row.createCell( colIndex++ ).setCellValue( "DEFAULT" );
+
+            row.createCell( colIndex++ ).setCellValue( malPropertyVariant.getStructureName() );
+
             colIndex++;
-            headerLabel = new Label(colIndex++, rowIndex, "NON_AFFILIATE_STRUCTURE", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "false", headerFormat);
-            sheet.addCell(headerLabel);
+
+            row.createCell( colIndex++ ).setCellValue( "NON_AFFILIATE_STRUCTURE" );
+
+            row.createCell( colIndex++ ).setCellValue( "false" );
+
             colIndex++;
 
             /*attributes = new ArrayList<>();
@@ -1070,8 +1076,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             attributes.add(new Attribute(7, "CITY", "City", null, 7, "TEXT", null, null));
             attributes.add(new Attribute(8, "COUNTRY", "Country", null, 8, "TEXT", null, null));*/
 
-            headerLabel = new Label(colIndex++, rowIndex, "[{\"number\":24,\"name\":\"Image1\",\"label\":\"Image 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Image2\",\"label\":\"Image 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Image3\",\"label\":\"Image 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Image4\",\"label\":\"Image 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Image5\",\"label\":\"Image 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]", headerFormat);
-            sheet.addCell(headerLabel);
+            row.createCell( colIndex++ ).setCellValue( "[{\"number\":24,\"name\":\"Image1\",\"label\":\"Image 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Image2\",\"label\":\"Image 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Image3\",\"label\":\"Image 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Image4\",\"label\":\"Image 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Image5\",\"label\":\"Image 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]" );
         }
     }
 
@@ -1223,20 +1228,20 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
 
     public class Props {
 
-        private Integer cheditor_id;
+        private Integer ckeditor_id;
 
         public Props() {}
 
-        public Props( final Integer cheditor_id ) {
-            this.cheditor_id = cheditor_id;
+        public Props( final Integer ckeditor_id ) {
+            this.ckeditor_id = ckeditor_id;
         }
 
-        public Integer getCheditor_id() {
-            return cheditor_id;
+        public Integer getCkeditor_id() {
+            return ckeditor_id;
         }
 
-        public void setCheditor_id(Integer cheditor_id) {
-            this.cheditor_id = cheditor_id;
+        public void setCkeditor_id(Integer ckeditor_id) {
+            this.ckeditor_id = ckeditor_id;
         }
     }
 }

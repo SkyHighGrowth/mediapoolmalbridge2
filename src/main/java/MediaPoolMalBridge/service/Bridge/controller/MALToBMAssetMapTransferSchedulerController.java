@@ -1,5 +1,6 @@
 package MediaPoolMalBridge.service.Bridge.controller;
 
+import MediaPoolMalBridge.service.Bridge.database.assetResolver.BridgeDatabaseAssetResolverSchedulerService;
 import MediaPoolMalBridge.service.Bridge.database.assetunlocker.BridgeDatabaseUnlockerSchedulerService;
 import MediaPoolMalBridge.service.Bridge.deleteFiles.BridgeDeleteFilesSchedulerService;
 import MediaPoolMalBridge.service.Bridge.excelcreator.BridgeCreateExcelFileSchedulerService;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller that exposes end points to trigger {@link Bridge}
  */
 @RestController
-@Profile("dev")
+@Profile("enable controllers")
 public class MALToBMAssetMapTransferSchedulerController {
 
     private final BridgeTransferThemeSchedulerService bridgeTransferThemeSchedulerService;
@@ -29,18 +30,22 @@ public class MALToBMAssetMapTransferSchedulerController {
 
     private BridgeDatabaseUnlockerSchedulerService bridgeDatabaseUnlockerSchedulerService;
 
+    private BridgeDatabaseAssetResolverSchedulerService bridgeDatabaseAssetResolverSchedulerService;
+
     public MALToBMAssetMapTransferSchedulerController(final BridgeTransferThemeSchedulerService bridgeTransferThemeSchedulerService,
                                                       final BridgeDeleteFilesSchedulerService bridgeDeleteFilesSchedulerService,
                                                       final BridgeCreateExcelFileSchedulerService bridgeCreateExcelFileSchedulerService,
                                                       final BridgeUploadExcelFilesSchedulerService bridgeUploadExcelFilesSchedulerService,
                                                       final BridgeSendMailSchedulerService bridgeSendMailSchedulerService,
-                                                      final BridgeDatabaseUnlockerSchedulerService bridgeDatabaseUnlockerSchedulerService) {
+                                                      final BridgeDatabaseUnlockerSchedulerService bridgeDatabaseUnlockerSchedulerService,
+                                                      final BridgeDatabaseAssetResolverSchedulerService bridgeDatabaseAssetResolverSchedulerService) {
         this.bridgeTransferThemeSchedulerService = bridgeTransferThemeSchedulerService;
         this.bridgeDeleteFilesSchedulerService = bridgeDeleteFilesSchedulerService;
         this.bridgeCreateExcelFileSchedulerService = bridgeCreateExcelFileSchedulerService;
         this.bridgeUploadExcelFilesSchedulerService = bridgeUploadExcelFilesSchedulerService;
         this.bridgeSendMailSchedulerService = bridgeSendMailSchedulerService;
         this.bridgeDatabaseUnlockerSchedulerService = bridgeDatabaseUnlockerSchedulerService;
+        this.bridgeDatabaseAssetResolverSchedulerService = bridgeDatabaseAssetResolverSchedulerService;
     }
 
     /**
@@ -90,5 +95,11 @@ public class MALToBMAssetMapTransferSchedulerController {
     public void assetOnBoarding()
     {
         bridgeDatabaseUnlockerSchedulerService.scheduled();
+    }
+
+    @GetMapping( "/service/app/assetResolve" )
+    public void assetResolve()
+    {
+        bridgeDatabaseAssetResolverSchedulerService.scheduled();
     }
 }

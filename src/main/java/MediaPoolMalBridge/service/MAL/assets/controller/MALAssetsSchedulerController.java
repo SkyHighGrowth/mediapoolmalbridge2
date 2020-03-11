@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * is involved
  */
 @RestController
-@Profile("dev")
+@Profile("enable controllers")
 public class MALAssetsSchedulerController {
 
     private final MALAssetsSchedulerService assetsSchedulerService;

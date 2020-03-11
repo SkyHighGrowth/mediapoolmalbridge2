@@ -1,12 +1,16 @@
 package MediaPoolMalBridge.config;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
 public class MalPriorities {
+
+    private static Logger logger = LoggerFactory.getLogger(MalPriorities.class);
 
     private final Map<String, Integer> brandIdToPriority = new HashMap<>();
 
@@ -48,7 +52,23 @@ public class MalPriorities {
         return orderedPriorities;
     }
 
-    public boolean contains( final String brandId ) {
+    public Map<String, Integer> getBrandIdToPriority() {
+        return brandIdToPriority;
+    }
+
+    public Map<Integer, List<String>> getPriorityToListOfBrands() {
+        return priorityToListOfBrands;
+    }
+
+    public List<String> getBrandIds() {
+        return brandIds;
+    }
+
+    public int getSmallestPriority() {
+        return smallestPriority;
+    }
+
+    public boolean contains(final String brandId ) {
         return brandIds.contains( brandId );
     }
 }
