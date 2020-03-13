@@ -116,6 +116,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                     }
                     if (StringUtils.isNotBlank(malGetAsset.getThumbnailUrl()) ||
                             StringUtils.isNotBlank(malGetAsset.getMediumUrl()) ||
+                            StringUtils.isNotBlank(malGetAsset.getHighUrl()) ||
                             StringUtils.isNotBlank(malGetAsset.getLargeUrl()) ||
                             StringUtils.isNotBlank(malGetAsset.getXlUrl())) {
                         final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.FILE);

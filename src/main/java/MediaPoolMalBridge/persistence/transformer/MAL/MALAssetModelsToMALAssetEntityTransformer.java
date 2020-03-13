@@ -49,6 +49,9 @@ public class MALAssetModelsToMALAssetEntityTransformer {
                 } else if (StringUtils.isNotBlank(malGetAsset.getLargeUrl())) {
                     url = malGetAsset.getLargeUrl();
                     fileNameOnDisc = Constants.LARGE_FILE_PREFIX + instant + Constants.SPLITTER + getFileName(url, malGetAsset);
+                } else if(StringUtils.isNotBlank(malGetAsset.getHighUrl())) {
+                    url = malGetAsset.getHighUrl();
+                    fileNameOnDisc = Constants.HIGH_FILE_PREFIX + instant + Constants.SPLITTER + getFileName(url, malGetAsset);
                 } else if (StringUtils.isNotBlank(malGetAsset.getMediumUrl())) {
                     url = malGetAsset.getMediumUrl();
                     fileNameOnDisc = Constants.MEDIUM_FILE_PREFIX + instant + Constants.SPLITTER + getFileName(url, malGetAsset);
