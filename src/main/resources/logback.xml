@@ -17,7 +17,7 @@
             </fieldNames>
         </encoder>
         <file>/data/skyhigh/marriott/logs/logFile.log</file>
-        <!--<file>C:/Users/User/marriott/logs/logFile.log</file>-->
+        <!--<file>${user.home}/marriott/logs/logFile.log</file>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--<fileNamePattern>${user.home}/marriott/logs/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>-->
             <fileNamePattern>/data/skyhigh/marriott/logs/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>

@@ -25,12 +25,16 @@ public class BridgeCreateExcelFileSchedulerService extends AbstractSchedulerServ
     @PostConstruct
     public void scheduleExcelFileCreation()
     {
-        taskSchedulerWrapper.getTaskScheduler().schedule( this::run, new CronTrigger(appConfig.getBridgeExcelFilesCronExpression()) );
+        if( !appConfig.isDoNotCreateExcelFiles() ) {
+            taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getBridgeExcelFilesCronExpression()));
+        }
     }
 
     @Override
     public void scheduled()
     {
-        bridgeCreateExcelXSSFFileUniqueThreadService.start();
+        if( !appConfig.isDoNotCreateExcelFiles() ) {
+            bridgeCreateExcelXSSFFileUniqueThreadService.start();
+        }
     }
 }

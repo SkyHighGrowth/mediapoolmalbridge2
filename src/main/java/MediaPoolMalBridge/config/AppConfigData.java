@@ -381,6 +381,15 @@ public class AppConfigData {
     @Value( "${working.directory}" )
     private String workingDirectory;
 
+    @Value( "#{${included.asset.types}}")
+    private Map<String, String> includedAssetTypes;
+
+    @Value( "${bridge.disable.absolutedelete}" )
+    private boolean disableAbsoluteDelete;
+
+    @Value( "${bridge.excel.donotcreateexcelfiles}" )
+    private boolean doNotCreateExcelFiles;
+
     public boolean isUseSftp() {
         return useSftp;
     }
@@ -660,4 +669,10 @@ public class AppConfigData {
     public String getWorkingDirectory() {
         return workingDirectory;
     }
+
+    public Map<String,String> getIncludedAssetTypes() { return includedAssetTypes; }
+
+    public boolean isDisableAbsoluteDelete() { return disableAbsoluteDelete; }
+
+    public boolean isDoNotCreateExcelFiles() { return doNotCreateExcelFiles; }
 }

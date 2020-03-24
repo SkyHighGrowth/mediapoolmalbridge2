@@ -6,6 +6,7 @@ import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAssetsRequest;
 import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAssetsResponse;
 import MediaPoolMalBridge.clients.MAL.model.MALAssetType;
 import MediaPoolMalBridge.clients.rest.RestResponse;
+import MediaPoolMalBridge.config.MalIncludedAssetTypes;
 import MediaPoolMalBridge.config.MalPriorities;
 import MediaPoolMalBridge.persistence.entity.BM.BMAssetIdEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
@@ -50,6 +51,9 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
 
     @Autowired
     private MalPriorities malPriorities;
+
+    @Autowired
+    private MalIncludedAssetTypes includedAssetTypes;
 
     private String since;
 
@@ -107,9 +111,12 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
     protected void transformPageIntoAssets(final List<MALGetAsset> malGetAssets)
     {
         malGetAssets.forEach(malGetAsset -> {
-        			if (!StringUtils.equalsIgnoreCase(malGetAsset.getStatus(), "active")) {
+        			if ( !StringUtils.equalsIgnoreCase( malGetAsset.getStatus(), "active" ) ) {
         				return;
         			}
+        			if( !includedAssetTypes.isIncludedAssetType( malGetAsset.getAssetTypeId() ) ) {
+        			    return;
+                    }
         			if( StringUtils.isNotEmpty( malGetAsset.getBrandId() ) && !malPriorities.contains( malGetAsset.getBrandId() ) ) {
         			    //logger.error( "DOES not contain {}", malGetAsset.getBrandId() );
         			    return;
