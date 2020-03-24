@@ -183,7 +183,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                             row[43] = malPropertyEntity.getPropertyId();
                             rows.add(row);
 
-                            List<AssetEntity> assetEntities = assetRepository.findPropertyAssets(malPropertyEntity.getPropertyId(), "1", getMidnightBridgeLookInThePast());
+                            List<AssetEntity> assetEntities = assetRepository.findPropertyAssets(malPropertyEntity.getPropertyId(), "1", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
                             if (assetEntities != null && !assetEntities.isEmpty()) {
                                 assetEntities.forEach(assetEntity ->
                                         addRow(rows, assetEntity, propertyVariant.getSubName(), malPropertyEntity.getPropertyId()));

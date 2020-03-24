@@ -33,7 +33,7 @@ import java.util.Map;
  * end points will not have an effect on assets in database
  */
 @RestController
-@Profile("dev")
+@Profile("enable controllers")
 public class BMClientController {
 
     private final BMDeleteAssetClient bmDeleteAssetClient;

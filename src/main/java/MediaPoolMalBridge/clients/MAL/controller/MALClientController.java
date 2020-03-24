@@ -58,7 +58,7 @@ import org.springframework.web.bind.annotation.RestController;
  * when dev profile is active
  */
 @RestController
-@Profile("dev")
+@Profile("enable controllers")
 public class MALClientController {
 
     private static Logger logger = LoggerFactory.getLogger(MALClientController.class);

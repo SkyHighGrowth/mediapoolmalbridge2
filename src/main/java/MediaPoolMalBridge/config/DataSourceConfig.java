@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 /**
  * Datasource configuration bean
  */
+@Profile( "standalone" )
 @Configuration
 public class DataSourceConfig {
 
@@ -20,7 +21,7 @@ public class DataSourceConfig {
      * @return
      */
     @Bean( "DataSource" )
-    @Profile( {"dev", "!production"})
+    @Profile( {"standalone", "dev", "!production"})
     public DataSource getDataSourceDev(final AppConfig appConfig)
     {
         final HikariConfig hikariConfig = new HikariConfig();
@@ -41,7 +42,7 @@ public class DataSourceConfig {
      * @return
      */
     @Bean( "DataSource" )
-    @Profile( {"production", "!dev"} )
+    @Profile( {"standalone", "production", "!dev"} )
     public DataSource getDataSourceProduction(final AppConfig appConfig)
     {
         final HikariConfig hikariConfig = new HikariConfig();

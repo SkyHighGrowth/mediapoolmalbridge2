@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller that triggers sftp file upload
  */
 @RestController
-@Profile("dev")
+@Profile("enable controllers")
 public class BridgeController {
 
     /**

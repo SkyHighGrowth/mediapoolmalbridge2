@@ -47,7 +47,9 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
     @Override
     public void scheduled() {
         deleteFiles();
-        listFilesInTempFolder();
+        if( !appConfig.isDisableAbsoluteDelete() ) {
+            listFilesInTempFolder();
+        }
     }
 
     private void listFilesInTempFolder() {
@@ -55,26 +57,26 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
         if(files == null || files.length == 0 ) {
             return;
         }
+        final LocalDateTime pointInTime = getTodayMidnight().minusDays( appConfig.getAssetFileMaximalLivingDaysOnDisc() );
         BasicFileAttributes attributes = null;
         for (final File file : files) {
+            logger.error( "DELETING list from temp folder {}", file.getAbsolutePath() );
             if (file.isFile()) {
                 try
                 {
                     attributes = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
-                    final LocalDateTime lastModified = Instant.ofEpochSecond( attributes.lastModifiedTime()
+                    final LocalDateTime creationTime = Instant.ofEpochSecond( attributes.creationTime()
                             .to(TimeUnit.SECONDS ) )
                             .atOffset( ZoneOffset.UTC )
-                            .toLocalDateTime()
-                            .plusDays( 5L );
-                    if( lastModified.isBefore( getTodayMidnight() ) ) {
+                            .toLocalDateTime();
+                    if( creationTime.isBefore( pointInTime ) ) {
                         final UploadedFileEntity uploadedFileEntity = new UploadedFileEntity( file.getName() );
                         uploadedFileRepository.save( uploadedFileEntity );
                     }
                 }
                 catch (final Exception e)
                 {
-                    System.out.println("Exception handled when trying to get file " +
-                            "attributes: " + e.getMessage());
+                    logger.error("Exception handled when trying to get file attributes: " + e.getMessage());
                 }
             }
         }
@@ -84,8 +86,9 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
         boolean condition = true;
         try {
             for (int page = 0; condition; ++page) {
-                final List<UploadedFileEntity> fileEntities = uploadedFileRepository.findAllByDeletedAndFileStateOnDiscNot(
-                        false, FileStateOnDisc.NO_ERROR, PageRequest.of(0, appConfig.getDatabasePageSize()));
+                final List<UploadedFileEntity> fileEntities = uploadedFileRepository.findByDeletedAndFileStateOnDiscAndCreatedIsBefore(
+                        false, FileStateOnDisc.NO_ERROR, getTodayMidnight().minusDays( appConfig.getBridgeLookInThePastDays() + appConfig.getBridgeResolverWindow() + 1 ), PageRequest.of(0, appConfig.getDatabasePageSize()));
+                //logger.info( "DELETING FILES {} for page {}", (new Gson()).toJson(fileEntities), page);
                 if( fileEntities.isEmpty() || page > 1000 ) {
                     break;
                 }
@@ -104,6 +107,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
     {
         fileEntities.forEach(fileEntity -> {
             final File file = new File(appConfig.getTempDir() + fileEntity.getFilename());
+            //logger.info( "DELETING FILE {}", file.getAbsolutePath());
             if (!file.delete()) {
                 final String message = String.format("Can not delete file [%s]", fileEntity.getFilename());
                 logger.error(message);

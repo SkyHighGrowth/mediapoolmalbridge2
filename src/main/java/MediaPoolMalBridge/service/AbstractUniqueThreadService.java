@@ -95,9 +95,9 @@ public abstract class AbstractUniqueThreadService extends AbstractService {
             boolean condition = true;
             final List<Integer> orderedPriorities = malPriorities.getOrderedPriorities();
             for( final Integer priority : orderedPriorities ) {
-                logger.error( "executing for priority {}", priority );
+                //logger.error( "executing for priority {}", priority );
                 for( final String  brandId : malPriorities.getBrandIdsForPriority(priority) ) {
-                    logger.error( "executing for brandId {}", brandId );
+                    //logger.error( "executing for brandId {}", brandId );
                     for (int page = 0; condition; ++page) {
                         final List<AssetEntity> assetEntities = getAssetEntitiesWithBrand(fromStatus, brandId);
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller that triggers {@link BMDownloadThemeUniqueThreadService} and {@link BMFireUploadThemeUniqueThreadService}
  */
 @RestController
-@Profile("dev")
+@Profile("enable controllers")
 public class BMThemeController {
 
     private BMDownloadThemeUniqueThreadService bmDownloadThemeUniqueThreadService;

@@ -29,18 +29,41 @@ public class AppConfig {
                       final Environment environment,
                       final ObjectMapper objectMapper )
     {
+
         if(Arrays.asList( environment.getActiveProfiles() ).contains( "dev" ) &&
-           Arrays.asList( environment.getActiveProfiles() ).contains( "production" ) ) {
+                Arrays.asList( environment.getActiveProfiles() ).contains( "production" ) ) {
             logger.error( "Can not start with profiles dev and production set at the same time" );
             throw new RuntimeException( "Can not start with profiles dev and production set at the same time" );
         }
-        this.appConfigData = appConfigData;
 
-        File file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR);
+        File file = new File( "/data/skyhigh" + File.separator + Constants.APPLICATION_DIR);
+        //File file = new File( "C:/Users/User" + File.separator + Constants.APPLICATION_DIR);
         if (!file.exists()) {
             if (!file.mkdir()) {
                 logger.info("Dir {} can not be created", file.getAbsolutePath());
                 throw new RuntimeException();
+            }
+        }
+
+        final String filePath = "/data/skyhigh" + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
+        //final String filePath = "C:/Users/User" + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
+        file = new File( filePath );
+        logger.info( "FILE PATH {}", file.getAbsolutePath() );
+        if( file.exists() ) {
+            try {
+                this.appConfigData = objectMapper.readValue( file, AppConfigData.class );
+                logger.info( "App config data loaded {}", (new Gson()).toJson(this.appConfigData) );
+            } catch (final Exception e) {
+                logger.error( "Fatal: Can not parse application.properties.json", e );
+                throw new RuntimeException( "Fatal: Can not parse application.properties.json" );
+            }
+        } else {
+            try {
+                this.appConfigData = appConfigData;
+                objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, appConfigData);
+                logger.info( "Using default app config data loaded {}", (new Gson()).toJson(this.appConfigData) );
+            } catch (final Exception e) {
+                logger.error("Can not write to file {}", file.getAbsolutePath(), e);
             }
         }
 
@@ -67,25 +90,10 @@ public class AppConfig {
                 throw new RuntimeException();
             }
         }
+    }
 
-        final String filePath = getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
-        file = new File( filePath );
-        logger.info( "FILE PATH {}", file.getAbsolutePath() );
-        if( file.exists() ) {
-            try {
-                this.appConfigData = objectMapper.readValue( file, AppConfigData.class);
-                logger.info( "App config data loaded {}", (new Gson()).toJson(this.appConfigData) );
-            } catch (final Exception e) {
-                logger.error( "Fatal: Can not parse application.properties.json", e );
-                throw new RuntimeException( "Fatal: Can not parse application.properties.json" );
-            }
-        } else {
-            try {
-                objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, appConfigData);
-            } catch (final Exception e) {
-                logger.error("Can not write to file {}", file.getAbsolutePath(), e);
-            }
-        }
+    public AppConfigData getAppConfigData() {
+        return appConfigData;
     }
 
     public String getTempDir() {
@@ -242,6 +250,10 @@ public class AppConfig {
         return appConfigData.getBridgeLookInThePastDays();
     }
 
+    public int getBridgeResolverWindow() {
+        return appConfigData.getBridgeResolverWindow();
+    }
+
     public String getBmExchangeSchedulerCronExpression() {
         return appConfigData.getBmExchangeSchedulerCronExpression();
     }
@@ -278,7 +290,13 @@ public class AppConfig {
         return appConfigData.getBridgeSendMailCronExpression();
     }
 
-    public String getBridgeAssetOnBoardingCronExpression() { return appConfigData.getBridgeAssetOnBoardingCronExpression(); }
+    public String getBridgeAssetOnBoardingCronExpression() {
+        return appConfigData.getBridgeAssetOnBoardingCronExpression();
+    }
+
+    public String getBridgeAssetResolverCronExpression() {
+        return appConfigData.getBridgeAssetResolverCronExpression();
+    }
 
     public String getMalAssetCronExpression() {
         return appConfigData.getMalAssetCronExpression();
@@ -370,4 +388,14 @@ public class AppConfig {
     public String getWorkingDirectory() {
         return appConfigData.getWorkingDirectory();
     }
+
+    public int getAssetFileMaximalLivingDaysOnDisc() {
+        return appConfigData.getAssetFileMaximalLivingDaysOnDisc();
+    }
+
+    public Map<String, String> getIncludedAssetTypes() { return appConfigData.getIncludedAssetTypes(); }
+
+    public boolean isDisableAbsoluteDelete() { return appConfigData.isDisableAbsoluteDelete(); }
+
+    public boolean isDoNotCreateExcelFiles() { return appConfigData.isDoNotCreateExcelFiles(); }
 }

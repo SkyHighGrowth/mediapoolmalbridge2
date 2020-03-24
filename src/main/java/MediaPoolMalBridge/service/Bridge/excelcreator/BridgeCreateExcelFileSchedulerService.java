@@ -1,7 +1,7 @@
 package MediaPoolMalBridge.service.Bridge.excelcreator;
 
 import MediaPoolMalBridge.service.AbstractSchedulerService;
-import MediaPoolMalBridge.service.Bridge.excelcreator.excelfilesserver6_5.BridgeCreateExcelFileUniqueThreadService;
+import MediaPoolMalBridge.service.Bridge.excelcreator.excelfilesserver6_5.BridgeCreateExcelXSSFFileUniqueThreadService;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
@@ -15,22 +15,26 @@ import javax.annotation.PostConstruct;
 @DependsOn( "BridgeDatabaseNormalizerService" )
 public class BridgeCreateExcelFileSchedulerService extends AbstractSchedulerService {
 
-    private final BridgeCreateExcelFileUniqueThreadService bridgeCreateExcelFileUniqueThreadService;
+    private final BridgeCreateExcelXSSFFileUniqueThreadService bridgeCreateExcelXSSFFileUniqueThreadService;
 
-    public BridgeCreateExcelFileSchedulerService(final BridgeCreateExcelFileUniqueThreadService bridgeCreateExcelFileUniqueThreadService)
+    public BridgeCreateExcelFileSchedulerService(final BridgeCreateExcelXSSFFileUniqueThreadService bridgeCreateExcelXSSFFileUniqueThreadService)
     {
-        this.bridgeCreateExcelFileUniqueThreadService = bridgeCreateExcelFileUniqueThreadService;
+        this.bridgeCreateExcelXSSFFileUniqueThreadService = bridgeCreateExcelXSSFFileUniqueThreadService;
     }
 
     @PostConstruct
     public void scheduleExcelFileCreation()
     {
-        taskSchedulerWrapper.getTaskScheduler().schedule( this::run, new CronTrigger(appConfig.getBridgeExcelFilesCronExpression()) );
+        if( !appConfig.isDoNotCreateExcelFiles() ) {
+            taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getBridgeExcelFilesCronExpression()));
+        }
     }
 
     @Override
     public void scheduled()
     {
-        bridgeCreateExcelFileUniqueThreadService.start();
+        if( !appConfig.isDoNotCreateExcelFiles() ) {
+            bridgeCreateExcelXSSFFileUniqueThreadService.start();
+        }
     }
 }
