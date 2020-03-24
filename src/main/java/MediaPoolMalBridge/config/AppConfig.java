@@ -392,4 +392,10 @@ public class AppConfig {
     public int getAssetFileMaximalLivingDaysOnDisc() {
         return appConfigData.getAssetFileMaximalLivingDaysOnDisc();
     }
+
+    public Map<String, String> getIncludedAssetTypes() { return appConfigData.getIncludedAssetTypes(); }
+
+    public boolean isDisableAbsoluteDelete() { return appConfigData.isDisableAbsoluteDelete(); }
+
+    public boolean isDoNotCreateExcelFiles() { return appConfigData.isDoNotCreateExcelFiles(); }
 }

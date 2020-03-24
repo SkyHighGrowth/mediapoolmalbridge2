@@ -27,16 +27,16 @@ public class ReportsEntity {
     @Column( name = "logger_name" )
     private String loggerName;
 
-    @Column( name = "message" )
+    @Column( name = "message", columnDefinition="LONGTEXT" )
     private String message;
 
-    @Column( name = "jsoned_object_01" )
+    @Column( name = "jsoned_object_01", columnDefinition="LONGTEXT" )
     private String jsonedObject01;
 
-    @Column( name = "jsoned_object_02" )
+    @Column( name = "jsoned_object_02", columnDefinition="LONGTEXT" )
     private String jsonedObject02;
 
-    @Column( name = "jsoned_object_03" )
+    @Column( name = "jsoned_object_03", columnDefinition="LONGTEXT" )
     private String jsonedObject03;
 
     @Column( name = "report_to" )
