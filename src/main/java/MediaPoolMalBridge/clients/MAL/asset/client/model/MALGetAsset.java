@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
                     "description", "limitedRights", "rightsManaged", "usageDescription",
                     "instructions", "collectionId", "destionationId", "subjectId",
                     "colorId", "fileTypeId", "zipped", "status", "dateCreated",
-                    "lastModified", "metadata", "thumbnailUrl", "mediumUrl",
+                    "lastModified", "metadata", "thumbnailUrl", "mediumUrl", "highUrl",
                     "largeUrl", "logoJpgUrl", "logoPngUrl", "xlUrl", "offerName",
                     "offerUrl", "width", "height", "isStock", "mimeType" })
 public class MALGetAsset {
@@ -168,6 +168,12 @@ public class MALGetAsset {
      */
     @SerializedName("medium_url")
     private String mediumUrl;
+
+    /**
+     * MAL asset high url
+     */
+    @SerializedName("high_url")
+    private String highUrl;
 
     /**
      * MAL asset large url
@@ -441,6 +447,14 @@ public class MALGetAsset {
 
     public void setLargeUrl(String largeUrl) {
         this.largeUrl = largeUrl;
+    }
+
+    public String getHighUrl() {
+        return highUrl;
+    }
+
+    public void setHighUrl(String highUrl) {
+        this.highUrl = highUrl;
     }
 
     public String getLogoJpgUrl() {

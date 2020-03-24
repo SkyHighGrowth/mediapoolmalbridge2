@@ -21,6 +21,11 @@ public class Constants {
     public final static String LARGE_FILE_PREFIX = "large_";
 
     /**
+     * prefix appended to download file if high link is downloaded
+     */
+    public final static String HIGH_FILE_PREFIX = "high_";
+
+    /**
      * prefix appended to downloaded file if logo JPG link is downloaded
      */
     public final static String LOGO_JPG_FILE_PREFIX = "logoJpg_";
