@@ -3,7 +3,10 @@ package MediaPoolMalBridge.persistence.repository.Bridge;
 import MediaPoolMalBridge.persistence.entity.Bridge.UploadedFileEntity;
 import MediaPoolMalBridge.persistence.entity.enums.FileStateOnDisc;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,4 +21,10 @@ public interface UploadedFileRepository extends CrudRepository<UploadedFileEntit
 
     List<UploadedFileEntity> findByDeletedAndFileStateOnDiscAndCreatedIsBefore(
             final boolean deleted, final FileStateOnDisc fileStateOnDisc, final LocalDateTime created, final Pageable page );
+
+    @Transactional
+    @Modifying
+    @Query( "delete from UploadedFileEntity ufe " +
+            "where ufe.created < :dateTime ")
+    void deleteRowsInThePast(final LocalDateTime dateTime );
 }

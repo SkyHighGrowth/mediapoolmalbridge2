@@ -254,6 +254,8 @@ public class AppConfig {
         return appConfigData.getBridgeResolverWindow();
     }
 
+    public int getBridgeDatabaseRowsDeleterDays() { return appConfigData.getBridgeDatabaseRowsDeleterDays(); }
+
     public String getBmExchangeSchedulerCronExpression() {
         return appConfigData.getBmExchangeSchedulerCronExpression();
     }
@@ -273,6 +275,8 @@ public class AppConfig {
     public String getBridgeDeleteFileCronExpression() {
         return appConfigData.getBridgeDeleteFileCronExpression();
     }
+
+    public String getBridgeDatabaseRowsDeleterCronExpression() { return appConfigData.getBridgeDatabaseRowsDeleterCronExpression(); }
 
     public String getBridgeExcelFilesCronExpression() {
         return appConfigData.getBridgeExcelFilesCronExpression();
