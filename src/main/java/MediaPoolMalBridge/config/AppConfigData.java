@@ -217,7 +217,7 @@ public class AppConfigData {
     /**
      * number of days after which rows are deleted from database
      */
-    @Value( "${bridge.resolver.window.days:31}" )
+    @Value( "${bridge.deletedatabaserows.window.days:31}" )
     private int bridgeDatabaseRowsDeleterDays;
     /**
      * database querries page size
