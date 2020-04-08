@@ -215,6 +215,11 @@ public class AppConfigData {
     @Value( "${bridge.resolver.window.days:1}")
     private int bridgeResolverWindow;
     /**
+     * number of days after which rows are deleted from database
+     */
+    @Value( "${bridge.deletedatabaserows.window.days:31}" )
+    private int bridgeDatabaseRowsDeleterDays;
+    /**
      * database querries page size
      */
     @Value( "${bridge.database.page.size:2000}" )
@@ -250,6 +255,12 @@ public class AppConfigData {
      */
     @Value( "${scheduler.bridgedeletefiles.cron.expression:0 0 */1 * * *}" )
     private String bridgeDeleteFileCronExpression;
+    /**
+     * delete rows in database tables that are created in the past,
+     * past is described bridgeDatabaseRowsDeleterDays
+     */
+    @Value( "${scheduler.bridgedeletedatabaserows.cron.expression:0 0 0 */1 * *}" )
+    private String bridgeDatabaseRowsDeleterCronExpression;
     /**
      * excel file creation scheduler cron expression
      */
@@ -536,6 +547,8 @@ public class AppConfigData {
 
     public int getBridgeResolverWindow() { return bridgeResolverWindow; }
 
+    public int getBridgeDatabaseRowsDeleterDays() { return bridgeDatabaseRowsDeleterDays; }
+
     public int getAssetFileMaximalLivingDaysOnDisc() {
         return assetFileMaximalLivingDaysOnDisc;
     }
@@ -569,6 +582,8 @@ public class AppConfigData {
     public String getBridgeDeleteFileCronExpression() {
         return bridgeDeleteFileCronExpression;
     }
+
+    public String getBridgeDatabaseRowsDeleterCronExpression() { return bridgeDatabaseRowsDeleterCronExpression; }
 
     public String getBridgeExcelFilesCronExpression() {
         return bridgeExcelFilesCronExpression;

@@ -98,8 +98,8 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                         //final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findByBrandAndUpdatedIsAfter(brandName, getMidnightBridgeLookInThePast());
                         final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findByBrandAndMalPropertyStatus(brandName, MALPropertyStatus.OBSERVED);
                         for( final MALPropertyEntity malPropertyEntity : malPropertyEntities ) {
-                            final String combinedAddressField = digestCombinedAddressField( propertyVariant, malPropertyEntity );
-                            digestLogos( sheet, propertyVariant, malPropertyEntity, combinedAddressField );
+                            final String[] combinedAddressFields = digestCombinedAddressField( propertyVariant, malPropertyEntity );
+                            digestLogos( sheet, propertyVariant, malPropertyEntity, combinedAddressFields );
                             digestAssets( sheet, propertyVariant, malPropertyEntity );
                             digestMaps( sheet, propertyVariant, malPropertyEntity );
                             digestFloorTypes( sheet, propertyVariant, malPropertyEntity );
@@ -119,7 +119,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         floorTypes[1] = "Fgr";
         int order = 1;
         for (final String floorType : floorTypes) {
-            final List<AssetEntity> assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "5", floorType, TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+            final List<AssetEntity> assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "13", floorType, TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
             if (assetEntities != null && !assetEntities.isEmpty()) {
                 for( final AssetEntity assetEntity : assetEntities ) {
                     final List<AttributeShort> attributes = new ArrayList<>();
@@ -141,7 +141,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         mapColors[2] = "Mrm";
         int order = 1;
         for (final String mapColor : mapColors) {
-            final List<AssetEntity> assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "5", mapColor, TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+            final List<AssetEntity> assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "12", mapColor, TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
             if (assetEntities != null && !assetEntities.isEmpty()) {
                 for( final AssetEntity assetEntity : assetEntities ) {
                     final List<AttributeShort> attributes = new ArrayList<>();
@@ -241,7 +241,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private void digestLogos( final Sheet sheet, MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity, final String combinedAddressField ) throws Exception {
+    private void digestLogos( final Sheet sheet, MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity, final String[] combinedAddressFields ) throws Exception {
         final List<Attribute> attributes = new ArrayList<>();
         List<AssetEntity> logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
         String propertyLogo1c = "";
@@ -723,7 +723,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                 null,
                 malPropertyEntity.getName() ) );
         attributes.add( new Attribute( 2,
-                "AFFILIATE_CODE",
+                "AFFILIATES_CODE",
                 "Property Number",
                 "",
                 1,
@@ -751,13 +751,37 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         //row[8] = malPropertyEntity.getAddress2();
         //row[9] = malPropertyEntity.getAddress();
         attributes.add( new Attribute( 34,
-                "CombinedAddress - Address 1 - Address 2",
-                "CombinedAddress - Address 1 - Address 2",
+                "CombinedAddress",
+                "CombinedAddress",
                 "",
                 -1,
                 "RICHTEXT",
                 new Props( 128 ),
-                combinedAddressField ) );
+                combinedAddressFields[ 0 ] ) );
+        attributes.add( new Attribute( 35,
+                "CombinedAddressAddress1",
+                "CombinedAddress - Address 1",
+                "",
+                -1,
+                "RICHTEXT",
+                new Props( 128 ),
+                combinedAddressFields[ 1 ] ) );
+        attributes.add( new Attribute( 36,
+                "CombinedAddressAddress1Bold",
+                "CombinedAddress - Address 1 - Bold",
+                "",
+                -1,
+                "RICHTEXT",
+                new Props( 128 ),
+                combinedAddressFields[ 2 ] ) );
+        attributes.add( new Attribute( 37,
+                "CombinedAddressAddress11stand2ndLineBold",
+                "CombinedAddress - Address 1 - 1st and 2nd Line Bold",
+                "",
+                -1,
+                "RICHTEXT",
+                new Props( 128 ),
+                combinedAddressFields[ 3 ] + combinedAddressFields[ 4 ] ) );
         attributes.add( new Attribute( 4,
                 "ADDRESS",
                 "Property Address",
@@ -868,7 +892,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         addRow(sheet, propertyVariant.getStructureName(), malPropertyEntity.getPropertyId(), malPropertyEntity.getName(), gsonWithNulls.toJson(attributes), null);
     }
 
-    private String digestCombinedAddressField( final MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity ) {
+    private String[] digestCombinedAddressField( final MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity ) {
         final String[] fields = propertyVariant.getFieldsArray();
         String addressField01 = propertyVariant.getAddressField01();
         String addressField02 = propertyVariant.getAddressField02();
@@ -921,7 +945,13 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                 addressField05 = addressField05.replace("{" + field + "}", replacement);
             }
         }
-        return addressField01 + addressField02 + addressField03 + addressField04 +addressField05;
+        final String[] addressFields = new String[ 5 ];
+        addressFields[ 0 ] = addressField01;
+        addressFields[ 1 ] = addressField02;
+        addressFields[ 2 ] = addressField03;
+        addressFields[ 3 ] = addressField04;
+        addressFields[ 4 ] = addressField05;
+        return addressFields;
     }
 
     private void createStructuresSheet( final Workbook workbook ) throws Exception {

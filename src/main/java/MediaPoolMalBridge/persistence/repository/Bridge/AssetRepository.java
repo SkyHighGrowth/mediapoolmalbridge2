@@ -5,8 +5,10 @@ import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -63,4 +65,10 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
 
     List<AssetEntity> findAllByUpdatedIsAfterAndUpdatedIsBeforeAndTransferringAssetStatus(
             final LocalDateTime from, final LocalDateTime to, final TransferringAssetStatus transferringAssetStatus, final Sort sort );
+
+    @Transactional
+    @Modifying
+    @Query( "delete from AssetEntity ae " +
+            "where ae.updated < :dateTime ")
+    void deleteRowsInThePast( final LocalDateTime dateTime );
 }
