@@ -12,6 +12,7 @@ build
 
 *.ipr
 *.iml
+*.target
 *.iws
 .idea/*
 
