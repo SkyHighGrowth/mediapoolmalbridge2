@@ -16,18 +16,18 @@
                 <logger>logger</logger>
             </fieldNames>
         </encoder>
-        <file>/data/skyhigh/marriott/logs/logFile.log</file>
+        <file>/home/strahinja/data/skyhigh/marriott/logs/logFile.log</file>
         <!--<file>${user.home}/marriott/logs/logFile.log</file>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--<fileNamePattern>${user.home}/marriott/logs/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>-->
-            <fileNamePattern>/data/skyhigh/marriott/logs/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>/home/strahinja/data/skyhigh/marriott/logs/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
             <totalSizeCap>100MB</totalSizeCap>
         </rollingPolicy>
     </appender>
 
 
-    <root level="info">
+    <root level="Info">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>

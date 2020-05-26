@@ -316,7 +316,7 @@ public class AppConfigData {
     /**
      * datasource url for dev profile
      */
-    @Value( "${spring.datasource.url.dev:jdbc:mysql://localhost:3306/maltobmbridge?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false&autoReconnect=true}")
+    @Value( "${spring.datasource.url.dev}")
     private String datasourceUrlDev;
     /**
      * datasource username for dev profile

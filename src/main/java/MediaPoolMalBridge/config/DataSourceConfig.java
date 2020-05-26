@@ -2,10 +2,15 @@ package MediaPoolMalBridge.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.catalina.startup.Tomcat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
+import org.springframework.jndi.JndiTemplate;
 
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 /**
@@ -15,6 +20,8 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig {
 
+    @Autowired
+    private Environment env;
     /**
      * dev profile
      * @param appConfig
@@ -55,4 +62,5 @@ public class DataSourceConfig {
         hikariConfig.setIdleTimeout( appConfig.getHikariIdleTimeout() );
         return new HikariDataSource( hikariConfig );
     }
+
 }

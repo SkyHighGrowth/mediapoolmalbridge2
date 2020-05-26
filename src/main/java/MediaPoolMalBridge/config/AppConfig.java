@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,8 @@ public class AppConfig {
 
     private AppConfigData appConfigData;
 
+    private String workDir = "/home/strahinja/data/skyhigh"; //change to /data/skyhigh
+
     public AppConfig( final AppConfigData appConfigData,
                       final Environment environment,
                       final ObjectMapper objectMapper )
@@ -36,7 +40,7 @@ public class AppConfig {
             throw new RuntimeException( "Can not start with profiles dev and production set at the same time" );
         }
 
-        File file = new File( "/data/skyhigh" + File.separator + Constants.APPLICATION_DIR);
+        File file = new File( workDir + File.separator + Constants.APPLICATION_DIR);
         //File file = new File( "C:/Users/User" + File.separator + Constants.APPLICATION_DIR);
         if (!file.exists()) {
             if (!file.mkdir()) {
@@ -44,8 +48,7 @@ public class AppConfig {
                 throw new RuntimeException();
             }
         }
-
-        final String filePath = "/data/skyhigh" + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
+        final String filePath = workDir + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
         //final String filePath = "C:/Users/User" + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
         file = new File( filePath );
         logger.info( "FILE PATH {}", file.getAbsolutePath() );
