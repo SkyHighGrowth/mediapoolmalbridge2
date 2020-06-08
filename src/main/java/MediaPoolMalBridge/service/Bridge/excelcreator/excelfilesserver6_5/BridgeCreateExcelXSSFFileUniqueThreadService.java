@@ -17,9 +17,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +34,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
     private static final Gson gsonWithNulls = new GsonBuilder().serializeNulls().create();
 
-    private MALAssetStructures assetStructures;
+    private final MALAssetStructures assetStructures;
 
     private int rowIndex = 0;
 
@@ -87,7 +85,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             cell.setCellStyle( headerFormat );
         }
 
-        MALAssetStructures.getPropertyVariants().values().forEach(
+        assetStructures.getPropertyVariants().values().forEach(
                 propertyVariant -> {
                     //logger.error( "CRESTING OBJECTS VARIANTS {}", (new Gson()).toJson( propertyVariant ) );
                     try {
@@ -973,7 +971,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             cell.setCellStyle( headerFormat );
         }
 
-        for( final MALPropertyVariant malPropertyVariant : MALAssetStructures.getPropertyVariants().values() ) {
+        for( final MALPropertyVariant malPropertyVariant : assetStructures.getPropertyVariants().values() ) {
             //parent
             row = sheet.createRow( rowIndex++ );
 

@@ -34,7 +34,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
 
     private static final Gson gsonWithNulls = new GsonBuilder().serializeNulls().create();
 
-    private MALAssetStructures assetStructures;
+    private final MALAssetStructures assetStructures;
 
     private int rowIndex = 0;
 
@@ -80,7 +80,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             sheet.addCell(headerLabel);
         }
 
-        MALAssetStructures.getPropertyVariants().values().forEach(
+        assetStructures.getPropertyVariants().values().forEach(
                 propertyVariant -> {
                     //logger.error( "CRESTING OBJECTS VARIANTS {}", (new Gson()).toJson( propertyVariant ) );
                     try {
@@ -946,7 +946,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             sheet.addCell(headerLabel);
         }
 
-        for( final MALPropertyVariant malPropertyVariant : MALAssetStructures.getPropertyVariants().values() ) {
+        for( final MALPropertyVariant malPropertyVariant : assetStructures.getPropertyVariants().values() ) {
             //parent
             ++rowIndex;
             colIndex = 0;
