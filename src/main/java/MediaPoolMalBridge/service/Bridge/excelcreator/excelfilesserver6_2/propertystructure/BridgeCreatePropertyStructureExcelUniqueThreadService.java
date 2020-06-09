@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 public class BridgeCreatePropertyStructureExcelUniqueThreadService extends AbstractBridgeUniqueExcelService {
 
-    private MALAssetStructures assetStructures;
+    private final MALAssetStructures assetStructures;
 
     public BridgeCreatePropertyStructureExcelUniqueThreadService(final MALAssetStructures assetStructures )
     {
@@ -32,7 +32,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
     @Override
     protected void run()
     {
-        MALAssetStructures.getPropertyVariants().values().forEach(
+        assetStructures.getPropertyVariants().values().forEach(
                 propertyVariant -> {
                     try {
                         final String[] fields = propertyVariant.getFieldsArray();
