@@ -27,7 +27,7 @@ public class AppConfig {
 
     private AppConfigData appConfigData;
 
-    private String workDir = "/home/strahinja/data/skyhigh"; //change to /data/skyhigh
+    private String workDir = "/data/skyhigh"; //change to /data/skyhigh
 
     public AppConfig( final AppConfigData appConfigData,
                       final Environment environment,
