@@ -5,13 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +26,7 @@ import java.util.Map;
 @DependsOn( "AppConfigData" )
 public class AppConfig {
 
-    private static Logger logger = LoggerFactory.getLogger(AppConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
 
     private AppConfigData appConfigData;
 
@@ -68,6 +71,22 @@ public class AppConfig {
             } catch (final Exception e) {
                 logger.error("Can not write to file {}", file.getAbsolutePath(), e);
             }
+        }
+
+        // Copy resources/propertyVariants.json file to data/skyhigh folder
+        File propertyVariantsFile = null;
+        File dataPropertyVariantsFile = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON);
+        try {
+            if (!dataPropertyVariantsFile.exists()) {
+                propertyVariantsFile = ResourceUtils.getFile("classpath:propertyVariants.json");
+                Files.copy(propertyVariantsFile.toPath(), dataPropertyVariantsFile.toPath(),
+                        StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            logger.error("Can not write to file {}", dataPropertyVariantsFile.getAbsolutePath(), e);
+        } catch (IOException e) {
+            logger.error("Not able to copy file {}", propertyVariantsFile.getAbsolutePath(), e);
         }
 
         file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR );

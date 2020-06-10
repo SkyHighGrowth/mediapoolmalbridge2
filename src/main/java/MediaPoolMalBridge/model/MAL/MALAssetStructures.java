@@ -1,15 +1,16 @@
 package MediaPoolMalBridge.model.MAL;
 
+import MediaPoolMalBridge.config.AppConfig;
+import MediaPoolMalBridge.constants.Constants;
 import MediaPoolMalBridge.model.MAL.propertyvariants.MALPropertyVariant;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,18 +18,24 @@ import java.util.Map;
 @Component
 public class MALAssetStructures {
 
-    public MALAssetStructures() {
+    private static final Logger logger = LoggerFactory.getLogger(MALAssetStructures.class);
+
+    private final AppConfig appConfig;
+
+    public MALAssetStructures(AppConfig appConfig) {
+        this.appConfig = appConfig;
         initAssetStructures();
     }
 
     private void initAssetStructures() {
         FileReader reader = null;
-        File file;
+        File file = null;
+        String filePath = appConfig.getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON;
         try {
-            file = ResourceUtils.getFile("classpath:propertyVariants.json");
+            file = new File(filePath);
             reader = new FileReader(file);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("Can not find file {}", file.getAbsolutePath(), e);
         }
 
         assert reader != null;
