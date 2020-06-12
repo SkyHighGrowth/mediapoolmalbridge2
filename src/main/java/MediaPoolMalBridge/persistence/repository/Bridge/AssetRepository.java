@@ -71,4 +71,5 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
     @Query( "delete from AssetEntity ae " +
             "where ae.updated < :dateTime ")
     void deleteRowsInThePast( final LocalDateTime dateTime );
+
 }
