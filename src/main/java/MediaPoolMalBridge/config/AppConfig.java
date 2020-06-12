@@ -74,19 +74,20 @@ public class AppConfig {
         }
 
         // Copy resources/propertyVariants.json file to data/skyhigh folder
-        File propertyVariantsFile = null;
-        File dataPropertyVariantsFile = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON);
-        try {
-            if (!dataPropertyVariantsFile.exists()) {
-                propertyVariantsFile = ResourceUtils.getFile("classpath:propertyVariants.json");
-                Files.copy(propertyVariantsFile.toPath(), dataPropertyVariantsFile.toPath(),
-                        StandardCopyOption.REPLACE_EXISTING);
+        if (file.exists()) {
+            File propertyVariantsFile = null;
+            File dataPropertyVariantsFile = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON);
+            try {
+                if (!dataPropertyVariantsFile.exists()) {
+                    propertyVariantsFile = ResourceUtils.getFile("classpath:propertyVariants.json");
+                    Files.copy(propertyVariantsFile.toPath(), dataPropertyVariantsFile.toPath(),
+                            StandardCopyOption.REPLACE_EXISTING);
+                }
+            } catch (FileNotFoundException e) {
+                logger.error("Can not write to file {}", dataPropertyVariantsFile.getAbsolutePath(), e);
+            } catch (IOException e) {
+                logger.error("Not able to copy file {}", propertyVariantsFile.getAbsolutePath(), e);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            logger.error("Can not write to file {}", dataPropertyVariantsFile.getAbsolutePath(), e);
-        } catch (IOException e) {
-            logger.error("Not able to copy file {}", propertyVariantsFile.getAbsolutePath(), e);
         }
 
         file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR );

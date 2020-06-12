@@ -29,19 +29,26 @@ public class MALAssetStructures {
 
     private void initAssetStructures() {
         FileReader reader = null;
-        File file = null;
-        String filePath = appConfig.getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON;
-        try {
-            file = new File(filePath);
-            reader = new FileReader(file);
-        } catch (FileNotFoundException e) {
-            logger.error("Can not find file {}", file.getAbsolutePath(), e);
-        }
+        File propertyVariantsFile;
+        String workingDirectoryPath = appConfig.getWorkingDirectory();
+        File workingDirectory = new File(workingDirectoryPath);
+        if (workingDirectory.exists()) {
+            String filePath = workingDirectoryPath + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON;
+            propertyVariantsFile = new File(filePath);
+            if (propertyVariantsFile.exists()) {
+                try {
+                    reader = new FileReader(propertyVariantsFile);
+                } catch (FileNotFoundException e) {
+                    logger.error("Can not find file {}", propertyVariantsFile.getAbsolutePath(), e);
+                }
 
-        assert reader != null;
-        Type type = new TypeToken<Map<Integer, MALPropertyVariant>>(){}.getType();
-        Map<Integer, MALPropertyVariant> propertyVariants = (new Gson()).fromJson(new JsonReader(reader), type);
-        this.setPropertyVariants(propertyVariants);
+                assert reader != null;
+                Type type = new TypeToken<Map<Integer, MALPropertyVariant>>() {
+                }.getType();
+                Map<Integer, MALPropertyVariant> propertyVariants = (new Gson()).fromJson(new JsonReader(reader), type);
+                this.setPropertyVariants(propertyVariants);
+            }
+        }
     }
 
     private Map<String, String> brands = new HashMap<>();
