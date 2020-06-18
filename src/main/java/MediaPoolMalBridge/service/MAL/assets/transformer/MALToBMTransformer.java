@@ -1,13 +1,14 @@
 package MediaPoolMalBridge.service.MAL.assets.transformer;
 
-        import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAsset;
-        import MediaPoolMalBridge.model.MAL.MALAssetStructures;
-        import MediaPoolMalBridge.service.BrandMaker.theme.themeid.model.BMThemePathToId;
-        import com.brandmaker.webservices.mediapool.LanguageItem;
-        import com.brandmaker.webservices.mediapool.ThemeDto;
-        import com.brandmaker.webservices.mediapool.UploadMetadataArgument;
-        import org.apache.commons.lang3.StringUtils;
-        import org.springframework.stereotype.Component;
+import MediaPoolMalBridge.clients.MAL.asset.client.model.MALGetAsset;
+import MediaPoolMalBridge.config.AppConfig;
+import MediaPoolMalBridge.model.MAL.MALAssetStructures;
+import MediaPoolMalBridge.service.BrandMaker.theme.themeid.model.BMThemePathToId;
+import com.brandmaker.webservices.mediapool.LanguageItem;
+import com.brandmaker.webservices.mediapool.ThemeDto;
+import com.brandmaker.webservices.mediapool.UploadMetadataArgument;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 /**
  * Transformer that transforms {@link MALGetAsset} into {@link UploadMetadataArgument}
@@ -15,14 +16,17 @@ package MediaPoolMalBridge.service.MAL.assets.transformer;
 @Component
 public class MALToBMTransformer {
 
-    private MALAssetStructures assetStructures;
+    private final MALAssetStructures assetStructures;
 
-    private BMThemePathToId bmThemePathToId;
+    private final BMThemePathToId bmThemePathToId;
+
+    private AppConfig appConfig;
 
     public MALToBMTransformer(final MALAssetStructures assetStructures,
-                              final BMThemePathToId bmThemePathToId) {
+                              final BMThemePathToId bmThemePathToId, AppConfig appConfig) {
         this.assetStructures = assetStructures;
         this.bmThemePathToId = bmThemePathToId;
+        this.appConfig = appConfig;
     }
 
     public UploadMetadataArgument transformToUploadMetadataArgument(final MALGetAsset malGetAsset) {
@@ -46,46 +50,54 @@ public class MALToBMTransformer {
         themeDto.setName("Implementation/Pictures");
         uploadMetadataArgument.getAssociations().add(themeDto);
 
-        String temp = assetStructures.getAssetTypes().get(malGetAsset.getAssetTypeId());
-        if (StringUtils.isNotBlank(temp)) {
+        String assetType = assetStructures.getAssetTypes().get( malGetAsset.getAssetTypeId() );
+        if ( StringUtils.isNotBlank( assetType ) ) {
             themeDto = new ThemeDto();
-            themeDto.setName("Asset Types/" + temp);
-            uploadMetadataArgument.getAssociations().add(themeDto);
+            themeDto.setName( "Asset Types/" +  assetType );
+            uploadMetadataArgument.getAssociations().add( themeDto );
         }
 
-        temp = assetStructures.getBrands().get(malGetAsset.getBrandId());
-        if (StringUtils.isNotEmpty(temp)) {
+        String brandId = assetStructures.getBrands().get( malGetAsset.getBrandId() );
+        if (StringUtils.isNotEmpty( brandId ) ) {
             themeDto = new ThemeDto();
-            themeDto.setName("Brands/" + temp);
-            uploadMetadataArgument.getAssociations().add(themeDto);
+            themeDto.setName( "Brands/" + brandId );
+            uploadMetadataArgument.getAssociations().add( themeDto );
         }
 
-        temp = assetStructures.getCollections().get(malGetAsset.getCollectionId());
-        if (StringUtils.isNotEmpty(temp)) {
+        String collectionId = assetStructures.getCollections().get( malGetAsset.getCollectionId() );
+        if (StringUtils.isNotEmpty( collectionId ) ) {
             themeDto = new ThemeDto();
-            themeDto.setName("Collections/" + temp);
-            uploadMetadataArgument.getAssociations().add(themeDto);
+            themeDto.setName( "Collections/" + collectionId );
+            uploadMetadataArgument.getAssociations().add( themeDto );
         }
 
-        temp = assetStructures.getDestinations().get(malGetAsset.getDestionationId());
-        if (StringUtils.isNotEmpty(temp)) {
+        String destinationId = assetStructures.getDestinations().get( malGetAsset.getDestionationId() );
+        if (StringUtils.isNotEmpty( destinationId ) ) {
             themeDto = new ThemeDto();
-            bmThemePathToId.addThemePath("Destinations/" + temp);
-            themeDto.setName(temp);
-            uploadMetadataArgument.getAssociations().add(themeDto);
+            bmThemePathToId.addThemePath( "Destinations/" + destinationId );
+            themeDto.setName( destinationId );
+            uploadMetadataArgument.getAssociations().add( themeDto );
         }
 
-        temp = assetStructures.getSubjects().get(malGetAsset.getSubjectId());
-        if (StringUtils.isNotEmpty(temp)) {
+        String subjectId = assetStructures.getSubjects().get( malGetAsset.getSubjectId() );
+        if (StringUtils.isNotEmpty( subjectId ) ) {
             themeDto = new ThemeDto();
-            themeDto.setName("Subjects/" + temp);
-            uploadMetadataArgument.getAssociations().add(themeDto);
+            themeDto.setName( "Subjects/" + subjectId );
+            uploadMetadataArgument.getAssociations().add( themeDto );
         }
 
-        temp = assetStructures.getColors().get(malGetAsset.getColorId());
-        if (StringUtils.isNotEmpty(temp)) {
+        String colorId = assetStructures.getColors().get( malGetAsset.getColorId() );
+        if (StringUtils.isNotEmpty( colorId ) ) {
             themeDto = new ThemeDto();
-            themeDto.setName("Colors/" + temp);
+            themeDto.setName( "Colors/" + colorId );
+            uploadMetadataArgument.getAssociations().add( themeDto );
+        }
+
+        // If asset theme is not set, fail safe value is set
+        if(StringUtils.isEmpty(collectionId) && StringUtils.isEmpty(destinationId)
+                && StringUtils.isEmpty(subjectId) && StringUtils.isEmpty(colorId)){
+            themeDto = new ThemeDto();
+            themeDto.setName(appConfig.getFailSaveCategoryName());
             uploadMetadataArgument.getAssociations().add(themeDto);
         }
 

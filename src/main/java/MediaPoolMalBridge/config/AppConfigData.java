@@ -401,6 +401,9 @@ public class AppConfigData {
     @Value( "${bridge.excel.donotcreateexcelfiles}" )
     private boolean doNotCreateExcelFiles;
 
+    @Value("${fail.save.category.name}")
+    private String failSaveCategoryName;
+
     public boolean isUseSftp() {
         return useSftp;
     }
@@ -690,4 +693,8 @@ public class AppConfigData {
     public boolean isDisableAbsoluteDelete() { return disableAbsoluteDelete; }
 
     public boolean isDoNotCreateExcelFiles() { return doNotCreateExcelFiles; }
+
+    public String getFailSaveCategoryName() {
+        return failSaveCategoryName;
+    }
 }
