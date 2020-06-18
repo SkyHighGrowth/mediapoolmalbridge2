@@ -29,27 +29,26 @@ public class MALToBMTransformer {
         this.appConfig = appConfig;
     }
 
-    public UploadMetadataArgument transformToUploadMetadataArgument(final MALGetAsset malGetAsset ) {
+    public UploadMetadataArgument transformToUploadMetadataArgument(final MALGetAsset malGetAsset) {
 
         final UploadMetadataArgument uploadMetadataArgument = new UploadMetadataArgument();
 
-        uploadMetadataArgument.setAddAssociations( true );
-        uploadMetadataArgument.setVirtualDbName( "Standard" );
-        uploadMetadataArgument.setShow( "SHOW_ALWAYS" );
-        uploadMetadataArgument.setCreatorName( "Soap Api" );
-        uploadMetadataArgument.setDesignationType( "3" );
-        uploadMetadataArgument.setFileName( malGetAsset.getFilename() );
+        uploadMetadataArgument.setAddAssociations(true);
+        uploadMetadataArgument.setVirtualDbName("Standard");
+        uploadMetadataArgument.setShow("SHOW_ALWAYS");
+        uploadMetadataArgument.setCreatorName("Soap Api");
+        uploadMetadataArgument.setDesignationType("3");
+        uploadMetadataArgument.setFileName(malGetAsset.getFilename());
 
-        if( StringUtils.isNotBlank(malGetAsset.getMarshaCode())) {
+        if (StringUtils.isNotBlank(malGetAsset.getMarshaCode())) {
             uploadMetadataArgument.setSelectedAffiliate(malGetAsset.getMarshaCode());
-        }
-        else if( StringUtils.isNotBlank( malGetAsset.getPropertyId() ) ) {
+        } else if (StringUtils.isNotBlank(malGetAsset.getPropertyId())) {
             uploadMetadataArgument.setSelectedAffiliate(malGetAsset.getPropertyId());
         }
 
         ThemeDto themeDto = new ThemeDto();
-        themeDto.setName( "Implementation/Pictures" );
-        uploadMetadataArgument.getAssociations().add( themeDto );
+        themeDto.setName("Implementation/Pictures");
+        uploadMetadataArgument.getAssociations().add(themeDto);
 
         String assetType = assetStructures.getAssetTypes().get( malGetAsset.getAssetTypeId() );
         if ( StringUtils.isNotBlank( assetType ) ) {
@@ -139,32 +138,32 @@ public class MALToBMTransformer {
         }
 
         languageItem = new LanguageItem();
-        languageItem.setDescription( malGetAsset.getName() );
+        languageItem.setDescription(malGetAsset.getName());
         languageItem.setLangCode("EN");
         uploadMetadataArgument.getFreeField4().add(languageItem);
 
-        if( malGetAsset.isLimitedRights() ) {
+        if (malGetAsset.isLimitedRights()) {
             languageItem = new LanguageItem();
             languageItem.setDescription(toZeroAndOne(malGetAsset.isLimitedRights()));
             languageItem.setLangCode("EN");
             uploadMetadataArgument.getFreeField5().add(languageItem);
         }
 
-        if( StringUtils.isNotBlank( malGetAsset.getUsageDescription() ) ) {
+        if (StringUtils.isNotBlank(malGetAsset.getUsageDescription())) {
             languageItem = new LanguageItem();
             languageItem.setDescription(String.valueOf(malGetAsset.getUsageDescription()));
             languageItem.setLangCode("EN");
             uploadMetadataArgument.getFreeField6().add(languageItem);
         }
 
-        if( StringUtils.isNotBlank( malGetAsset.getInstructions() ) ) {
+        if (StringUtils.isNotBlank(malGetAsset.getInstructions())) {
             languageItem = new LanguageItem();
             languageItem.setDescription(String.valueOf(malGetAsset.getInstructions()));
             languageItem.setLangCode("EN");
             uploadMetadataArgument.getFreeField7().add(languageItem);
         }
 
-        if( malGetAsset.isRightsManaged() ) {
+        if (malGetAsset.isRightsManaged()) {
             languageItem = new LanguageItem();
             languageItem.setDescription(toZeroAndOne(malGetAsset.isRightsManaged()));
             languageItem.setLangCode("EN");
@@ -174,8 +173,7 @@ public class MALToBMTransformer {
         return uploadMetadataArgument;
     }
 
-    private String toZeroAndOne( final boolean value )
-    {
+    private String toZeroAndOne(final boolean value) {
         return value ? "1" : "0";
     }
 }
