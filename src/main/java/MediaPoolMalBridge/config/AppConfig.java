@@ -425,4 +425,8 @@ public class AppConfig {
     public boolean isDisableAbsoluteDelete() { return appConfigData.isDisableAbsoluteDelete(); }
 
     public boolean isDoNotCreateExcelFiles() { return appConfigData.isDoNotCreateExcelFiles(); }
+
+    public String getFailSaveCategoryName() {
+        return appConfigData.getFailSaveCategoryName();
+    }
 }
