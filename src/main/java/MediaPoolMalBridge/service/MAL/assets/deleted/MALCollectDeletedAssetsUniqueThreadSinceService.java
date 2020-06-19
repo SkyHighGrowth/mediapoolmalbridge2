@@ -65,7 +65,13 @@ public class MALCollectDeletedAssetsUniqueThreadSinceService extends AbstractMAL
         }
 
         final MALGetAssetsRequest getAssetsRequest = new MALGetAssetsRequest();
-        getAssetsRequest.setLastModifiedStart(since);
+
+        if (appConfig.intervalFilterEnable()) {
+            getAssetsRequest.setLastModifiedStart(appConfig.getFilterStartDate());
+            getAssetsRequest.setLastModifiedEnd(appConfig.getFilterEndDate());
+        } else {
+            getAssetsRequest.setLastModifiedStart(getSince());
+        }
 
         final RestResponse<MALGetAssetsResponse> assetsRestResponse = getAssetsClient.download(getAssetsRequest);
 
