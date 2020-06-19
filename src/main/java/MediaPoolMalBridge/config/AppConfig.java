@@ -429,4 +429,16 @@ public class AppConfig {
     public String getFailSaveCategoryName() {
         return appConfigData.getFailSaveCategoryName();
     }
+
+    public boolean intervalFilterEnable() {
+        return appConfigData.isIntervalFilterEnable();
+    }
+
+    public String getFilterStartDate() {
+        return appConfigData.getFilterStartDate();
+    }
+
+    public String getFilterEndDate() {
+        return appConfigData.getFilterEndDate();
+    }
 }

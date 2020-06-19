@@ -404,6 +404,15 @@ public class AppConfigData {
     @Value("${fail.save.category.name}")
     private String failSaveCategoryName;
 
+    @Value("${interval.filter.enable}")
+    private boolean isIntervalFilterEnable;
+
+    @Value("${filter.start.date}")
+    private String filterStartDate;
+
+    @Value("${filter.end.date}")
+    private String filterEndDate;
+
     public boolean isUseSftp() {
         return useSftp;
     }
@@ -696,5 +705,17 @@ public class AppConfigData {
 
     public String getFailSaveCategoryName() {
         return failSaveCategoryName;
+    }
+
+    public boolean isIntervalFilterEnable() {
+        return isIntervalFilterEnable;
+    }
+
+    public String getFilterStartDate() {
+        return filterStartDate;
+    }
+
+    public String getFilterEndDate() {
+        return filterEndDate;
     }
 }

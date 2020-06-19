@@ -6,7 +6,7 @@ import MediaPoolMalBridge.service.MAL.assets.AbstractMALAssetsUniqueThreadServic
 import org.springframework.stereotype.Service;
 
 /**
- * Service to obtain {@link MediaPoolMalBridge.persistence.entity.MAL.MALAssetEntity} from the MAL server
+ * Service to obtain {@link MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity} from the MAL server
  * it checks for the assets which are created {@link AppConfigData#getMalLookInThePastDays} days before today
  */
 @Service
@@ -15,7 +15,13 @@ public class MALCollectCreatedAssetsUniqueThreadSinceService extends AbstractMAL
     @Override
     protected void run() {
         final MALGetAssetsRequest request = new MALGetAssetsRequest();
-        request.setDateCreatedStart(getSince());
+        if (appConfig.intervalFilterEnable()) {
+            request.setDateCreatedStart(appConfig.getFilterStartDate());
+            request.setDateCreatedEnd(appConfig.getFilterEndDate());
+        } else {
+            request.setDateCreatedStart(getSince());
+        }
+
         request.setPerPage(appConfig.getMalPageSize());
         downloadAssets(request);
     }
