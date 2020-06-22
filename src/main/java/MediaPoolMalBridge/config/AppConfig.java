@@ -8,12 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +31,7 @@ public class AppConfig {
 
     private AppConfigData appConfigData;
 
-    private String workDir = "/data/skyhigh"; //change to /data/skyhigh
+    private final String workDir = "/data/skyhigh"; //change to /data/skyhigh
 
     public AppConfig( final AppConfigData appConfigData,
                       final Environment environment,
@@ -75,18 +76,21 @@ public class AppConfig {
 
         // Copy resources/propertyVariants.json file to data/skyhigh folder
         if (file.exists()) {
-            File propertyVariantsFile = null;
-            File dataPropertyVariantsFile = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON);
+            InputStream propertyVariantsFile = null;
+            String destinationPath = getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON;
+            File dataPropertyVariantsFile = new File(destinationPath);
             try {
                 if (!dataPropertyVariantsFile.exists()) {
-                    propertyVariantsFile = ResourceUtils.getFile("classpath:propertyVariants.json");
-                    Files.copy(propertyVariantsFile.toPath(), dataPropertyVariantsFile.toPath(),
-                            StandardCopyOption.REPLACE_EXISTING);
+                    ClassLoader classLoader = getClass().getClassLoader();
+                    propertyVariantsFile = classLoader.getResourceAsStream("propertyVariants.json");
+                    assert propertyVariantsFile != null;
+                    Files.copy(propertyVariantsFile, Paths.get(destinationPath), new StandardCopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+
                 }
             } catch (FileNotFoundException e) {
                 logger.error("Can not write to file {}", dataPropertyVariantsFile.getAbsolutePath(), e);
             } catch (IOException e) {
-                logger.error("Not able to copy file {}", propertyVariantsFile.getAbsolutePath(), e);
+                logger.error("Can not copy file to destination file {}", destinationPath, e);
             }
         }
 
