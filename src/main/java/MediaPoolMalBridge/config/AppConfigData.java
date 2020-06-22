@@ -405,7 +405,7 @@ public class AppConfigData {
     private String failSaveCategoryName;
 
     @Value("${interval.filter.enable}")
-    private boolean isIntervalFilterEnable;
+    private boolean intervalFilterEnable;
 
     @Value("${filter.start.date}")
     private String filterStartDate;
@@ -708,7 +708,7 @@ public class AppConfigData {
     }
 
     public boolean isIntervalFilterEnable() {
-        return isIntervalFilterEnable;
+        return intervalFilterEnable;
     }
 
     public String getFilterStartDate() {
