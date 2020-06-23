@@ -1,14 +1,16 @@
 
 package com.brandmaker.webservices.mediapool;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceFeature;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 /**
@@ -23,7 +25,7 @@ public class MediaPoolService
 {
 
     private final static URL MEDIAPOOLSERVICE_WSDL_LOCATION;
-    private final static Logger logger = Logger.getLogger(com.brandmaker.webservices.mediapool.MediaPoolService.class.getName());
+    private final static Logger logger = LoggerFactory.getLogger(com.brandmaker.webservices.mediapool.MediaPoolService.class.getName());
 
     static {
         URL url = null;
@@ -32,8 +34,8 @@ public class MediaPoolService
             baseUrl = com.brandmaker.webservices.mediapool.MediaPoolService.class.getResource(".");
             url = new URL(baseUrl, "classpath:wsdl/MediaPool.wsdl");
         } catch (MalformedURLException e) {
-            logger.warning("Failed to create URL for the wsdl Location: 'classpath:wsdl/MediaPool.wsdl', retrying as a local file");
-            logger.warning(e.getMessage());
+            logger.warn("Failed to create URL for the wsdl Location: 'classpath:wsdl/MediaPool.wsdl', retrying as a local file");
+            logger.warn(e.getMessage());
         }
         MEDIAPOOLSERVICE_WSDL_LOCATION = url;
     }
