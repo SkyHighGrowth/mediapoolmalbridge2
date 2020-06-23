@@ -18,13 +18,13 @@ In application.properties we set these profiles
 - For development
 
 
-    dev, standalone, enable controllers 
+    `dev, standalone, enable controllers`
     
     
 - For production 
 
 
-    production, standalone, enable controllers
+    `production, standalone, enable controllers`
 
 
 #### Database
@@ -40,8 +40,8 @@ There are two options
         - This is the dependency that should be added for Tomcat deployment
    
    
-        <dependency>
-           <groupId>org.springframework.boot</groupId>
-           <artifactId>spring-boot-starter-tomcat</artifactId>
-           <version>2.0.5.RELEASE</version>
-        </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-tomcat</artifactId>
+        <version>2.0.5.RELEASE</version>
+    </dependency>
