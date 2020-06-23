@@ -10,7 +10,7 @@
 </parent>
 <groupId>com.brandmaker.cs.skyhigh.marriott.salmiddlewaresync</groupId>
 <artifactId>salmiddlewaresync</artifactId>
-<version>1.4.2</version>
+<version>1.4.3</version>
 <name>salmiddlewaresync</name>
 <description>SAL Middleware for Brandmaker Mediapool</description>
 
@@ -67,12 +67,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
             <scope>provided</scope>
@@ -106,11 +100,6 @@
             <version>8.0.18</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-gradle-plugin</artifactId>
-            <version>5.4.9.Final</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
