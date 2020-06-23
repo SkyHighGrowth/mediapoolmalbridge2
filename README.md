@@ -28,8 +28,8 @@ In application.properties we set these profiles
 
 
 #### Database
-- Database schema and user and password should be created
-> Note: You can find the database schema and user/password in the application.properties file 
+- Database schema, database user with password should be created before deploying on development environment.
+> Note: You can find the database schema and user/password in the application.properties file.
 
 
 #### Deployment
