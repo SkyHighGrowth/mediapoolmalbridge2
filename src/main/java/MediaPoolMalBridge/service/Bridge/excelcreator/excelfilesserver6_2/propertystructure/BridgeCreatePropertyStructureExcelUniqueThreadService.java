@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 public class BridgeCreatePropertyStructureExcelUniqueThreadService extends AbstractBridgeUniqueExcelService {
 
-    private MALAssetStructures assetStructures;
+    private final MALAssetStructures assetStructures;
 
     public BridgeCreatePropertyStructureExcelUniqueThreadService(final MALAssetStructures assetStructures )
     {
@@ -32,7 +32,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
     @Override
     protected void run()
     {
-        MALAssetStructures.getPropertyVariants().values().forEach(
+        assetStructures.getPropertyVariants().values().forEach(
                 propertyVariant -> {
                     try {
                         final String[] fields = propertyVariant.getFieldsArray();
@@ -213,7 +213,7 @@ public class BridgeCreatePropertyStructureExcelUniqueThreadService extends Abstr
                             }
                         });
 
-                        writeToFile(propertyVariant.getStructureName() + ".xls", rows);
+                        writeToFile(propertyVariant.getStructureName() + ".xlsx", rows);
                     } catch( final Exception e ) {
                         final String message = String.format( "Can not create Excel file for property variant [%s] with message [%s]", propertyVariant.getStructureName(), e.getMessage() );
                         final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, GSON.toJson( propertyVariant), null, null );

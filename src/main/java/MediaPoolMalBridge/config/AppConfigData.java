@@ -316,7 +316,7 @@ public class AppConfigData {
     /**
      * datasource url for dev profile
      */
-    @Value( "${spring.datasource.url.dev:jdbc:mysql://localhost:3306/maltobmbridge?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false&autoReconnect=true}")
+    @Value( "${spring.datasource.url.dev}")
     private String datasourceUrlDev;
     /**
      * datasource username for dev profile
@@ -400,6 +400,18 @@ public class AppConfigData {
 
     @Value( "${bridge.excel.donotcreateexcelfiles}" )
     private boolean doNotCreateExcelFiles;
+
+    @Value("${fail.save.category.name}")
+    private String failSaveCategoryName;
+
+    @Value("${interval.filter.enable}")
+    private boolean intervalFilterEnable;
+
+    @Value("${filter.start.date}")
+    private String filterStartDate;
+
+    @Value("${filter.end.date}")
+    private String filterEndDate;
 
     public boolean isUseSftp() {
         return useSftp;
@@ -690,4 +702,20 @@ public class AppConfigData {
     public boolean isDisableAbsoluteDelete() { return disableAbsoluteDelete; }
 
     public boolean isDoNotCreateExcelFiles() { return doNotCreateExcelFiles; }
+
+    public String getFailSaveCategoryName() {
+        return failSaveCategoryName;
+    }
+
+    public boolean isIntervalFilterEnable() {
+        return intervalFilterEnable;
+    }
+
+    public String getFilterStartDate() {
+        return filterStartDate;
+    }
+
+    public String getFilterEndDate() {
+        return filterEndDate;
+    }
 }

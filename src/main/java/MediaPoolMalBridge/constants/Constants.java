@@ -61,4 +61,9 @@ public class Constants {
      * name of directory used to store application properties in ${user.home} directory
      */
     public final static String APPLICATION_PROPERTIES_JSON = "application.properties.json";
+
+    /**
+     * Name of the file used for configuration of property variants in ${user.home} directory
+     */
+    public static final String PROPERTY_VARIANTS_JSON = "propertyVariants.json";
 }

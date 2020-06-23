@@ -10,6 +10,12 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +27,11 @@ import java.util.Map;
 @DependsOn( "AppConfigData" )
 public class AppConfig {
 
-    private static Logger logger = LoggerFactory.getLogger(AppConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
 
     private AppConfigData appConfigData;
+
+    private final String workDir = "/data/skyhigh"; //change to /data/skyhigh
 
     public AppConfig( final AppConfigData appConfigData,
                       final Environment environment,
@@ -36,7 +44,7 @@ public class AppConfig {
             throw new RuntimeException( "Can not start with profiles dev and production set at the same time" );
         }
 
-        File file = new File( "/data/skyhigh" + File.separator + Constants.APPLICATION_DIR);
+        File file = new File( workDir + File.separator + Constants.APPLICATION_DIR);
         //File file = new File( "C:/Users/User" + File.separator + Constants.APPLICATION_DIR);
         if (!file.exists()) {
             if (!file.mkdir()) {
@@ -44,8 +52,7 @@ public class AppConfig {
                 throw new RuntimeException();
             }
         }
-
-        final String filePath = "/data/skyhigh" + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
+        final String filePath = workDir + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
         //final String filePath = "C:/Users/User" + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
         file = new File( filePath );
         logger.info( "FILE PATH {}", file.getAbsolutePath() );
@@ -64,6 +71,26 @@ public class AppConfig {
                 logger.info( "Using default app config data loaded {}", (new Gson()).toJson(this.appConfigData) );
             } catch (final Exception e) {
                 logger.error("Can not write to file {}", file.getAbsolutePath(), e);
+            }
+        }
+
+        // Copy resources/propertyVariants.json file to data/skyhigh folder
+        if (file.exists()) {
+            InputStream propertyVariantsFile = null;
+            String destinationPath = getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON;
+            File dataPropertyVariantsFile = new File(destinationPath);
+            try {
+                if (!dataPropertyVariantsFile.exists()) {
+                    ClassLoader classLoader = getClass().getClassLoader();
+                    propertyVariantsFile = classLoader.getResourceAsStream("propertyVariants.json");
+                    assert propertyVariantsFile != null;
+                    Files.copy(propertyVariantsFile, Paths.get(destinationPath), new StandardCopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+
+                }
+            } catch (FileNotFoundException e) {
+                logger.error("Can not write to file {}", dataPropertyVariantsFile.getAbsolutePath(), e);
+            } catch (IOException e) {
+                logger.error("Can not copy file to destination file {}", destinationPath, e);
             }
         }
 
@@ -402,4 +429,20 @@ public class AppConfig {
     public boolean isDisableAbsoluteDelete() { return appConfigData.isDisableAbsoluteDelete(); }
 
     public boolean isDoNotCreateExcelFiles() { return appConfigData.isDoNotCreateExcelFiles(); }
+
+    public String getFailSaveCategoryName() {
+        return appConfigData.getFailSaveCategoryName();
+    }
+
+    public boolean intervalFilterEnable() {
+        return appConfigData.isIntervalFilterEnable();
+    }
+
+    public String getFilterStartDate() {
+        return appConfigData.getFilterStartDate();
+    }
+
+    public String getFilterEndDate() {
+        return appConfigData.getFilterEndDate();
+    }
 }

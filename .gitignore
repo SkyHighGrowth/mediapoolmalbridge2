@@ -12,6 +12,7 @@ build
 
 *.ipr
 *.iml
+*.target
 *.iws
 .idea/*
 
@@ -23,3 +24,4 @@ classes/
 bin/
 
 **/generated-sources/*
+/target/

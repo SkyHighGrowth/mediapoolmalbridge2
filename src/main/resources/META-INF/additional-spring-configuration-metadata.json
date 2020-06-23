@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "malthreadexecutor.pool.size",
+      "type": "java.lang.String",
+      "description": "Description for malthreadexecutor.pool.size."
+    },
+    {
+      "name": "mediapool.password.production",
+      "type": "java.lang.String",
+      "description": "Description for mediapool.password.production."
+    },
+    {
+      "name": "spring.datasource.url.dev",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.url.dev."
+    }
+  ] }
