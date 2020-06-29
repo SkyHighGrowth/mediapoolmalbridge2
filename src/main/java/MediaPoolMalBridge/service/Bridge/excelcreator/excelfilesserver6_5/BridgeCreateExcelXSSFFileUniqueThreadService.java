@@ -991,8 +991,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
             row.createCell( colIndex++ ).setCellValue( "MULTI_OBJECT_AFFILIATE_STRUCTURE" );
 
-           // row.createCell( colIndex++ ).setCellValue( "false" );
-
             colIndex++;
 
             /*List<Attribute> attributes = new ArrayList<>();
@@ -1023,8 +1021,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             colIndex++;
 
             row.createCell( colIndex++ ).setCellValue( "NON_AFFILIATE_STRUCTURE" );
-
-           // row.createCell( colIndex++ ).setCellValue( "false" );
 
             colIndex++;
 
@@ -1057,8 +1053,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
             row.createCell( colIndex++ ).setCellValue( "NON_AFFILIATE_STRUCTURE" );
 
-           // row.createCell( colIndex++ ).setCellValue( "false" );
-
             colIndex++;
 
             /*attributes = new ArrayList<>();
@@ -1089,8 +1083,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             colIndex++;
 
             row.createCell( colIndex++ ).setCellValue( "NON_AFFILIATE_STRUCTURE" );
-
-           // row.createCell( colIndex++ ).setCellValue( "false" );
 
             colIndex++;
 
