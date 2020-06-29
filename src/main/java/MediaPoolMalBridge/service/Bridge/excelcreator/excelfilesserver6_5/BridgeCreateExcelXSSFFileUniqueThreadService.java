@@ -26,7 +26,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
     protected static final String[] STRUCTURES_COLUMN_NAMES = {"List ID * (no editable)",
             "List name *", "Type * (no editable)", "ID of Parent list", "Name of default entry",
-            "Affiliate type", "Replace deleted entries", "Show preview for list entry", "Attributes"};
+            "Affiliate type", "Show preview for list entry", "Attributes"};
 
     protected static final String[] OBJECTS_COLUMN_NAMES = {"List ID * (no editable)",
             "List Entry ID * (no editable)", "Display name *", "Name of parent entry",
@@ -991,8 +991,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
             row.createCell( colIndex++ ).setCellValue( "MULTI_OBJECT_AFFILIATE_STRUCTURE" );
 
-            row.createCell( colIndex++ ).setCellValue( "false" );
-
             colIndex++;
 
             /*List<Attribute> attributes = new ArrayList<>();
@@ -1023,8 +1021,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             colIndex++;
 
             row.createCell( colIndex++ ).setCellValue( "NON_AFFILIATE_STRUCTURE" );
-
-            row.createCell( colIndex++ ).setCellValue( "false" );
 
             colIndex++;
 
@@ -1057,8 +1053,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
             row.createCell( colIndex++ ).setCellValue( "NON_AFFILIATE_STRUCTURE" );
 
-            row.createCell( colIndex++ ).setCellValue( "false" );
-
             colIndex++;
 
             /*attributes = new ArrayList<>();
@@ -1089,8 +1083,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             colIndex++;
 
             row.createCell( colIndex++ ).setCellValue( "NON_AFFILIATE_STRUCTURE" );
-
-            row.createCell( colIndex++ ).setCellValue( "false" );
 
             colIndex++;
 
