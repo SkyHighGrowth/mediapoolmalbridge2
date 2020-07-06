@@ -24,7 +24,7 @@ import java.util.Map;
  * Application configuration
  */
 @Component
-@DependsOn( "AppConfigData" )
+@DependsOn("AppConfigData")
 public class AppConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
@@ -33,18 +33,17 @@ public class AppConfig {
 
     private final String workDir = "/data/skyhigh"; //change to /data/skyhigh
 
-    public AppConfig( final AppConfigData appConfigData,
-                      final Environment environment,
-                      final ObjectMapper objectMapper )
-    {
+    public AppConfig(final AppConfigData appConfigData,
+                     final Environment environment,
+                     final ObjectMapper objectMapper) {
 
-        if(Arrays.asList( environment.getActiveProfiles() ).contains( "dev" ) &&
-                Arrays.asList( environment.getActiveProfiles() ).contains( "production" ) ) {
-            logger.error( "Can not start with profiles dev and production set at the same time" );
-            throw new RuntimeException( "Can not start with profiles dev and production set at the same time" );
+        if (Arrays.asList(environment.getActiveProfiles()).contains("dev") &&
+                Arrays.asList(environment.getActiveProfiles()).contains("production")) {
+            logger.error("Can not start with profiles dev and production set at the same time");
+            throw new RuntimeException("Can not start with profiles dev and production set at the same time");
         }
 
-        File file = new File( workDir + File.separator + Constants.APPLICATION_DIR);
+        File file = new File(workDir + File.separator + Constants.APPLICATION_DIR);
         //File file = new File( "C:/Users/User" + File.separator + Constants.APPLICATION_DIR);
         if (!file.exists()) {
             if (!file.mkdir()) {
@@ -54,21 +53,21 @@ public class AppConfig {
         }
         final String filePath = workDir + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
         //final String filePath = "C:/Users/User" + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
-        file = new File( filePath );
-        logger.info( "FILE PATH {}", file.getAbsolutePath() );
-        if( file.exists() ) {
+        file = new File(filePath);
+        logger.info("FILE PATH {}", file.getAbsolutePath());
+        if (file.exists()) {
             try {
-                this.appConfigData = objectMapper.readValue( file, AppConfigData.class );
-                logger.info( "App config data loaded {}", (new Gson()).toJson(this.appConfigData) );
+                this.appConfigData = objectMapper.readValue(file, AppConfigData.class);
+                logger.info("App config data loaded {}", (new Gson()).toJson(this.appConfigData));
             } catch (final Exception e) {
-                logger.error( "Fatal: Can not parse application.properties.json", e );
-                throw new RuntimeException( "Fatal: Can not parse application.properties.json" );
+                logger.error("Fatal: Can not parse application.properties.json", e);
+                throw new RuntimeException("Fatal: Can not parse application.properties.json");
             }
         } else {
             try {
                 this.appConfigData = appConfigData;
                 objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, appConfigData);
-                logger.info( "Using default app config data loaded {}", (new Gson()).toJson(this.appConfigData) );
+                logger.info("Using default app config data loaded {}", (new Gson()).toJson(this.appConfigData));
             } catch (final Exception e) {
                 logger.error("Can not write to file {}", file.getAbsolutePath(), e);
             }
@@ -94,7 +93,7 @@ public class AppConfig {
             }
         }
 
-        file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR );
+        file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR);
         if (!file.exists()) {
             if (!file.mkdir()) {
                 logger.info("Dir {} can not be created", file.getAbsolutePath());
@@ -102,7 +101,7 @@ public class AppConfig {
             }
         }
 
-        file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + "logs" );
+        file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + "logs");
         if (!file.exists()) {
             if (!file.mkdir()) {
                 logger.info("Dir {} can not be created", file.getAbsolutePath());
@@ -110,7 +109,7 @@ public class AppConfig {
             }
         }
 
-        file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.ASSET_DOWNLOAD_DIR );
+        file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.ASSET_DOWNLOAD_DIR);
         if (!file.exists()) {
             if (!file.mkdir()) {
                 logger.info("Dir {} can not be created", file.getAbsolutePath());
@@ -131,7 +130,9 @@ public class AppConfig {
         return getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR + File.separator;
     }
 
-    public boolean isUseSftp() { return appConfigData.isUseSftp(); }
+    public boolean isUseSftp() {
+        return appConfigData.isUseSftp();
+    }
 
     public String getSftpUsername() {
         return appConfigData.getSftpUsername();
@@ -281,7 +282,9 @@ public class AppConfig {
         return appConfigData.getBridgeResolverWindow();
     }
 
-    public int getBridgeDatabaseRowsDeleterDays() { return appConfigData.getBridgeDatabaseRowsDeleterDays(); }
+    public int getBridgeDatabaseRowsDeleterDays() {
+        return appConfigData.getBridgeDatabaseRowsDeleterDays();
+    }
 
     public String getBmExchangeSchedulerCronExpression() {
         return appConfigData.getBmExchangeSchedulerCronExpression();
@@ -303,7 +306,9 @@ public class AppConfig {
         return appConfigData.getBridgeDeleteFileCronExpression();
     }
 
-    public String getBridgeDatabaseRowsDeleterCronExpression() { return appConfigData.getBridgeDatabaseRowsDeleterCronExpression(); }
+    public String getBridgeDatabaseRowsDeleterCronExpression() {
+        return appConfigData.getBridgeDatabaseRowsDeleterCronExpression();
+    }
 
     public String getBridgeExcelFilesCronExpression() {
         return appConfigData.getBridgeExcelFilesCronExpression();
@@ -402,8 +407,8 @@ public class AppConfig {
     }
 
     public int getDatabasePageSize() {
-        if( appConfigData.getDatabasePageSize() <= 0 ) {
-            throw new RuntimeException( "Database page size has to be positive number" );
+        if (appConfigData.getDatabasePageSize() <= 0) {
+            throw new RuntimeException("Database page size has to be positive number");
         }
         return appConfigData.getDatabasePageSize();
     }
@@ -424,11 +429,17 @@ public class AppConfig {
         return appConfigData.getAssetFileMaximalLivingDaysOnDisc();
     }
 
-    public Map<String, String> getIncludedAssetTypes() { return appConfigData.getIncludedAssetTypes(); }
+    public Map<String, String> getIncludedAssetTypes() {
+        return appConfigData.getIncludedAssetTypes();
+    }
 
-    public boolean isDisableAbsoluteDelete() { return appConfigData.isDisableAbsoluteDelete(); }
+    public boolean isDisableAbsoluteDelete() {
+        return appConfigData.isDisableAbsoluteDelete();
+    }
 
-    public boolean isDoNotCreateExcelFiles() { return appConfigData.isDoNotCreateExcelFiles(); }
+    public boolean isDoNotCreateExcelFiles() {
+        return appConfigData.isDoNotCreateExcelFiles();
+    }
 
     public String getFailSaveCategoryName() {
         return appConfigData.getFailSaveCategoryName();
