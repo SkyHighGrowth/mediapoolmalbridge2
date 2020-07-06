@@ -26,7 +26,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
 
     protected static final String[] STRUCTURES_COLUMN_NAMES = {"List ID * (no editable)",
             "List name *", "Type * (no editable)", "ID of Parent list", "Name of default entry",
-            "Affiliate type", "Replace deleted entries", "Show preview for list entry", "Attributes"};
+            "Affiliate type", "Show preview for list entry", "Attributes"};
 
     protected static final String[] OBJECTS_COLUMN_NAMES = {"List ID * (no editable)",
             "List Entry ID * (no editable)", "Display name *", "Name of parent entry",
@@ -256,11 +256,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogo1c = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 24,
                     "PropertyLogo1c",
-                    "Property Logo 1c",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogo1c ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -269,11 +265,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogo4c = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 25,
                     "PropertyLogo4c",
-                    "Property Logo 4c",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogo4c ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-B", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -282,11 +274,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogocmykb = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 26,
                     "PropertyLogo4c-b",
-                    "Property Logo 4c-b",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogocmykb ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -295,11 +283,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogo1cBlack = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 27,
                     "PropertyLogo1cblack",
-                    "Property Logo 1c-black",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogo1cBlack ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -308,11 +292,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 28,
                     "PropertyLogopms",
-                    "Property Logo pms",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoPMS ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "pms-C", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -321,11 +301,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoPMSC = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 29,
                     "PropertyLogopmsc",
-                    "Property Logo pms-c",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoPMSC ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-C", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -334,11 +310,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogocmykC = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 30,
                     "PropertyLogo4cc",
-                    "Property Logo 4c-c",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogocmykC ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko-D", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -347,11 +319,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogokoD = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 31,
                     "PropertyLogokod",
-                    "Property Logo ko-d",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogokoD ) );
         }
 
@@ -362,11 +330,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoBlackK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 32,
                     "PropertyLogoblackK",
-                    "Property Logo black-K",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoBlackK ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-K", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -375,11 +339,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogo4cK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 33,
                     "PropertyLogo4cK",
-                    "Property Logo 4c-K",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoBlackK ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Sheraton Black logo-1", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -388,11 +348,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonBlack = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 39,
                     "PropertyLogoSheratonBlack",
-                    "Property Logo Sheraton Black",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonBlack ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "dusk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -401,11 +357,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonDusk = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 40,
                     "propertyLogoSheratonDusk",
-                    "property Logo Sheraton Dusk",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonDusk ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_C_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -414,11 +366,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonGraphiteCodedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 40,
                     "PropertyLogoSheratonGraphiteCodedCMYK",
-                    "Property Logo Sheraton Graphite Coded CMYK",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonGraphiteCodedCMYK ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_C_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -427,11 +375,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonGraphiteCodedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 42,
                     "PropertyLogoSheratonGraphiteCodedPMS",
-                    "Property Logo Sheraton Graphite Coded PMS",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonGraphiteCodedPMS ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_rgb", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -440,11 +384,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonGraphiteRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 43,
                     "PropertyLogoSheratonGraphiteRGB",
-                    "Property Logo Sheraton Graphite RGB",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonGraphiteRGB ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_U_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -453,11 +393,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonGraphiteUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 44,
                     "PropertyLogoSheratonGraphiteUncoatedCMYK",
-                    "Property Logo Sheraton Graphite Uncoated CMYK",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonGraphiteUncoatedCMYK ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_U_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -466,11 +402,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonGraphiteUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 45,
                     "PropertyLogoSheratonGraphiteUncoatedPMS",
-                    "Property Logo Sheraton Graphite Uncoated PMS",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonGraphiteUncoatedPMS ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ivory", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -479,11 +411,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonIvory = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 46,
                     "PropertyLogoSheratonIvory",
-                    "Property Logo Sheraton Ivory",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonIvory ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Knockout", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -492,11 +420,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonKnockout = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 47,
                     "PropertyLogoSheratonKnockout",
-                    "Property Logo Sheraton Knockout",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonKnockout ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Logo_Specs", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -505,11 +429,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonLogoSpecs = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 47,
                     "PropertyLogoSheratonLogoSpecs",
-                    "Property Logo Sheraton Logo Specs",
-                    "",
-                    -1,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonLogoSpecs ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Logo_Specs", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -518,11 +438,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonOysterCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 49,
                     "PropertyLogoSheratonOysterCoatedCMYK",
-                    "Property Logo Sheraton Oyster Coated CMYK",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonOysterCoatedCMYK ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_C_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -531,11 +447,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonOysterCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 50,
                     "PropertyLogoSheratonOysterCoatedPMS",
-                    "Property Logo Sheraton Oyster Coated PMS",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonOysterCoatedPMS ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_rgb", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -544,11 +456,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonOysterRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 51,
                     "PropertyLogoSheratonOysterRGB",
-                    "Property Logo Sheraton Oyster RGB",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonOysterRGB ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_U_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -557,11 +465,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonOysterUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 52,
                     "PropertyLogoSheratonOysterUncoatedCMYK",
-                    "Property Logo Sheraton Oyster Uncoated CMYK",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonOysterUncoatedCMYK ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_U_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -570,11 +474,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonOysterUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 53,
                     "PropertyLogoSheratonOysterUncoatedPMS",
-                    "Property Logo Sheraton Oyster Uncoated PMS",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonOysterUncoatedPMS ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_C_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -583,11 +483,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonResortFrenchGrayCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 54,
                     "PropertyLogoSheratonResortFrenchGrayCoatedCMYK",
-                    "Property Logo Sheraton Resort French Gray Coated CMYK",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonResortFrenchGrayCoatedCMYK ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_C_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -596,11 +492,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonResortFrenchGrayCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 55,
                     "PropertyLogoSheratonResortFrenchGrayCoatedPMS",
-                    "Property Logo Sheraton Resort French Gray Coated PMS",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonResortFrenchGrayCoatedPMS ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_rgb", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -609,11 +501,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonResortFrenchGrayRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 56,
                     "PropertyLogoSheratonResortFrenchGrayRGB",
-                    "Property Logo Sheraton Resort French Gray RGB",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonResortFrenchGrayRGB ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_U_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -622,11 +510,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonResortFrenchGrayUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 57,
                     "PropertyLogoSheratonResortFrenchGrayUncoatedCMYK",
-                    "Property Logo Sheraton Resort French Gray Uncoated CMYK",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonResortFrenchGrayUncoatedCMYK ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_U_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -635,11 +519,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonResortFrenchGrayUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 58,
                     "PropertyLogoSheratonResortFrenchGrayUncoatedPMS",
-                    "Property Logo Sheraton Resort French Gray Uncoated PMS",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonResortFrenchGrayUncoatedPMS ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_C_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -648,11 +528,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonTungstenCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 59,
                     "PropertyLogoSheratonTungstenCoatedCMYK",
-                    "Property Logo Sheraton Tungsten Coated CMYK",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonTungstenCoatedCMYK ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_C_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -661,11 +537,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonTungstenCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 60,
                     "PropertyLogoSheratonTungstenCoatedPMS",
-                    "Property Logo Sheraton Tungsten Coated PMS",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonTungstenCoatedPMS ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_rgb", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -674,11 +546,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonTungstenRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 61,
                     "PropertyLogoSheratonTungstenRGB",
-                    "Property Logo Sheraton Tungsten RGB",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonTungstenRGB ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_U_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -687,11 +555,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonTungstenUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 62,
                     "PropertyLogoSheratonTungstenUncoatedCMYK",
-                    "Property Logo Sheraton Tungsten Uncoated CMYK",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonTungstenUncoatedCMYK ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_U_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -700,11 +564,7 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoSheratonTungstenUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 63,
                     "PropertyLogoSheratonTungstenUncoatedPMS",
-                    "Property Logo Sheraton Tungsten Uncoated PMS",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoSheratonTungstenUncoatedPMS ) );
         }
         logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "usna", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
@@ -713,29 +573,17 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             propertyLogoUSNavy = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
             attributes.add( new Attribute( 64,
                     "PropertyLogoUSNavy",
-                    "Property Logo US Navy",
-                    "",
-                    0,
                     "MEDIA",
-                    null,
                     propertyLogoUSNavy ) );
         }
 
         attributes.add( new Attribute( 1,
                 "AFFILIATE_NAME",
-                "Property Name",
-                "",
-                2,
                 "TEXT",
-                null,
                 malPropertyEntity.getName() ) );
         attributes.add( new Attribute( 2,
                 "AFFILIATE_CODE",
-                "Property Number",
-                "",
-                1,
                 "TEXT",
-                null,
                 malPropertyEntity.getPropertyId() ) );
 
 
@@ -749,102 +597,58 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
         //row[7] = malPropertyEntity.getState();
         attributes.add( new Attribute( 3,
                 "PropertyState",
-                "Property State",
-                "",
-                3,
                 "TEXT",
-                null,
                 malPropertyEntity.getState() ) );
         //row[8] = malPropertyEntity.getAddress2();
         //row[9] = malPropertyEntity.getAddress();
         attributes.add( new Attribute( 34,
                 "CombinedAddress - Address 1 - Address 2",
-                "CombinedAddress - Address 1 - Address 2",
-                "",
-                -1,
                 "RICHTEXT",
-                new  Props( 128 ),
                 combinedAddressField ) );
         attributes.add( new Attribute( 4,
                 "ADDRESS",
-                "Property Address",
-                "",
-                4,
                 "TEXT",
-                null,
                 malPropertyEntity.getAddress() ) );
         attributes.add( new Attribute( 5,
                 "STREET",
-                "Property Street",
-                "",
-                5,
                 "TEXT",
-                null,
                 malPropertyEntity.getAddress2() ) );
         //row[10] = malPropertyEntity.getZip();
         attributes.add( new Attribute( 6,
                 "ZIP",
-                "Property Zip Code",
-                "",
-                6,
                 "TEXT",
-                null,
                 malPropertyEntity.getZip() ) );
         //row[11] = malPropertyEntity.getCity();
         attributes.add( new Attribute( 7,
                 "CITY",
-                "Property City",
-                "",
-                7,
                 "TEXT",
-                null,
                 malPropertyEntity.getCity() ) );
         //row[12] = malPropertyEntity.getCountry();
         attributes.add( new Attribute( 8,
                 "COUNTRY",
-                "Property Country",
-                "",
-                8,
                 "TEXT",
-                null,
                 malPropertyEntity.getCountry() ) );
         //row[13] = malPropertyEntity.getUrl();
         attributes.add( new Attribute( 9,
                 "PropertyURL",
-                "Property URL",
-                "",
-                -1,
                 "TEXT",
-                null,
                 malPropertyEntity.getUrl() ) );
         //row[14] = malPropertyEntity.getTelephone();
         attributes.add( new Attribute( 10,
                 "PropertyTelephone",
-                "Property Telephone",
-                "",
-                -1,
                 "TEXT",
-                null,
                 malPropertyEntity.getTelephone() ) );
         //row[15] = malPropertyEntity.getBrand();
         //row[16] = malPropertyEntity.getParentBrand();
         //row[17] = malPropertyEntity.getLatitude();
         attributes.add( new Attribute( 13,
                 "Latitude",
-                "Latitude",
-                "",
-                -1,
                 "TEXT",
-                null,
                 malPropertyEntity.getLatitude() ) );
         //row[18] = malPropertyEntity.getLongitude();
         attributes.add( new Attribute( 14,
                 "Longitude",
-                "Longitude",
-                "",
-                -1,
                 "TEXT",
-                null,
                 malPropertyEntity.getLongitude() ) );
         //row[19] = "";
         //row[20] = "";
@@ -960,11 +764,11 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             colIndex++;
             headerLabel = new Label(colIndex++, rowIndex, "MULTI_OBJECT_AFFILIATE_STRUCTURE", headerFormat);
             sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "false", headerFormat);
-            sheet.addCell(headerLabel);
             colIndex++;
 
-            headerLabel = new Label(colIndex++, rowIndex, "[{\"number\":3,\"name\":\"PropertyState\",\"label\":\"Property State\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":9,\"name\":\"PropertyURL\",\"label\":\"Property URL\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":10,\"name\":\"PropertyTelephone\",\"label\":\"Property Telephone\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":11,\"name\":\"PropertyFacsimile\",\"label\":\"Property Facsimile\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":13,\"name\":\"Latitude\",\"label\":\"Latitude\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":14,\"name\":\"Longitude\",\"label\":\"Longitude\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":24,\"name\":\"PropertyLogo1c\",\"label\":\"Property Logo 1c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"PropertyLogo4c\",\"label\":\"Property Logo 4c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"PropertyLogo4cb\",\"label\":\"Property Logo 4c-b\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"PropertyLogo1cblack\",\"label\":\"Property Logo 1c-black\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"PropertyLogopms\",\"label\":\"Property Logo pms\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":29,\"name\":\"PropertyLogopmsc\",\"label\":\"Property Logo pms-c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":30,\"name\":\"PropertyLogo4cc\",\"label\":\"Property Logo 4c-c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":31,\"name\":\"PropertyLogokod\",\"label\":\"Property Logo ko-d\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":32,\"name\":\"PropertyLogoblackK\",\"label\":\"Property Logo black-K\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":33,\"name\":\"PropertyLogo4cK\",\"label\":\"Property Logo 4c-K\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":34,\"name\":\"CombinedAddress\",\"label\":\"Combined Address\",\"comment\":\"\",\"order\":-1,\"type\":\"RICHTEXT\",\"props\":null},{\"number\":39,\"name\":\"PropertyLogoSheratonBlack\",\"label\":\"Property Logo Sheraton Black\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":40,\"name\":\"PropertyLogoSheratonDusk\",\"label\":\"Property Logo Sheraton Dusk\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":41,\"name\":\"PropertyLogoSheratonGraphiteCodedCMYK\",\"label\":\"Property Logo Sheraton Graphite Coded CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":42,\"name\":\"PropertyLogoSheratonGraphiteCodedPMS\",\"label\":\"Property Logo Sheraton Graphite Coded PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":43,\"name\":\"PropertyLogoSheratonGraphiteRGB\",\"label\":\"Property Logo Sheraton Graphite RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":44,\"name\":\"PropertyLogoSheratonGraphiteUncoatedCMYK\",\"label\":\"Property Logo Sheraton Graphite Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":45,\"name\":\"PropertyLogoSheratonGraphiteUncoatedPMS\",\"label\":\"Property Logo Sheraton Graphite Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":46,\"name\":\"PropertyLogoSheratonIvory\",\"label\":\"Property Logo Sheraton Ivory\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":47,\"name\":\"PropertyLogoSheratonKnockout\",\"label\":\"Property Logo Sheraton Knockout\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":48,\"name\":\"PropertyLogoSheratonLogoSpecs\",\"label\":\"Property Logo Sheraton Logo Specs\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":49,\"name\":\"PropertyLogoSheratonOysterCoatedCMYK\",\"label\":\"Property Logo Sheraton Oyster Coated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":50,\"name\":\"PropertyLogoSheratonOysterCoatedPMS\",\"label\":\"Property Logo Sheraton Oyster Coated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":51,\"name\":\"PropertyLogoSheratonOysterRGB\",\"label\":\"Property Logo Sheraton Oyster RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":52,\"name\":\"PropertyLogoSheratonOysterUncoatedCMYK\",\"label\":\"Property Logo Sheraton Oyster Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":53,\"name\":\"PropertyLogoSheratonOysterUncoatedPMS\",\"label\":\"Property Logo Sheraton Oyster Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":54,\"name\":\"PropertyLogoSheratonResortFrenchGrayCoatedCMYK\",\"label\":\"Property Logo Sheraton Resort French Gray Coated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":55,\"name\":\"PropertyLogoSheratonResortFrenchGrayCoatedPMS\",\"label\":\"Property Logo Sheraton Resort French Gray Coated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":56,\"name\":\"PropertyLogoSheratonResortFrenchGrayRGB\",\"label\":\"Property Logo Sheraton Resort French Gray RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":57,\"name\":\"PropertyLogoSheratonResortFrenchGrayUncoatedCMYK\",\"label\":\"Property Logo Sheraton Resort French Gray Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":58,\"name\":\"PropertyLogoSheratonResortFrenchGrayUncoatedPMS\",\"label\":\"Property Logo Sheraton Resort French Gray Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":59,\"name\":\"PropertyLogoSheratonTungstenCoatedCMYK\",\"label\":\"Property Logo Sheraton Tungsten Coated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":60,\"name\":\"PropertyLogoSheratonTungstenCoatedPMS\",\"label\":\"Property Logo Sheraton Tungsten Coated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":61,\"name\":\"PropertyLogoSheratonTungstenRGB\",\"label\":\"Property Logo Sheraton Tungsten RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":62,\"name\":\"PropertyLogoSheratonTungstenUncoatedCMYK\",\"label\":\"Property Logo Sheraton Tungsten Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":63,\"name\":\"PropertyLogoSheratonTungstenUncoatedPMS\",\"label\":\"Property Logo Sheraton Tungsten Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":64,\"name\":\"PropertyLogoUSNavy\",\"label\":\"Property Logo US Navy\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":2,\"name\":\"AFFILIATES_CODE\",\"label\":\"Property Number\",\"comment\":\"\",\"order\":1,\"type\":\"TEXT\",\"props\":null},{\"number\":1,\"name\":\"AFFILIATE_NAME\",\"label\":\"Property Name\",\"comment\":\"\",\"order\":2,\"type\":\"TEXT\",\"props\":null},{\"number\":4,\"name\":\"ADDRESS\",\"label\":\"Property Address\",\"comment\":\"\",\"order\":4,\"type\":\"TEXT\",\"props\":null},{\"number\":5,\"name\":\"STREET\",\"label\":\"Property Street\",\"comment\":\"\",\"order\":5,\"type\":\"TEXT\",\"props\":null},{\"number\":6,\"name\":\"ZIP\",\"label\":\"Property Zip Code\",\"comment\":\"\",\"order\":6,\"type\":\"TEXT\",\"props\":null},{\"number\":7,\"name\":\"CITY\",\"label\":\"Property City\",\"comment\":\"\",\"order\":7,\"type\":\"TEXT\",\"props\":null},{\"number\":8,\"name\":\"COUNTRY\",\"label\":\"Property Country\",\"comment\":\"\",\"order\":8,\"type\":\"TEXT\",\"props\":null}]", headerFormat);
+            headerLabel = new Label(colIndex++, rowIndex, "[{\"number\":3,\"name\":\"PropertyState\",\"label\":\"Property State\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":9,\"name\":\"PropertyURL\",\"label\":\"Property URL\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":10,\"name\":\"PropertyTelephone\",\"label\":\"Property Telephone\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":11,\"name\":\"PropertyFacsimile\",\"label\":\"Property Facsimile\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":13,\"name\":\"Latitude\",\"label\":\"Latitude\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":14,\"name\":\"Longitude\",\"label\":\"Longitude\",\"comment\":\"\",\"order\":-1,\"type\":\"TEXT\",\"props\":null},{\"number\":24,\"name\":\"PropertyLogo1c\",\"label\":\"Property Logo 1c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"PropertyLogo4c\",\"label\":\"Property Logo 4c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"PropertyLogo4cb\",\"label\":\"Property Logo 4c-b\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"PropertyLogo1cblack\",\"label\":\"Property Logo 1c-black\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"PropertyLogopms\",\"label\":\"Property Logo pms\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":29,\"name\":\"PropertyLogopmsc\",\"label\":\"Property Logo pms-c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":30,\"name\":\"PropertyLogo4cc\",\"label\":\"Property Logo 4c-c\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":31,\"name\":\"PropertyLogokod\",\"label\":\"Property Logo ko-d\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":32,\"name\":\"PropertyLogoblackK\",\"label\":\"Property Logo black-K\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":33,\"name\":\"PropertyLogo4cK\",\"label\":\"Property Logo 4c-K\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":34,\"name\":\"CombinedAddress\",\"label\":\"Combined Address\",\"comment\":\"\",\"order\":-1,\"type\":\"RICHTEXT\",\"props\":null},{\"number\":39,\"name\":\"PropertyLogoSheratonBlack\",\"label\":\"Property Logo Sheraton Black\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":40,\"name\":\"PropertyLogoSheratonDusk\",\"label\":\"Property Logo Sheraton Dusk\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":41,\"name\":\"PropertyLogoSheratonGraphiteCodedCMYK\",\"label\":\"Property Logo Sheraton Graphite Coded CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":42,\"name\":\"PropertyLogoSheratonGraphiteCodedPMS\",\"label\":\"Property Logo Sheraton Graphite Coded PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":43,\"name\":\"PropertyLogoSheratonGraphiteRGB\",\"label\":\"Property Logo Sheraton Graphite RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":44,\"name\":\"PropertyLogoSheratonGraphiteUncoatedCMYK\",\"label\":\"Property Logo Sheraton Graphite Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":45,\"name\":\"PropertyLogoSheratonGraphiteUncoatedPMS\",\"label\":\"Property Logo Sheraton Graphite Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":46,\"name\":\"PropertyLogoSheratonIvory\",\"label\":\"Property Logo Sheraton Ivory\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":47,\"name\":\"PropertyLogoSheratonKnockout\",\"label\":\"Property Logo Sheraton Knockout\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":48,\"name\":\"PropertyLogoSheratonLogoSpecs\",\"label\":\"Property Logo Sheraton Logo Specs\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":49,\"name\":\"PropertyLogoSheratonOysterCoatedCMYK\",\"label\":\"Property Logo Sheraton Oyster Coated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":50,\"name\":\"PropertyLogoSheratonOysterCoatedPMS\",\"label\":\"Property Logo Sheraton Oyster Coated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":51,\"name\":\"PropertyLogoSheratonOysterRGB\",\"label\":\"Property Logo Sheraton Oyster RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":52,\"name\":\"PropertyLogoSheratonOysterUncoatedCMYK\",\"label\":\"Property Logo Sheraton Oyster Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":53,\"name\":\"PropertyLogoSheratonOysterUncoatedPMS\",\"label\":\"Property Logo Sheraton Oyster Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":54,\"name\":\"PropertyLogoSheratonResortFrenchGrayCoatedCMYK\",\"label\":\"Property Logo Sheraton Resort French Gray Coated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":55,\"name\":\"PropertyLogoSheratonResortFrenchGrayCoatedPMS\",\"label\":\"Property Logo Sheraton Resort French Gray Coated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":56,\"name\":\"PropertyLogoSheratonResortFrenchGrayRGB\",\"label\":\"Property Logo Sheraton Resort French Gray RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":57,\"name\":\"PropertyLogoSheratonResortFrenchGrayUncoatedCMYK\",\"label\":\"Property Logo Sheraton Resort French Gray Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":58,\"name\":\"PropertyLogoSheratonResortFrenchGrayUncoatedPMS\",\"label\":\"Property Logo Sheraton Resort French Gray Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":59,\"name\":\"PropertyLogoSheratonTungstenCoatedCMYK\",\"label\":\"Property Logo Sheraton Tungsten Coated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":60,\"name\":\"PropertyLogoSheratonTungstenCoatedPMS\",\"label\":\"Property Logo Sheraton Tungsten Coated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":61,\"name\":\"PropertyLogoSheratonTungstenRGB\",\"label\":\"Property Logo Sheraton Tungsten RGB\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":62,\"name\":\"PropertyLogoSheratonTungstenUncoatedCMYK\",\"label\":\"Property Logo Sheraton Tungsten Uncoated CMYK\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":63,\"name\":\"PropertyLogoSheratonTungstenUncoatedPMS\",\"label\":\"Property Logo Sheraton Tungsten Uncoated PMS\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":64,\"name\":\"PropertyLogoUSNavy\",\"label\":\"Property Logo US Navy\",\"comment\":\"\",\"order\":0,\"type\":\"MEDIA\",\"props\":null},{\"number\":2,\"name\":\"AFFILIATES_CODE\",\"label\":\"Property Number\",\"comment\":\"\",\"order\":1,\"type\":\"TEXT\",\"props\":null},{\"number\":1,\"name\":\"AFFILIATE_NAME\",\"label\":\"Property Name\",\"comment\":\"\",\"order\":2,\"type\":\"TEXT\",\"props\":null},{\"number\":4,\"name\":\"ADDRESS\",\"label\":\"Property Address\",\"comment\":\"\",\"order\":4,\"type\":\"TEXT\",\"props\":null},{\"number\":5,\"name\":\"STREET\",\"label\":\"Property Street\",\"comment\":\"\",\"order\":5,\"type\":\"TEXT\",\"props\":null},{\"number\":6,\"name\":\"ZIP\",\"label\":\"Property Zip Code\",\"comment\":\"\",\"order\":6,\"type\":\"TEXT\",\"props\":null},{\"number\":7,\"name\":\"CITY\",\"label\":\"Property City\",\"comment\":\"\",\"order\":7,\"type\":\"TEXT\",\"props\":null},{\"number\":8,\"name\":\"COUNTRY\",\"label\":\"Property Country\",\"comment\":\"\",\"order\":8,\"type\":\"TEXT\",\"props\":null},{\"number\":35,\"name\":\"CombinedAddressAddress1\",\"label\":\"CombinedAddress - Address 1\",\"comment\":\"\",\"order\":-1,\"type\":\"RICHTEXT\",\"props\":null},\\n\" +\n" +
+                    "                    \"{\"number\":36,\"name\":\"CombinedAddressAddress1Bold\",\"label\":\"CombinedAddress - Address 1 - Bold\",\"comment\":\"\",\"order\":-1,\"type\":\"RICHTEXT\",\"props\":null},\\n\" +\n" +
+                    "                    \"{\"number\":37,\"name\":\"CombinedAddressAddress11stand2ndLineBold\",\"label\":\"CombinedAddress - Address 1 - 1st and 2nd Line Bold\",\"comment\":\"\",\"order\":-1,\"type\":\"RICHTEXT\",\"props\":null}]\");\n]", headerFormat);
             sheet.addCell(headerLabel);
 
             // substructure floor plans
@@ -990,8 +794,6 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             sheet.addCell(headerLabel);
             colIndex++;
             headerLabel = new Label(colIndex++, rowIndex, "NON_AFFILIATE_STRUCTURE", headerFormat);
-            sheet.addCell(headerLabel);
-            headerLabel = new Label(colIndex++, rowIndex, "false", headerFormat);
             sheet.addCell(headerLabel);
             colIndex++;
 
@@ -1056,30 +858,18 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
     public class Attribute {
         private int number;
 
-        private String name;
-
-        private String label;
-
-        private String comment;
-
-        private int order;
+        private String attributeName;
 
         private String type;
-
-        private Props props;
 
         private String value;
 
         public Attribute() {}
 
-        public Attribute(final int number, final String name, final String label, final String comment, final int order, final String type, final Props props, final String value ) {
+        public Attribute(final int number, final String attributeName, final String type, final String value) {
             this.number = number;
-            this.name = name;
-            this.label = label;
-            this.comment = comment;
-            this.order = order;
+            this.attributeName = attributeName;
             this.type = type;
-            this.props = props;
             this.value = value;
         }
 
@@ -1091,36 +881,12 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             this.number = number;
         }
 
-        public String getName() {
-            return name;
+        public String getAttributeName() {
+            return attributeName;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getLabel() {
-            return label;
-        }
-
-        public void setLabel(String label) {
-            this.label = label;
-        }
-
-        public String getComment() {
-            return comment;
-        }
-
-        public void setComment(String comment) {
-            this.comment = comment;
-        }
-
-        public int getOrder() {
-            return order;
-        }
-
-        public void setOrder(int order) {
-            this.order = order;
+        public void setAttributeName(String attributeName) {
+            this.attributeName = attributeName;
         }
 
         public String getType() {
@@ -1129,14 +895,6 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
 
         public void setType(String type) {
             this.type = type;
-        }
-
-        public Props getProps() {
-            return props;
-        }
-
-        public void setProps(Props props) {
-            this.props = props;
         }
 
         public String getValue() {
