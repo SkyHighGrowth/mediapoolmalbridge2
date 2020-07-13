@@ -34,7 +34,11 @@ public class MALToBMTransformer {
         final UploadMetadataArgument uploadMetadataArgument = new UploadMetadataArgument();
 
         uploadMetadataArgument.setAddAssociations(true);
-        uploadMetadataArgument.setVirtualDbName("Standard");
+        if (malGetAsset.getStatus().equals("active")) {
+            uploadMetadataArgument.setVirtualDbName("Standard");
+        } else {
+            uploadMetadataArgument.setVirtualDbName("Recycle bin");
+        }
         uploadMetadataArgument.setShow("SHOW_ALWAYS");
         uploadMetadataArgument.setCreatorName("Soap Api");
         uploadMetadataArgument.setDesignationType("3");

@@ -392,5 +392,11 @@
     "id": "50",
     "structureName": "BRAND_RIBM_Residence_Inn_Brand_Photography",
     "fields": ",Image,"
+  },
+  "51": {
+    "id": "51",
+    "structureName": "AFFILIATES_V003_RIBM",
+    "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\"/>{name}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{address}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{city}, {state} {zip}<br/></div>\"",
+    "fields": ",property_id, property_id - name, , status, name, property_id, state, address_2, address, zip, city, country, url, telephone, brand, parent_brand, latitude, longitude, , , , , , , , , , , , , , , , , , , , Address_Block_1, Address_Block_2, Address_Block_3, Address_Block_4, Address_Block_5, property_id"
   }
 }
