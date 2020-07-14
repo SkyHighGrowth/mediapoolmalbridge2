@@ -2,7 +2,6 @@ package MediaPoolMalBridge.config;
 
 import MediaPoolMalBridge.constants.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.DependsOn;
@@ -58,7 +57,6 @@ public class AppConfig {
         if (file.exists()) {
             try {
                 this.appConfigData = objectMapper.readValue(file, AppConfigData.class);
-                logger.info("App config data loaded {}", (new Gson()).toJson(this.appConfigData));
             } catch (final Exception e) {
                 logger.error("Fatal: Can not parse application.properties.json", e);
                 throw new RuntimeException("Fatal: Can not parse application.properties.json");
@@ -67,7 +65,6 @@ public class AppConfig {
             try {
                 this.appConfigData = appConfigData;
                 objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, appConfigData);
-                logger.info("Using default app config data loaded {}", (new Gson()).toJson(this.appConfigData));
             } catch (final Exception e) {
                 logger.error("Can not write to file {}", file.getAbsolutePath(), e);
             }
