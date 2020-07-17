@@ -41,7 +41,6 @@ public abstract class MALSingleResponseClient<REQUEST, RESPONSE> extends MALClie
 
     protected RestResponse<RESPONSE> exchange(final URI url, final REQUEST request, final HttpMethod httpMethod) {
         final HttpEntity<String> requestEntity = new HttpEntity<>(serializeRequestBody(request), new HttpHeaders());
-        logger.info( "REQUEST url {} headers {}", url, GSON.toJson( requestEntity) );//delete
         try {
             final ResponseEntity<String> response = restTemplate.exchange(url, httpMethod, requestEntity, String.class);
             logger.debug("REST RESPONSE {}", response);

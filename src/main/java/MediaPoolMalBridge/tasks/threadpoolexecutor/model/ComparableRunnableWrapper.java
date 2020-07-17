@@ -42,7 +42,6 @@ public class ComparableRunnableWrapper implements Runnable, Comparable<Comparabl
 
     @Override
     public void run() {
-        //logger.info( "RUNNING for priority {} on malAssetId {}", priority, malAssetId );
         task.run();
     }
 }

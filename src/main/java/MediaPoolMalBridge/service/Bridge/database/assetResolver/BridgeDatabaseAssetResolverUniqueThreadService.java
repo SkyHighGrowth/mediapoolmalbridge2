@@ -33,9 +33,7 @@ public class BridgeDatabaseAssetResolverUniqueThreadService extends AbstractBrid
 
     @Override
     protected void run() {
-        logger.info( "running resolver" );
         for( int page = 0; true; ++page ) {
-            logger.info( "reolving page {}", page );
             final List<AssetEntity> assetEntities = assetRepository.findAllByUpdatedIsAfterAndUpdatedIsBeforeAndTransferringAssetStatusIsNotAndTransferringAssetStatusIsNot(
                     getMidnightBridgeLookInThePast( ).minusDays( appConfig.getBridgeResolverWindow() ), getMidnightBridgeLookInThePast(), TransferringAssetStatus.DONE, TransferringAssetStatus.ERROR, PageRequest.of( 0, appConfig.getDatabasePageSize() ) );
             if( assetEntities.isEmpty() || page > 1000 ) {
@@ -48,13 +46,11 @@ public class BridgeDatabaseAssetResolverUniqueThreadService extends AbstractBrid
     @Transactional
     protected void resolvePage( final List<AssetEntity> assetEntities ) {
         assetEntities.forEach(assetEntity -> {
-            logger.info( "resolving asset {}", assetEntity.getMalAssetId() );
             final String message = String.format( "Asset with id [%s] transfer ended in status [%s] and total transfer has not finished successfully", assetEntity.getMalAssetId(), assetEntity.getTransferringAssetStatus().name());
             final ReportsEntity reportMal = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, gson.toJson(assetEntity), null, null);
             reportsRepository.save( reportMal );
             final ReportsEntity reportBM = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, gson.toJson(assetEntity), null, null);
             reportsRepository.save( reportBM );
-            logger.error( message + " asset {}", gson.toJson(assetEntity) );
             if( StringUtils.isNotBlank( assetEntity.getFileNameOnDisc() ) &&
                 !TransferringAssetStatus.ASSET_OBSERVED.equals( assetEntity.getTransferringAssetStatus() ) )
             {
