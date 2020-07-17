@@ -43,7 +43,6 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
     protected void run( final AssetEntity assetEntity ) {
         try {
             final MALDownloadAssetResponse response = malDownloadAssetClient.download(decode(assetEntity.getUrl()), assetEntity.getFileNameOnDisc());
-            //logger.error( "RESPONSE {}", response);//delete
             if ( response.isSuccess() ) {
                 onSuccess( assetEntity );
             } else {
