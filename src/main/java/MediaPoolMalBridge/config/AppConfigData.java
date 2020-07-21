@@ -413,6 +413,9 @@ public class AppConfigData {
     @Value("${filter.end.date}")
     private String filterEndDate;
 
+    @Value("${file.max.records}")
+    private int fileMaxRecords;
+
     public boolean isUseSftp() {
         return useSftp;
     }
@@ -718,4 +721,6 @@ public class AppConfigData {
     public String getFilterEndDate() {
         return filterEndDate;
     }
+
+    public int getFileMaxRecords(){  return fileMaxRecords; }
 }
