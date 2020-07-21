@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -75,7 +76,8 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
         for (MALPropertyVariant propertyVariant : propertyVariants) {
             final String brandName = assetStructures.getBrands().get(propertyVariant.getBrandId());
-            final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findByBrandAndMalPropertyStatus(brandName, MALPropertyStatus.OBSERVED);
+            LocalDateTime date = LocalDateTime.now().minusDays(appConfig.getMalLookInThePastDays());
+            final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findAllByBrandAndMalPropertyStatusAndUpdatedIsAfter(brandName, MALPropertyStatus.OBSERVED, date);
             for (MALPropertyEntity malPropertyEntity : malPropertyEntities) {
                 if (countProperties == appConfig.getFileMaxRecords()) {
                     count++;
