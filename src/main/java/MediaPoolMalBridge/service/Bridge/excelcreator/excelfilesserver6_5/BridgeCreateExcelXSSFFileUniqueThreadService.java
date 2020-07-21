@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 @Service
@@ -46,14 +47,14 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
     @Override
     protected void run() {
-        writeToFile("DataStructures.xlsx");
+        writeToFile();
     }
 
-    private void writeToFile(final String fileName) {
+    private void createFile(String fileName, LinkedHashSet<MALPropertyPair> allProperties) {
         try {
             final Workbook workbook = new XSSFWorkbook();
             createStructuresSheet(workbook);
-            createObjectsSheet(workbook);
+            createObjectsSheet(workbook, allProperties);
             final OutputStream fileOutputStream = new FileOutputStream(new File(appConfig.getExcelDir() + fileName));
             workbook.write(fileOutputStream);
             fileOutputStream.close();
@@ -66,8 +67,36 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private void createObjectsSheet(final Workbook workbook) throws Exception {
+    private void writeToFile() {
+        final List<MALPropertyVariant> propertyVariants = new ArrayList<>(assetStructures.getPropertyVariants().values());
+        LinkedHashSet<MALPropertyPair> malPropertyPairSet = new LinkedHashSet<>();
+        int count = 0;
+        int countProperties = 0;
 
+        for (MALPropertyVariant propertyVariant : propertyVariants) {
+            final String brandName = assetStructures.getBrands().get(propertyVariant.getBrandId());
+            final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findByBrandAndMalPropertyStatus(brandName, MALPropertyStatus.OBSERVED);
+            for (MALPropertyEntity malPropertyEntity : malPropertyEntities) {
+                if (countProperties == appConfig.getFileMaxRecords()) {
+                    count++;
+                    String fileName = String.format("DataStructures_%s.xlsx", count);
+                    createFile(fileName, malPropertyPairSet);
+                    malPropertyPairSet.clear();
+                    countProperties = 0;
+                }
+                MALPropertyPair malProperty = new MALPropertyPair(malPropertyEntity, propertyVariant);
+                malPropertyPairSet.add(malProperty);
+                countProperties++;
+            }
+        }
+        if (countProperties > 0) {
+            count++;
+            String fileName = String.format("DataStructures_%s.xlsx", count);
+            createFile(fileName, malPropertyPairSet);
+        }
+    }
+
+    private void createObjectsSheet(final Workbook workbook, LinkedHashSet<MALPropertyPair> malPropertyPairSet) throws Exception {
         final Sheet sheet = workbook.createSheet("objects");
 
         final Font font = workbook.createFont();
@@ -85,33 +114,27 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             cell.setCellStyle(headerFormat);
         }
 
-        assetStructures.getPropertyVariants().values().forEach(
-                propertyVariant -> {
-                    //logger.error( "CRESTING OBJECTS VARIANTS {}", (new Gson()).toJson( propertyVariant ) );
-                    try {
-                        final String brandName = assetStructures.getBrands().get(propertyVariant.getBrandId());
-                        if (StringUtils.isBlank(brandName)) {
-                            return;
-                        }
-                        //final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findByBrandAndUpdatedIsAfter(brandName, getMidnightBridgeLookInThePast());
-                        final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findByBrandAndMalPropertyStatus(brandName, MALPropertyStatus.OBSERVED);
-                        for (final MALPropertyEntity malPropertyEntity : malPropertyEntities) {
-                            final String[] combinedAddressFields = digestCombinedAddressField(propertyVariant, malPropertyEntity);
-                            digestLogos(sheet, propertyVariant, malPropertyEntity, combinedAddressFields);
-                            digestAssets(sheet, propertyVariant, malPropertyEntity);
-                            digestMaps(sheet, propertyVariant, malPropertyEntity);
-                            digestFloorTypes(sheet, propertyVariant, malPropertyEntity);
-                        }
-                    } catch (final Exception e) {
-                        final String message = String.format("Can not create Excel file for property variant [%s] with message [%s]", propertyVariant.getStructureName(), e.getMessage());
-                        final ReportsEntity reportsEntity = new ReportsEntity(ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, GSON.toJson(propertyVariant), null, null);
-                        reportsRepository.save(reportsEntity);
-                        logger.error(message, e);
-                    }
-                });
+        for (MALPropertyPair malProperty : malPropertyPairSet) {
+            MALPropertyEntity malPropertyEntity = malProperty.getMalPropertyEntity();
+            MALPropertyVariant propertyVariant = malProperty.getMalPropertyVariant();
+            try {
+                final String[] combinedAddressFields = digestCombinedAddressField(propertyVariant, malPropertyEntity);
+                digestLogos(sheet, propertyVariant, malPropertyEntity, combinedAddressFields);
+                digestAssets(sheet, propertyVariant, malPropertyEntity);
+                digestMaps(sheet, propertyVariant, malPropertyEntity);
+                digestFloorTypes(sheet, propertyVariant, malPropertyEntity);
+            } catch (final Exception e) {
+                final String message = String.format("Can not create Excel file for property variant [%s] with message [%s]", propertyVariant.getStructureName(), e.getMessage());
+                final ReportsEntity reportsEntity = new ReportsEntity(ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, GSON.toJson(propertyVariant), null, null);
+                reportsRepository.save(reportsEntity);
+                logger.error(message, e);
+            }
+        }
     }
 
-    private void digestFloorTypes(final Sheet sheet, final MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity) throws Exception {
+
+    private void digestFloorTypes(final Sheet sheet, final MALPropertyVariant propertyVariant,
+                                  final MALPropertyEntity malPropertyEntity) throws Exception {
         final String[] floorTypes = new String[2];
         floorTypes[0] = "Fmt";
         floorTypes[1] = "Fgr";
@@ -132,7 +155,8 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private void digestMaps(final Sheet sheet, final MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity) throws Exception {
+    private void digestMaps(final Sheet sheet, final MALPropertyVariant propertyVariant,
+                            final MALPropertyEntity malPropertyEntity) throws Exception {
         final String[] mapColors = new String[3];
         mapColors[0] = "Mat";
         mapColors[1] = "Mla";
@@ -154,7 +178,8 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private void digestAssets(final Sheet sheet, final MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity) throws Exception {
+    private void digestAssets(final Sheet sheet, final MALPropertyVariant propertyVariant,
+                              final MALPropertyEntity malPropertyEntity) throws Exception {
         final List<AssetEntity> assetEntities = assetRepository.findPropertyAssets(malPropertyEntity.getPropertyId(), "1", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
         int order = 1;
         if (assetEntities != null && !assetEntities.isEmpty()) {
@@ -170,55 +195,11 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private void addRow(final Sheet sheet, final String subName, final String propertyId, final String name, final String jsonedAttributes, final String malAssetId) throws Exception {
+    private void addRow(final Sheet sheet, final String subName, final String propertyId, final String name,
+                        final String jsonedAttributes, final String malAssetId) throws Exception {
         Row row = sheet.createRow(rowIndex++);
         int colIndex = 0;
 
-        //final String[] row_ = new String[6];
-        //row_[0] = subName;
-        //row_[1] = assetEntity.getMalAssetId();
-        //row_[2] = assetEntity.getMalAssetId() + " - " + assetEntity.getCaption();
-        //row_[3] = propertyId;
-        //row_[4] = "1";
-        //row_[5] = "";
-        //row_[6] = "";
-        //row_[7] = "";
-        //row_[8] = "";
-        //row_[9] = "";
-        //row_[10] = "";
-        //row_[11] = "";
-        //row_[12] = "";
-        //row_[13] = "";
-        //row_[14] = "";
-        //row_[15] = "";
-        //row_[16] = "";
-        //row_[17] = "";
-        //row_[18] = "";
-        //row_[19] = "";
-        //row_[20] = "";
-        //row_[21] = "";
-        //row_[22] = "";
-        //row_[23] = "";
-        //row_[24] = "";
-        //row_[25] = "";
-        //row_[26] = "";
-        //row_[27] = "";
-        //row_[28] = "[MD5_HASH=" + assetEntity.getBmMd5Hash() + ";MEDIA_GUID=" + assetEntity.getBmAssetId() + ";]";
-        //row_[29] = "";
-        //row_[30] = "";
-        //row_[31] = "";
-        //row_[32] = "";
-        //row_[33] = "";
-        //row_[34] = "";
-        //row_[35] = "";
-        //row_[36] = "";
-        //row_[37] = "";
-        //row_[38] = "";
-        //row_[39] = "";
-        //row_[40] = "";
-        //row_[41] = "";
-        //row_[42] = "";
-        //row_[43] = propertyId;
         if (StringUtils.isNotBlank(malAssetId)) {
             row.createCell(colIndex++).setCellValue(subName);
             row.createCell(colIndex++).setCellValue(malAssetId);
@@ -238,7 +219,8 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private void digestLogos(final Sheet sheet, MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity, final String[] combinedAddressFields) throws Exception {
+    private void digestLogos(final Sheet sheet, MALPropertyVariant propertyVariant,
+                             final MALPropertyEntity malPropertyEntity, final String[] combinedAddressFields) throws Exception {
         final List<Attribute> attributes = new ArrayList<>();
         List<AssetEntity> logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
         String propertyLogo1c = "";
@@ -691,7 +673,8 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         addRow(sheet, propertyVariant.getStructureName(), malPropertyEntity.getPropertyId(), malPropertyEntity.getName(), gsonWithNulls.toJson(attributes), null);
     }
 
-    private String[] digestCombinedAddressField(final MALPropertyVariant propertyVariant, final MALPropertyEntity malPropertyEntity) {
+    private String[] digestCombinedAddressField(final MALPropertyVariant propertyVariant,
+                                                final MALPropertyEntity malPropertyEntity) {
         final String[] fields = propertyVariant.getFieldsArray();
         String addressField01 = propertyVariant.getAddressField01();
         String addressField02 = propertyVariant.getAddressField02();
@@ -758,6 +741,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         return addressFields;
     }
 
+
     private void createStructuresSheet(final Workbook workbook) throws Exception {
 
         final Sheet sheet = workbook.createSheet("structures");
@@ -810,7 +794,8 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private int createSubStructure(Sheet sheet, int rowIndex, MALPropertyVariant malPropertyVariant, String subStructureName, String s) {
+    private int createSubStructure(Sheet sheet, int rowIndex, MALPropertyVariant malPropertyVariant, String
+            subStructureName, String s) {
         if (subStructureName != null) {
             Row row = sheet.createRow(rowIndex++);
 

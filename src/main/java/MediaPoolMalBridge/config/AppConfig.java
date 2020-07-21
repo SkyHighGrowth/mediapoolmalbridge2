@@ -453,4 +453,8 @@ public class AppConfig {
     public String getFilterEndDate() {
         return appConfigData.getFilterEndDate();
     }
+
+    public int getFileMaxRecords(){
+        return appConfigData.getFileMaxRecords();
+    }
 }
