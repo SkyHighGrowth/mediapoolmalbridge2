@@ -95,6 +95,11 @@ public class MALToBMTransformer {
             themeDto = new ThemeDto();
             themeDto.setName( "Colors/" + colorId );
             uploadMetadataArgument.getAssociations().add( themeDto );
+
+            LanguageItem languageItem = new LanguageItem();
+            languageItem.setDescription(colorId);
+            languageItem.setLangCode("EN");
+            uploadMetadataArgument.getFreeField10().add(languageItem);
         }
 
         // If asset theme is not set, fail safe value is set
