@@ -310,87 +310,87 @@
   },
   "34": {
     "id": "34",
-    "structureName": "BRAND_alf_Aloft_Lifestyle_Images",
+    "structureName": "BRAND_Aloft_Lifestyle_Images_alf",
     "fields": ",Image,"
   },
   "35": {
     "id": "35",
-    "structureName": "BRAND_elm_Element_Brand_Images",
+    "structureName": "BRAND_Element_Brand_Images_elm",
     "fields": ",Image,"
   },
   "36": {
     "id": "36",
-    "structureName": "BRAND_fpt_Four_Points_by_Sheraton_Lifestyle",
+    "structureName": "BRAND_Four_Points_by_Sheraton_Lifestyle_fpt",
     "fields": ",Image,"
   },
   "37": {
     "id": "37",
-    "structureName": "BRAND_mer_Le_Meridien_Brand_Images",
+    "structureName": "BRAND_Le_Meridien_Brand_Images_mer",
     "fields": ",Image,"
   },
   "38": {
     "id": "38",
-    "structureName": "BRAND_mer_Le_Meridien_Lifestyle",
+    "structureName": "BRAND_Le_Meridien_Lifestyle_mer",
     "fields": ",Image,"
   },
   "39": {
     "id": "39",
-    "structureName": "BRAND_lux_LUX_Beautiful_Destinations",
+    "structureName": "BRAND_LUX_Beautiful_Destinations_lux",
     "fields": ",Image,"
   },
   "40": {
     "id": "40",
-    "structureName": "BRAND_lux_Luxury_Collection_Brand_Still_Life_Photography",
+    "structureName": "BRAND_Luxury_Collection_Brand_Still_Life_Photography_lux",
     "fields": ",Image,"
   },
   "41": {
     "id": "41",
-    "structureName": "BRAND_she_Sheraton_Brand_Photography",
+    "structureName": "BRAND_Sheraton_Brand_Photography_she",
     "fields": ",Image,"
   },
   "42": {
     "id": "42",
-    "structureName": "BRAND_str_St_Regis_Bloody_Mary_Illustrations",
+    "structureName": "BRAND_St_Regis_Bloody_Mary_Illustrations_str",
     "fields": ",Image,"
   },
   "43": {
     "id": "43",
-    "structureName": "BRAND_str_St_Regis_IconicPhotography",
+    "structureName": "BRAND_St_Regis_IconicPhotography_str",
     "fields": ",Image,"
   },
   "44": {
     "id": "44",
-    "structureName": "BRAND_str_St_Regis_Stock_Photography",
+    "structureName": "BRAND_St_Regis_Stock_Photography_str",
     "fields": ",Image,"
   },
   "45": {
     "id": "45",
-    "structureName": "BRAND_str_St_Regis_Wedding_Photography",
+    "structureName": "BRAND_St_Regis_Wedding_Photography_str",
     "fields": ",Image,"
   },
   "46": {
     "id": "46",
-    "structureName": "BRAND_wes_Westin_Still_Life_and_Lifestyle_Photography",
+    "structureName": "BRAND_Westin_Still_Life_and_Lifestyle_Photography_wes",
     "fields": ",Image,"
   },
   "47": {
     "id": "47",
-    "structureName": "BRAND_wes_Westin_Wedding",
+    "structureName": "BRAND_Westin_Wedding_wes",
     "fields": ",Image,"
   },
   "48": {
     "id": "48",
-    "structureName": "BRAND_who_W_Hotels_Brand_Photography",
+    "structureName": "BRAND_W_Hotels_Brand_Photography_who",
     "fields": ",Image,"
   },
   "49": {
     "id": "49",
-    "structureName": "BRAND_MHRS_Marriott_Hotels_Brand_Photography",
+    "structureName": "BRAND_Marriott_Hotels_Brand_Photography_MHRS",
     "fields": ",Image,"
   },
   "50": {
     "id": "50",
-    "structureName": "BRAND_RIBM_Residence_Inn_Brand_Photography",
+    "structureName": "BRAND_Residence_Inn_Brand_Photography_RIBM",
     "fields": ",Image,"
   },
   "51": {
