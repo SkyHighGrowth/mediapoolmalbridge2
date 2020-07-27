@@ -7,6 +7,8 @@ import MediaPoolMalBridge.service.BrandMaker.AbstractBMUniqueThreadService;
 import MediaPoolMalBridge.tasks.threadpoolexecutor.model.ComparableRunnableWrapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * Service executes {@link BMUploadThemeService} for specific theme
  */
@@ -32,16 +34,15 @@ public class BMFireUploadThemeUniqueThreadService extends AbstractBMUniqueThread
         bmThemes.keySet().forEach(malKits::remove);
         taskExecutorWrapper.lock();
         try {
-            malKits.keySet().forEach(malKit -> {
+            for (Map.Entry<String, String> malKitEntry : malKits.entrySet()) {
                 final BMTheme bmTheme = new BMTheme();
-                bmTheme.setThemeId(301);
-                bmTheme.setThemePath(malKit);
+                bmTheme.setThemeId(Integer.parseInt(malKitEntry.getValue()));
+                bmTheme.setThemePath(malKitEntry.getKey());
 
-                    if ( taskExecutorWrapper.canAcceptNewTask() ) {
-                        taskExecutorWrapper.getTaskExecutor().execute( new ComparableRunnableWrapper( () -> bmUploadThemeService.start(bmTheme), 1, "kits to theme" ) );
-                    }
-
-            });
+                if (taskExecutorWrapper.canAcceptNewTask()) {
+                    taskExecutorWrapper.getTaskExecutor().execute(new ComparableRunnableWrapper(() -> bmUploadThemeService.start(bmTheme), 1, "kits to theme"));
+                }
+            }
         } catch( final Exception e ) {
             logger.error( "Exception occurred during putting load on task executor in {}", getClass().getName(), e );
         } finally {

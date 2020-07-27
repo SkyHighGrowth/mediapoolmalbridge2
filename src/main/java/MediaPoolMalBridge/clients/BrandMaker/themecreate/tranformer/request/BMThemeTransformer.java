@@ -14,6 +14,7 @@ public class BMThemeTransformer {
     public Theme toBMTheme(final BMTheme theme) {
         final Theme theme1 = new Theme();
         theme1.setId(theme.getThemeId());
+        theme1.setParentId(301);
         Theme.Names names = new Theme.Names();
         ThemeName themeName = new ThemeName();
         themeName.setValue(theme.getThemePath());
