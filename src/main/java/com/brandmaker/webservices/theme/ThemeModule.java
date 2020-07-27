@@ -1,11 +1,7 @@
 
 package com.brandmaker.webservices.theme;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.*;
 
 
 /**
@@ -33,7 +29,7 @@ public class ThemeModule {
 
     @XmlValue
     protected boolean value;
-    @XmlAttribute
+    @XmlAttribute(name = "name")
     protected String name;
 
     /**

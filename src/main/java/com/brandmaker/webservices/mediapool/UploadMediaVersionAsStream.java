@@ -2,11 +2,7 @@
 package com.brandmaker.webservices.mediapool;
 
 import javax.activation.DataHandler;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlMimeType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 
 /**
@@ -19,10 +15,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="mediaGuid" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="fileName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="fileData" type="{http://www.w3.org/2001/XMLSchema}base64Binary"/>
+ *         &lt;element name="mediaGuid" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
+ *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0" form="qualified"/>
+ *         &lt;element name="fileName" type="{http://www.w3.org/2001/XMLSchema}string" form="qualified"/>
+ *         &lt;element name="fileData" type="{http://www.w3.org/2001/XMLSchema}base64Binary" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
