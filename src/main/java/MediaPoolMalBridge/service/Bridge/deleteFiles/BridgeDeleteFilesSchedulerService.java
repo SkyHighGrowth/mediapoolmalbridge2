@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.Instant;
@@ -60,7 +61,6 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
         final LocalDateTime pointInTime = getTodayMidnight().minusDays( appConfig.getAssetFileMaximalLivingDaysOnDisc() );
         BasicFileAttributes attributes = null;
         for (final File file : files) {
-            logger.error( "DELETING list from temp folder {}", file.getAbsolutePath() );
             if (file.isFile()) {
                 try
                 {
@@ -73,10 +73,8 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
                         final UploadedFileEntity uploadedFileEntity = new UploadedFileEntity( file.getName() );
                         uploadedFileRepository.save( uploadedFileEntity );
                     }
-                }
-                catch (final Exception e)
-                {
-                    logger.error("Exception handled when trying to get file attributes: " + e.getMessage());
+                } catch (IOException e) {
+                    logger.error("Error deleting file " + file.getAbsolutePath() + " caused by exception " + e.getMessage());
                 }
             }
         }
