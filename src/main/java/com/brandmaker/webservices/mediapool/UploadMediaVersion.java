@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="uploadMediaVersionData" type="{http://brandmaker.com/webservices/MediaPool/}uploadMediaVersionArgument"/>
+ *         &lt;element name="uploadMediaVersionData" type="{http://brandmaker.com/webservices/MediaPool/}uploadMediaVersionArgument" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

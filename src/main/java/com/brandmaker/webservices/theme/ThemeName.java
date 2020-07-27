@@ -1,12 +1,7 @@
 
 package com.brandmaker.webservices.theme;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.*;
 
 
 /**
@@ -38,7 +33,7 @@ public class ThemeName {
 
     @XmlValue
     protected String value;
-    @XmlAttribute
+    @XmlAttribute(name = "languageKey")
     protected String languageKey;
 
     /**
