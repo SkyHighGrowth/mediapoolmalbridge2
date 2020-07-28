@@ -101,9 +101,11 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
     private void deleteOldFilesFromExcelDirectory() {
         final File[] files = new File(appConfig.getExcelDir()).listFiles();
-        for (File file : files) {
-            if (file.isFile()) {
-                file.delete();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.exists()) {
+                    file.delete();
+                }
             }
         }
     }
