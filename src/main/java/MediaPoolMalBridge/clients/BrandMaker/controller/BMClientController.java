@@ -122,8 +122,8 @@ public class BMClientController {
     public UploadMetadataResult uploadMetadata(@RequestBody() final UploadMetadataArgument uploadMetadataArgument) {
         final MediaPoolWebServicePort port = (new MediaPoolService()).getMediaPoolPort();
         Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-        reqContext.put(BindingProvider.USERNAME_PROPERTY, "tsupport.de" );
-        reqContext.put(BindingProvider.PASSWORD_PROPERTY, "de!SuPPort$4" );
+        reqContext.put(BindingProvider.USERNAME_PROPERTY, "sal_middle_ware_2" );
+        reqContext.put(BindingProvider.PASSWORD_PROPERTY, "Changeme2020!" );
         reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://qamarriott.brandmakerinc.com/webservices/MediaPool/");
         return port.uploadMetaData(uploadMetadataArgument);
     }
@@ -132,8 +132,8 @@ public class BMClientController {
     public GetMediaDetailsResult downloadMetadata(@RequestBody() final GetMediaDetailsArgument uploadMetadataArgument) {
         final MediaPoolWebServicePort port = (new MediaPoolService()).getMediaPoolPort();
         Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-        reqContext.put(BindingProvider.USERNAME_PROPERTY, "tsupport.de" );
-        reqContext.put(BindingProvider.PASSWORD_PROPERTY, "de!SuPPort$4" );
+        reqContext.put(BindingProvider.USERNAME_PROPERTY, "sal_middle_ware_2" );
+        reqContext.put(BindingProvider.PASSWORD_PROPERTY, "Changeme2020!" );
         reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://qamarriott.brandmakerinc.com/webservices/MediaPool/");
         return port.getMediaDetails(uploadMetadataArgument);
     }
