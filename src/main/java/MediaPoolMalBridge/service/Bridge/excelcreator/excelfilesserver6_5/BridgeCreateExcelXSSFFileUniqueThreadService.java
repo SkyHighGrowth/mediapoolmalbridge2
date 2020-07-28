@@ -69,6 +69,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     }
 
     private void writeToFile() {
+        emptyExcelDirectory();
         final List<MALPropertyVariant> propertyVariants = new ArrayList<>(assetStructures.getPropertyVariants().values());
         LinkedHashSet<MALPropertyPair> malPropertyPairSet = new LinkedHashSet<>();
         int count = 0;
@@ -95,6 +96,15 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             count++;
             String fileName = String.format("DataStructures_%s.xlsx", count);
             createFile(fileName, malPropertyPairSet);
+        }
+    }
+
+    private void emptyExcelDirectory() {
+        final File[] files = new File(appConfig.getExcelDir()).listFiles();
+        for (File file : files) {
+            if (file.isFile()) {
+                file.delete();
+            }
         }
     }
 
