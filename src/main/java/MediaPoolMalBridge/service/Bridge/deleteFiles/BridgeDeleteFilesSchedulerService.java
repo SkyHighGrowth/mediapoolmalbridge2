@@ -104,13 +104,18 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
     {
         fileEntities.forEach(fileEntity -> {
             final File file = new File(appConfig.getTempDir() + fileEntity.getFilename());
-            if (!file.delete()) {
-                final String message = String.format("Can not delete file [%s]", fileEntity.getFilename());
-                logger.error(message);
-                fileEntity.setFileStateOnDisc( FileStateOnDisc.ERROR );
-                uploadedFileRepository.save( fileEntity );
-                final ReportsEntity reportsEntity = new ReportsEntity(ReportType.WARNING, getClass().getName(), null, message, ReportTo.BM, null, null, null);
-                reportsRepository.save(reportsEntity);
+            if (file.exists()) {
+                if (!file.delete()) {
+                    final String message = String.format("Can not delete file [%s]", fileEntity.getFilename());
+                    logger.error(message);
+                    fileEntity.setFileStateOnDisc(FileStateOnDisc.ERROR);
+                    uploadedFileRepository.save(fileEntity);
+                    final ReportsEntity reportsEntity = new ReportsEntity(ReportType.WARNING, getClass().getName(), null, message, ReportTo.BM, null, null, null);
+                    reportsRepository.save(reportsEntity);
+                } else {
+                    fileEntity.setDeleted(true);
+                    uploadedFileRepository.save(fileEntity);
+                }
             } else {
                 fileEntity.setDeleted(true);
                 uploadedFileRepository.save(fileEntity);
