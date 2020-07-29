@@ -41,9 +41,12 @@ public class BMUploadMetadataClient extends BrandMakerSoapClient {
     }
 
     private UploadMetadataArgument getUploadMetadataArgument(final AssetEntity assetEntity ) {
-        final AssetJsonedValuesEntity assetJsonedValuesEntity = assetJsonedValuesRepository.findByAssetEntity( assetEntity );
-        if (assetJsonedValuesEntity != null && assetJsonedValuesEntity.getBmUploadMetadataArgumentJson() != null) {
-            return GSON.fromJson(assetJsonedValuesEntity.getBmUploadMetadataArgumentJson(), UploadMetadataArgument.class);
+        AssetJsonedValuesEntity jsonedValuesEntity = assetEntity.getAssetJsonedValuesEntity();
+        if (jsonedValuesEntity != null) {
+            final AssetJsonedValuesEntity assetJsonedValuesEntity = assetJsonedValuesRepository.findAssetJsonedValuesEntitiesById(jsonedValuesEntity.getId());
+            if (assetJsonedValuesEntity != null && assetJsonedValuesEntity.getBmUploadMetadataArgumentJson() != null) {
+                return GSON.fromJson(assetJsonedValuesEntity.getBmUploadMetadataArgumentJson(), UploadMetadataArgument.class);
+            }
         }
         return null;
     }
