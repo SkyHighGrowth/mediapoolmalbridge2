@@ -3,6 +3,7 @@
     "id": "1",
     "structureName": "AFFILIATES_V001_alf",
     "subName": "AFFILIATES_V001_Aloft_IMAGES",
+    "brandName" : "Aloft",
     "subNameMaps": "AFFILIATES_V001_Aloft_Maps",
     "subNameFloorPlans": "AFFILIATES_V001_Aloft_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{name}</span><br/>\n{address}, {city}, {state} {zip}</div>",
@@ -15,6 +16,7 @@
     "id": "2",
     "structureName": "AFFILIATES_V002_alf",
     "subName": "AFFILIATES_V002_Aloft_Images",
+    "brandName" : "Aloft",
     "subNameMaps": "AFFILIATES_V002_Aloft_Maps",
     "subNameFloorPlans": "AFFILIATES_V002_Aloft_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{name}<br/></div><div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{city}, {state},\u0026nbsp;{country}</div>",
@@ -24,6 +26,7 @@
     "id": "3",
     "structureName": "AFFILIATES_V003_alf",
     "subName": "AFFILIATES_V003_Aloft_IMAGES",
+    "brandName" : "Aloft",
     "subNameMaps": "AFFILIATES_V003_Aloft_Maps",
     "subNameFloorPlans": "AFFILIATES_V003_Aloft_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\"/>{name}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\"data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{address}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\"data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{city}, {state} {zip}<br/></div>",
@@ -33,6 +36,7 @@
     "id": "4",
     "structureName": "AFFILIATES_V004_elm",
     "subName": "AFFILIATES_V004_Element_Images",
+    "brandName" : "Element",
     "subNameMaps": "AFFILIATES_V004_Element_Maps",
     "subNameFloorPlans": "AFFILIATES_V004_Element_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{name},</span> {address}, {city}, {state} {zip}</div>",
@@ -42,6 +46,7 @@
     "id": "5",
     "structureName": "AFFILIATES_V005_elm",
     "subName": "AFFILIATES_V005_Element_Images",
+    "brandName" : "Element",
     "subNameMaps": "AFFILIATES_V005_Element_Maps",
     "subNameFloorPlans": "AFFILIATES_V005_Element_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{name}</span><br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{address}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{city}, {state} {zip}<br/></div>",
@@ -51,6 +56,7 @@
     "id": "6",
     "structureName": "AFFILIATES_V006_fpt",
     "subName": "AFFILIATES_V006_Four_Points_Images",
+    "brandName" : "Four Points",
     "subNameMaps": "AFFILIATES_V006_Four_Points_Maps",
     "subNameFloorPlans": "AFFILIATES_V006_Four_Points_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{name}</div><div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{address}<br/>{city}, {state} {zip}</div>",
@@ -60,6 +66,7 @@
     "id": "7",
     "structureName": "AFFILIATES_V007_elm",
     "subName": "AFFILIATES_V007_Element_Images",
+    "brandName" : "Element",
     "subNameMaps": "AFFILIATES_V007_Element_Maps",
     "subNameFloorPlans": "AFFILIATES_V007_Element_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{name}</div><div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{address}, {city}, {state}<br/></div>",
@@ -69,6 +76,7 @@
     "id": "8",
     "structureName": "AFFILIATES_V008_elm",
     "subName": "AFFILIATES_V008_Element_Images",
+    "brandName" : "Element",
     "subNameMaps": "AFFILIATES_V008_Element_Maps",
     "subNameFloorPlans": "AFFILIATES_V008_Element_Floorplans",
     "addressField01": "{address}    {city}, {state} {zip}",
@@ -78,6 +86,7 @@
     "id": "9",
     "structureName": "AFFILIATES_V009_elm",
     "subName": "AFFILIATES_V009_Element_Images",
+    "brandName" : "Element",
     "subNameMaps": "AFFILIATES_V009_Element_Maps",
     "subNameFloorPlans": "AFFILIATES_V009_Element_Floorplans",
     "addressField01": "{address}    {city}, {state} {zip}{name} • {address}, {city}, {state} {zip} • {telephone}",
@@ -91,6 +100,7 @@
     "id": "10",
     "structureName": "AFFILIATES_V001_elm",
     "subName": "AFFILIATES_V001_Element_Images",
+    "brandName" : "Element",
     "subNameMaps": "AFFILIATES_V001_Element_Maps",
     "subNameFloorPlans": "AFFILIATES_V001_Element_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{name}</span><br/>\r\n{address}, {city}, {state} {zip}</div>",
@@ -103,6 +113,7 @@
     "id": "11",
     "structureName": "AFFILIATES_V001_she",
     "subName": "AFFILIATES_V001_Sheraton_Images",
+    "brandName" : "Sheraton",
     "subNameMaps": "AFFILIATES_V001_Sheraton_Maps",
     "subNameFloorPlans": "AFFILIATES_V001_Sheraton_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{name}</span><br/>\r\n{address}, {city}, {state} {zip}</div>",
@@ -115,6 +126,7 @@
     "id": "12",
     "structureName": "AFFILIATES_V002_fpt",
     "subName": "AFFILIATES_V002_Four_Points_Images",
+    "brandName" : "Four Points",
     "subNameMaps": "AFFILIATES_V002_Four_Points_Maps",
     "subNameFloorPlans": "AFFILIATES_V002_Four_Points_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{name}<br/></div><div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{city}, {state},\u0026nbsp;{country}</div>",
@@ -124,6 +136,7 @@
     "id": "13",
     "structureName": "AFFILIATES_V001_fpt",
     "subName": "AFFILIATES_V001_Four_Points_Images",
+    "brandName" : "Four Points",
     "subNameMaps": "AFFILIATES_V001_Four_Points_Maps",
     "subNameFloorPlans": "AFFILIATES_V001_Four_Points_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{name}</span><br/>\r\n{address}, {city}, {state} {zip}</div>",
@@ -136,6 +149,7 @@
     "id": "14",
     "structureName": "AFFILIATES_V003_who",
     "subName": "AFFILIATES_V003_W_Hotels_Images",
+    "brandName" : "W Hotels",
     "subNameMaps": "AFFILIATES_V003_W_Hotels_Maps",
     "subNameFloorPlans": "AFFILIATES_V003_W_Hotels_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{name}</span><br/>\n{address}, {city}, {state} {zip}</div>",
@@ -145,6 +159,7 @@
     "id": "15",
     "structureName": "AFFILIATES_V010_alf",
     "subName": "AFFILIATES_V010_alf_Images",
+    "brandName" : "Aloft",
     "subNameMaps": "AFFILIATES_V010_alf_Maps",
     "subNameFloorPlans": "AFFILIATES_V010_alf_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{name}</span></div>\r\n<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{address}, {city}, {state} {zip}</div>",
@@ -154,6 +169,7 @@
     "id": "16",
     "structureName": "AFFILIATES_V011_mer",
     "subName": "AFFILIATES_V011_mer_Images",
+    "brandName" : "Le Meridien",
     "subNameMaps": "AFFILIATES_V011_mer_Maps",
     "subNameFloorPlans": "AFFILIATES_V011_mer_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{name}</div>\r\n<div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{address}<br/>\r\n{state}, {city} {zip}<br/>\r\n{country}<br/>\r\nT {telephone}<br/>\r\n{url}</div>",
@@ -163,6 +179,7 @@
     "id": "17",
     "structureName": "AFFILIATES_V012_she",
     "subName": "AFFILIATES_V012_she_Images",
+    "brandName" : "Sheraton",
     "subNameMaps": "AFFILIATES_V012_she_Maps",
     "subNameFloorPlans": "AFFILIATES_V012_she_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{name}</div>\r\n<div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{address}<br/>\r\n{city} {zip}, {country}<br/>\r\nT\u0026nbsp;\u0026nbsp;\u0026nbsp;{telephone}<br/>\r\n{url}</div>",
@@ -172,6 +189,7 @@
     "id": "18",
     "structureName": "AFFILIATES_V013_mer",
     "subName": "AFFILIATES_V013_mer_Images",
+    "brandName" : "Le Meridien",
     "subNameMaps": "AFFILIATES_V013_mer_Maps",
     "subNameFloorPlans": "AFFILIATES_V013_mer_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{name}</div>\r\n<div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{address}<br/>\r\n{state}<br/>\r\n{city} {zip}<br/>\r\n{country}<br/>\r\n{telephone}<br/>\r\n{url}</div>",
@@ -181,6 +199,7 @@
     "id": "19",
     "structureName": "AFFILIATES_V000_str",
     "subName": "AFFILIATES_V000_str_Images",
+    "brandName" : "St. Regis",
     "subNameMaps": "AFFILIATES_V000_str_Maps",
     "subNameFloorPlans": "AFFILIATES_V000_str_Floorplans",
     "fields": ",property_id, property_id - name, , status, name, property_id, state, address_2, address, zip, city, country, url, telephone, brand, parent_brand, latitude, longitude, , , , , , , , , , , , , , , , , , , , Address_Block_1, Address_Block_2, Address_Block_3, Address_Block_4, Address_Block_5, property_id"
@@ -189,6 +208,7 @@
     "id": "20",
     "structureName": "AFFILIATES_V000_wes",
     "subName": "AFFILIATES_V000_wes_Images",
+    "brandName" : "Westin",
     "subNameMaps": "AFFILIATES_V000_wes_Maps",
     "subNameFloorPlans": "AFFILIATES_V000_wes_Floorplans",
     "fields": ",property_id, property_id - name, , status, name, property_id, state, address_2, address, zip, city, country, url, telephone, brand, parent_brand, latitude, longitude, , , , , , , , , , , , , , , , , , , , Address_Block_1, Address_Block_2, Address_Block_3, Address_Block_4, Address_Block_5, property_id"
@@ -197,6 +217,7 @@
     "id": "21",
     "structureName": "AFFILIATES_V000_lux",
     "subName": "AFFILIATES_V000_lux_Images",
+    "brandName" : "Luxury Collection",
     "subNameMaps": "AFFILIATES_V000_lux_Maps",
     "subNameFloorPlans": "AFFILIATES_V000_lux_Floorplans",
     "fields": ",property_id, property_id - name, , status, name, property_id, state, address_2, address, zip, city, country, url, telephone, brand, parent_brand, latitude, longitude, , , , , , , , , , , , , , , , , , , , Address_Block_1, Address_Block_2, Address_Block_3, Address_Block_4, Address_Block_5, property_id"
@@ -205,6 +226,7 @@
     "id": "22",
     "structureName": "AFFILIATES_V006_wes",
     "subName": "AFFILIATES_V006_wes_Images",
+    "brandName" : "Westin",
     "subNameMaps": "AFFILIATES_V006_wes_Maps",
     "subNameFloorPlans": "AFFILIATES_V006_wes_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{name}</div><div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{address}<br/>{city}, {state} {zip}<br/>{country}</div>",
@@ -214,6 +236,7 @@
     "id": "23",
     "structureName": "AFFILIATES_V000_swh",
     "subName": "AFFILIATES_V000_swh_Images",
+    "brandName" : "Corporate",
     "subNameMaps": "AFFILIATES_V000_swh_Maps",
     "subNameFloorPlans": "AFFILIATES_V000_swh_Floorplans",
     "fields": ",property_id, property_id - name, , status, name, property_id, state, address_2, address, zip, city, country, url, telephone, brand, parent_brand, latitude, longitude, , , , , , , , , , , , , , , , , , , , Address_Block_1, Address_Block_2, Address_Block_3, Address_Block_4, Address_Block_5, property_id"
@@ -222,6 +245,7 @@
     "id": "24",
     "structureName": "AFFILIATES_V015_lux",
     "subName": "AFFILIATES_V015_lux_Images",
+    "brandName" : "Luxury Collection",
     "subNameMaps": "AFFILIATES_V015_lux_Maps",
     "subNameFloorPlans": "AFFILIATES_V015_lux_Floorplans",
     "addressField01": "{name}<br/>{address}, {city}, {state} {zip} {country}",
@@ -231,6 +255,7 @@
     "id": "25",
     "structureName": "AFFILIATES_V003_she",
     "subName": "AFFILIATES_V003_she_Images",
+    "brandName" : "Sheraton",
     "subNameMaps": "AFFILIATES_V003_she_Maps",
     "subNameFloorPlans": "AFFILIATES_V003_she_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\"/>{name}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{address}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{city}, {state} {zip}<br/></div>\"",
@@ -240,6 +265,7 @@
     "id": "26",
     "structureName": "AFFILIATES_V016_lux",
     "subName": "AFFILIATES_V016_lux_Images",
+    "brandName" : "Luxury Collection",
     "subNameMaps": "AFFILIATES_V016_lux_Maps",
     "subNameFloorPlans": "AFFILIATES_V016_lux_Floorplans",
     "addressField01": "{name}<br/>{address}<br/>{city}, {state} {zip} {country}",
@@ -249,6 +275,7 @@
     "id": "27",
     "structureName": "AFFILIATES_V017_fpt",
     "subName": "AFFILIATES_V017_Four_Points_Images",
+    "brandName" : "Four Points",
     "subNameMaps": "AFFILIATES_V017_Four_Points_Maps",
     "subNameFloorPlans": "AFFILIATES_V017_Four_Points_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{name}</span></div>\r\n<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{address}, {city}, {state} {zip} {country}</div>",
@@ -258,6 +285,7 @@
     "id": "28",
     "structureName": "AFFILIATES_V018_fpt",
     "subName": "AFFILIATES_V018_Four_Points_Images",
+    "brandName" : "Four Points",
     "subNameMaps": "AFFILIATES_V018_Four_Points_Maps",
     "subNameFloorPlans": "AFFILIATES_V018_Four_Points_Floorplans",
     "addressField01": "{address}, {city}, {state} {zip} {country}",
@@ -267,6 +295,7 @@
     "id": "29",
     "structureName": "AFFILIATES_V019_str",
     "subName": "AFFILIATES_V019_str_Images",
+    "brandName" : "St. Regis",
     "subNameMaps": "AFFILIATES_V019_str_Maps",
     "subNameFloorPlans": "AFFILIATES_V019_str_Floorplans",
     "addressField01": "{name}<br/>{address}, {city}, {state} {zip}<br/>{telephone}<br/>{url}",
@@ -276,6 +305,7 @@
     "id": "30",
     "structureName": "AFFILIATES_V020_str",
     "subName": "AFFILIATES_V020_str_Images",
+    "brandName" : "St. Regis",
     "subNameMaps": "AFFILIATES_V020_str_Maps",
     "subNameFloorPlans": "AFFILIATES_V020_str_Floorplans",
     "addressField01": "{name}<br/>{address}<br/>{city}, {state} {zip}",
@@ -285,6 +315,7 @@
     "id": "31",
     "structureName": "AFFILIATES_V021_who",
     "subName": "AFFILIATES_V021_who_Images",
+    "brandName" : "W Hotels",
     "subNameMaps": "AFFILIATES_V021_who_Maps",
     "subNameFloorPlans": "AFFILIATES_V021_who_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{name}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{address}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{city}, {state}, {zip}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{country}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{url}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{telephone}</div>",
@@ -294,6 +325,7 @@
     "id": "32",
     "structureName": "AFFILIATES_V022_str",
     "subName": "AFFILIATES_V022_str_Images",
+    "brandName" : "St. Regis",
     "subNameMaps": "AFFILIATES_V022_str_Maps",
     "subNameFloorPlans": "AFFILIATES_V022_str_Floorplans",
     "addressField01": "{address}, {city}, {state} {zip} {country} {url}",
@@ -303,6 +335,7 @@
     "id": "33",
     "structureName": "AFFILIATES_V006_she",
     "subName": "AFFILIATES_V006_she_Images",
+    "brandName" : "Sheraton",
     "subNameMaps": "AFFILIATES_V006_she_Maps",
     "subNameFloorPlans": "AFFILIATES_V006_she_Floorplans",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{name}</div><div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{address}<br/>{city}, {state} {zip}<br/>{country}</div>",
@@ -311,91 +344,109 @@
   "34": {
     "id": "34",
     "structureName": "BRAND_Aloft_Lifestyle_Images_alf",
+    "brandName" : "Aloft",
     "fields": ",Image,"
   },
   "35": {
     "id": "35",
     "structureName": "BRAND_Element_Brand_Images_elm",
+    "brandName" : "Element",
     "fields": ",Image,"
   },
   "36": {
     "id": "36",
     "structureName": "BRAND_Four_Points_by_Sheraton_Lifestyle_fpt",
+    "brandName" : "Four Points",
     "fields": ",Image,"
   },
   "37": {
     "id": "37",
     "structureName": "BRAND_Le_Meridien_Brand_Images_mer",
+    "brandName" : "Le Meridien",
     "fields": ",Image,"
   },
   "38": {
     "id": "38",
     "structureName": "BRAND_Le_Meridien_Lifestyle_mer",
+    "brandName" : "Le Meridien",
     "fields": ",Image,"
   },
   "39": {
     "id": "39",
     "structureName": "BRAND_LUX_Beautiful_Destinations_lux",
+    "brandName" : "Luxury Collection",
     "fields": ",Image,"
   },
   "40": {
     "id": "40",
     "structureName": "BRAND_Luxury_Collection_Brand_Still_Life_Photography_lux",
+    "brandName" : "Luxury Collection",
     "fields": ",Image,"
   },
   "41": {
     "id": "41",
     "structureName": "BRAND_Sheraton_Brand_Photography_she",
+    "brandName" : "Sheraton",
     "fields": ",Image,"
   },
   "42": {
     "id": "42",
     "structureName": "BRAND_St_Regis_Bloody_Mary_Illustrations_str",
+    "brandName" : "St. Regis",
     "fields": ",Image,"
   },
   "43": {
     "id": "43",
     "structureName": "BRAND_St_Regis_IconicPhotography_str",
+    "brandName" : "St. Regis",
     "fields": ",Image,"
   },
   "44": {
     "id": "44",
     "structureName": "BRAND_St_Regis_Stock_Photography_str",
+    "brandName" : "St. Regis",
     "fields": ",Image,"
   },
   "45": {
     "id": "45",
     "structureName": "BRAND_St_Regis_Wedding_Photography_str",
+    "brandName" : "St. Regis",
     "fields": ",Image,"
   },
   "46": {
     "id": "46",
     "structureName": "BRAND_Westin_Still_Life_and_Lifestyle_Photography_wes",
+    "brandName" : "Westin",
     "fields": ",Image,"
   },
   "47": {
     "id": "47",
     "structureName": "BRAND_Westin_Wedding_wes",
+    "brandName" : "Westin",
     "fields": ",Image,"
   },
   "48": {
     "id": "48",
     "structureName": "BRAND_W_Hotels_Brand_Photography_who",
+    "brandName" : "W Hotels",
     "fields": ",Image,"
   },
   "49": {
     "id": "49",
     "structureName": "BRAND_Marriott_Hotels_Brand_Photography_MHRS",
+    "brandName" : "Marriott Hotels & Resorts",
     "fields": ",Image,"
   },
   "50": {
     "id": "50",
     "structureName": "BRAND_Residence_Inn_Brand_Photography_RIBM",
+    "brandName" : "Residence Inn By Marriott",
     "fields": ",Image,"
   },
   "51": {
     "id": "51",
     "structureName": "AFFILIATES_V003_RIBM",
+    "brandName" : "Residence Inn By Marriott",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\"/>{name}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{address}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{city}, {state} {zip}<br/></div>\"",
     "fields": ",property_id, property_id - name, , status, name, property_id, state, address_2, address, zip, city, country, url, telephone, brand, parent_brand, latitude, longitude, , , , , , , , , , , , , , , , , , , , Address_Block_1, Address_Block_2, Address_Block_3, Address_Block_4, Address_Block_5, property_id"
   }

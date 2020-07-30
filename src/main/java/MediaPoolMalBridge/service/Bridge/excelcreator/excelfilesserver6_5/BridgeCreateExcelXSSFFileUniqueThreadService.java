@@ -76,7 +76,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         int countProperties = 0;
 
         for (MALPropertyVariant propertyVariant : propertyVariants) {
-            final String brandName = assetStructures.getBrands().get(propertyVariant.getBrandId());
+            final String brandName = propertyVariant.getBrandName();
             LocalDateTime date = LocalDateTime.now().minusDays(appConfig.getMalLookInThePastDays());
             final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findAllByBrandAndMalPropertyStatusAndUpdatedIsAfter(brandName, MALPropertyStatus.OBSERVED, date);
             for (MALPropertyEntity malPropertyEntity : malPropertyEntities) {
