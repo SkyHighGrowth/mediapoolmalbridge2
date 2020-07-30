@@ -10,6 +10,8 @@ public class MALPropertyVariant {
 
     private String subName;
 
+    private String brandName;
+
     private String subNameMaps;
 
     private String subNameFloorPlans;
@@ -26,21 +28,22 @@ public class MALPropertyVariant {
 
     private String fields;
 
-    public MALPropertyVariant( final String id,
-                               final String structureName,
-                               final String subName,
-                               final String subNameMaps,
-                               final String subNameFloorPlans,
-                               final String addressField01,
-                               final String addressField02,
-                               final String addressField03,
-                               final String addressField04,
-                               final String addressField05,
-                               final String fields )
-    {
+    public MALPropertyVariant(final String id,
+                              final String structureName,
+                              final String subName,
+                              final String brandName,
+                              final String subNameMaps,
+                              final String subNameFloorPlans,
+                              final String addressField01,
+                              final String addressField02,
+                              final String addressField03,
+                              final String addressField04,
+                              final String addressField05,
+                              final String fields) {
         this.id = id;
         this.structureName = structureName;
         this.subName = subName;
+        this.brandName = brandName;
         this.subNameMaps = subNameMaps;
         this.subNameFloorPlans = subNameFloorPlans;
         this.addressField01 = addressField01;
@@ -83,32 +86,31 @@ public class MALPropertyVariant {
         return fields;
     }
 
-    public String getBrandId()
-    {
-        if( StringUtils.isNotBlank( structureName ) ) {
+    public String getBrandId() {
+        if (StringUtils.isNotBlank(structureName)) {
             final String[] explode = structureName.split("_");
             return explode[explode.length - 1];
         }
         return null;
     }
 
-    public String[] getFieldsArray()
-    {
-        return fields.split( "," );
+    public String[] getFieldsArray() {
+        return fields.split(",");
     }
 
-    public String getSubName()
-    {
+    public String getSubName() {
         return subName;
     }
 
-    public String getSubNameMaps()
-    {
+    public String getSubNameMaps() {
         return subNameMaps;
     }
 
-    public String getSubNameFloorPlans()
-    {
+    public String getSubNameFloorPlans() {
         return subNameFloorPlans;
+    }
+
+    public String getBrandName() {
+        return this.brandName;
     }
 }
