@@ -37,6 +37,8 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
             "order by ae.updated desc")
     List<AssetEntity> findPropertyAssets( final String propertyId, final String assetTypeId, final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated );
 
+    List<AssetEntity> findAllByBrandIdAndMalAssetIdAndAssetTypeIdAndTransferringAssetStatus(final String brandId, String malAssetId, final String assetTypeId, final TransferringAssetStatus transferringAssetStatus);
+
     List<AssetEntity> findAllByTransferringAssetStatusAndUpdatedIsAfter( final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated, final Pageable page );
 
     List<AssetEntity> findAllByTransferringAssetStatusAndBrandIdAndUpdatedIsAfter( final TransferringAssetStatus transferringAssetStatus, final String brandIds, final LocalDateTime updated, final Pageable page );
