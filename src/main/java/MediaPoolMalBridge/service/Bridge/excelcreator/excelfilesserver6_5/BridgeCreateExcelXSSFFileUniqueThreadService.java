@@ -3,6 +3,7 @@ package MediaPoolMalBridge.service.Bridge.excelcreator.excelfilesserver6_5;
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
 import MediaPoolMalBridge.model.MAL.propertyvariants.MALPropertyVariant;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
+import MediaPoolMalBridge.persistence.entity.Bridge.AssetJsonedValuesEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
@@ -128,19 +129,42 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             cell.setCellStyle(headerFormat);
         }
 
+        List<String> structureNameAlreadyAdded = new ArrayList<>();
         for (MALPropertyPair malProperty : malPropertyPairSet) {
             MALPropertyEntity malPropertyEntity = malProperty.getMalPropertyEntity();
             MALPropertyVariant propertyVariant = malProperty.getMalPropertyVariant();
             try {
                 if (propertyVariant.isBrandStructure()) {
-                    //TODO: logic needs to be added here
-                } else {
-                    final String[] combinedAddressFields = digestCombinedAddressField(propertyVariant, malPropertyEntity);
-                    digestLogos(sheet, propertyVariant, malPropertyEntity, combinedAddressFields);
-                    digestAssets(sheet, propertyVariant, malPropertyEntity);
-                    digestMaps(sheet, propertyVariant, malPropertyEntity);
-                    digestFloorTypes(sheet, propertyVariant, malPropertyEntity);
-                }
+                    if (malPropertyEntity.getPrimaryPropertyImage() > 0) {
+                        String primaryPropertyImageId = String.valueOf(malPropertyEntity.getPrimaryPropertyImage());
+                        final List<AssetEntity> assetEntities =
+                                assetRepository.findAllByBrandIdAndMalAssetIdAndAssetTypeIdAndTransferringAssetStatus(
+                                        propertyVariant.getBrandId(), primaryPropertyImageId, "1", TransferringAssetStatus.DONE);
+                        int order = 1;
+
+                        if (assetEntities != null && !assetEntities.isEmpty() && (structureNameAlreadyAdded.isEmpty() || !structureNameAlreadyAdded.contains(propertyVariant.getStructureName()))) {
+                            for (final AssetEntity assetEntity : assetEntities) {
+                                if (checkIfAssetEntityCollectionExist(assetEntity, propertyVariant)) {
+                                    final List<AttributeShort> attributes = new ArrayList<>();
+                                    attributes.add(new AttributeShort(order,
+                                            "Image" + order,
+                                            "[MD5_HASH=" + assetEntity.getBmMd5Hash() + ";MEDIA_GUID=" + assetEntity.getBmAssetId() + ";]",
+                                            "MEDIA"));
+                                    addRow(sheet, propertyVariant.getStructureName(), "", assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
+                                }
+                            }
+                            ++order;
+                            structureNameAlreadyAdded.add(propertyVariant.getStructureName());
+                        }
+                    }
+                    } else {
+                        final String[] combinedAddressFields = digestCombinedAddressField(propertyVariant, malPropertyEntity);
+                        digestLogos(sheet, propertyVariant, malPropertyEntity, combinedAddressFields);
+                        digestAssets(sheet, propertyVariant, malPropertyEntity);
+                        digestMaps(sheet, propertyVariant, malPropertyEntity);
+                        digestFloorTypes(sheet, propertyVariant, malPropertyEntity);
+                    }
+
             } catch (final Exception e) {
                 final String message = String.format("Can not create Excel file for property variant [%s] with message [%s]", propertyVariant.getStructureName(), e.getMessage());
                 final ReportsEntity reportsEntity = new ReportsEntity(ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, GSON.toJson(propertyVariant), null, null);
@@ -148,6 +172,13 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                 logger.error(message, e);
             }
         }
+    }
+
+    private boolean checkIfAssetEntityCollectionExist(AssetEntity assetEntity, MALPropertyVariant propertyVariant) {
+        AssetJsonedValuesEntity assetJsonedValuesEntity = assetJsonedValuesRepository.findAssetJsonedValuesEntitiesById(assetEntity.getAssetJsonedValuesEntity().getId());
+        String collectionName = propertyVariant.getCollection();
+
+        return assetJsonedValuesEntity.getBmUploadMetadataArgumentJson().contains("Collections/" + collectionName);
     }
 
 

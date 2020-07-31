@@ -4,6 +4,7 @@ import MediaPoolMalBridge.config.AppConfig;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
+import MediaPoolMalBridge.persistence.repository.Bridge.AssetJsonedValuesRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.AssetRepository;
 import MediaPoolMalBridge.persistence.repository.MAL.MALPropertyRepository;
 import MediaPoolMalBridge.service.Bridge.AbstractBridgeUniqueThreadService;
@@ -24,6 +25,10 @@ public abstract class AbstractBridgeUniqueExcelService extends AbstractBridgeUni
 
     @Autowired
     protected AssetRepository assetRepository;
+
+
+    @Autowired
+    protected AssetJsonedValuesRepository assetJsonedValuesRepository;
 
     @Autowired
     protected AppConfig appConfig;

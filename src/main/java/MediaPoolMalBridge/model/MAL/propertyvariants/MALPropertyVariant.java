@@ -114,6 +114,12 @@ public class MALPropertyVariant {
         return this.structureName.startsWith("BRAND_");
     }
 
+    public String getCollection() {
+        String collectionName = structureName.substring(6, structureName.lastIndexOf("_"));
+        collectionName = collectionName.replaceAll("_", " ");
+        return collectionName;
+    }
+
     public String getBrandName() {
         return this.brandName;
     }
