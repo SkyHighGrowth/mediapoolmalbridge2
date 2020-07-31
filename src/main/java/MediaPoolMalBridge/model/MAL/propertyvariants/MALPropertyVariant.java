@@ -4,29 +4,29 @@ import org.apache.commons.lang3.StringUtils;
 
 public class MALPropertyVariant {
 
-    private String id;
+    private final String id;
 
-    private String structureName;
+    private final String structureName;
 
-    private String subName;
+    private final String subName;
 
-    private String brandName;
+    private final String brandName;
 
-    private String subNameMaps;
+    private final String subNameMaps;
 
-    private String subNameFloorPlans;
+    private final String subNameFloorPlans;
 
-    private String addressField01;
+    private final String addressField01;
 
-    private String addressField02;
+    private final String addressField02;
 
-    private String addressField03;
+    private final String addressField03;
 
-    private String addressField04;
+    private final String addressField04;
 
-    private String addressField05;
+    private final String addressField05;
 
-    private String fields;
+    private final String fields;
 
     public MALPropertyVariant(final String id,
                               final String structureName,
@@ -108,6 +108,10 @@ public class MALPropertyVariant {
 
     public String getSubNameFloorPlans() {
         return subNameFloorPlans;
+    }
+
+    public boolean isBrandStructure(){
+        return this.structureName.startsWith("BRAND_");
     }
 
     public String getBrandName() {
