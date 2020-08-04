@@ -238,7 +238,11 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                         "Image" + order,
                         "[MD5_HASH=" + assetEntity.getBmMd5Hash() + ";MEDIA_GUID=" + assetEntity.getBmAssetId() + ";]",
                         "MEDIA"));
-                addRow(sheet, propertyVariant.getSubName(), malPropertyEntity.getPropertyId(), assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
+                String structureName = propertyVariant.getSubName();
+                if (StringUtils.isBlank(structureName)) {
+                    structureName = propertyVariant.getStructureName();
+                }
+                addRow(sheet, structureName, malPropertyEntity.getPropertyId(), assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
             }
             ++order;
         }
