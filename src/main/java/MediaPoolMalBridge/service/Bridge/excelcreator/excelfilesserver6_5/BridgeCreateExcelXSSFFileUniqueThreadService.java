@@ -157,13 +157,22 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                             structureNameAlreadyAdded.add(propertyVariant.getStructureName());
                         }
                     }
-                    } else {
-                        final String[] combinedAddressFields = digestCombinedAddressField(propertyVariant, malPropertyEntity);
-                        digestLogos(sheet, propertyVariant, malPropertyEntity, combinedAddressFields);
+                } else {
+                    final String[] combinedAddressFields = digestCombinedAddressField(propertyVariant, malPropertyEntity);
+                    digestLogos(sheet, propertyVariant, malPropertyEntity, combinedAddressFields);
+
+                    if (!StringUtils.isBlank(propertyVariant.getSubName())) {
                         digestAssets(sheet, propertyVariant, malPropertyEntity);
+                    }
+
+                    if (!StringUtils.isBlank(propertyVariant.getSubNameMaps())) {
                         digestMaps(sheet, propertyVariant, malPropertyEntity);
+                    }
+
+                    if (!StringUtils.isBlank(propertyVariant.getSubNameFloorPlans())) {
                         digestFloorTypes(sheet, propertyVariant, malPropertyEntity);
                     }
+                }
 
             } catch (final Exception e) {
                 final String message = String.format("Can not create Excel file for property variant [%s] with message [%s]", propertyVariant.getStructureName(), e.getMessage());
