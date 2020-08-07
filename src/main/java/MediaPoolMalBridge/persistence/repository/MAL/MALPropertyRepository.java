@@ -25,5 +25,4 @@ public interface MALPropertyRepository extends PagingAndSortingRepository<MALPro
 
     List<MALPropertyEntity> findAllByUpdatedIsAfter( final LocalDateTime updated );
 
-    List<MALPropertyEntity> findAllByBrandAndMalPropertyStatusAndUpdatedIsAfter(final String brand, final MALPropertyStatus malPropertyStatus, final LocalDateTime updated);
 }
