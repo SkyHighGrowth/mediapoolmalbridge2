@@ -260,7 +260,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         Row row = sheet.createRow(rowIndex++);
         int colIndex = 0;
 
-        name = name.replaceAll("\"","\\\"");
+        name = name.replaceAll("\"","");
         if (StringUtils.isNotBlank(malAssetId)) {
             row.createCell(colIndex++).setCellValue(subName);
             row.createCell(colIndex++).setCellValue(malAssetId);
