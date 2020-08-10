@@ -255,11 +255,12 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private void addRow(final Sheet sheet, final String subName, final String propertyId, final String name,
+    private void addRow(final Sheet sheet, final String subName, final String propertyId, String name,
                         final String jsonedAttributes, final String malAssetId) throws Exception {
         Row row = sheet.createRow(rowIndex++);
         int colIndex = 0;
 
+        name = name.replaceAll("\"","\\\"");
         if (StringUtils.isNotBlank(malAssetId)) {
             row.createCell(colIndex++).setCellValue(subName);
             row.createCell(colIndex++).setCellValue(malAssetId);
@@ -619,20 +620,10 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                 malPropertyEntity.getPropertyId()));
 
 
-        //row[0] = propertyVariant.getStructureName();
-        //row[1] = malPropertyEntity.getPropertyId();
-        //row[2] = malPropertyEntity.getPropertyId() + " - " + malPropertyEntity.getName();
-        //row[3] = "";
-        //row[4] = MALPropertyStatus.OBSERVED.equals( malPropertyEntity.getMalPropertyStatus() ) ? "1" : "0";
-        //row[5] = malPropertyEntity.getName();
-        //row[6] = malPropertyEntity.getPropertyId();
-        //row[7] = malPropertyEntity.getState();
         attributes.add(new Attribute(3,
                 "PropertyState",
                 "TEXT",
                 malPropertyEntity.getState()));
-        //row[8] = malPropertyEntity.getAddress2();
-        //row[9] = malPropertyEntity.getAddress();
         attributes.add(new Attribute(34,
                 "CombinedAddress",
                 "RICHTEXT",
@@ -667,69 +658,34 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                 "STREET",
                 "TEXT",
                 malPropertyEntity.getAddress2()));
-        //row[10] = malPropertyEntity.getZip();
         attributes.add(new Attribute(6,
                 "ZIP",
                 "TEXT",
                 malPropertyEntity.getZip()));
-        //row[11] = malPropertyEntity.getCity();
         attributes.add(new Attribute(7,
                 "CITY",
                 "TEXT",
                 malPropertyEntity.getCity()));
-        //row[12] = malPropertyEntity.getCountry();
         attributes.add(new Attribute(8,
                 "COUNTRY",
                 "TEXT",
                 malPropertyEntity.getCountry()));
-        //row[13] = malPropertyEntity.getUrl();
         attributes.add(new Attribute(9,
                 "PropertyURL",
                 "TEXT",
                 malPropertyEntity.getUrl()));
-        //row[14] = malPropertyEntity.getTelephone();
         attributes.add(new Attribute(10,
                 "PropertyTelephone",
                 "TEXT",
                 malPropertyEntity.getTelephone()));
-        //row[15] = malPropertyEntity.getBrand();
-        //row[16] = malPropertyEntity.getParentBrand();
-        //row[17] = malPropertyEntity.getLatitude();
         attributes.add(new Attribute(13,
                 "Latitude",
                 "TEXT",
                 malPropertyEntity.getLatitude()));
-        //row[18] = malPropertyEntity.getLongitude();
         attributes.add(new Attribute(14,
                 "Longitude",
                 "TEXT",
                 malPropertyEntity.getLongitude()));
-        //row[19] = "";
-        //row[20] = "";
-        //row[21] = "";
-        //row[22] = "";
-        //row[23] = "";
-        //row[24] = "";
-        //row[25] = "";
-        //row[26] = "";
-        //row[27] = "";
-        //row[28] = propertyLogo1c;
-        //row[29] = propertyLogo4c;
-        //row[30] = propertyLogo4cb;
-        //row[31] = propertyLogo1cBlack;
-        //row[32] = propertyLogoPMS;
-        //row[33] = propertyLogoPMSC;
-        //row[34] = propertyLogo4cc;
-        //row[35] = propertyLogokod;
-        //row[36] = "";
-        //row[37] = "";
-        //row[38] = addressField01;
-        //row[39] = addressField02;
-        //row[40] = addressField03;
-        //row[41] = addressField04;
-        //row[42] = addressField05;
-        //row[43] = malPropertyEntity.getPropertyId();
-        //rows.add(row);
         addRow(sheet, propertyVariant.getStructureName(), malPropertyEntity.getPropertyId(), malPropertyEntity.getName(), gsonWithNulls.toJson(attributes), null);
     }
 
