@@ -34,7 +34,9 @@ public class BridgeCreateExcelFileSchedulerService extends AbstractSchedulerServ
     public void scheduled()
     {
         if( !appConfig.isDoNotCreateExcelFiles() ) {
+            logger.info("Creation of excel files started...");
             bridgeCreateExcelXSSFFileUniqueThreadService.start();
+            logger.info("Creation of excel files ended...");
         }
     }
 }
