@@ -74,4 +74,5 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
             "where ae.updated < :dateTime ")
     void deleteRowsInThePast( final LocalDateTime dateTime );
 
+    List<AssetEntity> findAllByBrandIdAndMalAssetIdAndAssetTypeId(String brandId, String malAssetId, String assetTypeId);
 }
