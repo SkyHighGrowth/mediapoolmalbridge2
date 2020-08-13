@@ -111,6 +111,9 @@ public class MALGetAssetsRequest {
     //    is_primary - Whether or not the image is a set as a primary property image on it’s property.
     private List<String> extraFields = new ArrayList<>();
 
+    //(boolean) Exclude inactive assets in the result
+    private boolean hideInactive = false;
+
     public List<String> getAssetIds() {
         return assetIds;
     }
@@ -464,6 +467,9 @@ public class MALGetAssetsRequest {
         }
         if (!extraFields.isEmpty()) {
             params.set("extra_fields", transfromToString(extraFields));
+        }
+        if (!hideInactive) {
+            params.set("hide_inactive", "0");
         }
         return params;
     }

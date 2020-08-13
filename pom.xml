@@ -10,13 +10,14 @@
     </parent>
     <groupId>com.brandmaker.cs.skyhigh.marriott.salmiddlewaresync</groupId>
     <artifactId>salmiddlewaresync</artifactId>
-    <version>1.4.28_${project.build.warname}</version>
+    <version>1.4.29_${project.build.warname}</version>
     <name>salmiddlewaresync</name>
     <description>SAL Middleware for Brandmaker Mediapool</description>
 
     <distributionManagement>
         <repository>
             <id>brandmaker-release-repository</id>
+
             <uniqueVersion>false</uniqueVersion>
             <url>https://nexus.brandmaker.com/content/repositories/releases</url>
         </repository>
