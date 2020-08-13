@@ -47,10 +47,12 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
 
     @Override
     public void scheduled() {
+        logger.info("Deleting files from uploaded file entity table started");
         deleteFiles();
         if( !appConfig.isDisableAbsoluteDelete() ) {
             listFilesInTempFolder();
         }
+        logger.info("Deleting files from uploaded file entity table started");
     }
 
     private void listFilesInTempFolder() {

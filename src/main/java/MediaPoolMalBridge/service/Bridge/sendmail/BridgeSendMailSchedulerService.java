@@ -27,6 +27,9 @@ public class BridgeSendMailSchedulerService extends AbstractSchedulerService {
 
     @Override
     public void scheduled() {
+        logger.info("Sending mail started");
         bridgeSendMailUniqueThreadService.start();
+        logger.info("Sending mail ended");
+
     }
 }

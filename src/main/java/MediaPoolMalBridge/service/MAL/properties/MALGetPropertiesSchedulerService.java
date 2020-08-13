@@ -32,9 +32,12 @@ public class MALGetPropertiesSchedulerService extends AbstractMALSchedulerServic
     @Override
     public void scheduled() {
         final String since = getMidnightMalLookInThePast();
-
+        logger.info("Collecting properties from MAL started");
         getPropertiesService.start();
+        logger.info("Collecting properties from MAL ended");
+        logger.info("Collecting deleted properties from MAL started");
         getPropertiesDeletedSinceService.setUnavailableSince( since );
         getPropertiesDeletedSinceService.start();
+        logger.info("Collecting deleted properties from MAL ended");
     }
 }

@@ -52,13 +52,29 @@ public class MALGetAssetStructureSchedulerService extends AbstractSchedulerServi
 
     @Override
     public void scheduled() {
+        logger.info("Downloading asset brands form MAL started");
         malGetAssetBrandUniqueThreadService.start();
+        logger.info("Downloading asset brands form MAL ended");
+        logger.info("Downloading asset collections form MAL started");
         malGetAssetCollectionUniqueThreadService.start();
+        logger.info("Downloading asset collections form MAL ended");
+        logger.info("Downloading asset colors form MAL started");
         malGetAssetColorUniqueThreadService.start();
+        logger.info("Downloading asset colors form MAL ended");
+        logger.info("Downloading asset destinations form MAL started");
         malGetAssetDestinationUniqueThreadService.start();
+        logger.info("Downloading asset destinations form MAL ended");
+        logger.info("Downloading asset file types form MAL started");
         malGetAssetFileTypesUniqueThreadService.start();
+        logger.info("Downloading asset file types  form MAL ended");
+        logger.info("Downloading asset subjects form MAL started");
         malGetAssetSubjectUniqueThreadService.start();
+        logger.info("Downloading asset subjects form MAL ended");
+        logger.info("Downloading asset type form MAL started");
         malGetAssetTypeUniqueThreadService.start();
+        logger.info("Downloading asset type form MAL ended");
+        logger.info("Downloading property types form MAL started");
         malGetPropertyTypesUniqueThreadService.start();
+        logger.info("Downloading property types form MAL ended");
     }
 }

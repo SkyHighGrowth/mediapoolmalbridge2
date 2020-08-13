@@ -22,6 +22,8 @@ public class BridgeDatabaseUnlockerSchedulerService extends AbstractSchedulerSer
 
     @Override
     public void scheduled() {
+        logger.info("Searching updated assets started");
         bridgeDatabaseUnlockerUniqueThreadService.start();
+        logger.info("Searching updated assets ended");
     }
 }

@@ -37,12 +37,17 @@ public class MALAssetsSchedulerService extends AbstractMALSchedulerService {
     @Override
     public void scheduled() {
         final String since = getMidnightMalLookInThePast();
-
+        logger.info("Collecting created assets started");
         malCollectCreatedAssetsUniqueThreadSinceService.setSince( since );
         malCollectCreatedAssetsUniqueThreadSinceService.start();
+        logger.info("Collecting created assets ended");
+        logger.info("Collecting modified assets started");
         malCollectModifiedAssetUniqueThreadSinceService.setSince( since );
         malCollectModifiedAssetUniqueThreadSinceService.start();
+        logger.info("Collecting created assets ended");
+        logger.info("Collecting deleted assets started");
         malCollectDeletedAssetsUniqueThreadSinceService.setSince( since );
         malCollectDeletedAssetsUniqueThreadSinceService.start();
+        logger.info("Collecting created assets ended");
     }
 }
