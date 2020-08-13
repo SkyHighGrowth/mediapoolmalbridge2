@@ -199,8 +199,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             try {
                 if (propertyVariant.isBrandStructure()) {
                     final List<AssetEntity> assetEntities =
-                            assetRepository.findAllByBrandIdAndMalAssetIdAndAssetTypeId(
-                                    propertyVariant.getBrandId(), String.valueOf(malPropertyEntity.getId()), "1");
+                            assetRepository.findAllByMalAssetIdAndAssetTypeId(String.valueOf(malPropertyEntity.getId()), "1");
                     int order = 1;
 
                     if (assetEntities != null && !assetEntities.isEmpty() && (structureNameAlreadyAdded.isEmpty() || !structureNameAlreadyAdded.contains(propertyVariant.getStructureName()))) {
