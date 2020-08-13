@@ -28,7 +28,9 @@ public class MALDownloadAssetSchedulerService extends AbstractSchedulerService {
 
     @Override
     public void scheduled() {
+        logger.info("Downloading assets from MAL started");
         malFireDownloadAssetsUniqueThreadService.start();
+        logger.info("Downloading assets from MAL ended");
     }
 }
 

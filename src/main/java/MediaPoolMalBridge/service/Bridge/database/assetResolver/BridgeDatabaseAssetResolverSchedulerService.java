@@ -22,6 +22,8 @@ public class BridgeDatabaseAssetResolverSchedulerService extends AbstractSchedul
 
     @Override
     public void scheduled() {
+        logger.info("Searching for updated assets started");
         bridgeDatabaseAssetResolverUniqueThreadService.start();
+        logger.info("Searching for updated assets ended");
     }
 }

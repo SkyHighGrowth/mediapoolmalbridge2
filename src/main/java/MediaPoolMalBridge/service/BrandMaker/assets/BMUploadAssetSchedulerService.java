@@ -43,10 +43,16 @@ public class BMUploadAssetSchedulerService extends AbstractSchedulerService {
 
     @Override
     public void scheduled() {
+        logger.info("Creating assets in BM started");
         create();
+        logger.info("Creating assets in BM ended");
         getAssetId();
+        logger.info("Uploading assets in BM started");
         update();
+        logger.info("Uploading assets in BM ended");
+        logger.info("Deleting assets in BM started");
         delete();
+        logger.info("Deleting assets in BM ended");
     }
 
     public void create() {
