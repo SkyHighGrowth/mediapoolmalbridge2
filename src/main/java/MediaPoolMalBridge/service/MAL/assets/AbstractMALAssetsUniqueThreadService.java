@@ -111,9 +111,6 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
     protected void transformPageIntoAssets(final List<MALGetAsset> malGetAssets)
     {
         malGetAssets.forEach(malGetAsset -> {
-        			if ( !StringUtils.equalsIgnoreCase( malGetAsset.getStatus(), "active" ) ) {
-        				return;
-        			}
         			if( !includedAssetTypes.isIncludedAssetType( malGetAsset.getAssetTypeId() ) ) {
         			    return;
                     }
