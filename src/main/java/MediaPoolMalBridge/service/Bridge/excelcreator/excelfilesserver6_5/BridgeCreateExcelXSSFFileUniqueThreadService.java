@@ -3,7 +3,6 @@ package MediaPoolMalBridge.service.Bridge.excelcreator.excelfilesserver6_5;
 import MediaPoolMalBridge.model.MAL.MALAssetStructures;
 import MediaPoolMalBridge.model.MAL.propertyvariants.MALPropertyVariant;
 import MediaPoolMalBridge.persistence.entity.Bridge.AssetEntity;
-import MediaPoolMalBridge.persistence.entity.Bridge.AssetJsonedValuesEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.MAL.MALPropertyEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
@@ -194,17 +193,15 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         boolean hasRows = false;
         List<String> structureNameAlreadyAdded = new ArrayList<>();
         for (MALPropertyPair malProperty : malPropertyPairSet) {
-            MALPropertyEntity malPropertyEntity = malProperty.getMalPropertyEntity();
             MALPropertyVariant propertyVariant = malProperty.getMalPropertyVariant();
             try {
                 if (propertyVariant.isBrandStructure()) {
                     final List<AssetEntity> assetEntities =
-                            assetRepository.findAllByPropertyIdAndAssetTypeId(String.valueOf(malPropertyEntity.getId()), "1");
+                            assetRepository.findAssetEntitiesByCollection(propertyVariant.getBrandId(), "1", "%Collections/" + propertyVariant.getCollection()+"%");
                     int order = 1;
 
                     if (assetEntities != null && !assetEntities.isEmpty() && (structureNameAlreadyAdded.isEmpty() || !structureNameAlreadyAdded.contains(propertyVariant.getStructureName()))) {
                         for (final AssetEntity assetEntity : assetEntities) {
-                            if (checkIfAssetEntityCollectionExist(assetEntity, propertyVariant)) {
                                 final List<AttributeShort> attributes = new ArrayList<>();
                                 attributes.add(new AttributeShort(order,
                                         "Image" + order,
@@ -212,7 +209,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                                         "MEDIA"));
                                 addRow(sheet, propertyVariant.getStructureName(), "", assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
                                 hasRows = true;
-                            }
                         }
                         ++order;
                         structureNameAlreadyAdded.add(propertyVariant.getStructureName());
@@ -230,12 +226,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         return hasRows;
     }
 
-    private boolean checkIfAssetEntityCollectionExist(AssetEntity assetEntity, MALPropertyVariant propertyVariant) {
-        AssetJsonedValuesEntity assetJsonedValuesEntity = assetJsonedValuesRepository.findAssetJsonedValuesEntitiesById(assetEntity.getAssetJsonedValuesEntity().getId());
-        String collectionName = propertyVariant.getCollection();
-
-        return assetJsonedValuesEntity.getBmUploadMetadataArgumentJson().contains("Collections/" + collectionName);
-    }
 
 
     private void digestFloorTypes(final Sheet sheet, final MALPropertyVariant propertyVariant,
