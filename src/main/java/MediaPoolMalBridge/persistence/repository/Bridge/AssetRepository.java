@@ -74,5 +74,11 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
             "where ae.updated < :dateTime ")
     void deleteRowsInThePast( final LocalDateTime dateTime );
 
-    List<AssetEntity> findAllByPropertyIdAndAssetTypeId(String propertyId, String assetTypeId);
+    @Query( "select ae " +
+            "from AssetEntity ae " +
+            "join fetch ae.assetJsonedValuesEntity ajve " +
+            "where ae.brandId = :brandId " +
+            "and ae.assetTypeId = :assetTypeId "+
+            "and ajve.bmUploadMetadataArgumentJson like :collectionId")
+    List<AssetEntity> findAssetEntitiesByCollection(String brandId, String assetTypeId, String collectionId);
 }
