@@ -79,6 +79,8 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
             "join fetch ae.assetJsonedValuesEntity ajve " +
             "where ae.brandId = :brandId " +
             "and ae.assetTypeId = :assetTypeId "+
-            "and ajve.bmUploadMetadataArgumentJson like :collectionId")
+            "and ajve.bmUploadMetadataArgumentJson like :collectionId " +
+            "and ae.transferringAssetStatus = 'DONE' " +
+            "and ae.bmMd5Hash is not null")
     List<AssetEntity> findAssetEntitiesByCollection(String brandId, String assetTypeId, String collectionId);
 }
