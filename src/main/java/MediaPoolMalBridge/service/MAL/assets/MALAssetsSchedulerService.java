@@ -44,10 +44,10 @@ public class MALAssetsSchedulerService extends AbstractMALSchedulerService {
         logger.info("Collecting modified assets started");
         malCollectModifiedAssetUniqueThreadSinceService.setSince( since );
         malCollectModifiedAssetUniqueThreadSinceService.start();
-        logger.info("Collecting created assets ended");
+        logger.info("Collecting modified assets ended");
         logger.info("Collecting deleted assets started");
         malCollectDeletedAssetsUniqueThreadSinceService.setSince( since );
         malCollectDeletedAssetsUniqueThreadSinceService.start();
-        logger.info("Collecting created assets ended");
+        logger.info("Collecting deleted assets ended");
     }
 }
