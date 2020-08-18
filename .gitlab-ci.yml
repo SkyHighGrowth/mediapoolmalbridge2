@@ -1,0 +1,11 @@
+image: ironstar94/mvn-builder:latest
+
+stages:
+  - build
+
+build:
+  stage: build
+  script: "mvn clean install"
+  artifacts:
+    paths:
+    - target/*.war
