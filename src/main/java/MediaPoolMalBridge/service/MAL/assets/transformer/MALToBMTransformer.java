@@ -20,7 +20,7 @@ public class MALToBMTransformer {
 
     private final BMThemePathToId bmThemePathToId;
 
-    private AppConfig appConfig;
+    private final AppConfig appConfig;
 
     public MALToBMTransformer(final MALAssetStructures assetStructures,
                               final BMThemePathToId bmThemePathToId, AppConfig appConfig) {
@@ -44,10 +44,10 @@ public class MALToBMTransformer {
         uploadMetadataArgument.setDesignationType("3");
         uploadMetadataArgument.setFileName(malGetAsset.getFilename());
 
-        if (StringUtils.isNotBlank(malGetAsset.getMarshaCode())) {
-            uploadMetadataArgument.setSelectedAffiliate(malGetAsset.getMarshaCode());
-        } else if (StringUtils.isNotBlank(malGetAsset.getPropertyId())) {
+        if (StringUtils.isNotBlank(malGetAsset.getPropertyId())) {
             uploadMetadataArgument.setSelectedAffiliate(malGetAsset.getPropertyId());
+        } else if (StringUtils.isNotBlank(malGetAsset.getMarshaCode())) {
+            uploadMetadataArgument.setSelectedAffiliate(malGetAsset.getMarshaCode());
         }
 
         ThemeDto themeDto = new ThemeDto();
@@ -134,7 +134,12 @@ public class MALToBMTransformer {
         languageItem.setLangCode("EN");
         uploadMetadataArgument.getFreeField2().add(languageItem);
 
-        if (StringUtils.isNotBlank(malGetAsset.getMarshaCode())) {
+        if (StringUtils.isNotBlank(malGetAsset.getMarshaCode()) && StringUtils.isNotBlank(malGetAsset.getPropertyId())) {
+            languageItem = new LanguageItem();
+            languageItem.setDescription(malGetAsset.getMarshaCode() + "," + malGetAsset.getPropertyId());
+            languageItem.setLangCode("EN");
+            uploadMetadataArgument.getFreeField3().add(languageItem);
+        } else if (StringUtils.isNotBlank(malGetAsset.getMarshaCode())) {
             languageItem = new LanguageItem();
             languageItem.setDescription(malGetAsset.getMarshaCode());
             languageItem.setLangCode("EN");
