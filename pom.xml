@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.brandmaker.cs.skyhigh.marriott.salmiddlewaresync</groupId>
     <artifactId>salmiddlewaresync</artifactId>
-    <version>1.4.35_${project.build.warname}</version>
+    <version>1.4.36_${project.build.warname}</version>
     <name>salmiddlewaresync</name>
     <description>SAL Middleware for Brandmaker Mediapool</description>
 
@@ -191,14 +191,19 @@
     <profiles>
         <profile>
             <id>qa</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <project.build.warname>qa</project.build.warname>
+                <activatedProperties>dev, standalone, enable controllers</activatedProperties>
             </properties>
         </profile>
         <profile>
             <id>prod</id>
             <properties>
                 <project.build.warname>prod</project.build.warname>
+                <activatedProperties>production, standalone, enable controllers</activatedProperties>
             </properties>
         </profile>
     </profiles>
