@@ -8,7 +8,6 @@ import MediaPoolMalBridge.persistence.entity.Bridge.UploadedFileEntity;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import MediaPoolMalBridge.persistence.repository.Bridge.UploadedFileRepository;
 import MediaPoolMalBridge.service.BrandMaker.AbstractBMNonUniqueThreadService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,13 +32,11 @@ public class BMUploadAssetService extends AbstractBMNonUniqueThreadService<Asset
         if( assetEntity.getBmAssetId().startsWith( "CREATING_ ") ) {
             return;
         }
-        if(!StringUtils.isBlank(assetEntity.getFileNameOnDisc())) {
-            final UploadStatus uploadStatus = bmUploadVersionAssetClient.upload(assetEntity);
-            if (uploadStatus.isStatus()) {
-                onSuccess(assetEntity);
-            } else {
-                onFailure(assetEntity, uploadStatus);
-            }
+        final UploadStatus uploadStatus = bmUploadVersionAssetClient.upload(assetEntity);
+        if (uploadStatus.isStatus()) {
+            onSuccess(assetEntity);
+        } else {
+            onFailure(assetEntity, uploadStatus);
         }
     }
 
