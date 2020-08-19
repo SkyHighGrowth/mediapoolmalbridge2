@@ -4,6 +4,7 @@ stages:
   - build
 
 build:
+  image: ironstar94/mvn-builder:latest
   stage: build
   script: "mvn clean install"
   artifacts:
