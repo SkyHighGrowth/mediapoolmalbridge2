@@ -202,13 +202,13 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
                     if (assetEntities != null && !assetEntities.isEmpty() && (structureNameAlreadyAdded.isEmpty() || !structureNameAlreadyAdded.contains(propertyVariant.getStructureName()))) {
                         for (final AssetEntity assetEntity : assetEntities) {
-                                final List<AttributeShort> attributes = new ArrayList<>();
-                                attributes.add(new AttributeShort(order,
-                                        "Image",
-                                        "[MD5_HASH=" + assetEntity.getBmMd5Hash() + ";MEDIA_GUID=" + assetEntity.getBmAssetId() + ";]",
-                                        "MEDIA"));
-                                addRow(sheet, propertyVariant.getStructureName(), "", assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
-                                hasRows = true;
+                            final List<AttributeShort> attributes = new ArrayList<>();
+                            attributes.add(new AttributeShort(order,
+                                    "Image",
+                                    "[MEDIA_GUID=" + assetEntity.getBmAssetId() + ";MEDIA_VERSION=0]",
+                                    "MEDIA"));
+                            addRow(sheet, propertyVariant.getStructureName(), "", assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
+                            hasRows = true;
                         }
                         ++order;
                         structureNameAlreadyAdded.add(propertyVariant.getStructureName());
