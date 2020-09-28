@@ -65,7 +65,7 @@ public abstract class BrandMakerSoapClient {
     @Autowired
     protected AssetRepository assetRepository;
 
-    protected MediaPoolWebServicePort getMediaPoolPort() {
+    public MediaPoolWebServicePort getMediaPoolPort() {
         final MediaPoolWebServicePort port = mediaPoolService.getMediaPoolPort();
         if( Arrays.asList( environment.getActiveProfiles() ).contains( "dev" ) &&
             !Arrays.asList( environment.getActiveProfiles() ).contains( "production" ) ) {
