@@ -61,7 +61,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
             return;
         }
         final LocalDateTime pointInTime = getTodayMidnight().minusDays( appConfig.getAssetFileMaximalLivingDaysOnDisc() );
-        BasicFileAttributes attributes = null;
+        BasicFileAttributes attributes;
         for (final File file : files) {
             if (file.isFile()) {
                 try
@@ -86,8 +86,9 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
         boolean condition = true;
         try {
             for (int page = 0; condition; ++page) {
-                final List<UploadedFileEntity> fileEntities = uploadedFileRepository.findByDeletedAndFileStateOnDiscAndCreatedIsBefore(
-                        false, FileStateOnDisc.NO_ERROR, getTodayMidnight().minusDays( appConfig.getBridgeLookInThePastDays() + appConfig.getBridgeResolverWindow() + 1 ), PageRequest.of(0, appConfig.getDatabasePageSize()));
+                Integer maxRepetitions = appConfig.getAssetStateRepetitionMax();
+                final List<UploadedFileEntity> fileEntities = uploadedFileRepository.findByDeletedAndCreatedIsBefore(
+                        false,  getTodayMidnight().minusDays( appConfig.getBridgeLookInThePastDays() + appConfig.getBridgeResolverWindow() + 1 ), maxRepetitions, PageRequest.of(0, appConfig.getDatabasePageSize()));
                 if( fileEntities.isEmpty() || page > 1000 ) {
                     break;
                 }

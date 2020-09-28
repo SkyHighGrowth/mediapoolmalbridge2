@@ -1,5 +1,6 @@
 package MediaPoolMalBridge.service.MAL.assets.download;
 
+import MediaPoolMalBridge.clients.BrandMaker.assetid.client.BMGetAssetIdFromHashClient;
 import MediaPoolMalBridge.clients.MAL.download.client.MALDownloadAssetClient;
 import MediaPoolMalBridge.clients.MAL.download.client.model.MALDownloadAssetResponse;
 import MediaPoolMalBridge.clients.MAL.singleresponse.MALAbstractResponse;
@@ -9,11 +10,11 @@ import MediaPoolMalBridge.persistence.entity.Bridge.UploadedFileEntity;
 import MediaPoolMalBridge.persistence.entity.enums.ReportTo;
 import MediaPoolMalBridge.persistence.entity.enums.ReportType;
 import MediaPoolMalBridge.persistence.entity.enums.asset.TransferringAssetStatus;
-import MediaPoolMalBridge.persistence.repository.Bridge.AssetJsonedValuesRepository;
 import MediaPoolMalBridge.persistence.repository.Bridge.UploadedFileRepository;
 import MediaPoolMalBridge.service.MAL.AbstractMALNonUniqueThreadService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -27,31 +28,34 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
 
     private final MALDownloadAssetClient malDownloadAssetClient;
 
-    private final AssetJsonedValuesRepository assetJsonedValuesRepository;
-
     private final UploadedFileRepository uploadedFileRepository;
 
+    BMGetAssetIdFromHashClient bmGetAssetIdFromHashClient;
+
     public MALDownloadAssetService(final MALDownloadAssetClient malDownloadAssetClient,
-                                   final AssetJsonedValuesRepository assetJsonedValuesRepository,
                                    final UploadedFileRepository uploadedFileRepository) {
         this.malDownloadAssetClient = malDownloadAssetClient;
-        this.assetJsonedValuesRepository = assetJsonedValuesRepository;
         this.uploadedFileRepository = uploadedFileRepository;
     }
 
     @Override
     protected void run( final AssetEntity assetEntity ) {
-        try {
-            final MALDownloadAssetResponse response = malDownloadAssetClient.download(decode(assetEntity.getUrl()), assetEntity.getFileNameOnDisc());
-            if ( response.isSuccess() ) {
-                onSuccess( assetEntity );
-            } else {
-                onFailure( assetEntity, response, null );
+        //check if the media file already exist in BM
+        String mediaGuidByHash = bmGetAssetIdFromHashClient.getMediaPoolPort().getMediaGuidByHash(assetEntity.getBmMd5Hash());
+
+        if (!StringUtils.isEmpty(mediaGuidByHash)) {
+            try {
+                final MALDownloadAssetResponse response = malDownloadAssetClient.download(decode(assetEntity.getUrl()), assetEntity.getFileNameOnDisc());
+                if (response.isSuccess()) {
+                    onSuccess(assetEntity);
+                } else {
+                    onFailure(assetEntity, response, null);
+                }
+            } catch (final Exception e) {
+                onFailure(assetEntity, null, e);
             }
-        } catch (final Exception e) {
-            onFailure( assetEntity, null, e );
+            assetRepository.save(assetEntity);
         }
-        assetRepository.save(assetEntity);
     }
 
     private void onSuccess( final AssetEntity assetEntity ) {
