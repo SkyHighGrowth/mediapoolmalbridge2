@@ -307,7 +307,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             row.createCell(colIndex++).setCellValue("{\"default\":\"" + malAssetId + " - " + name + "\"}");
             row.createCell(colIndex++).setCellValue(propertyId);
             row.createCell(colIndex++).setCellValue("EDIT_AND_ADD");
-            row.createCell(colIndex++).setCellValue("");
+            row.createCell(colIndex++).setCellValue(malAssetId);
             row.createCell(colIndex++).setCellValue(jsonedAttributes);
         } else {
             row.createCell(colIndex++).setCellValue(subName);
@@ -315,7 +315,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             row.createCell(colIndex++).setCellValue("{\"default\":\"" + propertyId + " - " + name + "\"}");
             row.createCell(colIndex++).setCellValue("");
             row.createCell(colIndex++).setCellValue("EDIT_AND_ADD");
-            row.createCell(colIndex++).setCellValue("");
+            row.createCell(colIndex++).setCellValue(propertyId);
             row.createCell(colIndex++).setCellValue(jsonedAttributes);
         }
     }
