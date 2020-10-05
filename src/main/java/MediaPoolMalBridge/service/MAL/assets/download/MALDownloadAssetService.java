@@ -30,12 +30,14 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
 
     private final UploadedFileRepository uploadedFileRepository;
 
-    BMGetAssetIdFromHashClient bmGetAssetIdFromHashClient;
+    private final BMGetAssetIdFromHashClient bmGetAssetIdFromHashClient;
 
     public MALDownloadAssetService(final MALDownloadAssetClient malDownloadAssetClient,
-                                   final UploadedFileRepository uploadedFileRepository) {
+                                   final UploadedFileRepository uploadedFileRepository,
+                                   final BMGetAssetIdFromHashClient bmGetAssetIdFromHashClient) {
         this.malDownloadAssetClient = malDownloadAssetClient;
         this.uploadedFileRepository = uploadedFileRepository;
+        this.bmGetAssetIdFromHashClient = bmGetAssetIdFromHashClient;
     }
 
     @Override
