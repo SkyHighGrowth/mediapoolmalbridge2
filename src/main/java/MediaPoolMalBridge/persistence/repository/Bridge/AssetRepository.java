@@ -24,18 +24,16 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
             "and ae.assetTypeId = :assetTypeId " +
             "and ae.colorId = :colorId " +
             "and ae.transferringAssetStatus = :transferringAssetStatus " +
-            "and ae.updated > :arg5 " +
             "order by ae.updated desc")
-    List<AssetEntity> findAssetDetails(final String propertyId, final String assetTypeId, final String colorId, final TransferringAssetStatus transferringAssetStatus, final LocalDateTime arg5 );
+    List<AssetEntity> findAssetDetails(final String propertyId, final String assetTypeId, final String colorId, final TransferringAssetStatus transferringAssetStatus );
 
     @Query( "select ae " +
             "from AssetEntity ae " +
             "where ae.propertyId = :propertyId " +
             "and ae.assetTypeId = :assetTypeId " +
             "and ae.transferringAssetStatus = :transferringAssetStatus " +
-            "and ae.updated > :updated " +
             "order by ae.updated desc")
-    List<AssetEntity> findPropertyAssets( final String propertyId, final String assetTypeId, final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated );
+    List<AssetEntity> findPropertyAssets( final String propertyId, final String assetTypeId, final TransferringAssetStatus transferringAssetStatus );
 
     List<AssetEntity> findAllByBrandIdAndMalAssetIdAndAssetTypeIdAndTransferringAssetStatus(final String brandId, String malAssetId, final String assetTypeId, final TransferringAssetStatus transferringAssetStatus);
 
