@@ -52,7 +52,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
         if( !appConfig.isDisableAbsoluteDelete() ) {
             listFilesInTempFolder();
         }
-        logger.info("Deleting files from uploaded file entity table started");
+        logger.info("Deleting files from uploaded file entity table ended");
     }
 
     private void listFilesInTempFolder() {
