@@ -235,7 +235,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         floorTypes[1] = "Fgr";
         int order = 1;
         for (final String floorType : floorTypes) {
-            final List<AssetEntity> assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "13", floorType, TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+            final List<AssetEntity> assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "13", floorType, TransferringAssetStatus.DONE);
             if (assetEntities != null && !assetEntities.isEmpty()) {
                 for (final AssetEntity assetEntity : assetEntities) {
                     final List<AttributeShort> attributes = new ArrayList<>();
@@ -258,7 +258,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         mapColors[2] = "Mrm";
         int order = 1;
         for (final String mapColor : mapColors) {
-            final List<AssetEntity> assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "12", mapColor, TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+            final List<AssetEntity> assetEntities = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "12", mapColor, TransferringAssetStatus.DONE);
             if (assetEntities != null && !assetEntities.isEmpty()) {
                 for (final AssetEntity assetEntity : assetEntities) {
                     final List<AttributeShort> attributes = new ArrayList<>();
@@ -275,7 +275,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
     private void digestAssets(final Sheet sheet, final MALPropertyVariant propertyVariant,
                               final MALPropertyEntity malPropertyEntity) throws Exception {
-        final List<AssetEntity> assetEntities = assetRepository.findPropertyAssets(malPropertyEntity.getPropertyId(), "1", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        final List<AssetEntity> assetEntities = assetRepository.findPropertyAssets(malPropertyEntity.getPropertyId(), "1", TransferringAssetStatus.DONE);
         int order = 1;
         if (assetEntities != null && !assetEntities.isEmpty()) {
             for (final AssetEntity assetEntity : assetEntities) {
@@ -323,7 +323,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     private void digestLogos(final Sheet sheet, MALPropertyVariant propertyVariant,
                              final MALPropertyEntity malPropertyEntity, final String[] combinedAddressFields) throws Exception {
         final List<Attribute> attributes = new ArrayList<>();
-        List<AssetEntity> logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        List<AssetEntity> logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko", TransferringAssetStatus.DONE);
         String propertyLogo1c = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogo1c = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -332,7 +332,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogo1c));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk", TransferringAssetStatus.DONE);
         String propertyLogo4c = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogo4c = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -341,7 +341,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogo4c));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-B", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-B", TransferringAssetStatus.DONE);
         String propertyLogocmykb = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogocmykb = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -350,7 +350,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogocmykb));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE);
         String propertyLogo1cBlack = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogo1cBlack = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -359,7 +359,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogo1cBlack));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "pms", TransferringAssetStatus.DONE);
         String propertyLogoPMS = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -368,7 +368,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoPMS));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "pms-C", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "pms-C", TransferringAssetStatus.DONE);
         String propertyLogoPMSC = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoPMSC = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -377,7 +377,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoPMSC));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-C", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-C", TransferringAssetStatus.DONE);
         String propertyLogocmykC = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogocmykC = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -386,7 +386,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogocmykC));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko-D", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko-D", TransferringAssetStatus.DONE);
         String propertyLogokoD = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogokoD = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -397,7 +397,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
 
         //this should be checked particularly
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE);
         String propertyLogoBlackK = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoBlackK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -406,7 +406,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoBlackK));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-K", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-K", TransferringAssetStatus.DONE);
         String propertyLogo4cK = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogo4cK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -415,7 +415,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoBlackK));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Sheraton Black logo-1", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Sheraton Black logo-1", TransferringAssetStatus.DONE);
         String propertyLogoSheratonBlack = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonBlack = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -424,7 +424,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonBlack));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "dusk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "dusk", TransferringAssetStatus.DONE);
         String propertyLogoSheratonDusk = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonDusk = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -433,7 +433,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonDusk));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_C_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_C_cmyk", TransferringAssetStatus.DONE);
         String propertyLogoSheratonGraphiteCodedCMYK = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonGraphiteCodedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -442,7 +442,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonGraphiteCodedCMYK));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_C_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_C_pms", TransferringAssetStatus.DONE);
         String propertyLogoSheratonGraphiteCodedPMS = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonGraphiteCodedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -451,7 +451,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonGraphiteCodedPMS));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_rgb", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_rgb", TransferringAssetStatus.DONE);
         String propertyLogoSheratonGraphiteRGB = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonGraphiteRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -460,7 +460,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonGraphiteRGB));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_U_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_U_cmyk", TransferringAssetStatus.DONE);
         String propertyLogoSheratonGraphiteUncoatedCMYK = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonGraphiteUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -469,7 +469,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonGraphiteUncoatedCMYK));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_U_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_U_pms", TransferringAssetStatus.DONE);
         String propertyLogoSheratonGraphiteUncoatedPMS = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonGraphiteUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -478,7 +478,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonGraphiteUncoatedPMS));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ivory", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ivory", TransferringAssetStatus.DONE);
         String propertyLogoSheratonIvory = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonIvory = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -487,7 +487,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonIvory));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Knockout", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Knockout", TransferringAssetStatus.DONE);
         String propertyLogoSheratonKnockout = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonKnockout = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -496,7 +496,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonKnockout));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Logo_Specs", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Logo_Specs", TransferringAssetStatus.DONE);
         String propertyLogoSheratonLogoSpecs = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonLogoSpecs = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -505,7 +505,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonLogoSpecs));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Logo_Specs", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Logo_Specs", TransferringAssetStatus.DONE);
         String propertyLogoSheratonOysterCoatedCMYK = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonOysterCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -514,7 +514,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonOysterCoatedCMYK));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_C_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_C_pms", TransferringAssetStatus.DONE);
         String propertyLogoSheratonOysterCoatedPMS = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonOysterCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -523,7 +523,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonOysterCoatedPMS));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_rgb", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_rgb", TransferringAssetStatus.DONE);
         String propertyLogoSheratonOysterRGB = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonOysterRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -532,7 +532,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonOysterRGB));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_U_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_U_cmyk", TransferringAssetStatus.DONE);
         String propertyLogoSheratonOysterUncoatedCMYK = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonOysterUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -541,7 +541,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonOysterUncoatedCMYK));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_U_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_U_pms", TransferringAssetStatus.DONE);
         String propertyLogoSheratonOysterUncoatedPMS = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonOysterUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -550,7 +550,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonOysterUncoatedPMS));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_C_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_C_cmyk", TransferringAssetStatus.DONE);
         String propertyLogoSheratonResortFrenchGrayCoatedCMYK = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonResortFrenchGrayCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -559,7 +559,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonResortFrenchGrayCoatedCMYK));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_C_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_C_pms", TransferringAssetStatus.DONE);
         String propertyLogoSheratonResortFrenchGrayCoatedPMS = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonResortFrenchGrayCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -568,7 +568,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonResortFrenchGrayCoatedPMS));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_rgb", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_rgb", TransferringAssetStatus.DONE);
         String propertyLogoSheratonResortFrenchGrayRGB = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonResortFrenchGrayRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -577,7 +577,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonResortFrenchGrayRGB));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_U_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_U_cmyk", TransferringAssetStatus.DONE);
         String propertyLogoSheratonResortFrenchGrayUncoatedCMYK = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonResortFrenchGrayUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -586,7 +586,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonResortFrenchGrayUncoatedCMYK));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_U_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_U_pms", TransferringAssetStatus.DONE);
         String propertyLogoSheratonResortFrenchGrayUncoatedPMS = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonResortFrenchGrayUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -595,7 +595,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonResortFrenchGrayUncoatedPMS));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_C_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_C_cmyk", TransferringAssetStatus.DONE);
         String propertyLogoSheratonTungstenCoatedCMYK = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonTungstenCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -604,7 +604,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonTungstenCoatedCMYK));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_C_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_C_pms", TransferringAssetStatus.DONE);
         String propertyLogoSheratonTungstenCoatedPMS = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonTungstenCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -613,7 +613,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonTungstenCoatedPMS));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_rgb", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_rgb", TransferringAssetStatus.DONE);
         String propertyLogoSheratonTungstenRGB = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonTungstenRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -622,7 +622,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonTungstenRGB));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_U_cmyk", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_U_cmyk", TransferringAssetStatus.DONE);
         String propertyLogoSheratonTungstenUncoatedCMYK = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonTungstenUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -631,7 +631,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonTungstenUncoatedCMYK));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_U_pms", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_U_pms", TransferringAssetStatus.DONE);
         String propertyLogoSheratonTungstenUncoatedPMS = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoSheratonTungstenUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
@@ -640,7 +640,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     "MEDIA",
                     propertyLogoSheratonTungstenUncoatedPMS));
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "usna", TransferringAssetStatus.DONE, getMidnightBridgeLookInThePast());
+        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "usna", TransferringAssetStatus.DONE);
         String propertyLogoUSNavy = "";
         if (logo != null && !logo.isEmpty()) {
             propertyLogoUSNavy = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
