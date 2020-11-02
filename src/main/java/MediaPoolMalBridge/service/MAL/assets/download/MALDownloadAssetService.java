@@ -1,5 +1,6 @@
 package MediaPoolMalBridge.service.MAL.assets.download;
 
+import MediaPoolMalBridge.clients.BrandMaker.assetid.client.BMGetAssetIdFromHashClient;
 import MediaPoolMalBridge.clients.MAL.download.client.MALDownloadAssetClient;
 import MediaPoolMalBridge.clients.MAL.download.client.model.MALDownloadAssetResponse;
 import MediaPoolMalBridge.clients.MAL.singleresponse.MALAbstractResponse;
@@ -13,6 +14,7 @@ import MediaPoolMalBridge.persistence.repository.Bridge.UploadedFileRepository;
 import MediaPoolMalBridge.service.MAL.AbstractMALNonUniqueThreadService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -28,14 +30,22 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
 
     private final UploadedFileRepository uploadedFileRepository;
 
+    private final BMGetAssetIdFromHashClient bmGetAssetIdFromHashClient;
+
     public MALDownloadAssetService(final MALDownloadAssetClient malDownloadAssetClient,
-                                   final UploadedFileRepository uploadedFileRepository) {
+                                   final UploadedFileRepository uploadedFileRepository,
+                                   final BMGetAssetIdFromHashClient bmGetAssetIdFromHashClient) {
         this.malDownloadAssetClient = malDownloadAssetClient;
         this.uploadedFileRepository = uploadedFileRepository;
+        this.bmGetAssetIdFromHashClient = bmGetAssetIdFromHashClient;
     }
 
     @Override
-    protected void run( final AssetEntity assetEntity ) {
+    protected void run(final AssetEntity assetEntity) {
+        //check if the media file already exist in BM
+        String mediaGuidByHash = bmGetAssetIdFromHashClient.getMediaPoolPort().getMediaGuidByHash(assetEntity.getBmMd5Hash());
+
+        if (StringUtils.isEmpty(mediaGuidByHash)) {
             try {
                 final MALDownloadAssetResponse response = malDownloadAssetClient.download(decode(assetEntity.getUrl()), assetEntity.getFileNameOnDisc());
                 if (response.isSuccess()) {
@@ -47,39 +57,40 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
                 onFailure(assetEntity, null, e);
             }
             assetRepository.save(assetEntity);
+        }
     }
 
-    private void onSuccess( final AssetEntity assetEntity ) {
-        assetEntity.setMalStatesRepetitions( 0 );
+    private void onSuccess(final AssetEntity assetEntity) {
+        assetEntity.setMalStatesRepetitions(0);
         assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
         assetRepository.save(assetEntity);
     }
 
     @Transactional
-    protected void onFailure( final AssetEntity assetEntity, final MALAbstractResponse malAbstractResponse, final Exception e ) {
-        if( !isGateOpen( assetEntity, "asset download", malAbstractResponse, e ) ) {
+    protected void onFailure(final AssetEntity assetEntity, final MALAbstractResponse malAbstractResponse, final Exception e) {
+        if (!isGateOpen(assetEntity, "asset download", malAbstractResponse, e)) {
             return;
         }
-        uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
-        assetEntity.setTransferringAssetStatus( TransferringAssetStatus.ASSET_ONBOARDED );
+        uploadedFileRepository.save(new UploadedFileEntity(assetEntity.getFileNameOnDisc()));
+        assetEntity.setTransferringAssetStatus(TransferringAssetStatus.ASSET_ONBOARDED);
         assetRepository.save(assetEntity);
         final String message;
-        if( e == null ) {
+        if (e == null) {
             message = String.format("Problem downloading asset with id [%s] and url [%s], with message [%s]", assetEntity.getMalAssetId(), assetEntity.getUrl(), malAbstractResponse.getMessage());
         } else {
-            message = String.format("Problem downloading asset with id [%s] and url [%s], with message [%s]", assetEntity.getMalAssetId(), assetEntity.getUrl(), e.getMessage() );
+            message = String.format("Problem downloading asset with id [%s] and url [%s], with message [%s]", assetEntity.getMalAssetId(), assetEntity.getUrl(), e.getMessage());
         }
-        final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), assetEntity.getMalAssetId(), message, ReportTo.NONE, GSON.toJson( assetEntity ), null, null );
-        reportsRepository.save( reportsEntity );
+        final ReportsEntity reportsEntity = new ReportsEntity(ReportType.ERROR, getClass().getName(), assetEntity.getMalAssetId(), message, ReportTo.NONE, GSON.toJson(assetEntity), null, null);
+        reportsRepository.save(reportsEntity);
     }
 
     @Override
     @Transactional
-    protected boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription, final MALAbstractResponse malAbstractResponse, final Exception e ) {
-        if( super.isGateOpen( assetEntity, serviceDescription, malAbstractResponse, e ) ) {
+    protected boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription, final MALAbstractResponse malAbstractResponse, final Exception e) {
+        if (super.isGateOpen(assetEntity, serviceDescription, malAbstractResponse, e)) {
             return true;
         }
-        uploadedFileRepository.save( new UploadedFileEntity( assetEntity.getFileNameOnDisc() ) );
+        uploadedFileRepository.save(new UploadedFileEntity(assetEntity.getFileNameOnDisc()));
         return false;
     }
 

@@ -22,7 +22,7 @@ public interface UploadedFileRepository extends CrudRepository<UploadedFileEntit
     @Query( "select ufe "+
             "from UploadedFileEntity ufe " +
             "left join AssetEntity as a on a.fileNameOnDisc = ufe.filename " +
-            "where ufe.deleted = :deleted  and ufe.created < :created and a.malStatesRepetitions > :repetitions")
+            "where (ufe.deleted = :deleted  and ufe.created < :created) or (a.malStatesRepetitions = :repetitions and ufe.deleted = :deleted)")
     List<UploadedFileEntity> findByDeletedAndCreatedIsBefore(
             final boolean deleted, final LocalDateTime created, final Integer repetitions, final Pageable page );
 
