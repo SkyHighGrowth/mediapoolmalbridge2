@@ -197,7 +197,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             try {
                 if (propertyVariant.isBrandStructure()) {
                     final List<AssetEntity> assetEntities =
-                            assetRepository.findAssetEntitiesByCollection(propertyVariant.getBrandId(), "1", "%Collections/" + propertyVariant.getCollection()+"%");
+                            assetRepository.findAssetEntitiesByCollection(propertyVariant.getBrandId(), "1", "%Collections/" + propertyVariant.getCollection() + "%");
                     int order = 1;
 
                     if (assetEntities != null && !assetEntities.isEmpty() && (structureNameAlreadyAdded.isEmpty() || !structureNameAlreadyAdded.contains(propertyVariant.getStructureName()))) {
@@ -225,7 +225,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
         return hasRows;
     }
-
 
 
     private void digestFloorTypes(final Sheet sheet, final MALPropertyVariant propertyVariant,
@@ -323,409 +322,510 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     private void digestLogos(final Sheet sheet, MALPropertyVariant propertyVariant,
                              final MALPropertyEntity malPropertyEntity, final String[] combinedAddressFields) throws Exception {
         final List<Attribute> attributes = new ArrayList<>();
-        List<AssetEntity> logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko", TransferringAssetStatus.DONE);
-        String propertyLogo1c = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogo1c = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(24,
-                    "PropertyLogo1c",
-                    "MEDIA",
-                    propertyLogo1c));
+        List<AssetEntity> logo;
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_1C)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko", TransferringAssetStatus.DONE);
+            String propertyLogo1c = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogo1c = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(24,
+                        PropertyVariantFields.PROPERTY_LOGO_1C,
+                        "MEDIA",
+                        propertyLogo1c));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk", TransferringAssetStatus.DONE);
-        String propertyLogo4c = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogo4c = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(25,
-                    "PropertyLogo4c",
-                    "MEDIA",
-                    propertyLogo4c));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_4C)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk", TransferringAssetStatus.DONE);
+            String propertyLogo4c = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogo4c = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(25,
+                        PropertyVariantFields.PROPERTY_LOGO_4C,
+                        "MEDIA",
+                        propertyLogo4c));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-B", TransferringAssetStatus.DONE);
-        String propertyLogocmykb = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogocmykb = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(26,
-                    "PropertyLogo4cb",
-                    "MEDIA",
-                    propertyLogocmykb));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_4CB)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-B", TransferringAssetStatus.DONE);
+            String propertyLogocmykb = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogocmykb = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(26,
+                        PropertyVariantFields.PROPERTY_LOGO_4CB,
+                        "MEDIA",
+                        propertyLogocmykb));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE);
-        String propertyLogo1cBlack = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogo1cBlack = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(27,
-                    "PropertyLogo1cblack",
-                    "MEDIA",
-                    propertyLogo1cBlack));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_1C_BLACK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE);
+            String propertyLogo1cBlack = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogo1cBlack = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(27,
+                        PropertyVariantFields.PROPERTY_LOGO_1C_BLACK,
+                        "MEDIA",
+                        propertyLogo1cBlack));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "pms", TransferringAssetStatus.DONE);
-        String propertyLogoPMS = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(28,
-                    "PropertyLogopms",
-                    "MEDIA",
-                    propertyLogoPMS));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_PMS)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "pms", TransferringAssetStatus.DONE);
+            String propertyLogoPMS = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(28,
+                        PropertyVariantFields.PROPERTY_LOGO_PMS,
+                        "MEDIA",
+                        propertyLogoPMS));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "pms-C", TransferringAssetStatus.DONE);
-        String propertyLogoPMSC = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoPMSC = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(29,
-                    "PropertyLogopmsc",
-                    "MEDIA",
-                    propertyLogoPMSC));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_PMSC)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "pms-C", TransferringAssetStatus.DONE);
+            String propertyLogoPMSC = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoPMSC = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(29,
+                        PropertyVariantFields.PROPERTY_LOGO_PMSC,
+                        "MEDIA",
+                        propertyLogoPMSC));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-C", TransferringAssetStatus.DONE);
-        String propertyLogocmykC = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogocmykC = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(30,
-                    "PropertyLogo4cc",
-                    "MEDIA",
-                    propertyLogocmykC));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_4CC)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-C", TransferringAssetStatus.DONE);
+            String propertyLogocmykC = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogocmykC = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(30,
+                        PropertyVariantFields.PROPERTY_LOGO_4CC,
+                        "MEDIA",
+                        propertyLogocmykC));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko-D", TransferringAssetStatus.DONE);
-        String propertyLogokoD = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogokoD = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(31,
-                    "PropertyLogokod",
-                    "MEDIA",
-                    propertyLogokoD));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_KOD)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko-D", TransferringAssetStatus.DONE);
+            String propertyLogokoD = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogokoD = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(31,
+                        PropertyVariantFields.PROPERTY_LOGO_KOD,
+                        "MEDIA",
+                        propertyLogokoD));
+            }
         }
-
         //this should be checked particularly
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE);
-        String propertyLogoBlackK = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoBlackK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(32,
-                    "PropertyLogoblackK",
-                    "MEDIA",
-                    propertyLogoBlackK));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_BLACKK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE);
+            String propertyLogoBlackK = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoBlackK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(32,
+                        PropertyVariantFields.PROPERTY_LOGO_BLACKK,
+                        "MEDIA",
+                        propertyLogoBlackK));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-K", TransferringAssetStatus.DONE);
-        String propertyLogo4cK = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogo4cK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(33,
-                    "PropertyLogo4cK",
-                    "MEDIA",
-                    propertyLogoBlackK));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_4CK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-K", TransferringAssetStatus.DONE);
+            String propertyLogo4cK = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogo4cK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(33,
+                        PropertyVariantFields.PROPERTY_LOGO_4CK,
+                        "MEDIA",
+                        propertyLogo4cK));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Sheraton Black logo-1", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonBlack = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonBlack = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(39,
-                    "PropertyLogoSheratonBlack",
-                    "MEDIA",
-                    propertyLogoSheratonBlack));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_BLACK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Sheraton Black logo-1", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonBlack = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonBlack = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(39,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_BLACK,
+                        "MEDIA",
+                        propertyLogoSheratonBlack));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "dusk", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonDusk = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonDusk = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(40,
-                    "propertyLogoSheratonDusk",
-                    "MEDIA",
-                    propertyLogoSheratonDusk));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_DUSK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "dusk", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonDusk = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonDusk = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(40,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_DUSK,
+                        "MEDIA",
+                        propertyLogoSheratonDusk));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_C_cmyk", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonGraphiteCodedCMYK = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonGraphiteCodedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(40,
-                    "PropertyLogoSheratonGraphiteCodedCMYK",
-                    "MEDIA",
-                    propertyLogoSheratonGraphiteCodedCMYK));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_CMYK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_C_cmyk", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonGraphiteCodedCMYK = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonGraphiteCodedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(40,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_CMYK,
+                        "MEDIA",
+                        propertyLogoSheratonGraphiteCodedCMYK));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_C_pms", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonGraphiteCodedPMS = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonGraphiteCodedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(42,
-                    "PropertyLogoSheratonGraphiteCodedPMS",
-                    "MEDIA",
-                    propertyLogoSheratonGraphiteCodedPMS));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_PMS)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_C_pms", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonGraphiteCodedPMS = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonGraphiteCodedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(42,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_PMS,
+                        "MEDIA",
+                        propertyLogoSheratonGraphiteCodedPMS));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_rgb", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonGraphiteRGB = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonGraphiteRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(43,
-                    "PropertyLogoSheratonGraphiteRGB",
-                    "MEDIA",
-                    propertyLogoSheratonGraphiteRGB));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_RGB)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_rgb", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonGraphiteRGB = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonGraphiteRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(43,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_RGB,
+                        "MEDIA",
+                        propertyLogoSheratonGraphiteRGB));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_U_cmyk", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonGraphiteUncoatedCMYK = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonGraphiteUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(44,
-                    "PropertyLogoSheratonGraphiteUncoatedCMYK",
-                    "MEDIA",
-                    propertyLogoSheratonGraphiteUncoatedCMYK));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_UNCOATED_CMYK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_U_cmyk", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonGraphiteUncoatedCMYK = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonGraphiteUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(44,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_UNCOATED_CMYK,
+                        "MEDIA",
+                        propertyLogoSheratonGraphiteUncoatedCMYK));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_U_pms", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonGraphiteUncoatedPMS = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonGraphiteUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(45,
-                    "PropertyLogoSheratonGraphiteUncoatedPMS",
-                    "MEDIA",
-                    propertyLogoSheratonGraphiteUncoatedPMS));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_UNCOATED_PMS)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_U_pms", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonGraphiteUncoatedPMS = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonGraphiteUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(45,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_UNCOATED_PMS,
+                        "MEDIA",
+                        propertyLogoSheratonGraphiteUncoatedPMS));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ivory", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonIvory = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonIvory = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(46,
-                    "PropertyLogoSheratonIvory",
-                    "MEDIA",
-                    propertyLogoSheratonIvory));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_IVORY)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ivory", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonIvory = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonIvory = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(46,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_IVORY,
+                        "MEDIA",
+                        propertyLogoSheratonIvory));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Knockout", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonKnockout = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonKnockout = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(47,
-                    "PropertyLogoSheratonKnockout",
-                    "MEDIA",
-                    propertyLogoSheratonKnockout));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_KNOCKOUT)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Knockout", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonKnockout = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonKnockout = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(47,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_KNOCKOUT,
+                        "MEDIA",
+                        propertyLogoSheratonKnockout));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Logo_Specs", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonLogoSpecs = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonLogoSpecs = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(47,
-                    "PropertyLogoSheratonLogoSpecs",
-                    "MEDIA",
-                    propertyLogoSheratonLogoSpecs));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_LOGO_SPECS)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Logo_Specs", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonLogoSpecs = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonLogoSpecs = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(47,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_LOGO_SPECS,
+                        "MEDIA",
+                        propertyLogoSheratonLogoSpecs));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Logo_Specs", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonOysterCoatedCMYK = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonOysterCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(49,
-                    "PropertyLogoSheratonOysterCoatedCMYK",
-                    "MEDIA",
-                    propertyLogoSheratonOysterCoatedCMYK));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_COATED_CMYK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Logo_Specs", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonOysterCoatedCMYK = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonOysterCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(49,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_COATED_CMYK,
+                        "MEDIA",
+                        propertyLogoSheratonOysterCoatedCMYK));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_C_pms", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonOysterCoatedPMS = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonOysterCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(50,
-                    "PropertyLogoSheratonOysterCoatedPMS",
-                    "MEDIA",
-                    propertyLogoSheratonOysterCoatedPMS));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_COATED_PMS)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_C_pms", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonOysterCoatedPMS = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonOysterCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(50,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_COATED_PMS,
+                        "MEDIA",
+                        propertyLogoSheratonOysterCoatedPMS));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_rgb", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonOysterRGB = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonOysterRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(51,
-                    "PropertyLogoSheratonOysterRGB",
-                    "MEDIA",
-                    propertyLogoSheratonOysterRGB));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_RGB)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_rgb", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonOysterRGB = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonOysterRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(51,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_RGB,
+                        "MEDIA",
+                        propertyLogoSheratonOysterRGB));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_U_cmyk", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonOysterUncoatedCMYK = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonOysterUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(52,
-                    "PropertyLogoSheratonOysterUncoatedCMYK",
-                    "MEDIA",
-                    propertyLogoSheratonOysterUncoatedCMYK));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_UNCOATED_CMYK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_U_cmyk", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonOysterUncoatedCMYK = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonOysterUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(52,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_UNCOATED_CMYK,
+                        "MEDIA",
+                        propertyLogoSheratonOysterUncoatedCMYK));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_U_pms", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonOysterUncoatedPMS = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonOysterUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(53,
-                    "PropertyLogoSheratonOysterUncoatedPMS",
-                    "MEDIA",
-                    propertyLogoSheratonOysterUncoatedPMS));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_UNCOATED_PMS)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_U_pms", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonOysterUncoatedPMS = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonOysterUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(53,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_UNCOATED_PMS,
+                        "MEDIA",
+                        propertyLogoSheratonOysterUncoatedPMS));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_C_cmyk", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonResortFrenchGrayCoatedCMYK = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonResortFrenchGrayCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(54,
-                    "PropertyLogoSheratonResortFrenchGrayCoatedCMYK",
-                    "MEDIA",
-                    propertyLogoSheratonResortFrenchGrayCoatedCMYK));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_COATED_CMYK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_C_cmyk", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonResortFrenchGrayCoatedCMYK = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonResortFrenchGrayCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(54,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_COATED_CMYK,
+                        "MEDIA",
+                        propertyLogoSheratonResortFrenchGrayCoatedCMYK));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_C_pms", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonResortFrenchGrayCoatedPMS = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonResortFrenchGrayCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(55,
-                    "PropertyLogoSheratonResortFrenchGrayCoatedPMS",
-                    "MEDIA",
-                    propertyLogoSheratonResortFrenchGrayCoatedPMS));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_COATED_PMS)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_C_pms", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonResortFrenchGrayCoatedPMS = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonResortFrenchGrayCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(55,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_COATED_PMS,
+                        "MEDIA",
+                        propertyLogoSheratonResortFrenchGrayCoatedPMS));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_rgb", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonResortFrenchGrayRGB = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonResortFrenchGrayRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(56,
-                    "PropertyLogoSheratonResortFrenchGrayRGB",
-                    "MEDIA",
-                    propertyLogoSheratonResortFrenchGrayRGB));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_RGB)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_rgb", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonResortFrenchGrayRGB = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonResortFrenchGrayRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(56,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_RGB,
+                        "MEDIA",
+                        propertyLogoSheratonResortFrenchGrayRGB));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_U_cmyk", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonResortFrenchGrayUncoatedCMYK = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonResortFrenchGrayUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(57,
-                    "PropertyLogoSheratonResortFrenchGrayUncoatedCMYK",
-                    "MEDIA",
-                    propertyLogoSheratonResortFrenchGrayUncoatedCMYK));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_UNCOATED_CMYK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_U_cmyk", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonResortFrenchGrayUncoatedCMYK = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonResortFrenchGrayUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(57,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_UNCOATED_CMYK,
+                        "MEDIA",
+                        propertyLogoSheratonResortFrenchGrayUncoatedCMYK));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_U_pms", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonResortFrenchGrayUncoatedPMS = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonResortFrenchGrayUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(58,
-                    "PropertyLogoSheratonResortFrenchGrayUncoatedPMS",
-                    "MEDIA",
-                    propertyLogoSheratonResortFrenchGrayUncoatedPMS));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_UNCOATED_PMS)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_U_pms", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonResortFrenchGrayUncoatedPMS = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonResortFrenchGrayUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(58,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_UNCOATED_PMS,
+                        "MEDIA",
+                        propertyLogoSheratonResortFrenchGrayUncoatedPMS));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_C_cmyk", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonTungstenCoatedCMYK = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonTungstenCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(59,
-                    "PropertyLogoSheratonTungstenCoatedCMYK",
-                    "MEDIA",
-                    propertyLogoSheratonTungstenCoatedCMYK));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_COATED_CMYK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_C_cmyk", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonTungstenCoatedCMYK = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonTungstenCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(59,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_COATED_CMYK,
+                        "MEDIA",
+                        propertyLogoSheratonTungstenCoatedCMYK));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_C_pms", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonTungstenCoatedPMS = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonTungstenCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(60,
-                    "PropertyLogoSheratonTungstenCoatedPMS",
-                    "MEDIA",
-                    propertyLogoSheratonTungstenCoatedPMS));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_COATED_PMS)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_C_pms", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonTungstenCoatedPMS = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonTungstenCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(60,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_COATED_PMS,
+                        "MEDIA",
+                        propertyLogoSheratonTungstenCoatedPMS));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_rgb", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonTungstenRGB = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonTungstenRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(61,
-                    "PropertyLogoSheratonTungstenRGB",
-                    "MEDIA",
-                    propertyLogoSheratonTungstenRGB));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_RGB)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_rgb", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonTungstenRGB = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonTungstenRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(61,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_RGB,
+                        "MEDIA",
+                        propertyLogoSheratonTungstenRGB));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_U_cmyk", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonTungstenUncoatedCMYK = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonTungstenUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(62,
-                    "PropertyLogoSheratonTungstenUncoatedCMYK",
-                    "MEDIA",
-                    propertyLogoSheratonTungstenUncoatedCMYK));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_CMYK)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_U_cmyk", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonTungstenUncoatedCMYK = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonTungstenUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(62,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_CMYK,
+                        "MEDIA",
+                        propertyLogoSheratonTungstenUncoatedCMYK));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_U_pms", TransferringAssetStatus.DONE);
-        String propertyLogoSheratonTungstenUncoatedPMS = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoSheratonTungstenUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(63,
-                    "PropertyLogoSheratonTungstenUncoatedPMS",
-                    "MEDIA",
-                    propertyLogoSheratonTungstenUncoatedPMS));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_PMS)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_U_pms", TransferringAssetStatus.DONE);
+            String propertyLogoSheratonTungstenUncoatedPMS = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoSheratonTungstenUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(63,
+                        PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_PMS,
+                        "MEDIA",
+                        propertyLogoSheratonTungstenUncoatedPMS));
+            }
         }
-        logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "usna", TransferringAssetStatus.DONE);
-        String propertyLogoUSNavy = "";
-        if (logo != null && !logo.isEmpty()) {
-            propertyLogoUSNavy = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
-            attributes.add(new Attribute(64,
-                    "PropertyLogoUSNavy",
-                    "MEDIA",
-                    propertyLogoUSNavy));
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_LOGO_US_NAVY)) {
+            logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "usna", TransferringAssetStatus.DONE);
+            String propertyLogoUSNavy = "";
+            if (logo != null && !logo.isEmpty()) {
+                propertyLogoUSNavy = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                attributes.add(new Attribute(64,
+                        PropertyVariantFields.PROPERTY_LOGO_US_NAVY,
+                        "MEDIA",
+                        propertyLogoUSNavy));
+            }
         }
 
-        attributes.add(new Attribute(1,
-                "AFFILIATE_NAME",
-                "TEXT",
-                malPropertyEntity.getName()));
-        attributes.add(new Attribute(2,
-                "AFFILIATES_CODE",
-                "TEXT",
-                malPropertyEntity.getPropertyId()));
-
-
-        attributes.add(new Attribute(3,
-                "PropertyState",
-                "TEXT",
-                malPropertyEntity.getState()));
-        attributes.add(new Attribute(34,
-                "CombinedAddress",
-                "RICHTEXT",
-                combinedAddressFields[0]));
-        attributes.add(new Attribute(35,
-                "CombinedAddressAddress1",
-                "RICHTEXT",
-                combinedAddressFields[1]));
-        attributes.add(new Attribute(36,
-                "CombinedAddressAddress1Bold",
-                "RICHTEXT",
-                combinedAddressFields[2]));
-
-        String result = null;
-        if (combinedAddressFields[3] != null && combinedAddressFields[4] != null) {
-            result = combinedAddressFields[3] + combinedAddressFields[4];
-        } else if (combinedAddressFields[3] != null) {
-            result = combinedAddressFields[3];
-        } else if (combinedAddressFields[4] != null) {
-            result = combinedAddressFields[4];
+        if (propertyVariant.getFields().contains(PropertyVariantFields.AFFILIATE_NAME)) {
+            attributes.add(new Attribute(1,
+                    PropertyVariantFields.AFFILIATE_NAME,
+                    "TEXT",
+                    malPropertyEntity.getName()));
         }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.AFFILIATES_CODE)) {
+            attributes.add(new Attribute(2,
+                    PropertyVariantFields.AFFILIATES_CODE,
+                    "TEXT",
+                    malPropertyEntity.getPropertyId()));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_STATE)) {
+            attributes.add(new Attribute(3,
+                    PropertyVariantFields.PROPERTY_STATE,
+                    "TEXT",
+                    malPropertyEntity.getState()));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.COMBINED_ADDRESS)) {
+            attributes.add(new Attribute(34,
+                    PropertyVariantFields.COMBINED_ADDRESS,
+                    "RICHTEXT",
+                    combinedAddressFields[0]));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.COMBINED_ADDRESS_ADDRESS1)) {
+            attributes.add(new Attribute(35,
+                    PropertyVariantFields.COMBINED_ADDRESS_ADDRESS1,
+                    "RICHTEXT",
+                    combinedAddressFields[1]));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.COMBINED_ADDRESS_ADDRESS1_BOLD)) {
+            attributes.add(new Attribute(36,
+                    PropertyVariantFields.COMBINED_ADDRESS_ADDRESS1_BOLD,
+                    "RICHTEXT",
+                    combinedAddressFields[2]));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.COMBINED_ADDRESS_ADDRESS11ST_AND_2ND_LINE_BOLD)) {
+            String result = null;
+            if (combinedAddressFields[3] != null && combinedAddressFields[4] != null) {
+                result = combinedAddressFields[3] + combinedAddressFields[4];
+            } else if (combinedAddressFields[3] != null) {
+                result = combinedAddressFields[3];
+            } else if (combinedAddressFields[4] != null) {
+                result = combinedAddressFields[4];
+            }
 
-        attributes.add(new Attribute(37,
-                "CombinedAddressAddress11stand2ndLineBold",
-                "RICHTEXT",
-                result));
-        attributes.add(new Attribute(4,
-                "ADDRESS",
-                "TEXT",
-                malPropertyEntity.getAddress()));
-        attributes.add(new Attribute(5,
-                "STREET",
-                "TEXT",
-                malPropertyEntity.getAddress2()));
-        attributes.add(new Attribute(6,
-                "ZIP",
-                "TEXT",
-                malPropertyEntity.getZip()));
-        attributes.add(new Attribute(7,
-                "CITY",
-                "TEXT",
-                malPropertyEntity.getCity()));
-        attributes.add(new Attribute(8,
-                "COUNTRY",
-                "TEXT",
-                malPropertyEntity.getCountry()));
-        attributes.add(new Attribute(9,
-                "PropertyURL",
-                "TEXT",
-                malPropertyEntity.getUrl()));
-        attributes.add(new Attribute(10,
-                "PropertyTelephone",
-                "TEXT",
-                malPropertyEntity.getTelephone()));
-        attributes.add(new Attribute(13,
-                "Latitude",
-                "TEXT",
-                malPropertyEntity.getLatitude()));
-        attributes.add(new Attribute(14,
-                "Longitude",
-                "TEXT",
-                malPropertyEntity.getLongitude()));
+            attributes.add(new Attribute(37,
+                    PropertyVariantFields.COMBINED_ADDRESS_ADDRESS11ST_AND_2ND_LINE_BOLD,
+                    "RICHTEXT",
+                    result));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.ADDRESS)) {
+            attributes.add(new Attribute(4,
+                    PropertyVariantFields.ADDRESS,
+                    "TEXT",
+                    malPropertyEntity.getAddress()));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.STREET)) {
+            attributes.add(new Attribute(5,
+                    PropertyVariantFields.STREET,
+                    "TEXT",
+                    malPropertyEntity.getAddress2()));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.ZIP)) {
+            attributes.add(new Attribute(6,
+                    PropertyVariantFields.ZIP,
+                    "TEXT",
+                    malPropertyEntity.getZip()));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.CITY)) {
+            attributes.add(new Attribute(7,
+                    PropertyVariantFields.CITY,
+                    "TEXT",
+                    malPropertyEntity.getCity()));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.COUNTRY)) {
+            attributes.add(new Attribute(8,
+                    PropertyVariantFields.COUNTRY,
+                    "TEXT",
+                    malPropertyEntity.getCountry()));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_URL)) {
+            attributes.add(new Attribute(9,
+                    PropertyVariantFields.PROPERTY_URL,
+                    "TEXT",
+                    malPropertyEntity.getUrl()));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.PROPERTY_TELEPHONE)) {
+            attributes.add(new Attribute(10,
+                    PropertyVariantFields.PROPERTY_TELEPHONE,
+                    "TEXT",
+                    malPropertyEntity.getTelephone()));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.LATITUDE)) {
+            attributes.add(new Attribute(13,
+                    PropertyVariantFields.LATITUDE,
+                    "TEXT",
+                    malPropertyEntity.getLatitude()));
+        }
+        if (propertyVariant.getFields().contains(PropertyVariantFields.LONGITUDE)) {
+            attributes.add(new Attribute(14,
+                    PropertyVariantFields.LONGITUDE,
+                    "TEXT",
+                    malPropertyEntity.getLongitude()));
+        }
         addRow(sheet, propertyVariant.getStructureName(), malPropertyEntity.getPropertyId(), malPropertyEntity.getName(), gsonWithNulls.toJson(attributes), null);
     }
 
