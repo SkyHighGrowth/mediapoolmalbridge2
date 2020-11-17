@@ -761,7 +761,8 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             headerLabel = new Label(colIndex++, rowIndex, "DEFAULT", headerFormat);
             sheet.addCell(headerLabel);
             colIndex++;
-            colIndex++;
+            headerLabel = new Label(colIndex++, rowIndex, malPropertyVariant.getStructureNameRadiobutton(), headerFormat);
+            sheet.addCell(headerLabel);
             headerLabel = new Label(colIndex++, rowIndex, "MULTI_OBJECT_AFFILIATE_STRUCTURE", headerFormat);
             sheet.addCell(headerLabel);
             colIndex++;
@@ -770,15 +771,19 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             sheet.addCell(headerLabel);
 
             // substructure floor plans
-            rowIndex = createSubStructure(sheet, headerFormat, rowIndex, malPropertyVariant, malPropertyVariant.getSubNameFloorPlans(), "[{\"number\":24,\"name\":\"Floorplan1\",\"label\":\"Floorplan 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Floorplan2\",\"label\":\"Floorplan 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Floorplan3\",\"label\":\"Floorplan 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Floorplan4\",\"label\":\"Floorplan 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Floorplan5\",\"label\":\"Floorplan 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]");
+            rowIndex = createSubStructure(sheet, headerFormat, rowIndex, malPropertyVariant, malPropertyVariant.getSubNameFloorPlans(),
+                    malPropertyVariant.getSubNameFloorPlansRadiobutton(), "[{\"number\":24,\"name\":\"Floorplan1\",\"label\":\"Floorplan 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Floorplan2\",\"label\":\"Floorplan 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Floorplan3\",\"label\":\"Floorplan 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Floorplan4\",\"label\":\"Floorplan 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Floorplan5\",\"label\":\"Floorplan 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]");
             // substructure maps
-            rowIndex = createSubStructure(sheet, headerFormat, rowIndex, malPropertyVariant, malPropertyVariant.getSubNameMaps(), "[{\"number\":24,\"name\":\"Map1\",\"label\":\"Map 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Map2\",\"label\":\"Map 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Map3\",\"label\":\"Map 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Map4\",\"label\":\"Map 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Map5\",\"label\":\"Map 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]");
+            rowIndex = createSubStructure(sheet, headerFormat, rowIndex, malPropertyVariant, malPropertyVariant.getSubNameMaps(),
+                    malPropertyVariant.getSubNameMapsRadiobutton(), "[{\"number\":24,\"name\":\"Map1\",\"label\":\"Map 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Map2\",\"label\":\"Map 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Map3\",\"label\":\"Map 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Map4\",\"label\":\"Map 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Map5\",\"label\":\"Map 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]");
             // substructure images
-            rowIndex = createSubStructure(sheet, headerFormat, rowIndex, malPropertyVariant, malPropertyVariant.getSubName(), "[{\"number\":24,\"name\":\"Image1\",\"label\":\"Image 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Image2\",\"label\":\"Image 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Image3\",\"label\":\"Image 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Image4\",\"label\":\"Image 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Image5\",\"label\":\"Image 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]");
+            rowIndex = createSubStructure(sheet, headerFormat, rowIndex, malPropertyVariant, malPropertyVariant.getSubName(),
+                    malPropertyVariant.getSubNameRadiobutton(), "[{\"number\":24,\"name\":\"Image1\",\"label\":\"Image 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Image2\",\"label\":\"Image 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Image3\",\"label\":\"Image 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Image4\",\"label\":\"Image 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Image5\",\"label\":\"Image 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]");
         }
     }
 
-    private int createSubStructure(WritableSheet sheet, WritableCellFormat headerFormat, int rowIndex, MALPropertyVariant malPropertyVariant, String subStructureName, String s) throws WriteException {
+    private int createSubStructure(WritableSheet sheet, WritableCellFormat headerFormat, int rowIndex, MALPropertyVariant malPropertyVariant,
+                                   String subStructureName, String radioButton, String s) throws WriteException {
         if (subStructureName != null) {
             ++rowIndex;
             int colIndex = 0;
@@ -790,7 +795,8 @@ public class BridgeCreateExcelFileUniqueThreadService extends AbstractBridgeUniq
             sheet.addCell(headerLabel);
             headerLabel = new Label(colIndex++, rowIndex, malPropertyVariant.getStructureName(), headerFormat);
             sheet.addCell(headerLabel);
-            colIndex++;
+            headerLabel = new Label(colIndex++, rowIndex, radioButton, headerFormat);
+            sheet.addCell(headerLabel);
             headerLabel = new Label(colIndex++, rowIndex, "NON_AFFILIATE_STRUCTURE", headerFormat);
             sheet.addCell(headerLabel);
             colIndex++;

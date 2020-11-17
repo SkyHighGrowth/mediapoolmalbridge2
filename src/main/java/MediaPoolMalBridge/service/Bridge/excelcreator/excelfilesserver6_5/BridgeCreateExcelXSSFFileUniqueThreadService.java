@@ -197,7 +197,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             try {
                 if (propertyVariant.isBrandStructure()) {
                     final List<AssetEntity> assetEntities =
-                            assetRepository.findAssetEntitiesByCollection(propertyVariant.getBrandId(), "1", "%Collections/" + propertyVariant.getCollection()+"%");
+                            assetRepository.findAssetEntitiesByCollection(propertyVariant.getBrandId(), "1", "%Collections/" + propertyVariant.getCollection() + "%");
                     int order = 1;
 
                     if (assetEntities != null && !assetEntities.isEmpty() && (structureNameAlreadyAdded.isEmpty() || !structureNameAlreadyAdded.contains(propertyVariant.getStructureName()))) {
@@ -225,7 +225,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
         return hasRows;
     }
-
 
 
     private void digestFloorTypes(final Sheet sheet, final MALPropertyVariant propertyVariant,
@@ -830,7 +829,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             row.createCell(colIndex++).setCellValue("DEFAULT");
 
             colIndex++;
-            colIndex++;
+            row.createCell(colIndex++).setCellValue(malPropertyVariant.getStructureNameRadiobutton());
 
             row.createCell(colIndex++).setCellValue("MULTI_OBJECT_AFFILIATE_STRUCTURE");
 
@@ -844,17 +843,20 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                         "{\"number\":37,\"name\":\"CombinedAddressAddress11stand2ndLineBold\",\"label\":\"CombinedAddress - Address 1 - 1st and 2nd Line Bold\",\"comment\":\"\",\"order\":-1,\"type\":\"RICHTEXT\",\"props\":null}]");
 
                 // substructure floor plans
-                rowIndex = createSubStructure(sheet, rowIndex, malPropertyVariant, malPropertyVariant.getSubNameFloorPlans(), "[{\"number\":24,\"name\":\"Floorplan1\",\"label\":\"Floorplan 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Floorplan2\",\"label\":\"Floorplan 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Floorplan3\",\"label\":\"Floorplan 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Floorplan4\",\"label\":\"Floorplan 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Floorplan5\",\"label\":\"Floorplan 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]");
+                rowIndex = createSubStructure(sheet, rowIndex, malPropertyVariant, malPropertyVariant.getSubNameFloorPlans(),
+                        malPropertyVariant.getSubNameFloorPlansRadiobutton(), "[{\"number\":24,\"name\":\"Floorplan1\",\"label\":\"Floorplan 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Floorplan2\",\"label\":\"Floorplan 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Floorplan3\",\"label\":\"Floorplan 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Floorplan4\",\"label\":\"Floorplan 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Floorplan5\",\"label\":\"Floorplan 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]");
                 // substructure maps
-                rowIndex = createSubStructure(sheet, rowIndex, malPropertyVariant, malPropertyVariant.getSubNameMaps(), "[{\"number\":24,\"name\":\"Map1\",\"label\":\"Map 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Map2\",\"label\":\"Map 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Map3\",\"label\":\"Map 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Map4\",\"label\":\"Map 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Map5\",\"label\":\"Map 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]");
+                rowIndex = createSubStructure(sheet, rowIndex, malPropertyVariant, malPropertyVariant.getSubNameMaps(),
+                        malPropertyVariant.getSubNameMapsRadiobutton(), "[{\"number\":24,\"name\":\"Map1\",\"label\":\"Map 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Map2\",\"label\":\"Map 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Map3\",\"label\":\"Map 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Map4\",\"label\":\"Map 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Map5\",\"label\":\"Map 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]");
                 // substructure images
-                rowIndex = createSubStructure(sheet, rowIndex, malPropertyVariant, malPropertyVariant.getSubName(), "[{\"number\":24,\"name\":\"Image1\",\"label\":\"Image 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Image2\",\"label\":\"Image 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Image3\",\"label\":\"Image 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Image4\",\"label\":\"Image 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Image5\",\"label\":\"Image 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]");
+                rowIndex = createSubStructure(sheet, rowIndex, malPropertyVariant, malPropertyVariant.getSubName(),
+                        malPropertyVariant.getSubNameRadiobutton(), "[{\"number\":24,\"name\":\"Image1\",\"label\":\"Image 1\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":25,\"name\":\"Image2\",\"label\":\"Image 2\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":26,\"name\":\"Image3\",\"label\":\"Image 3\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":27,\"name\":\"Image4\",\"label\":\"Image 4\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null},{\"number\":28,\"name\":\"Image5\",\"label\":\"Image 5\",\"comment\":\"\",\"order\":-1,\"type\":\"MEDIA\",\"props\":null}]");
             }
         }
     }
 
     private int createSubStructure(Sheet sheet, int rowIndex, MALPropertyVariant malPropertyVariant, String
-            subStructureName, String s) {
+            subStructureName, String radioButton, String s) {
         if (subStructureName != null) {
             Row row = sheet.createRow(rowIndex++);
 
@@ -868,7 +870,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
             row.createCell(colIndex++).setCellValue(malPropertyVariant.getStructureName());
 
-            colIndex++;
+            row.createCell(colIndex++).setCellValue(radioButton);
 
             row.createCell(colIndex++).setCellValue("NON_AFFILIATE_STRUCTURE");
 
