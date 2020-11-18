@@ -1,7 +1,6 @@
 package MediaPoolMalBridge.service.Bridge.excelcreator.excelfilesserver6_5;
 
 public final class PropertyVariantFields {
-
     public static final String PROPERTY_LOGO_1C = "PropertyLogo1c";
     public static final String PROPERTY_LOGO_4C = "PropertyLogo4c";
     public static final String PROPERTY_LOGO_4CB = "PropertyLogo4cb";
@@ -54,11 +53,4 @@ public final class PropertyVariantFields {
     public static final String PROPERTY_TELEPHONE="PropertyTelephone";
     public static final String LATITUDE="Latitude";
     public static final String LONGITUDE="Longitude";
-
-
-
-
-
-
-
 }
