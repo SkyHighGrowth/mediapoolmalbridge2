@@ -205,7 +205,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                             final List<AttributeShort> attributes = new ArrayList<>();
                             attributes.add(new AttributeShort(order,
                                     "Image",
-                                    "[MEDIA_GUID=" + assetEntity.getBmAssetId() + ";MEDIA_VERSION=0]",
+                                    getPropertyMedia(assetEntity.getBmAssetId()),
                                     "MEDIA"));
                             addRow(sheet, propertyVariant.getStructureName(), "", assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
                             hasRows = true;
@@ -240,7 +240,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     final List<AttributeShort> attributes = new ArrayList<>();
                     attributes.add(new AttributeShort(order,
                             "Floorplan" + order,
-                            "[MD5_HASH=" + assetEntity.getBmMd5Hash() + ";MEDIA_GUID=" + assetEntity.getBmAssetId() + ";]",
+                            getPropertyMedia(assetEntity.getBmAssetId()),
                             "MEDIA"));
                     addRow(sheet, propertyVariant.getSubNameFloorPlans(), malPropertyEntity.getPropertyId(), assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
                 }
@@ -263,7 +263,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     final List<AttributeShort> attributes = new ArrayList<>();
                     attributes.add(new AttributeShort(order,
                             "Map" + order,
-                            "[MD5_HASH=" + assetEntity.getBmMd5Hash() + ";MEDIA_GUID=" + assetEntity.getBmAssetId() + ";]",
+                            getPropertyMedia(assetEntity.getBmAssetId()),
                             "MEDIA"));
                     addRow(sheet, propertyVariant.getSubNameMaps(), malPropertyEntity.getPropertyId(), assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
                 }
@@ -281,7 +281,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                 final List<AttributeShort> attributes = new ArrayList<>();
                 attributes.add(new AttributeShort(order,
                         "Image" + order,
-                        "[MD5_HASH=" + assetEntity.getBmMd5Hash() + ";MEDIA_GUID=" + assetEntity.getBmAssetId() + ";]",
+                        getPropertyMedia(assetEntity.getBmAssetId()),
                         "MEDIA"));
                 String structureName = propertyVariant.getSubName();
                 if (StringUtils.isBlank(structureName)) {
@@ -327,7 +327,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_1C)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogo1c = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogo1c = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(24,
                         PropertyVariantFields.PROPERTY_LOGO_1C,
                         "MEDIA",
@@ -337,7 +337,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_4C)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogo4c = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogo4c = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(25,
                         PropertyVariantFields.PROPERTY_LOGO_4C,
                         "MEDIA",
@@ -347,7 +347,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_4CB)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-B", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogocmykb = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogocmykb = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(26,
                         PropertyVariantFields.PROPERTY_LOGO_4CB,
                         "MEDIA",
@@ -357,7 +357,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_1C_BLACK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogo1cBlack = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogo1cBlack = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(27,
                         PropertyVariantFields.PROPERTY_LOGO_1C_BLACK,
                         "MEDIA",
@@ -367,7 +367,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_PMS)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "pms", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoPMS = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(28,
                         PropertyVariantFields.PROPERTY_LOGO_PMS,
                         "MEDIA",
@@ -377,7 +377,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_PMSC)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "pms-C", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoPMSC = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoPMSC = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(29,
                         PropertyVariantFields.PROPERTY_LOGO_PMSC,
                         "MEDIA",
@@ -387,7 +387,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_4CC)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-C", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogocmykC = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogocmykC = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(30,
                         PropertyVariantFields.PROPERTY_LOGO_4CC,
                         "MEDIA",
@@ -397,7 +397,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_KOD)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ko-D", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogokoD = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogokoD = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(31,
                         PropertyVariantFields.PROPERTY_LOGO_KOD,
                         "MEDIA",
@@ -408,7 +408,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_BLACKK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "k", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoBlackK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoBlackK = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(32,
                         PropertyVariantFields.PROPERTY_LOGO_BLACKK,
                         "MEDIA",
@@ -418,7 +418,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_4CK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "cmyk-K", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogo4cK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogo4cK = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(33,
                         PropertyVariantFields.PROPERTY_LOGO_4CK,
                         "MEDIA",
@@ -428,7 +428,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_BLACK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Sheraton Black logo-1", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonBlack = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonBlack = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(39,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_BLACK,
                         "MEDIA",
@@ -438,7 +438,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_DUSK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "dusk", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonDusk = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonDusk = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(40,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_DUSK,
                         "MEDIA",
@@ -448,7 +448,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_CMYK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_C_cmyk", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonGraphiteCodedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonGraphiteCodedCMYK = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(40,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_CMYK,
                         "MEDIA",
@@ -458,7 +458,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_PMS)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_C_pms", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonGraphiteCodedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonGraphiteCodedPMS = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(42,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_PMS,
                         "MEDIA",
@@ -468,7 +468,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_RGB)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_rgb", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonGraphiteRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonGraphiteRGB = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(43,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_RGB,
                         "MEDIA",
@@ -478,7 +478,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_UNCOATED_CMYK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_U_cmyk", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonGraphiteUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonGraphiteUncoatedCMYK = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(44,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_UNCOATED_CMYK,
                         "MEDIA",
@@ -488,7 +488,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_UNCOATED_PMS)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Graphite_U_pms", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonGraphiteUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonGraphiteUncoatedPMS = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(45,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_UNCOATED_PMS,
                         "MEDIA",
@@ -498,7 +498,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_IVORY)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "ivory", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonIvory = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonIvory = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(46,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_IVORY,
                         "MEDIA",
@@ -508,7 +508,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_KNOCKOUT)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Knockout", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonKnockout = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonKnockout = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(47,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_KNOCKOUT,
                         "MEDIA",
@@ -518,7 +518,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_LOGO_SPECS)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Logo_Specs", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonLogoSpecs = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonLogoSpecs = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(47,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_LOGO_SPECS,
                         "MEDIA",
@@ -528,7 +528,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_COATED_CMYK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Logo_Specs", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonOysterCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonOysterCoatedCMYK = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(49,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_COATED_CMYK,
                         "MEDIA",
@@ -538,7 +538,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_COATED_PMS)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_C_pms", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonOysterCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonOysterCoatedPMS = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(50,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_COATED_PMS,
                         "MEDIA",
@@ -548,7 +548,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_RGB)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_rgb", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonOysterRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonOysterRGB = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(51,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_RGB,
                         "MEDIA",
@@ -558,7 +558,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_UNCOATED_CMYK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_U_cmyk", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonOysterUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonOysterUncoatedCMYK = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(52,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_UNCOATED_CMYK,
                         "MEDIA",
@@ -568,7 +568,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_UNCOATED_PMS)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Oyster_U_pms", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonOysterUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonOysterUncoatedPMS = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(53,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_UNCOATED_PMS,
                         "MEDIA",
@@ -578,7 +578,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_COATED_CMYK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_C_cmyk", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonResortFrenchGrayCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonResortFrenchGrayCoatedCMYK = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(54,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_COATED_CMYK,
                         "MEDIA",
@@ -588,7 +588,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_COATED_PMS)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_C_pms", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonResortFrenchGrayCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonResortFrenchGrayCoatedPMS = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(55,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_COATED_PMS,
                         "MEDIA",
@@ -598,7 +598,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_RGB)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_rgb", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonResortFrenchGrayRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonResortFrenchGrayRGB = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(56,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_RGB,
                         "MEDIA",
@@ -608,7 +608,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_UNCOATED_CMYK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_U_cmyk", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonResortFrenchGrayUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonResortFrenchGrayUncoatedCMYK = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(57,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_UNCOATED_CMYK,
                         "MEDIA",
@@ -618,7 +618,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_UNCOATED_PMS)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "FrenchGray_U_pms", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonResortFrenchGrayUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonResortFrenchGrayUncoatedPMS = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(58,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_UNCOATED_PMS,
                         "MEDIA",
@@ -628,7 +628,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_COATED_CMYK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_C_cmyk", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonTungstenCoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonTungstenCoatedCMYK = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(59,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_COATED_CMYK,
                         "MEDIA",
@@ -638,7 +638,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_COATED_PMS)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_C_pms", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonTungstenCoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonTungstenCoatedPMS = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(60,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_COATED_PMS,
                         "MEDIA",
@@ -648,7 +648,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_RGB)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_rgb", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonTungstenRGB = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonTungstenRGB = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(61,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_RGB,
                         "MEDIA",
@@ -658,7 +658,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_CMYK)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_U_cmyk", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonTungstenUncoatedCMYK = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonTungstenUncoatedCMYK = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(62,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_CMYK,
                         "MEDIA",
@@ -668,7 +668,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_PMS)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "Tungsten_U_pms", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoSheratonTungstenUncoatedPMS = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoSheratonTungstenUncoatedPMS = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(63,
                         PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_PMS,
                         "MEDIA",
@@ -678,7 +678,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (propertyVariantFields.contains(PropertyVariantFields.PROPERTY_LOGO_US_NAVY)) {
             logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), "2", "usna", TransferringAssetStatus.DONE);
             if (logo != null && !logo.isEmpty()) {
-                String propertyLogoUSNavy = "[MD5_HASH=" + logo.get(0).getBmMd5Hash() + ";MEDIA_GUID=" + logo.get(0).getBmAssetId() + ";]";
+                String propertyLogoUSNavy = getPropertyMedia(logo.get(0).getBmAssetId());
                 attributes.add(new Attribute(64,
                         PropertyVariantFields.PROPERTY_LOGO_US_NAVY,
                         "MEDIA",
@@ -792,6 +792,10 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     malPropertyEntity.getLongitude()));
         }
         addRow(sheet, propertyVariant.getStructureName(), malPropertyEntity.getPropertyId(), malPropertyEntity.getName(), gsonWithNulls.toJson(attributes), null);
+    }
+
+    private String getPropertyMedia(String bmAssetId) {
+        return "[MEDIA_GUID=" + bmAssetId + ";MEDIA_VERSION=0;]";
     }
 
     private String[] digestCombinedAddressField(final MALPropertyVariant propertyVariant,
