@@ -545,11 +545,12 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             row.createCell(colIndex++).setCellValue("DEFAULT");
 
             colIndex++;
-            row.createCell(colIndex++).setCellValue(malPropertyVariant.getStructureNameRadiobutton());
+
+            colIndex++;
 
             row.createCell(colIndex++).setCellValue("MULTI_OBJECT_AFFILIATE_STRUCTURE");
 
-            colIndex++;
+            row.createCell(colIndex++).setCellValue(malPropertyVariant.getStructureNameRadiobutton());
 
             if (malPropertyVariant.isBrandStructure()) {
                 row.createCell(colIndex++).setCellValue("[{\"number\": 24,\"name\": \"Image\",\"label\": \"Image\",\"comment\": \"\",\"order\": 0,\"type\": \"MEDIA\",\"props\": null}]");
@@ -586,11 +587,11 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
             row.createCell(colIndex++).setCellValue(malPropertyVariant.getStructureName());
 
-            row.createCell(colIndex++).setCellValue(radioButton);
+            colIndex++;
 
             row.createCell(colIndex++).setCellValue("NON_AFFILIATE_STRUCTURE");
 
-            colIndex++;
+            row.createCell(colIndex++).setCellValue(radioButton);
 
             row.createCell(colIndex++).setCellValue(s);
         }
@@ -645,7 +646,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     public static class Attribute {
         private int number;
 
-        private String attributeName;
+        private final String attributeName;
 
         private String label;
 
