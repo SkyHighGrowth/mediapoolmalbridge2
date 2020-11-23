@@ -518,7 +518,13 @@
     "structureNameRadiobutton": "",
     "fields": ", PropertyZipCode, PropertyURL, PropertyTelephone, PropertyStreet, PropertyState, PropertyNumber, PropertyName, PropertyCountry, PropertyCity, PropertyAddress, Longitude, Latitude, CombinedAddress"
   },
-
+  "40": {
+    "id": "40",
+    "brandName": "Delta Hotels and Resorts",
+    "structureName": "AFFILIATES_V000_DE",
+    "structureNameRadiobutton": "",
+    "fields": ", PropertyZipCode, PropertyURL, PropertyTelephone, PropertyStreet, PropertyState, PropertyNumber, PropertyName, PropertyCountry, PropertyCity, PropertyAddress, Longitude, Latitude, CombinedAddress"
+  },
   "100": {
     "id": "100",
     "structureName": "BRAND_Aloft_Lifestyle_Images_alf",
