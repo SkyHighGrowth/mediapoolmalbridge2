@@ -30,7 +30,7 @@ public class AppConfig {
 
     private AppConfigData appConfigData;
 
-    private final String workDir = "/data/skyhigh"; //change to /data/skyhigh
+    private static final String WORK_DIR = "/data/skyhigh"; //change to /data/skyhigh
 
     public AppConfig(final AppConfigData appConfigData,
                      final Environment environment,
@@ -42,15 +42,10 @@ public class AppConfig {
             throw new RuntimeException("Can not start with profiles dev and production set at the same time");
         }
 
-        File file = new File(workDir + File.separator + Constants.APPLICATION_DIR);
+        File file = new File(WORK_DIR + File.separator + Constants.APPLICATION_DIR);
         //File file = new File( "C:/Users/User" + File.separator + Constants.APPLICATION_DIR);
-        if (!file.exists()) {
-            if (!file.mkdir()) {
-                logger.info("Dir {} can not be created", file.getAbsolutePath());
-                throw new RuntimeException();
-            }
-        }
-        final String filePath = workDir + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
+        checkIfFileExist(file);
+        final String filePath = WORK_DIR + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
         //final String filePath = "C:/Users/User" + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
         file = new File(filePath);
         logger.info("FILE PATH {}", file.getAbsolutePath());
@@ -72,7 +67,7 @@ public class AppConfig {
 
         // Copy resources/propertyVariants.json file to data/skyhigh folder
         if (file.exists()) {
-            InputStream propertyVariantsFile = null;
+            InputStream propertyVariantsFile;
             String destinationPath = getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON;
             File dataPropertyVariantsFile = new File(destinationPath);
             try {
@@ -80,7 +75,7 @@ public class AppConfig {
                     ClassLoader classLoader = getClass().getClassLoader();
                     propertyVariantsFile = classLoader.getResourceAsStream("propertyVariants.json");
                     assert propertyVariantsFile != null;
-                    Files.copy(propertyVariantsFile, Paths.get(destinationPath), new StandardCopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+                    Files.copy(propertyVariantsFile, Paths.get(destinationPath), StandardCopyOption.REPLACE_EXISTING);
 
                 }
             } catch (FileNotFoundException e) {
@@ -91,27 +86,19 @@ public class AppConfig {
         }
 
         file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR);
-        if (!file.exists()) {
-            if (!file.mkdir()) {
-                logger.info("Dir {} can not be created", file.getAbsolutePath());
-                throw new RuntimeException();
-            }
-        }
+        checkIfFileExist(file);
 
-        file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + "logs");
-        if (!file.exists()) {
-            if (!file.mkdir()) {
-                logger.info("Dir {} can not be created", file.getAbsolutePath());
-                throw new RuntimeException();
-            }
-        }
+        file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.LOGS);
+        checkIfFileExist(file);
 
         file = new File(getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.ASSET_DOWNLOAD_DIR);
-        if (!file.exists()) {
-            if (!file.mkdir()) {
-                logger.info("Dir {} can not be created", file.getAbsolutePath());
-                throw new RuntimeException();
-            }
+        checkIfFileExist(file);
+    }
+
+    private void checkIfFileExist(File file) {
+        if (!file.exists() && !file.mkdir()) {
+            logger.info("Dir {} can not be created", file.getAbsolutePath());
+            throw new RuntimeException();
         }
     }
 
@@ -295,6 +282,7 @@ public class AppConfig {
         return appConfigData.getBmGetThemeIdCronExpression();
     }
 
+    @SuppressWarnings("unused method")
     public String getBridgeExchangeAssetsCronExpression() {
         return appConfigData.getBridgeExchangeAssetsCronExpression();
     }
@@ -391,6 +379,7 @@ public class AppConfig {
         return appConfigData.getHikariIdleTimeout();
     }
 
+    @SuppressWarnings("unused method")
     public int getHikariMaxLifeTime() {
         return appConfigData.getHikariMaxLifeTime();
     }
@@ -454,7 +443,12 @@ public class AppConfig {
         return appConfigData.getFilterEndDate();
     }
 
-    public int getFileMaxRecords(){
+    public int getFileMaxRecords() {
         return appConfigData.getFileMaxRecords();
     }
+
+    public List<String> getFileFormatsOrder() {
+        return appConfigData.getFileFormatsOrder();
+    }
+
 }
