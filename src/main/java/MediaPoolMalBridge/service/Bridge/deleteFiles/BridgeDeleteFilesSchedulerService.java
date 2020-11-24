@@ -1,6 +1,5 @@
 package MediaPoolMalBridge.service.Bridge.deleteFiles;
 
-import MediaPoolMalBridge.config.AppConfig;
 import MediaPoolMalBridge.persistence.entity.Bridge.ReportsEntity;
 import MediaPoolMalBridge.persistence.entity.Bridge.UploadedFileEntity;
 import MediaPoolMalBridge.persistence.entity.enums.FileStateOnDisc;
@@ -32,12 +31,8 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
 
     private final UploadedFileRepository uploadedFileRepository;
 
-    private final AppConfig appConfig;
-
-    public BridgeDeleteFilesSchedulerService(final UploadedFileRepository uploadedFileRepository,
-                                             final AppConfig appConfig ) {
+    public BridgeDeleteFilesSchedulerService(final UploadedFileRepository uploadedFileRepository) {
         this.uploadedFileRepository = uploadedFileRepository;
-        this.appConfig = appConfig;
     }
 
     @PostConstruct
@@ -49,75 +44,75 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
     public void scheduled() {
         logger.info("Deleting files from uploaded file entity table started");
         deleteFiles();
-        if( !appConfig.isDisableAbsoluteDelete() ) {
+        if (!appConfig.isDisableAbsoluteDelete()) {
             listFilesInTempFolder();
         }
         logger.info("Deleting files from uploaded file entity table ended");
     }
 
     private void listFilesInTempFolder() {
-        final File[] files = new File(appConfig.getTempDir() ).listFiles();
-        if(files == null || files.length == 0 ) {
+        final File[] files = new File(appConfig.getTempDir()).listFiles();
+        if (files == null || files.length == 0) {
             return;
         }
-        final LocalDateTime pointInTime = getTodayMidnight().minusDays( appConfig.getAssetFileMaximalLivingDaysOnDisc() );
+        final LocalDateTime pointInTime = getTodayMidnight().minusDays(appConfig.getAssetFileMaximalLivingDaysOnDisc());
         BasicFileAttributes attributes;
         for (final File file : files) {
             if (file.isFile()) {
-                try
-                {
+                try {
                     attributes = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
-                    final LocalDateTime creationTime = Instant.ofEpochSecond( attributes.creationTime()
-                            .to(TimeUnit.SECONDS ) )
-                            .atOffset( ZoneOffset.UTC )
+                    final LocalDateTime creationTime = Instant.ofEpochSecond(attributes.creationTime()
+                            .to(TimeUnit.SECONDS))
+                            .atOffset(ZoneOffset.UTC)
                             .toLocalDateTime();
-                    if( creationTime.isBefore( pointInTime ) ) {
-                        final UploadedFileEntity uploadedFileEntity = new UploadedFileEntity( file.getName() );
-                        uploadedFileRepository.save( uploadedFileEntity );
+                    if (creationTime.isBefore(pointInTime)) {
+                        final UploadedFileEntity uploadedFileEntity = new UploadedFileEntity(file.getName());
+                        uploadedFileRepository.save(uploadedFileEntity);
                     }
                 } catch (IOException e) {
-                    logger.error("Error deleting file " + file.getAbsolutePath() + " caused by exception " + e.getMessage());
+                    logger.error(String.format("Error deleting file %s caused by exception %s", file.getAbsolutePath(), e));
                 }
             }
         }
     }
 
     private void deleteFiles() {
-        boolean condition = true;
         try {
-            for (int page = 0; condition; ++page) {
-                Integer maxRepetitions = appConfig.getAssetStateRepetitionMax();
+            for (int page = 0; true; ++page) {
                 final List<UploadedFileEntity> fileEntities = uploadedFileRepository.findByDeletedAndCreatedIsBefore(
-                        false,  getTodayMidnight().minusDays( appConfig.getBridgeLookInThePastDays() + appConfig.getBridgeResolverWindow() + 1 ), maxRepetitions, PageRequest.of(0, appConfig.getDatabasePageSize()));
+                        false,  getTodayMidnight().minusDays( appConfig.getBridgeLookInThePastDays() + appConfig.getBridgeResolverWindow() + 1L ), PageRequest.of(0, appConfig.getDatabasePageSize()));
                 if( fileEntities.isEmpty() || page > 1000 ) {
                     break;
                 }
                 deletePage(fileEntities);
             }
-        } catch( final Exception e ) {
-            final String message = String.format( "Error deleting files with message [%s]", e.getMessage() );
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null );
-            reportsRepository.save( reportsEntity );
-            logger.error( message, e );
+        } catch (final Exception e) {
+            final String message = String.format("Error deleting files with message [%s]", e.getMessage());
+            final ReportsEntity reportsEntity = new ReportsEntity(ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null);
+            reportsRepository.save(reportsEntity);
+            logger.error(message, e);
         }
     }
 
     @Transactional
-    protected void deletePage( final List<UploadedFileEntity> fileEntities )
-    {
+    public void deletePage(final List<UploadedFileEntity> fileEntities) {
         fileEntities.forEach(fileEntity -> {
             final File file = new File(appConfig.getTempDir() + fileEntity.getFilename());
             if (file.exists()) {
-                if (!file.delete()) {
-                    final String message = String.format("Can not delete file [%s]", fileEntity.getFilename());
-                    logger.error(message);
-                    fileEntity.setFileStateOnDisc(FileStateOnDisc.ERROR);
-                    uploadedFileRepository.save(fileEntity);
-                    final ReportsEntity reportsEntity = new ReportsEntity(ReportType.WARNING, getClass().getName(), null, message, ReportTo.BM, null, null, null);
-                    reportsRepository.save(reportsEntity);
-                } else {
-                    fileEntity.setDeleted(true);
-                    uploadedFileRepository.save(fileEntity);
+                try {
+                    if (!Files.deleteIfExists(file.toPath())) {
+                        final String message = String.format("Can not delete file [%s]", fileEntity.getFilename());
+                        logger.error(message);
+                        fileEntity.setFileStateOnDisc(FileStateOnDisc.ERROR);
+                        uploadedFileRepository.save(fileEntity);
+                        final ReportsEntity reportsEntity = new ReportsEntity(ReportType.WARNING, getClass().getName(), null, message, ReportTo.BM, null, null, null);
+                        reportsRepository.save(reportsEntity);
+                    } else {
+                        fileEntity.setDeleted(true);
+                        uploadedFileRepository.save(fileEntity);
+                    }
+                } catch (IOException e) {
+                    logger.error(String.format("Error occurred deleting file: %s", file.getName()), e);
                 }
             } else {
                 fileEntity.setDeleted(true);
