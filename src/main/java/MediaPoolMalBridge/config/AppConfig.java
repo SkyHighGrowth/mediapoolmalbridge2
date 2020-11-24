@@ -447,6 +447,10 @@ public class AppConfig {
         return appConfigData.getFileMaxRecords();
     }
 
+    public long getDownloadFolderSizeLimit() {
+        return appConfigData.getDownloadFolderSizeLimit();
+    }
+
     public List<String> getFileFormatsOrder() {
         return appConfigData.getFileFormatsOrder();
     }

@@ -16,9 +16,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 /**
  * Service that triggers download of asset from MAL server
@@ -42,28 +45,50 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
 
     @Override
     protected void run(final AssetEntity assetEntity) {
-        //check if the media file already exist in BM
-        String mediaGuidByHash = bmGetAssetIdFromHashClient.getMediaPoolPort().getMediaGuidByHash(assetEntity.getBmMd5Hash());
-
-        if (StringUtils.isEmpty(mediaGuidByHash)) {
-            try {
-                final MALDownloadAssetResponse response = malDownloadAssetClient.download(decode(assetEntity.getUrl()), assetEntity.getFileNameOnDisc());
-                if (response.isSuccess()) {
-                    onSuccess(assetEntity);
-                } else {
-                    onFailure(assetEntity, response, null);
+        long size = getCurrentDownloadFolderSize();
+        long downloadFolderSizeLimit = getDownloadFolderSizeLimitInBytes();
+        if (size < downloadFolderSizeLimit) {
+            //check if the media file already exist in BM
+            String mediaGuidByHash = bmGetAssetIdFromHashClient.getMediaPoolPort().getMediaGuidByHash(assetEntity.getBmMd5Hash());
+            if (StringUtils.isEmpty(mediaGuidByHash)) {
+                try {
+                    final MALDownloadAssetResponse response = malDownloadAssetClient.download(decode(assetEntity.getUrl()), assetEntity.getFileNameOnDisc());
+                    if (response.isSuccess()) {
+                        onSuccess(assetEntity);
+                    } else {
+                        onFailure(assetEntity, response, null);
+                    }
+                } catch (final Exception e) {
+                    onFailure(assetEntity, null, e);
                 }
-            } catch (final Exception e) {
-                onFailure(assetEntity, null, e);
+                assetRepository.save(assetEntity);
             }
-            assetRepository.save(assetEntity);
         }
+    }
+
+    private long getCurrentDownloadFolderSize() {
+        File tempDir = new File(appConfig.getTempDir());
+        long size = 0;
+        try {
+            size = Files.walk(tempDir.toPath())
+                    .filter(p -> p.toFile().isFile())
+                    .mapToLong(p -> p.toFile().length())
+                    .sum();
+        } catch (IOException e) {
+            logger.error(String.format("Could not calculate %s size", tempDir.getName()), e);
+        }
+        return size;
     }
 
     private void onSuccess(final AssetEntity assetEntity) {
         assetEntity.setMalStatesRepetitions(0);
         assetEntity.setTransferringAssetStatus(TransferringAssetStatus.FILE_DOWNLOADED);
         assetRepository.save(assetEntity);
+    }
+
+    private long getDownloadFolderSizeLimitInBytes() {
+        //For Windows server change this to 1024
+        return appConfig.getDownloadFolderSizeLimit() * 1000 * 1000 * 1000;
     }
 
     @Transactional
