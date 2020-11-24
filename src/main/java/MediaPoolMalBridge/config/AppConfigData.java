@@ -420,6 +420,9 @@ public class AppConfigData {
     @Value("${file.formats.order}")
     private String[] fileFormatsOrder;
 
+    @Value("${download.folder.size.limit}")
+    private long downloadFolderSizeLimit;
+
     public boolean isUseSftp() {
         return useSftp;
     }
@@ -750,5 +753,9 @@ public class AppConfigData {
 
     public List<String> getFileFormatsOrder() {
         return Arrays.asList(fileFormatsOrder);
+    }
+
+    public long getDownloadFolderSizeLimit() {
+        return downloadFolderSizeLimit;
     }
 }
