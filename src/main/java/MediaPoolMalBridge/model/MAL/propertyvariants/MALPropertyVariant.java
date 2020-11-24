@@ -4,55 +4,37 @@ import org.apache.commons.lang3.StringUtils;
 
 public class MALPropertyVariant {
 
-    private final String id;
+    private String id;
 
-    private final String structureName;
+    private String structureName;
 
-    private final String subName;
+    private String structureNameRadiobutton;
 
-    private final String brandName;
+    private String subName;
 
-    private final String subNameMaps;
+    private String subNameRadiobutton;
 
-    private final String subNameFloorPlans;
+    private String brandName;
 
-    private final String addressField01;
+    private String subNameMaps;
 
-    private final String addressField02;
+    private String subNameMapsRadiobutton;
 
-    private final String addressField03;
+    private String subNameFloorPlans;
 
-    private final String addressField04;
+    private String subNameFloorPlansRadiobutton;
 
-    private final String addressField05;
+    private String addressField01;
 
-    private final String fields;
+    private String addressField02;
 
-    public MALPropertyVariant(final String id,
-                              final String structureName,
-                              final String subName,
-                              final String brandName,
-                              final String subNameMaps,
-                              final String subNameFloorPlans,
-                              final String addressField01,
-                              final String addressField02,
-                              final String addressField03,
-                              final String addressField04,
-                              final String addressField05,
-                              final String fields) {
-        this.id = id;
-        this.structureName = structureName;
-        this.subName = subName;
-        this.brandName = brandName;
-        this.subNameMaps = subNameMaps;
-        this.subNameFloorPlans = subNameFloorPlans;
-        this.addressField01 = addressField01;
-        this.addressField02 = addressField02;
-        this.addressField03 = addressField03;
-        this.addressField04 = addressField04;
-        this.addressField05 = addressField05;
-        this.fields = fields;
-    }
+    private String addressField03;
+
+    private String addressField04;
+
+    private String addressField05;
+
+    private String fields;
 
     public String getId() {
         return id;
@@ -60,6 +42,10 @@ public class MALPropertyVariant {
 
     public String getStructureName() {
         return structureName;
+    }
+
+    public String getStructureNameRadiobutton() {
+        return structureNameRadiobutton;
     }
 
     public String getAddressField01() {
@@ -102,12 +88,24 @@ public class MALPropertyVariant {
         return subName;
     }
 
+    public String getSubNameRadiobutton() {
+        return subNameRadiobutton;
+    }
+
     public String getSubNameMaps() {
         return subNameMaps;
     }
 
+    public String getSubNameMapsRadiobutton() {
+        return subNameMapsRadiobutton;
+    }
+
     public String getSubNameFloorPlans() {
         return subNameFloorPlans;
+    }
+
+    public String getSubNameFloorPlansRadiobutton() {
+        return subNameFloorPlansRadiobutton;
     }
 
     public boolean isBrandStructure(){
