@@ -1,9 +1,319 @@
 {
   "properties": [
     {
+      "name": "bridge.jscp.usesftp",
+      "type": "java.lang.String",
+      "description": "Description for bridge.jscp.usesftp."
+    },
+    {
+      "name": "included.asset.types",
+      "type": "java.lang.String",
+      "description": "Description for included.asset.types."
+    },
+    {
+      "name": "mal.priorities",
+      "type": "java.lang.String",
+      "description": "Description for mal.priorities."
+    },
+    {
+      "name": "working.directory",
+      "type": "java.lang.String",
+      "description": "Description for working.directory."
+    },
+    {
+      "name": "spring.datasource.url.production",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.url.production."
+    },
+    {
+      "name": "spring.datasource.url.dev",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.url.dev."
+    },
+    {
+      "name": "file.formats.order",
+      "type": "java.lang.String",
+      "description": "Description for file.formats.order."
+    },
+    {
+      "name": "file.max.records",
+      "type": "java.lang.String",
+      "description": "Description for file.max.records."
+    },
+    {
+      "name": "filter.end.date",
+      "type": "java.lang.String",
+      "description": "Description for filter.end.date."
+    },
+    {
+      "name": "filter.start.date",
+      "type": "java.lang.String",
+      "description": "Description for filter.start.date."
+    },
+    {
+      "name": "interval.filter.enable",
+      "type": "java.lang.String",
+      "description": "Description for interval.filter.enable."
+    },
+    {
+      "name": "fail.save.category.name",
+      "type": "java.lang.String",
+      "description": "Description for fail.save.category.name."
+    },
+    {
+      "name": "scheduler.malphoto.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.malphoto.cron.expression."
+    },
+    {
+      "name": "scheduler.malgetphotos.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.malgetphotos.cron.expression."
+    },
+    {
+      "name": "scheduler.malproperties.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.malproperties.cron.expression."
+    },
+    {
+      "name": "scheduler.malassetstructures.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.malassetstructures.cron.expression."
+    },
+    {
+      "name": "scheduler.maldownloadasset.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.maldownloadasset.cron.expression."
+    },
+    {
+      "name": "scheduler.malasset.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.malasset.cron.expression."
+    },
+    {
+      "name": "scheduler.bridgesendmail.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.bridgesendmail.cron.expression."
+    },
+    {
+      "name": "scheduler.bridgetransfertheme.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.bridgetransfertheme.cron.expression."
+    },
+    {
+      "name": "scheduler.bridgeuploadexcelfiles.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.bridgeuploadexcelfiles.cron.expression."
+    },
+    {
+      "name": "scheduler.bridgecreateexcelfiles.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.bridgecreateexcelfiles.cron.expression."
+    },
+    {
+      "name": "scheduler.bridgedeletedatabaserows.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.bridgedeletedatabaserows.cron.expression."
+    },
+    {
+      "name": "scheduler.bridgedeletefiles.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.bridgedeletefiles.cron.expression."
+    },
+    {
+      "name": "scheduler.bridgeexchangeassets.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.bridgeexchangeassets.cron.expression."
+    },
+    {
+      "name": "scheduler.bridgeassetresolver.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.bridgeassetresolver.cron.expression."
+    },
+    {
+      "name": "scheduler.bridgeassetonboarding.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.bridgeassetonboarding.cron.expression."
+    },
+    {
+      "name": "scheduler.bmgetthemeid.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.bmgetthemeid.cron.expression."
+    },
+    {
+      "name": "scheduler.bmupload.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.bmupload.cron.expression."
+    },
+    {
+      "name": "scheduler.bmexchange.cron.expression",
+      "type": "java.lang.String",
+      "description": "Description for scheduler.bmexchange.cron.expression."
+    },
+    {
+      "name": "mal.page.size",
+      "type": "java.lang.String",
+      "description": "Description for mal.page.size."
+    },
+    {
+      "name": "bridge.database.page.size",
+      "type": "java.lang.String",
+      "description": "Description for bridge.database.page.size."
+    },
+    {
+      "name": "bridge.excel.donotcreateexcelfiles",
+      "type": "java.lang.String",
+      "description": "Description for bridge.excel.donotcreateexcelfiles."
+    },
+    {
+      "name": "bridge.deletedatabaserows.window.days",
+      "type": "java.lang.String",
+      "description": "Description for bridge.deletedatabaserows.window.days."
+    },
+    {
+      "name": "bridge.resolver.window.days",
+      "type": "java.lang.String",
+      "description": "Description for bridge.resolver.window.days."
+    },
+    {
+      "name": "bridge.look.in.the.past.days",
+      "type": "java.lang.String",
+      "description": "Description for bridge.look.in.the.past.days."
+    },
+    {
+      "name": "bridge.asset.maximallivingdaysofassetondisc",
+      "type": "java.lang.String",
+      "description": "Description for bridge.asset.maximallivingdaysofassetondisc."
+    },
+    {
+      "name": "bridge.disable.absolutedelete",
+      "type": "java.lang.String",
+      "description": "Description for bridge.disable.absolutedelete."
+    },
+    {
+      "name": "mal.look.in.the.past.days",
+      "type": "java.lang.String",
+      "description": "Description for mal.look.in.the.past.days."
+    },
+    {
+      "name": "asset.state.repetition.max",
+      "type": "java.lang.String",
+      "description": "Description for asset.state.repetition.max."
+    },
+    {
+      "name": "mail.mal.address",
+      "type": "java.lang.String",
+      "description": "Description for mail.mal.address."
+    },
+    {
+      "name": "mail.bm.address",
+      "type": "java.lang.String",
+      "description": "Description for mail.bm.address."
+    },
+    {
+      "name": "mail.debug",
+      "type": "java.lang.String",
+      "description": "Description for mail.debug."
+    },
+    {
+      "name": "mail.smtp.starttls.enable",
+      "type": "java.lang.String",
+      "description": "Description for mail.smtp.starttls.enable."
+    },
+    {
+      "name": "mail.smtp.auth",
+      "type": "java.lang.String",
+      "description": "Description for mail.smtp.auth."
+    },
+    {
+      "name": "mail.transport.protocol",
+      "type": "java.lang.String",
+      "description": "Description for mail.transport.protocol."
+    },
+    {
+      "name": "mail.password",
+      "type": "java.lang.String",
+      "description": "Description for mail.password."
+    },
+    {
+      "name": "mail.username",
+      "type": "java.lang.String",
+      "description": "Description for mail.username."
+    },
+    {
+      "name": "mail.port",
+      "type": "java.lang.String",
+      "description": "Description for mail.port."
+    },
+    {
+      "name": "mail.hostname",
+      "type": "java.lang.String",
+      "description": "Description for mail.hostname."
+    },
+    {
+      "name": "bmthreadexecutor.queue.length.max",
+      "type": "java.lang.String",
+      "description": "Description for bmthreadexecutor.queue.length.max."
+    },
+    {
+      "name": "bmthreadexecutor.queue.size",
+      "type": "java.lang.String",
+      "description": "Description for bmthreadexecutor.queue.size."
+    },
+    {
+      "name": "bmthreadexecutor.pool.size",
+      "type": "java.lang.String",
+      "description": "Description for bmthreadexecutor.pool.size."
+    },
+    {
+      "name": "malthreadexecutor.queue.length.max",
+      "type": "java.lang.String",
+      "description": "Description for malthreadexecutor.queue.length.max."
+    },
+    {
+      "name": "malthreadexecutor.queue.size",
+      "type": "java.lang.String",
+      "description": "Description for malthreadexecutor.queue.size."
+    },
+    {
       "name": "malthreadexecutor.pool.size",
       "type": "java.lang.String",
       "description": "Description for malthreadexecutor.pool.size."
+    },
+    {
+      "name": "threadscheduler.pool.size",
+      "type": "java.lang.String",
+      "description": "Description for threadscheduler.pool.size."
+    },
+    {
+      "name": "database.password.production",
+      "type": "java.lang.String",
+      "description": "Description for database.password.production."
+    },
+    {
+      "name": "database.user.production",
+      "type": "java.lang.String",
+      "description": "Description for database.user.production."
+    },
+    {
+      "name": "database.password.dev",
+      "type": "java.lang.String",
+      "description": "Description for database.password.dev."
+    },
+    {
+      "name": "database.user.dev",
+      "type": "java.lang.String",
+      "description": "Description for database.user.dev."
+    },
+    {
+      "name": "theme.url.production",
+      "type": "java.lang.String",
+      "description": "Description for theme.url.production."
+    },
+    {
+      "name": "mediapool.url.production",
+      "type": "java.lang.String",
+      "description": "Description for mediapool.url.production."
     },
     {
       "name": "mediapool.password.production",
@@ -11,8 +321,68 @@
       "description": "Description for mediapool.password.production."
     },
     {
-      "name": "spring.datasource.url.dev",
+      "name": "mediapool.username.production",
       "type": "java.lang.String",
-      "description": "Description for spring.datasource.url.dev."
+      "description": "Description for mediapool.username.production."
+    },
+    {
+      "name": "theme.url.test",
+      "type": "java.lang.String",
+      "description": "Description for theme.url.test."
+    },
+    {
+      "name": "mediapool.url.test",
+      "type": "java.lang.String",
+      "description": "Description for mediapool.url.test."
+    },
+    {
+      "name": "mediapool.password.test",
+      "type": "java.lang.String",
+      "description": "Description for mediapool.password.test."
+    },
+    {
+      "name": "mediapool.username.test",
+      "type": "java.lang.String",
+      "description": "Description for mediapool.username.test."
+    },
+    {
+      "name": "mal.apiKey",
+      "type": "java.lang.String",
+      "description": "Description for mal.apiKey."
+    },
+    {
+      "name": "mal.login",
+      "type": "java.lang.String",
+      "description": "Description for mal.login."
+    },
+    {
+      "name": "mal.hostname",
+      "type": "java.lang.String",
+      "description": "Description for mal.hostname."
+    },
+    {
+      "name": "server.ssh.public.key",
+      "type": "java.lang.String",
+      "description": "Description for server.ssh.public.key."
+    },
+    {
+      "name": "bridge.jscp.port",
+      "type": "java.lang.String",
+      "description": "Description for bridge.jscp.port."
+    },
+    {
+      "name": "bridge.jscp.hostname",
+      "type": "java.lang.String",
+      "description": "Description for bridge.jscp.hostname."
+    },
+    {
+      "name": "bridge.jscp.password",
+      "type": "java.lang.String",
+      "description": "Description for bridge.jscp.password."
+    },
+    {
+      "name": "bridge.jscp.username",
+      "type": "java.lang.String",
+      "description": "Description for bridge.jscp.username."
     }
   ] }
