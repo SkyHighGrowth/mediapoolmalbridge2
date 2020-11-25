@@ -49,11 +49,11 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
     private static final String MEDIA = "MEDIA";
 
-    private static final String DEFAULT_STRING ="{\"default\":\"%s\"}";
+    private static final String DEFAULT_STRING = "{\"default\":\"%s\"}";
 
     private static final String RICHTEXT = "RICHTEXT";
 
-    private static final String TEXT ="TEXT";
+    private static final String TEXT = "TEXT";
 
     @Autowired
     private MALPropertyRepository malPropertyRepository;
@@ -107,7 +107,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             final String brandName = propertyVariant.getBrandName();
             final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findByBrandAndMalPropertyStatus(brandName, MALPropertyStatus.OBSERVED);
             for (MALPropertyEntity malPropertyEntity : malPropertyEntities) {
-                if (!propertyVariant.isBrandStructure() && countProperties == appConfig.getFileMaxRecords()) {
+                if (!propertyVariant.isBrandStructure() && countProperties == appConfig.getFileMaxRecords() && appConfig.getFileMaxRecords() > 0) {
                     count++;
                     String fileName = String.format("DataStructures_%s.xlsx", count);
                     createFile(fileName, malPropertyPairSet, false);
@@ -145,7 +145,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private void createObjectsSheet(final Workbook workbook, LinkedHashSet<MALPropertyPair> malPropertyPairSet){
+    private void createObjectsSheet(final Workbook workbook, LinkedHashSet<MALPropertyPair> malPropertyPairSet) {
         final Sheet sheet = workbook.createSheet("objects");
 
         final Font font = workbook.createFont();
@@ -193,7 +193,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private boolean createBrandObjectsSheet(final Workbook workbook, LinkedHashSet<MALPropertyPair> malPropertyPairSet){
+    private boolean createBrandObjectsSheet(final Workbook workbook, LinkedHashSet<MALPropertyPair> malPropertyPairSet) {
         final Sheet sheet = workbook.createSheet("objects");
 
         final Font font = workbook.createFont();
@@ -248,7 +248,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
 
     private void digestFloorTypes(final Sheet sheet, final MALPropertyVariant propertyVariant,
-                                  final MALPropertyEntity malPropertyEntity){
+                                  final MALPropertyEntity malPropertyEntity) {
         final String[] floorTypes = new String[2];
         floorTypes[0] = "Fmt";
         floorTypes[1] = "Fgr";
@@ -270,7 +270,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     }
 
     private void digestMaps(final Sheet sheet, final MALPropertyVariant propertyVariant,
-                            final MALPropertyEntity malPropertyEntity){
+                            final MALPropertyEntity malPropertyEntity) {
         final String[] mapColors = new String[3];
         mapColors[0] = "Mat";
         mapColors[1] = "Mla";
@@ -293,7 +293,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     }
 
     private void digestAssets(final Sheet sheet, final MALPropertyVariant propertyVariant,
-                              final MALPropertyEntity malPropertyEntity){
+                              final MALPropertyEntity malPropertyEntity) {
         final List<AssetEntity> assetEntities = assetRepository.findPropertyAssets(malPropertyEntity.getPropertyId(), "1", TransferringAssetStatus.DONE);
         int order = 1;
         if (assetEntities != null && !assetEntities.isEmpty()) {
@@ -313,7 +313,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     }
 
     private void addRow(final Sheet sheet, final String subName, final String propertyId, String name,
-                        final String jsonedAttributes, final String malAssetId){
+                        final String jsonedAttributes, final String malAssetId) {
         Row row = sheet.createRow(rowIndex++);
         int colIndex = 0;
 
@@ -322,7 +322,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (StringUtils.isNotBlank(malAssetId)) {
             row.createCell(colIndex++).setCellValue(subName);
             row.createCell(colIndex++).setCellValue(malAssetId);
-            row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING,malAssetId + " - " + name));
+            row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING, malAssetId + " - " + name));
             row.createCell(colIndex++).setCellValue(propertyId);
             row.createCell(colIndex++).setCellValue("EDIT_AND_ADD");
             row.createCell(colIndex++).setCellValue(malAssetId);
@@ -330,7 +330,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         } else {
             row.createCell(colIndex++).setCellValue(subName);
             row.createCell(colIndex++).setCellValue(propertyId);
-            row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING,propertyId + " - " + name));
+            row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING, propertyId + " - " + name));
             row.createCell(colIndex++).setCellValue("");
             row.createCell(colIndex++).setCellValue("EDIT_AND_ADD");
             row.createCell(colIndex++).setCellValue(propertyId);
@@ -339,7 +339,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     }
 
     private void digestLogos(final Sheet sheet, MALPropertyVariant propertyVariant,
-                             final MALPropertyEntity malPropertyEntity, final String[] combinedAddressFields){
+                             final MALPropertyEntity malPropertyEntity, final String[] combinedAddressFields) {
         final List<Attribute> attributes = new ArrayList<>();
         final String propertyVariantFields = propertyVariant.getFields();
         addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_1C, "ko", 24);
@@ -540,7 +540,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
             row.createCell(colIndex++).setCellValue(malPropertyVariant.getStructureName());
 
-            row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING,malPropertyVariant.getStructureName()));
+            row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING, malPropertyVariant.getStructureName()));
 
             row.createCell(colIndex++).setCellValue("DEFAULT");
 
@@ -581,7 +581,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
             row.createCell(colIndex++).setCellValue(subStructureName);
 
-            row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING,subStructureName));
+            row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING, subStructureName));
 
             row.createCell(colIndex++).setCellValue("DEFAULT");
 
