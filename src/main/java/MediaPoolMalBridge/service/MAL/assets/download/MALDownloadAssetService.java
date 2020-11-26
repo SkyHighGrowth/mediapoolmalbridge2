@@ -22,6 +22,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Stream;
 
 /**
  * Service that triggers download of asset from MAL server
@@ -69,8 +71,8 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
     private long getCurrentDownloadFolderSize() {
         File tempDir = new File(appConfig.getTempDir());
         long size = 0;
-        try {
-            size = Files.walk(tempDir.toPath())
+        try (Stream<Path> walkStream = Files.walk(tempDir.toPath())){
+            size = walkStream
                     .filter(p -> p.toFile().isFile())
                     .mapToLong(p -> p.toFile().length())
                     .sum();
@@ -92,7 +94,7 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
     }
 
     @Transactional
-    protected void onFailure(final AssetEntity assetEntity, final MALAbstractResponse malAbstractResponse, final Exception e) {
+    public void onFailure(final AssetEntity assetEntity, final MALAbstractResponse malAbstractResponse, final Exception e) {
         if (!isGateOpen(assetEntity, "asset download", malAbstractResponse, e)) {
             return;
         }
@@ -111,7 +113,7 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
 
     @Override
     @Transactional
-    protected boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription, final MALAbstractResponse malAbstractResponse, final Exception e) {
+    public boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription, final MALAbstractResponse malAbstractResponse, final Exception e) {
         if (super.isGateOpen(assetEntity, serviceDescription, malAbstractResponse, e)) {
             return true;
         }

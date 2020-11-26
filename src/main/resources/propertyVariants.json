@@ -528,210 +528,210 @@
   "100": {
     "id": "100",
     "structureName": "BRAND_Aloft_Lifestyle_Images_alf",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Aloft",
     "fields": ",Image,"
   },
   "101": {
     "id": "101",
     "structureName": "BRAND_Element_Brand_Images_elm",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Element",
     "fields": ",Image,"
   },
   "102": {
     "id": "102",
     "structureName": "BRAND_Four_Points_by_Sheraton_Lifestyle_fpt",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Four Points",
     "fields": ",Image,"
   },
   "103": {
     "id": "103",
     "structureName": "BRAND_Le_Meridien_Brand_Images_mer",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Le Meridien",
     "fields": ",Image,"
   },
   "104": {
     "id": "104",
     "structureName": "BRAND_Le_Meridien_Lifestyle_mer",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Le Meridien",
     "fields": ",Image,"
   },
   "105": {
     "id": "105",
     "structureName": "BRAND_LUX_Beautiful_Destinations_lux",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Luxury Collection",
     "fields": ",Image,"
   },
   "106": {
     "id": "106",
     "structureName": "BRAND_Luxury_Collection_Brand_Still_Life_Photography_lux",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Luxury Collection",
     "fields": ",Image,"
   },
   "107": {
     "id": "107",
     "structureName": "BRAND_Sheraton_Brand_Photography_she",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Sheraton",
     "fields": ",Image,"
   },
   "108": {
     "id": "108",
     "structureName": "BRAND_St_Regis_Bloody_Mary_Illustrations_str",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "St. Regis",
     "fields": ",Image,"
   },
   "109": {
     "id": "109",
     "structureName": "BRAND_St_Regis_IconicPhotography_str",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "St. Regis",
     "fields": ",Image,"
   },
   "110": {
     "id": "110",
     "structureName": "BRAND_St_Regis_Stock_Photography_str",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "St. Regis",
     "fields": ",Image,"
   },
   "111": {
     "id": "111",
     "structureName": "BRAND_St_Regis_Wedding_Photography_str",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "St. Regis",
     "fields": ",Image,"
   },
   "112": {
     "id": "112",
     "structureName": "BRAND_Westin_Still_Life_and_Lifestyle_Photography_wes",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Westin",
     "fields": ",Image,"
   },
   "113": {
     "id": "113",
     "structureName": "BRAND_Westin_Wedding_wes",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Westin",
     "fields": ",Image,"
   },
   "114": {
     "id": "114",
     "structureName": "BRAND_W_Hotels_Brand_Photography_who",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "W Hotels",
     "fields": ",Image,"
   },
   "115": {
     "id": "115",
     "structureName": "BRAND_Marriott_Hotels_Brand_Photography_MHRS",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Marriott Hotels & Resorts",
     "fields": ",Image,"
   },
   "116": {
     "id": "116",
     "structureName": "BRAND_Residence_Inn_Brand_Photography_RIBM",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Residence Inn By Marriott",
     "fields": ",Image,"
   },
   "117": {
     "id": "117",
     "structureName": "BRAND_AC_Hotels_Brand_Photography_ACH",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "AC Hotels by Marriott",
     "fields": ",Image,"
   },
   "118": {
     "id": "118",
     "structureName": "BRAND_Autograph_Brand_Photography_autr",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Autograph Collection Residences",
     "fields": ",Image,"
   },
   "119": {
     "id": "119",
     "structureName": "BRAND_Courtyard_Brand_Images_CY",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Courtyard By Marriott",
     "fields": ",Image,"
   },
   "120": {
     "id": "120",
     "structureName": "BRAND_Delta_Brand_Photography_DE",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Delta Hotels and Resorts",
     "fields": ",Image,"
   },
   "121": {
     "id": "121",
     "structureName": "BRAND_EDITION_Brand_Photography_EB",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "EDITION",
     "fields": ",Image,"
   },
   "122": {
     "id": "122",
     "structureName": "BRAND_Fairfield_Brand_Images_FFI",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Fairfield Inn By Marriott",
     "fields": ",Image,"
   },
   "123": {
     "id": "123",
     "structureName": "BRAND_Gaylord_Brand_Photography_GE",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Gaylord Hotels",
     "fields": ",Image,"
   },
   "124": {
     "id": "124",
     "structureName": "BRAND_JW_Marriott_Brand_Photography_jwm",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "JW Marriott",
     "fields": ",Image,"
   },
   "125": {
     "id": "125",
     "structureName": "BRAND_Moxy_Brand_Photography_MXY",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "MOXY HOTELS",
     "fields": ",Image,"
   },
   "126": {
     "id": "126",
     "structureName": "BRAND_Renaissance_Brand_Images_RHR",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "Renaissance Hotels",
     "fields": ",Image,"
   },
   "127": {
     "id": "127",
     "structureName": "BRAND_Ritz_Carlton_Brand_Photography_RITZ",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "The Ritz-Carlton",
     "fields": ",Image,"
   },
   "128": {
     "id": "128",
     "structureName": "BRAND_SpringHill_Suites_Brand_Photography_SHS",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "SpringHill Suites By Marriott",
     "fields": ",Image,"
   },
   "129": {
     "id": "129",
     "structureName": "BRAND_TownePlace_Suites_Brand_Photography_TPS",
-    "structureNameRadiobutton": "VALUE_MEDIA_01",
+    "structureNameRadiobutton": "VALUE_MEDIA_24",
     "brandName": "TownePlace Suites By Marriott",
     "fields": ",Image,"
   }

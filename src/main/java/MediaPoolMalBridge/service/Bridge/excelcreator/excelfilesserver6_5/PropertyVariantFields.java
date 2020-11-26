@@ -13,7 +13,7 @@ public enum PropertyVariantFields {
     PROPERTY_LOGO_BLACKK("PropertyLogoblackK", "Property Logo black-K", "k", 32, -1),
     PROPERTY_LOGO_4CK("PropertyLogo4cK", "Property Logo 4c-K", "cmyk-K", 33, -1),
     PROPERTY_LOGO_SHERATON_BLACK("PropertyLogoSheratonBlack", "Property Logo Sheraton Black", "Sheraton Black logo-1", 39, 0),
-    PROPERTY_LOGO_SHERATON_DUSK("propertyLogoSheratonDusk", "Property Logo Sheraton Dusk", "dusk", 40, 0),
+    PROPERTY_LOGO_SHERATON_DUSK("PropertyLogoSheratonDusk", "Property Logo Sheraton Dusk", "dusk", 40, 0),
     PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_CMYK("PropertyLogoSheratonGraphiteCodedCMYK", "Property Logo Sheraton Graphite Coded CMYK", "Graphite_C_cmyk", 41, 0),
     PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_PMS("PropertyLogoSheratonGraphiteCodedPMS", "Property Logo Sheraton Graphite Coded PMS", "Graphite_C_pms", 42, 0),
     PROPERTY_LOGO_SHERATON_GRAPHITE_RGB("PropertyLogoSheratonGraphiteRGB", "Property Logo Sheraton Graphite RGB", "Graphite_rgb", 43, 0),
