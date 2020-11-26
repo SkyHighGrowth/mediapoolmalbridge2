@@ -490,6 +490,9 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     replacement = malPropertyEntity.getBrand();
                     break;
                 case "STREET":
+                    replacement = malPropertyEntity.getAddress2();
+                    break;
+                case "ADDRESS":
                     replacement = malPropertyEntity.getAddress();
                     break;
                 case "COUNTRY":
