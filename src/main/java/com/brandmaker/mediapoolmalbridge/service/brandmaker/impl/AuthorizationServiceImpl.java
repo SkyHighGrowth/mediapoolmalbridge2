@@ -1,6 +1,8 @@
-package com.brandmaker.mediapoolmalbridge.service.mal;
+package com.brandmaker.mediapoolmalbridge.service.brandmaker.impl;
 
 import com.brandmaker.mediapoolmalbridge.config.AppConfig;
+import com.brandmaker.mediapoolmalbridge.service.brandmaker.AuthorizationService;
+import com.brandmaker.mediapoolmalbridge.service.brandmaker.RestAccessToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;

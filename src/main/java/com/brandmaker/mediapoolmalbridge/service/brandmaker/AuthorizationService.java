@@ -1,4 +1,4 @@
-package com.brandmaker.mediapoolmalbridge.service.mal;
+package com.brandmaker.mediapoolmalbridge.service.brandmaker;
 
 import org.springframework.http.HttpEntity;
 
