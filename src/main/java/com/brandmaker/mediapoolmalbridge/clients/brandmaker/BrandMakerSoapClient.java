@@ -6,8 +6,8 @@ import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportTo;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportType;
 import com.brandmaker.mediapoolmalbridge.persistence.repository.bridge.AssetRepository;
 import com.brandmaker.mediapoolmalbridge.persistence.repository.bridge.ReportsRepository;
-import com.brandmaker.webservices.mediapool.MediaPoolService;
-import com.brandmaker.webservices.mediapool.MediaPoolWebServicePort;
+import com.brandmaker.webservices.mediapool.MediaPoolServiceV2;
+import com.brandmaker.webservices.mediapool.MediaPoolWebServicePortV2;
 import com.brandmaker.webservices.theme.ThemeService;
 import com.brandmaker.webservices.theme.ThemeWebServicePort;
 import com.google.gson.Gson;
@@ -47,7 +47,7 @@ public abstract class BrandMakerSoapClient {
      * Bean representing MediapoolWebServicePort factory
      */
     @Autowired
-    private MediaPoolService mediaPoolService;
+    private MediaPoolServiceV2 mediaPoolService;
 
     /**
      * Bean representing MediapoolWebThemePort factory
@@ -67,8 +67,8 @@ public abstract class BrandMakerSoapClient {
     @Autowired
     protected AssetRepository assetRepository;
 
-    public MediaPoolWebServicePort getMediaPoolPort() {
-        final MediaPoolWebServicePort port = mediaPoolService.getMediaPoolPort();
+    public MediaPoolWebServicePortV2 getMediaPoolPort() {
+        final MediaPoolWebServicePortV2 port = mediaPoolService.getMediaPoolPortV2();
         if( Arrays.asList( environment.getActiveProfiles() ).contains(DEV) &&
             !Arrays.asList( environment.getActiveProfiles() ).contains(PRODUCTION) ) {
             Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();

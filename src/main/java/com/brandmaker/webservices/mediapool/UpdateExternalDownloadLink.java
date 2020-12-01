@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="link" type="{http://brandmaker.com/webservices/MediaPool/}externalDownloadLink" minOccurs="0" form="qualified"/>
+ *         &lt;element name="link" type="{http://brandmaker.com/webservices/MediaPool/v2/}externalDownloadLink" minOccurs="0" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class UpdateExternalDownloadLink {
 
-    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/")
+    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/v2/")
     protected ExternalDownloadLink link;
 
     /**

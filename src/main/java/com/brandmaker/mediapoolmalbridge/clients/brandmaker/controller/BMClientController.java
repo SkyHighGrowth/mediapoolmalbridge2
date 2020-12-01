@@ -119,23 +119,23 @@ public class BMClientController {
     }
 
     @PostMapping("/client/soap/bm/uploadMetadata")
-    public UploadMetadataResult uploadMetadata(@RequestBody() final UploadMetadataArgument uploadMetadataArgument) {
-        final MediaPoolWebServicePort port = getMediaPoolWebServicePort();
+    public UploadMetadataResult uploadMetadata(@RequestBody() final UploadMetadataArgumentVersion2 uploadMetadataArgument) {
+        final MediaPoolWebServicePortV2 port = getMediaPoolWebServicePort();
         return port.uploadMetaData(uploadMetadataArgument);
     }
 
-    private MediaPoolWebServicePort getMediaPoolWebServicePort() {
-        final MediaPoolWebServicePort port = (new MediaPoolService()).getMediaPoolPort();
+    private MediaPoolWebServicePortV2 getMediaPoolWebServicePort() {
+        final MediaPoolWebServicePortV2 port = (new MediaPoolServiceV2()).getMediaPoolPortV2();
         Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
         reqContext.put(BindingProvider.USERNAME_PROPERTY, "sal_middle_ware_2");
         reqContext.put(BindingProvider.PASSWORD_PROPERTY, "Changeme2020!");
-        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://qamarriott.brandmakerinc.com/webservices/MediaPool/");
+        reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://qamarriott.brandmakerinc.com/webservices/MediaPool/v2/");
         return port;
     }
 
     @PostMapping("/client/soap/bm/downloadMetadata")
     public GetMediaDetailsResult downloadMetadata(@RequestBody() final GetMediaDetailsArgument uploadMetadataArgument) {
-        final MediaPoolWebServicePort port = getMediaPoolWebServicePort();
+        final MediaPoolWebServicePortV2 port = getMediaPoolWebServicePort();
         return port.getMediaDetails(uploadMetadataArgument);
     }
 

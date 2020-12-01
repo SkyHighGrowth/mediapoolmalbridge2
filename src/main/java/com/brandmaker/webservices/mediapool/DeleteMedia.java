@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="deleteMediaData" type="{http://brandmaker.com/webservices/MediaPool/}deleteMediaArgument" form="qualified"/>
+ *         &lt;element name="deleteMediaData" type="{http://brandmaker.com/webservices/MediaPool/v2/}deleteMediaArgument" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class DeleteMedia {
 
-    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/", required = true)
+    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", required = true)
     protected DeleteMediaArgument deleteMediaData;
 
     /**

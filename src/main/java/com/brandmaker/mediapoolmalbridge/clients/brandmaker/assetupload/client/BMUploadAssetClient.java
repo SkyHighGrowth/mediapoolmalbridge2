@@ -2,19 +2,19 @@ package com.brandmaker.mediapoolmalbridge.clients.brandmaker.assetupload.client;
 
 import com.brandmaker.mediapoolmalbridge.clients.brandmaker.BrandMakerSoapClient;
 import com.brandmaker.mediapoolmalbridge.clients.brandmaker.assetuploadversion.client.model.UploadStatus;
-import com.brandmaker.mediapoolmalbridge.constants.Constants;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetEntity;
 import com.brandmaker.webservices.mediapool.UploadMediaResult;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.xml.ws.soap.MTOM;
 import java.nio.file.Paths;
 
 /**
  * Client that wraps MediapoolWebServicePort.uploadMediaAsStream
  */
+@MTOM
 @Component
 public class BMUploadAssetClient extends BrandMakerSoapClient {
 
@@ -24,7 +24,7 @@ public class BMUploadAssetClient extends BrandMakerSoapClient {
             fileExists(absoluteFilePath);
             final FileDataSource fileDataSource = new FileDataSource(absoluteFilePath);
             final DataHandler dataHandler = new DataHandler(fileDataSource);
-            final UploadMediaResult result = getMediaPoolPort().uploadMediaAsStream(StringUtils.substringAfter(asset.getFileNameOnDisc(), Constants.SPLITTER), dataHandler);
+            final UploadMediaResult result = getMediaPoolPort().uploadMediaAsStream(asset.getFileNameOnDisc(), dataHandler);
             return new UploadStatus(result);
         } catch (final Exception e) {
             reportErrorOnException(asset.getBmAssetId(), e);

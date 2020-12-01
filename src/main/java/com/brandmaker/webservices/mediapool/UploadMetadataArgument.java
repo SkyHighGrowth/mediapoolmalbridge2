@@ -1,13 +1,9 @@
 
 package com.brandmaker.webservices.mediapool;
 
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
 
 
 /**
@@ -22,54 +18,54 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="addAssociations" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="approve" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="approveDescription" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="articleDescription" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="approveDescription" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="articleDescription" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="articleNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="associations" type="{http://brandmaker.com/webservices/MediaPool/}themeDto" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="countryCodes" type="{http://brandmaker.com/webservices/MediaPool/}code" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="associations" type="{http://brandmaker.com/webservices/MediaPool/v2/}themeDto" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="countryCodes" type="{http://brandmaker.com/webservices/MediaPool/v2/}code" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="creatorName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="description" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="description" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="designationType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="fileName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="fontChecked" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="freeField1" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField10" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField11" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField12" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField13" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField14" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField15" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField16" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField17" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField18" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField19" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField2" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField20" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField3" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField4" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField5" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField6" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField7" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField8" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="freeField9" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField1" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField10" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField11" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField12" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField13" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField14" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField15" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField16" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField17" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField18" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField19" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField2" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField20" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField3" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField4" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField5" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField6" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField7" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField8" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="freeField9" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="hideIfNotValid" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="isHires" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="keepIfEmtpy" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="keyword" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="keyword" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="license" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="licenseName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="mediaGuid" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="mediaHash" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="mediaIsins" type="{http://brandmaker.com/webservices/MediaPool/}isin" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="mediaIsins" type="{http://brandmaker.com/webservices/MediaPool/v2/}isin" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="mediaNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="mediaTitle" type="{http://brandmaker.com/webservices/MediaPool/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="mediaTitle" type="{http://brandmaker.com/webservices/MediaPool/v2/}languageItem" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="official" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="platform" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="programVersion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="selectedAffiliate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="show" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="strict" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="structuredKeywords" type="{http://brandmaker.com/webservices/MediaPool/}structuredKeywords" minOccurs="0"/>
+ *         &lt;element name="structuredKeywords" type="{http://brandmaker.com/webservices/MediaPool/v2/}structuredKeywords" minOccurs="0"/>
  *         &lt;element name="validDateFrom" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="validDateTo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="virtualDbName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -138,6 +134,7 @@ import javax.xml.bind.annotation.XmlType;
     "virtualDbName"
 })
 @XmlSeeAlso({
+    UploadMetadataArgumentVersion2 .class,
     GetMediaDetailsResult.class
 })
 public class UploadMetadataArgument {

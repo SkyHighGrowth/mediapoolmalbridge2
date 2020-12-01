@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class GetMediaGuidByHashResponse {
 
-    @XmlElement(name = "return", namespace = "http://brandmaker.com/webservices/MediaPool/")
+    @XmlElement(name = "return", namespace = "http://brandmaker.com/webservices/MediaPool/v2/")
     protected String _return;
 
     /**

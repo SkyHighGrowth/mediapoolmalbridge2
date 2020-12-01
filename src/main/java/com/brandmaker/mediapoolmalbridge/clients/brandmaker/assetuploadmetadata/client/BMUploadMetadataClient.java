@@ -5,7 +5,7 @@ import com.brandmaker.mediapoolmalbridge.clients.brandmaker.assetuploadmetadata.
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetJsonedValuesEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.repository.bridge.AssetJsonedValuesRepository;
-import com.brandmaker.webservices.mediapool.UploadMetadataArgument;
+import com.brandmaker.webservices.mediapool.UploadMetadataArgumentVersion2;
 import com.brandmaker.webservices.mediapool.UploadMetadataResult;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -24,7 +24,7 @@ public class BMUploadMetadataClient extends BrandMakerSoapClient {
 
     public UploadMetadataStatus upload(final AssetEntity asset) {
         try {
-            final UploadMetadataArgument uploadMetadataArgument = getUploadMetadataArgument( asset );
+            final UploadMetadataArgumentVersion2 uploadMetadataArgument = getUploadMetadataArgument( asset );
             if( StringUtils.isEmpty(asset.getBmAssetId() ) ||
                 asset.getBmAssetId().startsWith( "CREATING_" ) ||
                 uploadMetadataArgument == null ) {
@@ -40,12 +40,12 @@ public class BMUploadMetadataClient extends BrandMakerSoapClient {
         }
     }
 
-    private UploadMetadataArgument getUploadMetadataArgument(final AssetEntity assetEntity ) {
+    private UploadMetadataArgumentVersion2 getUploadMetadataArgument(final AssetEntity assetEntity ) {
         AssetJsonedValuesEntity jsonedValuesEntity = assetEntity.getAssetJsonedValuesEntity();
         if (jsonedValuesEntity != null) {
             final AssetJsonedValuesEntity assetJsonedValuesEntity = assetJsonedValuesRepository.findAssetJsonedValuesEntitiesById(jsonedValuesEntity.getId());
             if (assetJsonedValuesEntity != null && assetJsonedValuesEntity.getBmUploadMetadataArgumentJson() != null) {
-                return GSON.fromJson(assetJsonedValuesEntity.getBmUploadMetadataArgumentJson(), UploadMetadataArgument.class);
+                return GSON.fromJson(assetJsonedValuesEntity.getBmUploadMetadataArgumentJson(), UploadMetadataArgumentVersion2.class);
             }
         }
         return null;
