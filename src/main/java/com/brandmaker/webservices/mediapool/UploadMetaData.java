@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="uploadMetaData" type="{http://brandmaker.com/webservices/MediaPool/}uploadMetadataArgument" form="qualified"/>
+ *         &lt;element name="uploadMetaData" type="{http://brandmaker.com/webservices/MediaPool/v2/}uploadMetadataArgumentVersion2" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,18 +32,18 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class UploadMetaData {
 
-    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/", required = true)
-    protected UploadMetadataArgument uploadMetaData;
+    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", required = true)
+    protected UploadMetadataArgumentVersion2 uploadMetaData;
 
     /**
      * Gets the value of the uploadMetaData property.
      * 
      * @return
      *     possible object is
-     *     {@link UploadMetadataArgument }
+     *     {@link UploadMetadataArgumentVersion2 }
      *     
      */
-    public UploadMetadataArgument getUploadMetaData() {
+    public UploadMetadataArgumentVersion2 getUploadMetaData() {
         return uploadMetaData;
     }
 
@@ -52,10 +52,10 @@ public class UploadMetaData {
      * 
      * @param value
      *     allowed object is
-     *     {@link UploadMetadataArgument }
+     *     {@link UploadMetadataArgumentVersion2 }
      *     
      */
-    public void setUploadMetaData(UploadMetadataArgument value) {
+    public void setUploadMetaData(UploadMetadataArgumentVersion2 value) {
         this.uploadMetaData = value;
     }
 

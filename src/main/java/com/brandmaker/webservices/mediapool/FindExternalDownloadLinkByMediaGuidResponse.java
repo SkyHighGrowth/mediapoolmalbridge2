@@ -19,7 +19,7 @@ import java.util.List;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="externalDownloadLinks" type="{http://brandmaker.com/webservices/MediaPool/}externalDownloadLink" maxOccurs="unbounded" minOccurs="0" form="qualified"/>
+ *         &lt;element name="externalDownloadLinks" type="{http://brandmaker.com/webservices/MediaPool/v2/}externalDownloadLink" maxOccurs="unbounded" minOccurs="0" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,7 +34,7 @@ import java.util.List;
 })
 public class FindExternalDownloadLinkByMediaGuidResponse {
 
-    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/")
+    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/v2/")
     protected List<ExternalDownloadLink> externalDownloadLinks;
 
     /**

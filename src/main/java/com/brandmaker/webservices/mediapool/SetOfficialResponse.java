@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://brandmaker.com/webservices/MediaPool/}setOfficialResult" minOccurs="0" form="qualified"/>
+ *         &lt;element name="return" type="{http://brandmaker.com/webservices/MediaPool/v2/}setOfficialResult" minOccurs="0" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class SetOfficialResponse {
 
-    @XmlElement(name = "return", namespace = "http://brandmaker.com/webservices/MediaPool/")
+    @XmlElement(name = "return", namespace = "http://brandmaker.com/webservices/MediaPool/v2/")
     protected SetOfficialResult _return;
 
     /**

@@ -24,38 +24,38 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _UploadMediaVersionResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "uploadMediaVersionResponse");
-    private final static QName _UpdateExternalDownloadLinkResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "updateExternalDownloadLinkResponse");
-    private final static QName _WebPublishedMediaResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "webPublishedMediaResponse");
-    private final static QName _FindExternalDownloadLinkByMediaGuidResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "findExternalDownloadLinkByMediaGuidResponse");
-    private final static QName _UploadMediaAsStream_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "uploadMediaAsStream");
-    private final static QName _GetMediaDetails_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "getMediaDetails");
-    private final static QName _UploadMediaVersionAsStreamResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "uploadMediaVersionAsStreamResponse");
-    private final static QName _AddExternalDownloadLink_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "addExternalDownloadLink");
-    private final static QName _SetOfficial_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "setOfficial");
-    private final static QName _FindExternalDownloadLinkById_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "findExternalDownloadLinkById");
-    private final static QName _UploadMedia_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "uploadMedia");
-    private final static QName _DeleteExternalDownloadLinkByMediaGuid_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "deleteExternalDownloadLinkByMediaGuid");
-    private final static QName _GetMediaGuidByHashResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "getMediaGuidByHashResponse");
-    private final static QName _UploadMetaDataResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "uploadMetaDataResponse");
-    private final static QName _UploadMediaResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "uploadMediaResponse");
-    private final static QName _SetOfficialResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "setOfficialResponse");
-    private final static QName _AddExternalDownloadLinkResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "addExternalDownloadLinkResponse");
-    private final static QName _DeleteMediaResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "deleteMediaResponse");
-    private final static QName _WebPublishedMedia_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "webPublishedMedia");
-    private final static QName _FindExternalDownloadLinkByIdResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "findExternalDownloadLinkByIdResponse");
-    private final static QName _FindExternalDownloadLinkByMediaGuid_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "findExternalDownloadLinkByMediaGuid");
-    private final static QName _DeleteExternalDownloadLinkByMediaGuidResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "deleteExternalDownloadLinkByMediaGuidResponse");
-    private final static QName _UploadMediaAsStreamResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "uploadMediaAsStreamResponse");
-    private final static QName _DeleteMedia_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "deleteMedia");
-    private final static QName _UploadMetaData_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "uploadMetaData");
-    private final static QName _DeleteExternalDownloadLinkByIdResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "deleteExternalDownloadLinkByIdResponse");
-    private final static QName _UpdateExternalDownloadLink_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "updateExternalDownloadLink");
-    private final static QName _GetMediaGuidByHash_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "getMediaGuidByHash");
-    private final static QName _UploadMediaVersionAsStream_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "uploadMediaVersionAsStream");
-    private final static QName _GetMediaDetailsResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "getMediaDetailsResponse");
-    private final static QName _DeleteExternalDownloadLinkById_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "deleteExternalDownloadLinkById");
-    private final static QName _UploadMediaVersion_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/", "uploadMediaVersion");
+    private final static QName _UploadMediaVersion_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "uploadMediaVersion");
+    private final static QName _DeleteExternalDownloadLinkById_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "deleteExternalDownloadLinkById");
+    private final static QName _UploadMediaVersionAsStream_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "uploadMediaVersionAsStream");
+    private final static QName _GetMediaDetailsResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "getMediaDetailsResponse");
+    private final static QName _DeleteMediaResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "deleteMediaResponse");
+    private final static QName _AddExternalDownloadLinkResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "addExternalDownloadLinkResponse");
+    private final static QName _SetOfficialResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "setOfficialResponse");
+    private final static QName _UpdateExternalDownloadLink_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "updateExternalDownloadLink");
+    private final static QName _GetMediaGuidByHash_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "getMediaGuidByHash");
+    private final static QName _UploadMetaData_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "uploadMetaData");
+    private final static QName _DeleteExternalDownloadLinkByIdResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "deleteExternalDownloadLinkByIdResponse");
+    private final static QName _DeleteExternalDownloadLinkByMediaGuidResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "deleteExternalDownloadLinkByMediaGuidResponse");
+    private final static QName _UploadMediaAsStreamResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "uploadMediaAsStreamResponse");
+    private final static QName _DeleteMedia_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "deleteMedia");
+    private final static QName _WebPublishedMedia_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "webPublishedMedia");
+    private final static QName _FindExternalDownloadLinkByIdResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "findExternalDownloadLinkByIdResponse");
+    private final static QName _FindExternalDownloadLinkByMediaGuid_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "findExternalDownloadLinkByMediaGuid");
+    private final static QName _SetOfficial_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "setOfficial");
+    private final static QName _AddExternalDownloadLink_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "addExternalDownloadLink");
+    private final static QName _UploadMediaVersionAsStreamResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "uploadMediaVersionAsStreamResponse");
+    private final static QName _UploadMediaResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "uploadMediaResponse");
+    private final static QName _UploadMedia_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "uploadMedia");
+    private final static QName _DeleteExternalDownloadLinkByMediaGuid_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "deleteExternalDownloadLinkByMediaGuid");
+    private final static QName _GetMediaGuidByHashResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "getMediaGuidByHashResponse");
+    private final static QName _UploadMetaDataResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "uploadMetaDataResponse");
+    private final static QName _FindExternalDownloadLinkById_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "findExternalDownloadLinkById");
+    private final static QName _UpdateExternalDownloadLinkResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "updateExternalDownloadLinkResponse");
+    private final static QName _WebPublishedMediaResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "webPublishedMediaResponse");
+    private final static QName _UploadMediaVersionResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "uploadMediaVersionResponse");
+    private final static QName _GetMediaDetails_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "getMediaDetails");
+    private final static QName _UploadMediaAsStream_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "uploadMediaAsStream");
+    private final static QName _FindExternalDownloadLinkByMediaGuidResponse_QNAME = new QName("http://brandmaker.com/webservices/MediaPool/v2/", "findExternalDownloadLinkByMediaGuidResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.brandmaker.webservices.mediapool
@@ -361,6 +361,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link UploadMetadataArgumentVersion2 }
+     * 
+     */
+    public UploadMetadataArgumentVersion2 createUploadMetadataArgumentVersion2() {
+        return new UploadMetadataArgumentVersion2();
+    }
+
+    /**
      * Create an instance of {@link StructuredKeywords }
      * 
      */
@@ -369,19 +377,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DeleteMediaResult }
-     * 
-     */
-    public DeleteMediaResult createDeleteMediaResult() {
-        return new DeleteMediaResult();
-    }
-
-    /**
      * Create an instance of {@link UploadMediaVersionResult }
      * 
      */
     public UploadMediaVersionResult createUploadMediaVersionResult() {
         return new UploadMediaVersionResult();
+    }
+
+    /**
+     * Create an instance of {@link DeleteMediaResult }
+     * 
+     */
+    public DeleteMediaResult createDeleteMediaResult() {
+        return new DeleteMediaResult();
     }
 
     /**
@@ -505,262 +513,28 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaVersionResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaVersion }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "uploadMediaVersionResponse")
-    public JAXBElement<UploadMediaVersionResponse> createUploadMediaVersionResponse(UploadMediaVersionResponse value) {
-        return new JAXBElement<UploadMediaVersionResponse>(_UploadMediaVersionResponse_QNAME, UploadMediaVersionResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "uploadMediaVersion")
+    public JAXBElement<UploadMediaVersion> createUploadMediaVersion(UploadMediaVersion value) {
+        return new JAXBElement<UploadMediaVersion>(_UploadMediaVersion_QNAME, UploadMediaVersion.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateExternalDownloadLinkResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteExternalDownloadLinkById }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "updateExternalDownloadLinkResponse")
-    public JAXBElement<UpdateExternalDownloadLinkResponse> createUpdateExternalDownloadLinkResponse(UpdateExternalDownloadLinkResponse value) {
-        return new JAXBElement<UpdateExternalDownloadLinkResponse>(_UpdateExternalDownloadLinkResponse_QNAME, UpdateExternalDownloadLinkResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link WebPublishedMediaResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "webPublishedMediaResponse")
-    public JAXBElement<WebPublishedMediaResponse> createWebPublishedMediaResponse(WebPublishedMediaResponse value) {
-        return new JAXBElement<WebPublishedMediaResponse>(_WebPublishedMediaResponse_QNAME, WebPublishedMediaResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link FindExternalDownloadLinkByMediaGuidResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "findExternalDownloadLinkByMediaGuidResponse")
-    public JAXBElement<FindExternalDownloadLinkByMediaGuidResponse> createFindExternalDownloadLinkByMediaGuidResponse(FindExternalDownloadLinkByMediaGuidResponse value) {
-        return new JAXBElement<FindExternalDownloadLinkByMediaGuidResponse>(_FindExternalDownloadLinkByMediaGuidResponse_QNAME, FindExternalDownloadLinkByMediaGuidResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaAsStream }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "uploadMediaAsStream")
-    public JAXBElement<UploadMediaAsStream> createUploadMediaAsStream(UploadMediaAsStream value) {
-        return new JAXBElement<UploadMediaAsStream>(_UploadMediaAsStream_QNAME, UploadMediaAsStream.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaDetails }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "getMediaDetails")
-    public JAXBElement<GetMediaDetails> createGetMediaDetails(GetMediaDetails value) {
-        return new JAXBElement<GetMediaDetails>(_GetMediaDetails_QNAME, GetMediaDetails.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaVersionAsStreamResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "uploadMediaVersionAsStreamResponse")
-    public JAXBElement<UploadMediaVersionAsStreamResponse> createUploadMediaVersionAsStreamResponse(UploadMediaVersionAsStreamResponse value) {
-        return new JAXBElement<UploadMediaVersionAsStreamResponse>(_UploadMediaVersionAsStreamResponse_QNAME, UploadMediaVersionAsStreamResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AddExternalDownloadLink }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "addExternalDownloadLink")
-    public JAXBElement<AddExternalDownloadLink> createAddExternalDownloadLink(AddExternalDownloadLink value) {
-        return new JAXBElement<AddExternalDownloadLink>(_AddExternalDownloadLink_QNAME, AddExternalDownloadLink.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SetOfficial }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "setOfficial")
-    public JAXBElement<SetOfficial> createSetOfficial(SetOfficial value) {
-        return new JAXBElement<SetOfficial>(_SetOfficial_QNAME, SetOfficial.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link FindExternalDownloadLinkById }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "findExternalDownloadLinkById")
-    public JAXBElement<FindExternalDownloadLinkById> createFindExternalDownloadLinkById(FindExternalDownloadLinkById value) {
-        return new JAXBElement<FindExternalDownloadLinkById>(_FindExternalDownloadLinkById_QNAME, FindExternalDownloadLinkById.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMedia }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "uploadMedia")
-    public JAXBElement<UploadMedia> createUploadMedia(UploadMedia value) {
-        return new JAXBElement<UploadMedia>(_UploadMedia_QNAME, UploadMedia.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteExternalDownloadLinkByMediaGuid }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "deleteExternalDownloadLinkByMediaGuid")
-    public JAXBElement<DeleteExternalDownloadLinkByMediaGuid> createDeleteExternalDownloadLinkByMediaGuid(DeleteExternalDownloadLinkByMediaGuid value) {
-        return new JAXBElement<DeleteExternalDownloadLinkByMediaGuid>(_DeleteExternalDownloadLinkByMediaGuid_QNAME, DeleteExternalDownloadLinkByMediaGuid.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaGuidByHashResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "getMediaGuidByHashResponse")
-    public JAXBElement<GetMediaGuidByHashResponse> createGetMediaGuidByHashResponse(GetMediaGuidByHashResponse value) {
-        return new JAXBElement<GetMediaGuidByHashResponse>(_GetMediaGuidByHashResponse_QNAME, GetMediaGuidByHashResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMetaDataResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "uploadMetaDataResponse")
-    public JAXBElement<UploadMetaDataResponse> createUploadMetaDataResponse(UploadMetaDataResponse value) {
-        return new JAXBElement<UploadMetaDataResponse>(_UploadMetaDataResponse_QNAME, UploadMetaDataResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "uploadMediaResponse")
-    public JAXBElement<UploadMediaResponse> createUploadMediaResponse(UploadMediaResponse value) {
-        return new JAXBElement<UploadMediaResponse>(_UploadMediaResponse_QNAME, UploadMediaResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SetOfficialResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "setOfficialResponse")
-    public JAXBElement<SetOfficialResponse> createSetOfficialResponse(SetOfficialResponse value) {
-        return new JAXBElement<SetOfficialResponse>(_SetOfficialResponse_QNAME, SetOfficialResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AddExternalDownloadLinkResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "addExternalDownloadLinkResponse")
-    public JAXBElement<AddExternalDownloadLinkResponse> createAddExternalDownloadLinkResponse(AddExternalDownloadLinkResponse value) {
-        return new JAXBElement<AddExternalDownloadLinkResponse>(_AddExternalDownloadLinkResponse_QNAME, AddExternalDownloadLinkResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteMediaResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "deleteMediaResponse")
-    public JAXBElement<DeleteMediaResponse> createDeleteMediaResponse(DeleteMediaResponse value) {
-        return new JAXBElement<DeleteMediaResponse>(_DeleteMediaResponse_QNAME, DeleteMediaResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link WebPublishedMedia }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "webPublishedMedia")
-    public JAXBElement<WebPublishedMedia> createWebPublishedMedia(WebPublishedMedia value) {
-        return new JAXBElement<WebPublishedMedia>(_WebPublishedMedia_QNAME, WebPublishedMedia.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link FindExternalDownloadLinkByIdResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "findExternalDownloadLinkByIdResponse")
-    public JAXBElement<FindExternalDownloadLinkByIdResponse> createFindExternalDownloadLinkByIdResponse(FindExternalDownloadLinkByIdResponse value) {
-        return new JAXBElement<FindExternalDownloadLinkByIdResponse>(_FindExternalDownloadLinkByIdResponse_QNAME, FindExternalDownloadLinkByIdResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link FindExternalDownloadLinkByMediaGuid }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "findExternalDownloadLinkByMediaGuid")
-    public JAXBElement<FindExternalDownloadLinkByMediaGuid> createFindExternalDownloadLinkByMediaGuid(FindExternalDownloadLinkByMediaGuid value) {
-        return new JAXBElement<FindExternalDownloadLinkByMediaGuid>(_FindExternalDownloadLinkByMediaGuid_QNAME, FindExternalDownloadLinkByMediaGuid.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteExternalDownloadLinkByMediaGuidResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "deleteExternalDownloadLinkByMediaGuidResponse")
-    public JAXBElement<DeleteExternalDownloadLinkByMediaGuidResponse> createDeleteExternalDownloadLinkByMediaGuidResponse(DeleteExternalDownloadLinkByMediaGuidResponse value) {
-        return new JAXBElement<DeleteExternalDownloadLinkByMediaGuidResponse>(_DeleteExternalDownloadLinkByMediaGuidResponse_QNAME, DeleteExternalDownloadLinkByMediaGuidResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaAsStreamResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "uploadMediaAsStreamResponse")
-    public JAXBElement<UploadMediaAsStreamResponse> createUploadMediaAsStreamResponse(UploadMediaAsStreamResponse value) {
-        return new JAXBElement<UploadMediaAsStreamResponse>(_UploadMediaAsStreamResponse_QNAME, UploadMediaAsStreamResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteMedia }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "deleteMedia")
-    public JAXBElement<DeleteMedia> createDeleteMedia(DeleteMedia value) {
-        return new JAXBElement<DeleteMedia>(_DeleteMedia_QNAME, DeleteMedia.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMetaData }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "uploadMetaData")
-    public JAXBElement<UploadMetaData> createUploadMetaData(UploadMetaData value) {
-        return new JAXBElement<UploadMetaData>(_UploadMetaData_QNAME, UploadMetaData.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteExternalDownloadLinkByIdResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "deleteExternalDownloadLinkByIdResponse")
-    public JAXBElement<DeleteExternalDownloadLinkByIdResponse> createDeleteExternalDownloadLinkByIdResponse(DeleteExternalDownloadLinkByIdResponse value) {
-        return new JAXBElement<DeleteExternalDownloadLinkByIdResponse>(_DeleteExternalDownloadLinkByIdResponse_QNAME, DeleteExternalDownloadLinkByIdResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateExternalDownloadLink }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "updateExternalDownloadLink")
-    public JAXBElement<UpdateExternalDownloadLink> createUpdateExternalDownloadLink(UpdateExternalDownloadLink value) {
-        return new JAXBElement<UpdateExternalDownloadLink>(_UpdateExternalDownloadLink_QNAME, UpdateExternalDownloadLink.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaGuidByHash }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "getMediaGuidByHash")
-    public JAXBElement<GetMediaGuidByHash> createGetMediaGuidByHash(GetMediaGuidByHash value) {
-        return new JAXBElement<GetMediaGuidByHash>(_GetMediaGuidByHash_QNAME, GetMediaGuidByHash.class, null, value);
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "deleteExternalDownloadLinkById")
+    public JAXBElement<DeleteExternalDownloadLinkById> createDeleteExternalDownloadLinkById(DeleteExternalDownloadLinkById value) {
+        return new JAXBElement<DeleteExternalDownloadLinkById>(_DeleteExternalDownloadLinkById_QNAME, DeleteExternalDownloadLinkById.class, null, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaVersionAsStream }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "uploadMediaVersionAsStream")
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "uploadMediaVersionAsStream")
     public JAXBElement<UploadMediaVersionAsStream> createUploadMediaVersionAsStream(UploadMediaVersionAsStream value) {
         return new JAXBElement<UploadMediaVersionAsStream>(_UploadMediaVersionAsStream_QNAME, UploadMediaVersionAsStream.class, null, value);
     }
@@ -769,27 +543,261 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaDetailsResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "getMediaDetailsResponse")
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "getMediaDetailsResponse")
     public JAXBElement<GetMediaDetailsResponse> createGetMediaDetailsResponse(GetMediaDetailsResponse value) {
         return new JAXBElement<GetMediaDetailsResponse>(_GetMediaDetailsResponse_QNAME, GetMediaDetailsResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteExternalDownloadLinkById }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteMediaResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "deleteExternalDownloadLinkById")
-    public JAXBElement<DeleteExternalDownloadLinkById> createDeleteExternalDownloadLinkById(DeleteExternalDownloadLinkById value) {
-        return new JAXBElement<DeleteExternalDownloadLinkById>(_DeleteExternalDownloadLinkById_QNAME, DeleteExternalDownloadLinkById.class, null, value);
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "deleteMediaResponse")
+    public JAXBElement<DeleteMediaResponse> createDeleteMediaResponse(DeleteMediaResponse value) {
+        return new JAXBElement<DeleteMediaResponse>(_DeleteMediaResponse_QNAME, DeleteMediaResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaVersion }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link AddExternalDownloadLinkResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/", name = "uploadMediaVersion")
-    public JAXBElement<UploadMediaVersion> createUploadMediaVersion(UploadMediaVersion value) {
-        return new JAXBElement<UploadMediaVersion>(_UploadMediaVersion_QNAME, UploadMediaVersion.class, null, value);
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "addExternalDownloadLinkResponse")
+    public JAXBElement<AddExternalDownloadLinkResponse> createAddExternalDownloadLinkResponse(AddExternalDownloadLinkResponse value) {
+        return new JAXBElement<AddExternalDownloadLinkResponse>(_AddExternalDownloadLinkResponse_QNAME, AddExternalDownloadLinkResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetOfficialResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "setOfficialResponse")
+    public JAXBElement<SetOfficialResponse> createSetOfficialResponse(SetOfficialResponse value) {
+        return new JAXBElement<SetOfficialResponse>(_SetOfficialResponse_QNAME, SetOfficialResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateExternalDownloadLink }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "updateExternalDownloadLink")
+    public JAXBElement<UpdateExternalDownloadLink> createUpdateExternalDownloadLink(UpdateExternalDownloadLink value) {
+        return new JAXBElement<UpdateExternalDownloadLink>(_UpdateExternalDownloadLink_QNAME, UpdateExternalDownloadLink.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaGuidByHash }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "getMediaGuidByHash")
+    public JAXBElement<GetMediaGuidByHash> createGetMediaGuidByHash(GetMediaGuidByHash value) {
+        return new JAXBElement<GetMediaGuidByHash>(_GetMediaGuidByHash_QNAME, GetMediaGuidByHash.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMetaData }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "uploadMetaData")
+    public JAXBElement<UploadMetaData> createUploadMetaData(UploadMetaData value) {
+        return new JAXBElement<UploadMetaData>(_UploadMetaData_QNAME, UploadMetaData.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteExternalDownloadLinkByIdResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "deleteExternalDownloadLinkByIdResponse")
+    public JAXBElement<DeleteExternalDownloadLinkByIdResponse> createDeleteExternalDownloadLinkByIdResponse(DeleteExternalDownloadLinkByIdResponse value) {
+        return new JAXBElement<DeleteExternalDownloadLinkByIdResponse>(_DeleteExternalDownloadLinkByIdResponse_QNAME, DeleteExternalDownloadLinkByIdResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteExternalDownloadLinkByMediaGuidResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "deleteExternalDownloadLinkByMediaGuidResponse")
+    public JAXBElement<DeleteExternalDownloadLinkByMediaGuidResponse> createDeleteExternalDownloadLinkByMediaGuidResponse(DeleteExternalDownloadLinkByMediaGuidResponse value) {
+        return new JAXBElement<DeleteExternalDownloadLinkByMediaGuidResponse>(_DeleteExternalDownloadLinkByMediaGuidResponse_QNAME, DeleteExternalDownloadLinkByMediaGuidResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaAsStreamResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "uploadMediaAsStreamResponse")
+    public JAXBElement<UploadMediaAsStreamResponse> createUploadMediaAsStreamResponse(UploadMediaAsStreamResponse value) {
+        return new JAXBElement<UploadMediaAsStreamResponse>(_UploadMediaAsStreamResponse_QNAME, UploadMediaAsStreamResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteMedia }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "deleteMedia")
+    public JAXBElement<DeleteMedia> createDeleteMedia(DeleteMedia value) {
+        return new JAXBElement<DeleteMedia>(_DeleteMedia_QNAME, DeleteMedia.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link WebPublishedMedia }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "webPublishedMedia")
+    public JAXBElement<WebPublishedMedia> createWebPublishedMedia(WebPublishedMedia value) {
+        return new JAXBElement<WebPublishedMedia>(_WebPublishedMedia_QNAME, WebPublishedMedia.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FindExternalDownloadLinkByIdResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "findExternalDownloadLinkByIdResponse")
+    public JAXBElement<FindExternalDownloadLinkByIdResponse> createFindExternalDownloadLinkByIdResponse(FindExternalDownloadLinkByIdResponse value) {
+        return new JAXBElement<FindExternalDownloadLinkByIdResponse>(_FindExternalDownloadLinkByIdResponse_QNAME, FindExternalDownloadLinkByIdResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FindExternalDownloadLinkByMediaGuid }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "findExternalDownloadLinkByMediaGuid")
+    public JAXBElement<FindExternalDownloadLinkByMediaGuid> createFindExternalDownloadLinkByMediaGuid(FindExternalDownloadLinkByMediaGuid value) {
+        return new JAXBElement<FindExternalDownloadLinkByMediaGuid>(_FindExternalDownloadLinkByMediaGuid_QNAME, FindExternalDownloadLinkByMediaGuid.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetOfficial }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "setOfficial")
+    public JAXBElement<SetOfficial> createSetOfficial(SetOfficial value) {
+        return new JAXBElement<SetOfficial>(_SetOfficial_QNAME, SetOfficial.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AddExternalDownloadLink }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "addExternalDownloadLink")
+    public JAXBElement<AddExternalDownloadLink> createAddExternalDownloadLink(AddExternalDownloadLink value) {
+        return new JAXBElement<AddExternalDownloadLink>(_AddExternalDownloadLink_QNAME, AddExternalDownloadLink.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaVersionAsStreamResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "uploadMediaVersionAsStreamResponse")
+    public JAXBElement<UploadMediaVersionAsStreamResponse> createUploadMediaVersionAsStreamResponse(UploadMediaVersionAsStreamResponse value) {
+        return new JAXBElement<UploadMediaVersionAsStreamResponse>(_UploadMediaVersionAsStreamResponse_QNAME, UploadMediaVersionAsStreamResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "uploadMediaResponse")
+    public JAXBElement<UploadMediaResponse> createUploadMediaResponse(UploadMediaResponse value) {
+        return new JAXBElement<UploadMediaResponse>(_UploadMediaResponse_QNAME, UploadMediaResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMedia }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "uploadMedia")
+    public JAXBElement<UploadMedia> createUploadMedia(UploadMedia value) {
+        return new JAXBElement<UploadMedia>(_UploadMedia_QNAME, UploadMedia.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteExternalDownloadLinkByMediaGuid }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "deleteExternalDownloadLinkByMediaGuid")
+    public JAXBElement<DeleteExternalDownloadLinkByMediaGuid> createDeleteExternalDownloadLinkByMediaGuid(DeleteExternalDownloadLinkByMediaGuid value) {
+        return new JAXBElement<DeleteExternalDownloadLinkByMediaGuid>(_DeleteExternalDownloadLinkByMediaGuid_QNAME, DeleteExternalDownloadLinkByMediaGuid.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaGuidByHashResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "getMediaGuidByHashResponse")
+    public JAXBElement<GetMediaGuidByHashResponse> createGetMediaGuidByHashResponse(GetMediaGuidByHashResponse value) {
+        return new JAXBElement<GetMediaGuidByHashResponse>(_GetMediaGuidByHashResponse_QNAME, GetMediaGuidByHashResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMetaDataResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "uploadMetaDataResponse")
+    public JAXBElement<UploadMetaDataResponse> createUploadMetaDataResponse(UploadMetaDataResponse value) {
+        return new JAXBElement<UploadMetaDataResponse>(_UploadMetaDataResponse_QNAME, UploadMetaDataResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FindExternalDownloadLinkById }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "findExternalDownloadLinkById")
+    public JAXBElement<FindExternalDownloadLinkById> createFindExternalDownloadLinkById(FindExternalDownloadLinkById value) {
+        return new JAXBElement<FindExternalDownloadLinkById>(_FindExternalDownloadLinkById_QNAME, FindExternalDownloadLinkById.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateExternalDownloadLinkResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "updateExternalDownloadLinkResponse")
+    public JAXBElement<UpdateExternalDownloadLinkResponse> createUpdateExternalDownloadLinkResponse(UpdateExternalDownloadLinkResponse value) {
+        return new JAXBElement<UpdateExternalDownloadLinkResponse>(_UpdateExternalDownloadLinkResponse_QNAME, UpdateExternalDownloadLinkResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link WebPublishedMediaResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "webPublishedMediaResponse")
+    public JAXBElement<WebPublishedMediaResponse> createWebPublishedMediaResponse(WebPublishedMediaResponse value) {
+        return new JAXBElement<WebPublishedMediaResponse>(_WebPublishedMediaResponse_QNAME, WebPublishedMediaResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaVersionResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "uploadMediaVersionResponse")
+    public JAXBElement<UploadMediaVersionResponse> createUploadMediaVersionResponse(UploadMediaVersionResponse value) {
+        return new JAXBElement<UploadMediaVersionResponse>(_UploadMediaVersionResponse_QNAME, UploadMediaVersionResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetMediaDetails }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "getMediaDetails")
+    public JAXBElement<GetMediaDetails> createGetMediaDetails(GetMediaDetails value) {
+        return new JAXBElement<GetMediaDetails>(_GetMediaDetails_QNAME, GetMediaDetails.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadMediaAsStream }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "uploadMediaAsStream")
+    public JAXBElement<UploadMediaAsStream> createUploadMediaAsStream(UploadMediaAsStream value) {
+        return new JAXBElement<UploadMediaAsStream>(_UploadMediaAsStream_QNAME, UploadMediaAsStream.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FindExternalDownloadLinkByMediaGuidResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", name = "findExternalDownloadLinkByMediaGuidResponse")
+    public JAXBElement<FindExternalDownloadLinkByMediaGuidResponse> createFindExternalDownloadLinkByMediaGuidResponse(FindExternalDownloadLinkByMediaGuidResponse value) {
+        return new JAXBElement<FindExternalDownloadLinkByMediaGuidResponse>(_FindExternalDownloadLinkByMediaGuidResponse_QNAME, FindExternalDownloadLinkByMediaGuidResponse.class, null, value);
     }
 
 }

@@ -1,121 +1,149 @@
-<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://brandmaker.com/webservices/MediaPool/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="MediaPoolService" targetNamespace="http://brandmaker.com/webservices/MediaPool/">
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://brandmaker.com/webservices/MediaPool/v2/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  name="MediaPoolService_v2" targetNamespace="http://brandmaker.com/webservices/MediaPool/v2/">
     <wsdl:types>
-        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:tns="http://brandmaker.com/webservices/MediaPool/" elementFormDefault="unqualified" targetNamespace="http://brandmaker.com/webservices/MediaPool/" version="1.0">
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:tns="http://brandmaker.com/webservices/MediaPool/v2/" elementFormDefault="unqualified" targetNamespace="http://brandmaker.com/webservices/MediaPool/v2/" version="1.0">
+
             <xs:import namespace="http://www.w3.org/2005/05/xmlmime"/>
             <xs:element name="addExternalDownloadLink" type="tns:addExternalDownloadLink"/>
+
             <xs:element name="addExternalDownloadLinkResponse" type="tns:addExternalDownloadLinkResponse"/>
+
             <xs:element name="deleteExternalDownloadLinkById" type="tns:deleteExternalDownloadLinkById"/>
+
             <xs:element name="deleteExternalDownloadLinkByIdResponse" type="tns:deleteExternalDownloadLinkByIdResponse"/>
+
             <xs:element name="deleteExternalDownloadLinkByMediaGuid" type="tns:deleteExternalDownloadLinkByMediaGuid"/>
+
             <xs:element name="deleteExternalDownloadLinkByMediaGuidResponse" type="tns:deleteExternalDownloadLinkByMediaGuidResponse"/>
+
             <xs:element name="deleteMedia" type="tns:deleteMedia"/>
+
             <xs:element name="deleteMediaResponse" type="tns:deleteMediaResponse"/>
+
             <xs:element name="findExternalDownloadLinkById" type="tns:findExternalDownloadLinkById"/>
+
             <xs:element name="findExternalDownloadLinkByIdResponse" type="tns:findExternalDownloadLinkByIdResponse"/>
+
             <xs:element name="findExternalDownloadLinkByMediaGuid" type="tns:findExternalDownloadLinkByMediaGuid"/>
+
             <xs:element name="findExternalDownloadLinkByMediaGuidResponse" type="tns:findExternalDownloadLinkByMediaGuidResponse"/>
+
             <xs:element name="getMediaDetails" type="tns:getMediaDetails"/>
+
             <xs:element name="getMediaDetailsResponse" type="tns:getMediaDetailsResponse"/>
+
             <xs:element name="getMediaGuidByHash" type="tns:getMediaGuidByHash"/>
+
             <xs:element name="getMediaGuidByHashResponse" type="tns:getMediaGuidByHashResponse"/>
+
             <xs:element name="setOfficial" type="tns:setOfficial"/>
+
             <xs:element name="setOfficialResponse" type="tns:setOfficialResponse"/>
+
             <xs:element name="updateExternalDownloadLink" type="tns:updateExternalDownloadLink"/>
+
             <xs:element name="updateExternalDownloadLinkResponse" type="tns:updateExternalDownloadLinkResponse"/>
+
             <xs:element name="uploadMedia" type="tns:uploadMedia"/>
+
             <xs:element name="uploadMediaAsStream" type="tns:uploadMediaAsStream"/>
+
             <xs:element name="uploadMediaAsStreamResponse" type="tns:uploadMediaAsStreamResponse"/>
+
             <xs:element name="uploadMediaResponse" type="tns:uploadMediaResponse"/>
+
             <xs:element name="uploadMediaVersion" type="tns:uploadMediaVersion"/>
+
             <xs:element name="uploadMediaVersionAsStream" type="tns:uploadMediaVersionAsStream"/>
+
             <xs:element name="uploadMediaVersionAsStreamResponse" type="tns:uploadMediaVersionAsStreamResponse"/>
+
             <xs:element name="uploadMediaVersionResponse" type="tns:uploadMediaVersionResponse"/>
+
             <xs:element name="uploadMetaData" type="tns:uploadMetaData"/>
+
             <xs:element name="uploadMetaDataResponse" type="tns:uploadMetaDataResponse"/>
+
             <xs:element name="webPublishedMedia" type="tns:webPublishedMedia"/>
+
             <xs:element name="webPublishedMediaResponse" type="tns:webPublishedMediaResponse"/>
-            <xs:complexType name="webPublishedMedia">
+
+            <xs:complexType name="uploadMediaVersion">
                 <xs:sequence>
-                    <xs:element form="qualified" minOccurs="0" name="webPublishedMediaData" type="tns:webPublishedMediaArgument"/>
+                    <xs:element form="qualified" name="uploadMediaVersionData" type="tns:uploadMediaVersionArgument"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="webPublishedMediaArgument">
+
+            <xs:complexType name="uploadMediaVersionArgument">
+                <xs:complexContent>
+                    <xs:extension base="tns:uploadMediaArgument">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="comment" type="xs:string"/>
+                            <xs:element name="mediaGuid" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="uploadMediaArgument">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="fileName" type="xs:string"/>
-                    <xs:element minOccurs="0" name="mediaGUID" type="xs:int"/>
-                    <xs:element minOccurs="0" name="publishedFrom" type="xs:string"/>
-                    <xs:element minOccurs="0" name="publishedTo" type="xs:string"/>
+                    <xs:element name="fileName" type="xs:string"/>
+                    <xs:element name="fileData" type="xs:base64Binary"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="webPublishedMediaResponse">
+
+            <xs:complexType name="uploadMediaVersionResponse">
                 <xs:sequence>
-                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:webPublishedMediaResult"/>
+                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:uploadMediaVersionResult"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="webPublishedMediaResult">
+
+            <xs:complexType name="uploadMediaVersionResult">
                 <xs:complexContent>
                     <xs:extension base="tns:result">
                         <xs:sequence>
-                            <xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:error"/>
-                            <xs:element minOccurs="0" name="info" type="xs:string"/>
-                            <xs:element minOccurs="0" name="mediaGuid" type="xs:int"/>
-                            <xs:element minOccurs="0" name="newFileName" type="xs:string"/>
+                            <xs:element minOccurs="0" name="error" type="xs:string"/>
                             <xs:element maxOccurs="unbounded" minOccurs="0" name="warnings" nillable="true" type="tns:warning"/>
                         </xs:sequence>
                     </xs:extension>
                 </xs:complexContent>
             </xs:complexType>
+
             <xs:complexType abstract="true" name="result">
                 <xs:sequence>
                     <xs:element name="success" type="xs:boolean"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="error">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="error" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
+
             <xs:complexType name="warning">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="warning" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="findExternalDownloadLinkByMediaGuid">
+
+            <xs:complexType name="setOfficial">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="mediaGuid" type="xs:int"/>
+                    <xs:element form="qualified" minOccurs="0" name="setOfficialArgument" type="tns:setOfficialArgument"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="findExternalDownloadLinkByMediaGuidResponse">
+
+            <xs:complexType name="setOfficialArgument">
                 <xs:sequence>
-                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="externalDownloadLinks" type="tns:externalDownloadLink"/>
+                    <xs:element name="mediaGuid" type="xs:int"/>
+                    <xs:element minOccurs="0" name="versionNumber" type="xs:int"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="externalDownloadLink">
+
+            <xs:complexType name="setOfficialResponse">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="description" type="xs:string"/>
-                    <xs:element minOccurs="0" name="id" type="xs:int"/>
-                    <xs:element minOccurs="0" name="label" type="xs:string"/>
-                    <xs:element minOccurs="0" name="mediaGuid" type="xs:int"/>
-                    <xs:element minOccurs="0" name="url" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:setOfficialResult"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="deleteMedia">
-                <xs:sequence>
-                    <xs:element form="qualified" name="deleteMediaData" type="tns:deleteMediaArgument"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="deleteMediaArgument">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="mediaGuid" type="xs:string"/>
-                    <xs:element minOccurs="0" name="mediaHash" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="deleteMediaResponse">
-                <xs:sequence>
-                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:deleteMediaResult"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="deleteMediaResult">
+
+            <xs:complexType name="setOfficialResult">
                 <xs:complexContent>
                     <xs:extension base="tns:result">
                         <xs:sequence>
@@ -125,17 +153,65 @@
                     </xs:extension>
                 </xs:complexContent>
             </xs:complexType>
-            <xs:complexType name="uploadMediaAsStream">
+
+            <xs:complexType name="error">
                 <xs:sequence>
+                    <xs:element minOccurs="0" name="error" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="deleteExternalDownloadLinkById">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="linkId" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="deleteExternalDownloadLinkByIdResponse">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="uploadMediaVersionAsStream">
+                <xs:sequence>
+                    <xs:element form="qualified" name="mediaGuid" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="comment" type="xs:string"/>
                     <xs:element form="qualified" name="fileName" type="xs:string"/>
                     <xs:element form="qualified" name="fileData" type="xs:base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="uploadMediaAsStreamResponse">
+
+            <xs:complexType name="uploadMediaVersionAsStreamResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:uploadMediaVersionResult"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="addExternalDownloadLink">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="mediaGuid" type="xs:int"/>
+                    <xs:element minOccurs="0" name="url" type="xs:string"/>
+                    <xs:element minOccurs="0" name="label" type="xs:string"/>
+                    <xs:element minOccurs="0" name="description" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="addExternalDownloadLinkResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="linkId" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="uploadMedia">
+                <xs:sequence>
+                    <xs:element form="qualified" name="uploadMediaData" type="tns:uploadMediaArgument"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="uploadMediaResponse">
                 <xs:sequence>
                     <xs:element form="qualified" minOccurs="0" name="return" type="tns:uploadMediaResult"/>
                 </xs:sequence>
             </xs:complexType>
+
             <xs:complexType name="uploadMediaResult">
                 <xs:complexContent>
                     <xs:extension base="tns:result">
@@ -147,11 +223,70 @@
                     </xs:extension>
                 </xs:complexContent>
             </xs:complexType>
-            <xs:complexType name="uploadMetaData">
+
+            <xs:complexType name="deleteExternalDownloadLinkByMediaGuid">
                 <xs:sequence>
-                    <xs:element form="qualified" name="uploadMetaData" type="tns:uploadMetadataArgument"/>
+                    <xs:element minOccurs="0" name="mediaGuid" type="xs:int"/>
                 </xs:sequence>
             </xs:complexType>
+
+            <xs:complexType name="deleteExternalDownloadLinkByMediaGuidResponse">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="findExternalDownloadLinkById">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="linkId" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="findExternalDownloadLinkByIdResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="externalDownloadLink" type="tns:externalDownloadLink"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="externalDownloadLink">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="description" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" type="xs:int"/>
+                    <xs:element minOccurs="0" name="label" type="xs:string"/>
+                    <xs:element minOccurs="0" name="mediaGuid" type="xs:int"/>
+                    <xs:element minOccurs="0" name="url" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="getMediaDetails">
+                <xs:sequence>
+                    <xs:element form="qualified" name="mediaDetailsData" type="tns:getMediaDetailsArgument"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="getMediaDetailsArgument">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="mediaGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="mediaHash" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="getMediaDetailsResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:getMediaDetailsResult"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="getMediaDetailsResult">
+                <xs:complexContent>
+                    <xs:extension base="tns:uploadMetadataArgument">
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="errors" nillable="true" type="tns:error"/>
+                            <xs:element name="success" type="xs:boolean"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="warnings" nillable="true" type="tns:warning"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
             <xs:complexType name="uploadMetadataArgument">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="addAssociations" type="xs:boolean"/>
@@ -209,44 +344,103 @@
                     <xs:element minOccurs="0" name="virtualDbName" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
+
             <xs:complexType name="languageItem">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="description" type="xs:string"/>
                     <xs:element minOccurs="0" name="langCode" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
+
             <xs:complexType name="themeDto">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="id" type="xs:string"/>
                     <xs:element minOccurs="0" name="name" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
+
             <xs:complexType name="code">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="code" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
+
             <xs:complexType name="isin">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="isin" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
+
             <xs:complexType name="structuredKeywords">
                 <xs:sequence>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="structuredKeyword" nillable="true" type="tns:nameAndIdItem"/>
                 </xs:sequence>
             </xs:complexType>
+
             <xs:complexType name="nameAndIdItem">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="id" type="xs:string"/>
                     <xs:element minOccurs="0" name="name" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
+
+            <xs:complexType name="updateExternalDownloadLink">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="link" type="tns:externalDownloadLink"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="updateExternalDownloadLinkResponse">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="getMediaGuidByHash">
+                <xs:sequence>
+                    <xs:element form="qualified" name="mediaGuidByHashData" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="getMediaGuidByHashResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="uploadMediaAsStream">
+                <xs:sequence>
+                    <xs:element form="qualified" name="fileName" type="xs:string"/>
+                    <xs:element form="qualified" name="fileData" type="xs:base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="uploadMediaAsStreamResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:uploadMediaResult"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="uploadMetaData">
+                <xs:sequence>
+                    <xs:element form="qualified" name="uploadMetaData" type="tns:uploadMetadataArgumentVersion2"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="uploadMetadataArgumentVersion2">
+                <xs:complexContent>
+                    <xs:extension base="tns:uploadMetadataArgument">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="creatorLogin" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
             <xs:complexType name="uploadMetaDataResponse">
                 <xs:sequence>
                     <xs:element form="qualified" minOccurs="0" name="return" type="tns:uploadMetadataResult"/>
                 </xs:sequence>
             </xs:complexType>
+
             <xs:complexType name="uploadMetadataResult">
                 <xs:complexContent>
                     <xs:extension base="tns:result">
@@ -257,138 +451,27 @@
                     </xs:extension>
                 </xs:complexContent>
             </xs:complexType>
-            <xs:complexType name="getMediaDetails">
+
+            <xs:complexType name="deleteMedia">
                 <xs:sequence>
-                    <xs:element form="qualified" name="mediaDetailsData" type="tns:getMediaDetailsArgument"/>
+                    <xs:element form="qualified" name="deleteMediaData" type="tns:deleteMediaArgument"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="getMediaDetailsArgument">
+
+            <xs:complexType name="deleteMediaArgument">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="mediaGuid" type="xs:string"/>
                     <xs:element minOccurs="0" name="mediaHash" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="getMediaDetailsResponse">
+
+            <xs:complexType name="deleteMediaResponse">
                 <xs:sequence>
-                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:getMediaDetailsResult"/>
+                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:deleteMediaResult"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="getMediaDetailsResult">
-                <xs:complexContent>
-                    <xs:extension base="tns:uploadMetadataArgument">
-                        <xs:sequence>
-                            <xs:element maxOccurs="unbounded" minOccurs="0" name="errors" nillable="true" type="tns:error"/>
-                            <xs:element name="success" type="xs:boolean"/>
-                            <xs:element maxOccurs="unbounded" minOccurs="0" name="warnings" nillable="true" type="tns:warning"/>
-                        </xs:sequence>
-                    </xs:extension>
-                </xs:complexContent>
-            </xs:complexType>
-            <xs:complexType name="updateExternalDownloadLink">
-                <xs:sequence>
-                    <xs:element form="qualified" minOccurs="0" name="link" type="tns:externalDownloadLink"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="updateExternalDownloadLinkResponse">
-                <xs:sequence/>
-            </xs:complexType>
-            <xs:complexType name="getMediaGuidByHash">
-                <xs:sequence>
-                    <xs:element form="qualified" name="mediaGuidByHashData" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="getMediaGuidByHashResponse">
-                <xs:sequence>
-                    <xs:element form="qualified" minOccurs="0" name="return" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="uploadMediaVersionAsStream">
-                <xs:sequence>
-                    <xs:element form="qualified" name="mediaGuid" type="xs:string"/>
-                    <xs:element form="qualified" minOccurs="0" name="comment" type="xs:string"/>
-                    <xs:element form="qualified" name="fileName" type="xs:string"/>
-                    <xs:element form="qualified" name="fileData" type="xs:base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="uploadMediaVersionAsStreamResponse">
-                <xs:sequence>
-                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:uploadMediaVersionResult"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="uploadMediaVersionResult">
-                <xs:complexContent>
-                    <xs:extension base="tns:result">
-                        <xs:sequence>
-                            <xs:element minOccurs="0" name="error" type="xs:string"/>
-                            <xs:element maxOccurs="unbounded" minOccurs="0" name="warnings" nillable="true" type="tns:warning"/>
-                        </xs:sequence>
-                    </xs:extension>
-                </xs:complexContent>
-            </xs:complexType>
-            <xs:complexType name="addExternalDownloadLink">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="mediaGuid" type="xs:int"/>
-                    <xs:element minOccurs="0" name="url" type="xs:string"/>
-                    <xs:element minOccurs="0" name="label" type="xs:string"/>
-                    <xs:element minOccurs="0" name="description" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="addExternalDownloadLinkResponse">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="linkId" type="xs:int"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="deleteExternalDownloadLinkById">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="linkId" type="xs:int"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="deleteExternalDownloadLinkByIdResponse">
-                <xs:sequence/>
-            </xs:complexType>
-            <xs:complexType name="uploadMediaVersion">
-                <xs:sequence>
-                    <xs:element form="qualified" name="uploadMediaVersionData" type="tns:uploadMediaVersionArgument"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="uploadMediaVersionArgument">
-                <xs:complexContent>
-                    <xs:extension base="tns:uploadMediaArgument">
-                        <xs:sequence>
-                            <xs:element minOccurs="0" name="comment" type="xs:string"/>
-                            <xs:element name="mediaGuid" type="xs:string"/>
-                        </xs:sequence>
-                    </xs:extension>
-                </xs:complexContent>
-            </xs:complexType>
-            <xs:complexType name="uploadMediaArgument">
-                <xs:sequence>
-                    <xs:element name="fileName" type="xs:string"/>
-                    <xs:element name="fileData" type="xs:base64Binary"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="uploadMediaVersionResponse">
-                <xs:sequence>
-                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:uploadMediaVersionResult"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="setOfficial">
-                <xs:sequence>
-                    <xs:element form="qualified" minOccurs="0" name="setOfficialArgument" type="tns:setOfficialArgument"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="setOfficialArgument">
-                <xs:sequence>
-                    <xs:element name="mediaGuid" type="xs:int"/>
-                    <xs:element minOccurs="0" name="versionNumber" type="xs:int"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="setOfficialResponse">
-                <xs:sequence>
-                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:setOfficialResult"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="setOfficialResult">
+
+            <xs:complexType name="deleteMediaResult">
                 <xs:complexContent>
                     <xs:extension base="tns:result">
                         <xs:sequence>
@@ -398,242 +481,353 @@
                     </xs:extension>
                 </xs:complexContent>
             </xs:complexType>
-            <xs:complexType name="findExternalDownloadLinkById">
+
+            <xs:complexType name="webPublishedMedia">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="linkId" type="xs:int"/>
+                    <xs:element form="qualified" minOccurs="0" name="webPublishedMediaData" type="tns:webPublishedMediaArgument"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="findExternalDownloadLinkByIdResponse">
+
+            <xs:complexType name="webPublishedMediaArgument">
                 <xs:sequence>
-                    <xs:element form="qualified" minOccurs="0" name="externalDownloadLink" type="tns:externalDownloadLink"/>
+                    <xs:element minOccurs="0" name="fileName" type="xs:string"/>
+                    <xs:element minOccurs="0" name="mediaGUID" type="xs:int"/>
+                    <xs:element minOccurs="0" name="publishedFrom" type="xs:string"/>
+                    <xs:element minOccurs="0" name="publishedTo" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="uploadMedia">
+
+            <xs:complexType name="webPublishedMediaResponse">
                 <xs:sequence>
-                    <xs:element form="qualified" name="uploadMediaData" type="tns:uploadMediaArgument"/>
+                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:webPublishedMediaResult"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="uploadMediaResponse">
-                <xs:sequence>
-                    <xs:element form="qualified" minOccurs="0" name="return" type="tns:uploadMediaResult"/>
-                </xs:sequence>
+
+            <xs:complexType name="webPublishedMediaResult">
+                <xs:complexContent>
+                    <xs:extension base="tns:result">
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="error" nillable="true" type="tns:error"/>
+                            <xs:element minOccurs="0" name="info" type="xs:string"/>
+                            <xs:element minOccurs="0" name="mediaGuid" type="xs:int"/>
+                            <xs:element minOccurs="0" name="newFileName" type="xs:string"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="warnings" nillable="true" type="tns:warning"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
             </xs:complexType>
-            <xs:complexType name="deleteExternalDownloadLinkByMediaGuid">
+
+            <xs:complexType name="findExternalDownloadLinkByMediaGuid">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="mediaGuid" type="xs:int"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="deleteExternalDownloadLinkByMediaGuidResponse">
-                <xs:sequence/>
+
+            <xs:complexType name="findExternalDownloadLinkByMediaGuidResponse">
+                <xs:sequence>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="externalDownloadLinks" type="tns:externalDownloadLink"/>
+                </xs:sequence>
             </xs:complexType>
+
         </xs:schema>
     </wsdl:types>
-    <wsdl:message name="uploadMediaVersionResponse">
-        <wsdl:part element="tns:uploadMediaVersionResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="updateExternalDownloadLinkResponse">
-        <wsdl:part element="tns:updateExternalDownloadLinkResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="webPublishedMediaResponse">
-        <wsdl:part element="tns:webPublishedMediaResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="findExternalDownloadLinkByMediaGuidResponse">
-        <wsdl:part element="tns:findExternalDownloadLinkByMediaGuidResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="uploadMediaAsStream">
-        <wsdl:part element="tns:uploadMediaAsStream" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="getMediaDetails">
-        <wsdl:part element="tns:getMediaDetails" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="uploadMediaVersionAsStreamResponse">
-        <wsdl:part element="tns:uploadMediaVersionAsStreamResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="addExternalDownloadLink">
-        <wsdl:part element="tns:addExternalDownloadLink" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="setOfficial">
-        <wsdl:part element="tns:setOfficial" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="findExternalDownloadLinkById">
-        <wsdl:part element="tns:findExternalDownloadLinkById" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="uploadMedia">
-        <wsdl:part element="tns:uploadMedia" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="uploadMetaDataResponse">
-        <wsdl:part element="tns:uploadMetaDataResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="getMediaGuidByHashResponse">
-        <wsdl:part element="tns:getMediaGuidByHashResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="deleteExternalDownloadLinkByMediaGuid">
-        <wsdl:part element="tns:deleteExternalDownloadLinkByMediaGuid" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="uploadMediaResponse">
-        <wsdl:part element="tns:uploadMediaResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="setOfficialResponse">
-        <wsdl:part element="tns:setOfficialResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="addExternalDownloadLinkResponse">
-        <wsdl:part element="tns:addExternalDownloadLinkResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="deleteMediaResponse">
-        <wsdl:part element="tns:deleteMediaResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="webPublishedMedia">
-        <wsdl:part element="tns:webPublishedMedia" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="findExternalDownloadLinkByMediaGuid">
-        <wsdl:part element="tns:findExternalDownloadLinkByMediaGuid" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="findExternalDownloadLinkByIdResponse">
-        <wsdl:part element="tns:findExternalDownloadLinkByIdResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="uploadMediaAsStreamResponse">
-        <wsdl:part element="tns:uploadMediaAsStreamResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="deleteExternalDownloadLinkByMediaGuidResponse">
-        <wsdl:part element="tns:deleteExternalDownloadLinkByMediaGuidResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="deleteMedia">
-        <wsdl:part element="tns:deleteMedia" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="uploadMetaData">
-        <wsdl:part element="tns:uploadMetaData" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="deleteExternalDownloadLinkByIdResponse">
-        <wsdl:part element="tns:deleteExternalDownloadLinkByIdResponse" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="updateExternalDownloadLink">
-        <wsdl:part element="tns:updateExternalDownloadLink" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="getMediaGuidByHash">
-        <wsdl:part element="tns:getMediaGuidByHash" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="uploadMediaVersionAsStream">
-        <wsdl:part element="tns:uploadMediaVersionAsStream" name="parameters"> </wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="getMediaDetailsResponse">
-        <wsdl:part element="tns:getMediaDetailsResponse" name="parameters"> </wsdl:part>
+    <wsdl:message name="uploadMediaVersion">
+        <wsdl:part element="tns:uploadMediaVersion" name="parameters">
+        </wsdl:part>
     </wsdl:message>
     <wsdl:message name="deleteExternalDownloadLinkById">
-        <wsdl:part element="tns:deleteExternalDownloadLinkById" name="parameters"> </wsdl:part>
+        <wsdl:part element="tns:deleteExternalDownloadLinkById" name="parameters">
+        </wsdl:part>
     </wsdl:message>
-    <wsdl:message name="uploadMediaVersion">
-        <wsdl:part element="tns:uploadMediaVersion" name="parameters"> </wsdl:part>
+    <wsdl:message name="uploadMediaVersionAsStream">
+        <wsdl:part element="tns:uploadMediaVersionAsStream" name="parameters">
+        </wsdl:part>
     </wsdl:message>
-    <wsdl:portType name="MediaPoolWebServicePort">
-        <wsdl:operation name="webPublishedMedia">
-            <wsdl:input message="tns:webPublishedMedia" name="webPublishedMedia"> </wsdl:input>
-            <wsdl:output message="tns:webPublishedMediaResponse" name="webPublishedMediaResponse"> </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="findExternalDownloadLinkByMediaGuid">
-            <wsdl:input message="tns:findExternalDownloadLinkByMediaGuid" name="findExternalDownloadLinkByMediaGuid"> </wsdl:input>
-            <wsdl:output message="tns:findExternalDownloadLinkByMediaGuidResponse" name="findExternalDownloadLinkByMediaGuidResponse"> </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="deleteMedia">
-            <wsdl:input message="tns:deleteMedia" name="deleteMedia"> </wsdl:input>
-            <wsdl:output message="tns:deleteMediaResponse" name="deleteMediaResponse"> </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="uploadMediaAsStream">
-            <wsdl:input message="tns:uploadMediaAsStream" name="uploadMediaAsStream"> </wsdl:input>
-            <wsdl:output message="tns:uploadMediaAsStreamResponse" name="uploadMediaAsStreamResponse"> </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="uploadMetaData">
-            <wsdl:input message="tns:uploadMetaData" name="uploadMetaData"> </wsdl:input>
-            <wsdl:output message="tns:uploadMetaDataResponse" name="uploadMetaDataResponse"> </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="getMediaDetails">
-            <wsdl:input message="tns:getMediaDetails" name="getMediaDetails"> </wsdl:input>
-            <wsdl:output message="tns:getMediaDetailsResponse" name="getMediaDetailsResponse"> </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="updateExternalDownloadLink">
-            <wsdl:input message="tns:updateExternalDownloadLink" name="updateExternalDownloadLink"> </wsdl:input>
-            <wsdl:output message="tns:updateExternalDownloadLinkResponse" name="updateExternalDownloadLinkResponse"> </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="getMediaGuidByHash">
-            <wsdl:input message="tns:getMediaGuidByHash" name="getMediaGuidByHash"> </wsdl:input>
-            <wsdl:output message="tns:getMediaGuidByHashResponse" name="getMediaGuidByHashResponse"> </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="uploadMediaVersionAsStream">
-            <wsdl:input message="tns:uploadMediaVersionAsStream" name="uploadMediaVersionAsStream"> </wsdl:input>
-            <wsdl:output message="tns:uploadMediaVersionAsStreamResponse" name="uploadMediaVersionAsStreamResponse"> </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="addExternalDownloadLink">
-            <wsdl:input message="tns:addExternalDownloadLink" name="addExternalDownloadLink"> </wsdl:input>
-            <wsdl:output message="tns:addExternalDownloadLinkResponse" name="addExternalDownloadLinkResponse"> </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="deleteExternalDownloadLinkById">
-            <wsdl:input message="tns:deleteExternalDownloadLinkById" name="deleteExternalDownloadLinkById"> </wsdl:input>
-            <wsdl:output message="tns:deleteExternalDownloadLinkByIdResponse" name="deleteExternalDownloadLinkByIdResponse"> </wsdl:output>
-        </wsdl:operation>
+    <wsdl:message name="getMediaDetailsResponse">
+        <wsdl:part element="tns:getMediaDetailsResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteMediaResponse">
+        <wsdl:part element="tns:deleteMediaResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="addExternalDownloadLinkResponse">
+        <wsdl:part element="tns:addExternalDownloadLinkResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="setOfficialResponse">
+        <wsdl:part element="tns:setOfficialResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateExternalDownloadLink">
+        <wsdl:part element="tns:updateExternalDownloadLink" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getMediaGuidByHash">
+        <wsdl:part element="tns:getMediaGuidByHash" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="uploadMetaData">
+        <wsdl:part element="tns:uploadMetaData" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteExternalDownloadLinkByIdResponse">
+        <wsdl:part element="tns:deleteExternalDownloadLinkByIdResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteExternalDownloadLinkByMediaGuidResponse">
+        <wsdl:part element="tns:deleteExternalDownloadLinkByMediaGuidResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="uploadMediaAsStreamResponse">
+        <wsdl:part element="tns:uploadMediaAsStreamResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteMedia">
+        <wsdl:part element="tns:deleteMedia" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="webPublishedMedia">
+        <wsdl:part element="tns:webPublishedMedia" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findExternalDownloadLinkByIdResponse">
+        <wsdl:part element="tns:findExternalDownloadLinkByIdResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findExternalDownloadLinkByMediaGuid">
+        <wsdl:part element="tns:findExternalDownloadLinkByMediaGuid" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="setOfficial">
+        <wsdl:part element="tns:setOfficial" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="addExternalDownloadLink">
+        <wsdl:part element="tns:addExternalDownloadLink" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="uploadMediaVersionAsStreamResponse">
+        <wsdl:part element="tns:uploadMediaVersionAsStreamResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="uploadMediaResponse">
+        <wsdl:part element="tns:uploadMediaResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="uploadMedia">
+        <wsdl:part element="tns:uploadMedia" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteExternalDownloadLinkByMediaGuid">
+        <wsdl:part element="tns:deleteExternalDownloadLinkByMediaGuid" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getMediaGuidByHashResponse">
+        <wsdl:part element="tns:getMediaGuidByHashResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="uploadMetaDataResponse">
+        <wsdl:part element="tns:uploadMetaDataResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findExternalDownloadLinkById">
+        <wsdl:part element="tns:findExternalDownloadLinkById" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateExternalDownloadLinkResponse">
+        <wsdl:part element="tns:updateExternalDownloadLinkResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="webPublishedMediaResponse">
+        <wsdl:part element="tns:webPublishedMediaResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="uploadMediaVersionResponse">
+        <wsdl:part element="tns:uploadMediaVersionResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getMediaDetails">
+        <wsdl:part element="tns:getMediaDetails" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="uploadMediaAsStream">
+        <wsdl:part element="tns:uploadMediaAsStream" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findExternalDownloadLinkByMediaGuidResponse">
+        <wsdl:part element="tns:findExternalDownloadLinkByMediaGuidResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="MediaPoolWebServicePort_v2">
         <wsdl:operation name="uploadMediaVersion">
-            <wsdl:input message="tns:uploadMediaVersion" name="uploadMediaVersion"> </wsdl:input>
-            <wsdl:output message="tns:uploadMediaVersionResponse" name="uploadMediaVersionResponse"> </wsdl:output>
+            <wsdl:input message="tns:uploadMediaVersion" name="uploadMediaVersion">
+            </wsdl:input>
+            <wsdl:output message="tns:uploadMediaVersionResponse" name="uploadMediaVersionResponse">
+            </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="setOfficial">
-            <wsdl:input message="tns:setOfficial" name="setOfficial"> </wsdl:input>
-            <wsdl:output message="tns:setOfficialResponse" name="setOfficialResponse"> </wsdl:output>
+            <wsdl:input message="tns:setOfficial" name="setOfficial">
+            </wsdl:input>
+            <wsdl:output message="tns:setOfficialResponse" name="setOfficialResponse">
+            </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="findExternalDownloadLinkById">
-            <wsdl:input message="tns:findExternalDownloadLinkById" name="findExternalDownloadLinkById"> </wsdl:input>
-            <wsdl:output message="tns:findExternalDownloadLinkByIdResponse" name="findExternalDownloadLinkByIdResponse"> </wsdl:output>
+        <wsdl:operation name="deleteExternalDownloadLinkById">
+            <wsdl:input message="tns:deleteExternalDownloadLinkById" name="deleteExternalDownloadLinkById">
+            </wsdl:input>
+            <wsdl:output message="tns:deleteExternalDownloadLinkByIdResponse" name="deleteExternalDownloadLinkByIdResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="uploadMediaVersionAsStream">
+            <wsdl:input message="tns:uploadMediaVersionAsStream" name="uploadMediaVersionAsStream">
+            </wsdl:input>
+            <wsdl:output message="tns:uploadMediaVersionAsStreamResponse" name="uploadMediaVersionAsStreamResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addExternalDownloadLink">
+            <wsdl:input message="tns:addExternalDownloadLink" name="addExternalDownloadLink">
+            </wsdl:input>
+            <wsdl:output message="tns:addExternalDownloadLinkResponse" name="addExternalDownloadLinkResponse">
+            </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="uploadMedia">
-            <wsdl:input message="tns:uploadMedia" name="uploadMedia"> </wsdl:input>
-            <wsdl:output message="tns:uploadMediaResponse" name="uploadMediaResponse"> </wsdl:output>
+            <wsdl:input message="tns:uploadMedia" name="uploadMedia">
+            </wsdl:input>
+            <wsdl:output message="tns:uploadMediaResponse" name="uploadMediaResponse">
+            </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="deleteExternalDownloadLinkByMediaGuid">
-            <wsdl:input message="tns:deleteExternalDownloadLinkByMediaGuid" name="deleteExternalDownloadLinkByMediaGuid"> </wsdl:input>
-            <wsdl:output message="tns:deleteExternalDownloadLinkByMediaGuidResponse" name="deleteExternalDownloadLinkByMediaGuidResponse"> </wsdl:output>
-        </wsdl:operation>
-    </wsdl:portType>
-    <wsdl:binding name="MediaPoolServiceSoapBinding" type="tns:MediaPoolWebServicePort">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="webPublishedMedia">
-            <soap:operation soapAction="webPublishedMedia" style="document"/>
-            <wsdl:input name="webPublishedMedia">
-                <soap:body use="literal"/>
+            <wsdl:input message="tns:deleteExternalDownloadLinkByMediaGuid" name="deleteExternalDownloadLinkByMediaGuid">
             </wsdl:input>
-            <wsdl:output name="webPublishedMediaResponse">
-                <soap:body use="literal"/>
+            <wsdl:output message="tns:deleteExternalDownloadLinkByMediaGuidResponse" name="deleteExternalDownloadLinkByMediaGuidResponse">
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="findExternalDownloadLinkByMediaGuid">
-            <soap:operation soapAction="findExternalDownloadLinkByMediaGuid" style="document"/>
-            <wsdl:input name="findExternalDownloadLinkByMediaGuid">
-                <soap:body use="literal"/>
+        <wsdl:operation name="findExternalDownloadLinkById">
+            <wsdl:input message="tns:findExternalDownloadLinkById" name="findExternalDownloadLinkById">
             </wsdl:input>
-            <wsdl:output name="findExternalDownloadLinkByMediaGuidResponse">
-                <soap:body use="literal"/>
+            <wsdl:output message="tns:findExternalDownloadLinkByIdResponse" name="findExternalDownloadLinkByIdResponse">
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="deleteMedia">
-            <soap:operation soapAction="deleteMedia" style="document"/>
-            <wsdl:input name="deleteMedia">
-                <soap:body use="literal"/>
+        <wsdl:operation name="getMediaDetails">
+            <wsdl:input message="tns:getMediaDetails" name="getMediaDetails">
             </wsdl:input>
-            <wsdl:output name="deleteMediaResponse">
-                <soap:body use="literal"/>
+            <wsdl:output message="tns:getMediaDetailsResponse" name="getMediaDetailsResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="updateExternalDownloadLink">
+            <wsdl:input message="tns:updateExternalDownloadLink" name="updateExternalDownloadLink">
+            </wsdl:input>
+            <wsdl:output message="tns:updateExternalDownloadLinkResponse" name="updateExternalDownloadLinkResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getMediaGuidByHash">
+            <wsdl:input message="tns:getMediaGuidByHash" name="getMediaGuidByHash">
+            </wsdl:input>
+            <wsdl:output message="tns:getMediaGuidByHashResponse" name="getMediaGuidByHashResponse">
             </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="uploadMediaAsStream">
-            <soap:operation soapAction="uploadMediaAsStream" style="document"/>
-            <wsdl:input name="uploadMediaAsStream">
-                <soap:body use="literal"/>
+            <wsdl:input message="tns:uploadMediaAsStream" name="uploadMediaAsStream">
             </wsdl:input>
-            <wsdl:output name="uploadMediaAsStreamResponse">
-                <soap:body use="literal"/>
+            <wsdl:output message="tns:uploadMediaAsStreamResponse" name="uploadMediaAsStreamResponse">
             </wsdl:output>
         </wsdl:operation>
         <wsdl:operation name="uploadMetaData">
-            <soap:operation soapAction="uploadMetaData" style="document"/>
-            <wsdl:input name="uploadMetaData">
+            <wsdl:input message="tns:uploadMetaData" name="uploadMetaData">
+            </wsdl:input>
+            <wsdl:output message="tns:uploadMetaDataResponse" name="uploadMetaDataResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteMedia">
+            <wsdl:input message="tns:deleteMedia" name="deleteMedia">
+            </wsdl:input>
+            <wsdl:output message="tns:deleteMediaResponse" name="deleteMediaResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="webPublishedMedia">
+            <wsdl:input message="tns:webPublishedMedia" name="webPublishedMedia">
+            </wsdl:input>
+            <wsdl:output message="tns:webPublishedMediaResponse" name="webPublishedMediaResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="findExternalDownloadLinkByMediaGuid">
+            <wsdl:input message="tns:findExternalDownloadLinkByMediaGuid" name="findExternalDownloadLinkByMediaGuid">
+            </wsdl:input>
+            <wsdl:output message="tns:findExternalDownloadLinkByMediaGuidResponse" name="findExternalDownloadLinkByMediaGuidResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="MediaPoolService_v2SoapBinding" type="tns:MediaPoolWebServicePort_v2">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="uploadMediaVersion">
+            <soap:operation soapAction="uploadMediaVersion" style="document"/>
+            <wsdl:input name="uploadMediaVersion">
                 <soap:body use="literal"/>
             </wsdl:input>
-            <wsdl:output name="uploadMetaDataResponse">
+            <wsdl:output name="uploadMediaVersionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="setOfficial">
+            <soap:operation soapAction="setOfficial" style="document"/>
+            <wsdl:input name="setOfficial">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="setOfficialResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteExternalDownloadLinkById">
+            <soap:operation soapAction="deleteExternalDownloadLinkById" style="document"/>
+            <wsdl:input name="deleteExternalDownloadLinkById">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="deleteExternalDownloadLinkByIdResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="uploadMediaVersionAsStream">
+            <soap:operation soapAction="uploadMediaVersionAsStream" style="document"/>
+            <wsdl:input name="uploadMediaVersionAsStream">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="uploadMediaVersionAsStreamResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addExternalDownloadLink">
+            <soap:operation soapAction="addExternalDownloadLink" style="document"/>
+            <wsdl:input name="addExternalDownloadLink">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="addExternalDownloadLinkResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="uploadMedia">
+            <soap:operation soapAction="uploadMedia" style="document"/>
+            <wsdl:input name="uploadMedia">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="uploadMediaResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteExternalDownloadLinkByMediaGuid">
+            <soap:operation soapAction="deleteExternalDownloadLinkByMediaGuid" style="document"/>
+            <wsdl:input name="deleteExternalDownloadLinkByMediaGuid">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="deleteExternalDownloadLinkByMediaGuidResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="findExternalDownloadLinkById">
+            <soap:operation soapAction="findExternalDownloadLinkById" style="document"/>
+            <wsdl:input name="findExternalDownloadLinkById">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findExternalDownloadLinkByIdResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
@@ -664,82 +858,55 @@
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="uploadMediaVersionAsStream">
-            <soap:operation soapAction="uploadMediaVersionAsStream" style="document"/>
-            <wsdl:input name="uploadMediaVersionAsStream">
+        <wsdl:operation name="uploadMediaAsStream">
+            <soap:operation soapAction="uploadMediaAsStream" style="document"/>
+            <wsdl:input name="uploadMediaAsStream">
                 <soap:body use="literal"/>
             </wsdl:input>
-            <wsdl:output name="uploadMediaVersionAsStreamResponse">
+            <wsdl:output name="uploadMediaAsStreamResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="addExternalDownloadLink">
-            <soap:operation soapAction="addExternalDownloadLink" style="document"/>
-            <wsdl:input name="addExternalDownloadLink">
+        <wsdl:operation name="uploadMetaData">
+            <soap:operation soapAction="uploadMetaData" style="document"/>
+            <wsdl:input name="uploadMetaData">
                 <soap:body use="literal"/>
             </wsdl:input>
-            <wsdl:output name="addExternalDownloadLinkResponse">
+            <wsdl:output name="uploadMetaDataResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="deleteExternalDownloadLinkById">
-            <soap:operation soapAction="deleteExternalDownloadLinkById" style="document"/>
-            <wsdl:input name="deleteExternalDownloadLinkById">
+        <wsdl:operation name="deleteMedia">
+            <soap:operation soapAction="deleteMedia" style="document"/>
+            <wsdl:input name="deleteMedia">
                 <soap:body use="literal"/>
             </wsdl:input>
-            <wsdl:output name="deleteExternalDownloadLinkByIdResponse">
+            <wsdl:output name="deleteMediaResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="uploadMediaVersion">
-            <soap:operation soapAction="uploadMediaVersion" style="document"/>
-            <wsdl:input name="uploadMediaVersion">
+        <wsdl:operation name="webPublishedMedia">
+            <soap:operation soapAction="webPublishedMedia" style="document"/>
+            <wsdl:input name="webPublishedMedia">
                 <soap:body use="literal"/>
             </wsdl:input>
-            <wsdl:output name="uploadMediaVersionResponse">
+            <wsdl:output name="webPublishedMediaResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="setOfficial">
-            <soap:operation soapAction="setOfficial" style="document"/>
-            <wsdl:input name="setOfficial">
+        <wsdl:operation name="findExternalDownloadLinkByMediaGuid">
+            <soap:operation soapAction="findExternalDownloadLinkByMediaGuid" style="document"/>
+            <wsdl:input name="findExternalDownloadLinkByMediaGuid">
                 <soap:body use="literal"/>
             </wsdl:input>
-            <wsdl:output name="setOfficialResponse">
-                <soap:body use="literal"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="findExternalDownloadLinkById">
-            <soap:operation soapAction="findExternalDownloadLinkById" style="document"/>
-            <wsdl:input name="findExternalDownloadLinkById">
-                <soap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output name="findExternalDownloadLinkByIdResponse">
-                <soap:body use="literal"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="uploadMedia">
-            <soap:operation soapAction="uploadMedia" style="document"/>
-            <wsdl:input name="uploadMedia">
-                <soap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output name="uploadMediaResponse">
-                <soap:body use="literal"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="deleteExternalDownloadLinkByMediaGuid">
-            <soap:operation soapAction="deleteExternalDownloadLinkByMediaGuid" style="document"/>
-            <wsdl:input name="deleteExternalDownloadLinkByMediaGuid">
-                <soap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output name="deleteExternalDownloadLinkByMediaGuidResponse">
+            <wsdl:output name="findExternalDownloadLinkByMediaGuidResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name="MediaPoolService">
-        <wsdl:port binding="tns:MediaPoolServiceSoapBinding" name="MediaPoolPort">
-            <soap:address location="https://qamarriott.brandmakerinc.com/webservices/MediaPool/"/>
+    <wsdl:service name="MediaPoolService_v2">
+        <wsdl:port binding="tns:MediaPoolService_v2SoapBinding" name="MediaPoolPort_v2">
+            <soap:address location="https://marriott.brandmakerinc.com/webservices/MediaPool/v2/"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

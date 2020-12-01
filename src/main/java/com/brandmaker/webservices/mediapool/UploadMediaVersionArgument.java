@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="uploadMediaVersionArgument">
  *   &lt;complexContent>
- *     &lt;extension base="{http://brandmaker.com/webservices/MediaPool/}uploadMediaArgument">
+ *     &lt;extension base="{http://brandmaker.com/webservices/MediaPool/v2/}uploadMediaArgument">
  *       &lt;sequence>
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="mediaGuid" type="{http://www.w3.org/2001/XMLSchema}string"/>

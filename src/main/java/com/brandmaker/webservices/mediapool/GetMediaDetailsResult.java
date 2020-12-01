@@ -1,12 +1,12 @@
 
 package com.brandmaker.webservices.mediapool;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -17,11 +17,11 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="getMediaDetailsResult">
  *   &lt;complexContent>
- *     &lt;extension base="{http://brandmaker.com/webservices/MediaPool/}uploadMetadataArgument">
+ *     &lt;extension base="{http://brandmaker.com/webservices/MediaPool/v2/}uploadMetadataArgument">
  *       &lt;sequence>
- *         &lt;element name="errors" type="{http://brandmaker.com/webservices/MediaPool/}error" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="errors" type="{http://brandmaker.com/webservices/MediaPool/v2/}error" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="success" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="warnings" type="{http://brandmaker.com/webservices/MediaPool/}warning" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="warnings" type="{http://brandmaker.com/webservices/MediaPool/v2/}warning" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>

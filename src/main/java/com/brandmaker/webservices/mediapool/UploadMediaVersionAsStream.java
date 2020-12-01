@@ -36,13 +36,13 @@ import javax.xml.bind.annotation.*;
 })
 public class UploadMediaVersionAsStream {
 
-    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/", required = true)
+    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", required = true)
     protected String mediaGuid;
-    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/")
+    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/v2/")
     protected String comment;
-    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/", required = true)
+    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", required = true)
     protected String fileName;
-    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/", required = true)
+    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/v2/", required = true)
     @XmlMimeType("application/octet-stream")
     protected DataHandler fileData;
 

@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="setOfficialArgument" type="{http://brandmaker.com/webservices/MediaPool/}setOfficialArgument" minOccurs="0" form="qualified"/>
+ *         &lt;element name="setOfficialArgument" type="{http://brandmaker.com/webservices/MediaPool/v2/}setOfficialArgument" minOccurs="0" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class SetOfficial {
 
-    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/")
+    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/v2/")
     protected SetOfficialArgument setOfficialArgument;
 
     /**

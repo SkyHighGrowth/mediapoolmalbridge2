@@ -31,8 +31,8 @@ import javax.xml.bind.annotation.XmlType;
     "success"
 })
 @XmlSeeAlso({
-    DeleteMediaResult.class,
     UploadMediaVersionResult.class,
+    DeleteMediaResult.class,
     SetOfficialResult.class,
     UploadMetadataResult.class,
     UploadMediaResult.class,

@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="webPublishedMediaData" type="{http://brandmaker.com/webservices/MediaPool/}webPublishedMediaArgument" minOccurs="0" form="qualified"/>
+ *         &lt;element name="webPublishedMediaData" type="{http://brandmaker.com/webservices/MediaPool/v2/}webPublishedMediaArgument" minOccurs="0" form="qualified"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class WebPublishedMedia {
 
-    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/")
+    @XmlElement(namespace = "http://brandmaker.com/webservices/MediaPool/v2/")
     protected WebPublishedMediaArgument webPublishedMediaData;
 
     /**
