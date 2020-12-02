@@ -478,14 +478,14 @@
     "structureName": "AFFILIATES_V003_RIBM",
     "structureNameRadiobutton": "",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\"/>{AFFILIATE_NAME}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{ADDRESS}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{CITY}, {PropertyState} {ZIP}<br/></div>\"",
-    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,PropertyNumber,PropertyName,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "35": {
     "id": "35",
     "brandName": "Marriott Hotels & Resorts",
     "structureName": "AFFILIATES_V000_MHRS",
     "structureNameRadiobutton": "",
-    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,PropertyNumber,PropertyName,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "36": {
     "id": "36",
@@ -493,7 +493,7 @@
     "structureName": "AFFILIATES_V012_CY",
     "structureNameRadiobutton": "",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\"/>{AFFILIATE_NAME}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{ADDRESS}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{CITY}, {PropertyState} {ZIP}<br/></div>\"",
-    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,PropertyNumber,PropertyName,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "37": {
     "id": "37",
@@ -501,14 +501,14 @@
     "structureName": "AFFILIATES_V003_ffi",
     "structureNameRadiobutton": "",
     "addressField01": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\"/>{AFFILIATE_NAME}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{ADDRESS}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{CITY}, {PropertyState} {ZIP}<br/></div>\"",
-    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,PropertyNumber,PropertyName,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "38": {
     "id": "38",
     "brandName": "SpringHill Suites By Marriott",
     "structureName": "AFFILIATES_V000_SHS",
     "structureNameRadiobutton": "",
-    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,PropertyNumber,PropertyName,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
 
   "39": {
@@ -516,14 +516,14 @@
     "brandName": "TownePlace Suites By Marriott",
     "structureName": "AFFILIATES_V000_TPS",
     "structureNameRadiobutton": "",
-    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,PropertyNumber,PropertyName,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "40": {
     "id": "40",
     "brandName": "Delta Hotels and Resorts",
     "structureName": "AFFILIATES_V000_DE",
     "structureNameRadiobutton": "",
-    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,PropertyNumber,PropertyName,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "100": {
     "id": "100",
