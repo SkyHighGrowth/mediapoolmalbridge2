@@ -423,6 +423,15 @@ public class AppConfigData {
     @Value("${download.folder.size.limit}")
     private long downloadFolderSizeLimit;
 
+    @Value("${filter.only.mal.properties}")
+    private List<String> filterOnlyMalProperties;
+
+    @Value("${filter.only.asset.type}")
+    private List<String> filterOnlyAssetType;
+
+    @Value("${filter.only.color.ids}")
+    private List<String> filterOnlyColorIds;
+
     public boolean isUseSftp() {
         return useSftp;
     }
@@ -758,4 +767,17 @@ public class AppConfigData {
     public long getDownloadFolderSizeLimit() {
         return downloadFolderSizeLimit;
     }
+
+    public List<String> getFilterOnlyMalProperties() {
+        return filterOnlyMalProperties;
+    }
+
+    public List<String> getFilterOnlyAssetType() {
+        return filterOnlyAssetType;
+    }
+
+    public List<String> getFilterOnlyColorIds() {
+        return filterOnlyColorIds;
+    }
+
 }

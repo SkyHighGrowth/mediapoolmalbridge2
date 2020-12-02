@@ -32,6 +32,9 @@ import java.util.List;
  */
 public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUniqueThreadService {
 
+    public static final String EPS_FILE_FORMAT = ".eps?";
+    public static final String ZIP_FILE_FORMAT = ".zip?";
+    public static final String LOGO_ASSET_TYPE_ID = "2";
     @Autowired
     private MALGetAssetsClient getAssetsClient;
 
@@ -51,6 +54,13 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
 
     protected void downloadAssets(final MALGetAssetsRequest request) {
         request.setPage(1);
+
+        //filter based on the properties from application.properties.json file
+        request.setBrandIds(appConfig.getFilterOnlyMalProperties());
+        request.setAssetTypeIds(appConfig.getFilterOnlyAssetType());
+        request.setColorIds(appConfig.getFilterOnlyColorIds());
+
+
         RestResponse<MALGetAssetsResponse> response = getAssetsClient.download(request);
         if (!response.isSuccess() ||
                 response.getResponse() == null ||
@@ -102,7 +112,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
     public void transformPageIntoAssets(final List<MALGetAsset> malGetAssets) {
         malGetAssets.forEach(malGetAsset -> {
             if (includedAssetTypes.isIncludedAssetType(malGetAsset.getAssetTypeId())
-                    && StringUtils.isNotEmpty(malGetAsset.getBrandId()) && malPriorities.contains(malGetAsset.getBrandId())) {
+                    && (!malGetAsset.getAssetTypeId().equals(LOGO_ASSET_TYPE_ID) || isNotEPS(malGetAsset))) {
                 setAssetEntityByFileFormat(malGetAsset);
             }
         });
@@ -148,8 +158,25 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
         }
     }
 
-    private boolean isMatchingFileFormat(String fileFormat, String matchingFileFormat, String xlUrl) {
-        return fileFormat.equals(matchingFileFormat) && StringUtils.isNotBlank(xlUrl);
+    private boolean isNotEPS(MALGetAsset malGetAsset) {
+        return malGetAsset.getAssetTypeId().equals(LOGO_ASSET_TYPE_ID) &&
+                (
+                        malGetAsset.getXlUrl() != null && !malGetAsset.getXlUrl().toLowerCase().contains(EPS_FILE_FORMAT) ||
+                                malGetAsset.getLargeUrl() != null && !malGetAsset.getLargeUrl().toLowerCase().contains(EPS_FILE_FORMAT) ||
+                                malGetAsset.getHighUrl() != null && !malGetAsset.getHighUrl().toLowerCase().contains(EPS_FILE_FORMAT) ||
+                                malGetAsset.getMediumUrl() != null && !malGetAsset.getMediumUrl().toLowerCase().contains(EPS_FILE_FORMAT) ||
+                                malGetAsset.getThumbnailUrl() != null && !malGetAsset.getThumbnailUrl().toLowerCase().contains(EPS_FILE_FORMAT) ||
+                                malGetAsset.getLogoJpgUrl() != null && !malGetAsset.getLogoJpgUrl().toLowerCase().contains(EPS_FILE_FORMAT) ||
+                                malGetAsset.getLogoPngUrl() != null && !malGetAsset.getLogoPngUrl().toLowerCase().contains(EPS_FILE_FORMAT)
+                );
+    }
+
+    private boolean isNotZip(String logoPngUrl) {
+        return !logoPngUrl.toLowerCase().contains(ZIP_FILE_FORMAT);
+    }
+
+    private boolean isMatchingFileFormat(String fileFormat, String matchingFileFormat, String url) {
+        return fileFormat.equals(matchingFileFormat) && StringUtils.isNotBlank(url) && isNotZip(url);
     }
 
     private void saveAssetEntity(AssetEntity assetEntity) {
