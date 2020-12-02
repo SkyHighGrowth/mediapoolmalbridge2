@@ -453,4 +453,15 @@ public class AppConfig {
         return appConfigData.getFileFormatsOrder();
     }
 
+    public List<String> getFilterOnlyMalProperties() {
+        return appConfigData.getFilterOnlyMalProperties();
+    }
+
+    public List<String> getFilterOnlyAssetType(){
+        return appConfigData.getFilterOnlyAssetType();
+    }
+
+    public List<String> getFilterOnlyColorIds() {
+        return appConfigData.getFilterOnlyColorIds();
+    }
 }
