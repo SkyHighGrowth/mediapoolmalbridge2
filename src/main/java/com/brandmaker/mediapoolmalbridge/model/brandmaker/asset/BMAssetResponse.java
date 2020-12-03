@@ -7,18 +7,12 @@ import java.util.List;
  */
 public class BMAssetResponse {
 
-    private String total;
     private List<BMAsset> assets;
 
-    public String getTotal() {
-        return total;
-    }
-    public void setTotal(String total) {
-        this.total = total;
-    }
     public List<BMAsset> getAssets() {
         return assets;
     }
+
     public void setAssets(List<BMAsset> assets) {
         this.assets = assets;
     }

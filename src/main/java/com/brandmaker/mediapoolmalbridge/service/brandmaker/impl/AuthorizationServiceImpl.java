@@ -16,12 +16,13 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 
 /**
  * This class is for server authorization with user/pass
  */
-
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
 
@@ -54,6 +55,26 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         return new HttpEntity<>(headers);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public String getDomainUrl() {
+        final URL url;
+        try {
+            if (Arrays.asList(environment.getActiveProfiles()).contains(DEV) && !Arrays.asList(environment.getActiveProfiles()).contains(PRODUCTION)) {
+                url = new URL(appConfig.getMediapoolUrlDev());
+                return "https://" + url.getHost();
+            } else if (Arrays.asList(environment.getActiveProfiles()).contains(PRODUCTION) && !Arrays.asList(environment.getActiveProfiles()).contains(DEV)) {
+                url = new URL(appConfig.getMediapoolUrlProduction());
+                return "https://" + url.getHost();
+            }
+
+        } catch (MalformedURLException e) {
+            logger.error("URL is wrong in the application.properties file for MediaPoolUrl property");
+        }
+        return null;
+    }
+
     private RestAccessToken authenticateUser() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -71,7 +92,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         }
 
         return null;
-
     }
 
     private HttpHeaders setAuthorizationHeader() {
@@ -99,18 +119,18 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         if (Arrays.asList(environment.getActiveProfiles()).contains(DEV) && !Arrays.asList(environment.getActiveProfiles()).contains(PRODUCTION)) {
             credentials.setUsername(appConfig.getMediapoolUsernameDev());
             credentials.setPassword(appConfig.getMediapoolPasswordDev());
-            credentials.setUrl("https://qamarriott.brandmakerinc.com/");
+            credentials.setUrl(getDomainUrl());
         }
         if (Arrays.asList(environment.getActiveProfiles()).contains(PRODUCTION) && !Arrays.asList(environment.getActiveProfiles()).contains(DEV)) {
             credentials.setUsername(appConfig.getMediapoolUsernameProduction());
             credentials.setPassword(appConfig.getMediapoolPasswordProduction());
-            credentials.setUrl("https://marriott.brandmakerinc.com/");
+            credentials.setUrl(getDomainUrl());
         }
 
         return credentials;
     }
 
-    class Credentials {
+    static class Credentials {
         private String username;
         private String password;
         private String url;

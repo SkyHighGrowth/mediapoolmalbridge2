@@ -22,6 +22,7 @@ public class BMAsset {
     public String getAffiliateNumber() {
         return affiliateNumber;
     }
+
     public void setAffiliateNumber(String affiliateNumber) {
         this.affiliateNumber = affiliateNumber;
     }

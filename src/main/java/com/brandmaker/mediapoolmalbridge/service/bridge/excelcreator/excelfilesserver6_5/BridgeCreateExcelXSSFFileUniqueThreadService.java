@@ -11,6 +11,7 @@ import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.property.MALPr
 import com.brandmaker.mediapoolmalbridge.persistence.entity.mal.MALPropertyEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.repository.mal.MALPropertyRepository;
 import com.brandmaker.mediapoolmalbridge.service.brandmaker.AssetRestService;
+import com.brandmaker.mediapoolmalbridge.service.brandmaker.ThemeRestService;
 import com.brandmaker.mediapoolmalbridge.service.bridge.AbstractBridgeUniqueThreadService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,8 +40,6 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
     private static final Gson gsonWithNulls = new GsonBuilder().serializeNulls().create();
 
-    private static final String ASSET_TYPE_ID = "2";
-
     private final MALAssetStructures assetStructures;
 
     private int rowIndex = 0;
@@ -57,10 +56,16 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
     private final AssetRestService assetRestService;
 
-    public BridgeCreateExcelXSSFFileUniqueThreadService(final MALAssetStructures assetStructures, MALPropertyRepository malPropertyRepository, AssetRestService assetRestService) {
+    private final ThemeRestService themeRestService;
+
+    public BridgeCreateExcelXSSFFileUniqueThreadService(final MALAssetStructures assetStructures,
+                                                        MALPropertyRepository malPropertyRepository,
+                                                        AssetRestService assetRestService,
+                                                        ThemeRestService themeRestService) {
         this.assetStructures = assetStructures;
         this.malPropertyRepository = malPropertyRepository;
         this.assetRestService = assetRestService;
+        this.themeRestService = themeRestService;
     }
 
 
@@ -453,12 +458,15 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                         propertyVariantField.getOrder(),
                         MEDIA));
             } else {
-                String logo = assetRestService.getAssetsByThemeId(propertyVariantField.getColorId(), malPropertyEntity.getPropertyId());
-                if (logo != null) {
-                    attributes.add(new AttributeCO(propertyVariantField.getOrderNumber(),
-                            propertyVariantField.getPropertyName(),
-                            MEDIA,
-                            logo));
+                String bmColorThemeId = themeRestService.getColorIdByName(propertyVariantField.getPropertyName());
+                if (bmColorThemeId != null) {
+                    String logo = assetRestService.getAssetIdsByThemeIdAndPropertyId(bmColorThemeId, malPropertyEntity.getPropertyId());
+                    if (logo != null) {
+                        attributes.add(new AttributeCO(propertyVariantField.getOrderNumber(),
+                                propertyVariantField.getPropertyName(),
+                                MEDIA,
+                                logo));
+                    }
                 }
             }
         }
