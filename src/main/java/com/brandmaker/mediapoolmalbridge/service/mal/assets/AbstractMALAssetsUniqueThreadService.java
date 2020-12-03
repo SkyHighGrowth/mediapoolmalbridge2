@@ -56,9 +56,20 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
         request.setPage(1);
 
         //filter based on the properties from application.properties.json file
-        request.setBrandIds(appConfig.getFilterOnlyMalProperties());
-        request.setAssetTypeIds(appConfig.getFilterOnlyAssetType());
-        request.setColorIds(appConfig.getFilterOnlyColorIds());
+        List<String> filterOnlyMalProperties = appConfig.getFilterOnlyMalProperties();
+        if (filterOnlyMalProperties != null && !filterOnlyMalProperties.isEmpty()) {
+            request.setBrandIds(filterOnlyMalProperties);
+        }
+
+        List<String> filterOnlyAssetType = appConfig.getFilterOnlyAssetType();
+        if (filterOnlyAssetType != null && !filterOnlyAssetType.isEmpty()) {
+            request.setAssetTypeIds(filterOnlyAssetType);
+        }
+
+        List<String> filterOnlyColorIds = appConfig.getFilterOnlyColorIds();
+        if (filterOnlyColorIds != null && !filterOnlyColorIds.isEmpty()) {
+            request.setColorIds(filterOnlyColorIds);
+        }
 
 
         RestResponse<MALGetAssetsResponse> response = getAssetsClient.download(request);
