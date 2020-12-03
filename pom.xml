@@ -10,9 +10,9 @@
     </parent>
     <groupId>com.brandmaker.cs.skyhigh.marriott.salmiddlewaresync</groupId>
     <artifactId>salmiddlewaresync</artifactId>
-    <version>2.0.2_${project.build.warname}</version>
+    <version>2.0.3_${project.build.warname}</version>
     <name>salmiddlewaresync</name>
-    <description>SAL Middleware for Brandmaker Mediapool</description>
+    <description>SAL Middleware for Brandmaker MediaPool</description>
 
     <distributionManagement>
         <repository>
