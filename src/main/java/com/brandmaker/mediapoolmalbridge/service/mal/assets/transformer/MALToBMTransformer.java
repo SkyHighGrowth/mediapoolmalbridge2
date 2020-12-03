@@ -69,7 +69,7 @@ public class MALToBMTransformer {
         String colorId = assetStructures.getColors().get(malGetAsset.getColorId());
         if (StringUtils.isNotEmpty(colorId)) {
             setAssociation(uploadMetadataArgument, "Colors/", colorId, true);
-            setFreeFieldValue(uploadMetadataArgument.getFreeField10(), colorId);
+            setFreeFieldValue(uploadMetadataArgument.getFreeField10(), "MAL_" + colorId);
         }
 
         // If asset theme is not set, fail safe value is set
