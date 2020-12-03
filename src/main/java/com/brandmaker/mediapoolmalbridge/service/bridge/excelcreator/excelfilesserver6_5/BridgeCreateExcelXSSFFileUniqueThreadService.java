@@ -58,6 +58,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
     private final ThemeRestService themeRestService;
 
+
     public BridgeCreateExcelXSSFFileUniqueThreadService(final MALAssetStructures assetStructures,
                                                         MALPropertyRepository malPropertyRepository,
                                                         AssetRestService assetRestService,
@@ -78,7 +79,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private void createFile(String fileName, LinkedHashSet<MALPropertyPair> allProperties, boolean isBrand) {
+    private void createFile(String fileName, LinkedHashSet<MALPropertyPair> allProperties, boolean isBrand, Map<String, String> colorsMap) {
         try {
             final Workbook workbook = new XSSFWorkbook();
             createStructuresSheet(workbook);
@@ -88,7 +89,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     return;
                 }
             } else {
-                createObjectsSheet(workbook, allProperties);
+                createObjectsSheet(workbook, allProperties, colorsMap);
             }
             final OutputStream fileOutputStream = new FileOutputStream(new File(appConfig.getExcelDir() + fileName));
             workbook.write(fileOutputStream);
@@ -107,6 +108,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         final List<MALPropertyVariant> propertyVariants = new ArrayList<>(assetStructures.getPropertyVariants().values());
         LinkedHashSet<MALPropertyPair> malPropertyPairSet = new LinkedHashSet<>();
         LinkedHashSet<MALPropertyPair> malPropertyBrandPairSet = new LinkedHashSet<>();
+        Map<String, String> colorsMap = getColorsMap();
         int count = 0;
         int countProperties = 0;
 
@@ -117,7 +119,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                 if (!propertyVariant.isBrandStructure() && countProperties == appConfig.getFileMaxRecords() && appConfig.getFileMaxRecords() > 0) {
                     count++;
                     String fileName = String.format("DataStructures_%s.xlsx", count);
-                    createFile(fileName, malPropertyPairSet, false);
+                    createFile(fileName, malPropertyPairSet, false, colorsMap);
                     malPropertyPairSet.clear();
                     countProperties = 0;
                 }
@@ -134,11 +136,24 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (countProperties > 0) {
             count++;
             String fileName = String.format("DataStructures_%s.xlsx", count);
-            createFile(fileName, malPropertyPairSet, false);
+            createFile(fileName, malPropertyPairSet, false, colorsMap);
         }
 
         String fileName = "DataStructures_BRAND_IMAGES.xlsx";
-        createFile(fileName, malPropertyBrandPairSet, true);
+        createFile(fileName, malPropertyBrandPairSet, true, colorsMap);
+    }
+
+    private HashMap<String, String> getColorsMap() {
+        HashMap<String, String> map = new HashMap<>();
+        for (PropertyVariantFields propertyVariantField : PropertyVariantFields.values()) {
+            if (!propertyVariantField.getColorId().equals("")) {
+                String colorId = propertyVariantField.getColorId();
+                String colorName = assetStructures.getColors().get(colorId);
+                String bmColorThemeId = themeRestService.getColorIdByName(colorName);
+                map.put(colorId, bmColorThemeId);
+            }
+        }
+        return map;
     }
 
     private void deleteOldFilesFromExcelDirectory() throws IOException {
@@ -152,7 +167,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private void createObjectsSheet(final Workbook workbook, LinkedHashSet<MALPropertyPair> malPropertyPairSet) {
+    private void createObjectsSheet(final Workbook workbook, LinkedHashSet<MALPropertyPair> malPropertyPairSet, Map<String, String> colorsMap) {
         final Sheet sheet = getObjectsHeader(workbook);
 
         for (MALPropertyPair malProperty : malPropertyPairSet) {
@@ -161,7 +176,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             try {
                 if (!propertyVariant.isBrandStructure()) {
                     final String[] combinedAddressFields = digestCombinedAddressField(propertyVariant, malPropertyEntity);
-                    digestLogos(sheet, propertyVariant, malPropertyEntity, combinedAddressFields);
+                    digestLogos(sheet, propertyVariant, malPropertyEntity, combinedAddressFields, colorsMap);
 
                     if (!StringUtils.isBlank(propertyVariant.getSubName())) {
                         digestAssets(sheet, propertyVariant, malPropertyEntity);
@@ -337,51 +352,51 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     }
 
     private void digestLogos(final Sheet sheet, MALPropertyVariant propertyVariant,
-                             final MALPropertyEntity malPropertyEntity, final String[] combinedAddressFields) {
+                             final MALPropertyEntity malPropertyEntity, final String[] combinedAddressFields, Map<String, String> colorsMap) {
         final List<String> propertyVariantFields = Arrays.asList(propertyVariant.getFieldsArray());
-        String jsonAttributes = getJsonAttributes(malPropertyEntity, combinedAddressFields, propertyVariantFields, false);
+        String jsonAttributes = getJsonAttributes(malPropertyEntity, combinedAddressFields, propertyVariantFields, false, colorsMap);
         addRow(sheet, propertyVariant.getStructureName(), malPropertyEntity.getPropertyId(), malPropertyEntity.getName(), jsonAttributes, null);
     }
 
     public String getJsonAttributes(MALPropertyEntity malPropertyEntity, String[] combinedAddressFields,
-                                    List<String> propertyVariantFields, boolean isCustomStructure) {
+                                    List<String> propertyVariantFields, boolean isCustomStructure, Map<String, String> colorsMap) {
         final List<Object> attributes = new ArrayList<>();
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_1C, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_4C, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_4CB, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_1C_BLACK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_PMS, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_PMSC, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_4CC, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_KOD, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_BLACKK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_4CK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_BLACK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_DUSK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_CMYK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_PMS, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_RGB, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_UNCOATED_CMYK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_UNCOATED_PMS, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_IVORY, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_KNOCKOUT, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_LOGO_SPECS, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_COATED_CMYK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_COATED_PMS, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_RGB, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_UNCOATED_CMYK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_UNCOATED_PMS, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_COATED_CMYK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_COATED_PMS, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_RGB, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_UNCOATED_CMYK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_UNCOATED_PMS, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_COATED_CMYK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_COATED_PMS, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_RGB, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_CMYK, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_PMS, isCustomStructure);
-        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_US_NAVY, isCustomStructure);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_1C, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_4C, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_4CB, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_1C_BLACK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_PMS, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_PMSC, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_4CC, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_KOD, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_BLACKK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_4CK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_BLACK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_DUSK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_CMYK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_CODED_PMS, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_RGB, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_UNCOATED_CMYK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_GRAPHITE_UNCOATED_PMS, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_IVORY, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_KNOCKOUT, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_LOGO_SPECS, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_COATED_CMYK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_COATED_PMS, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_RGB, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_UNCOATED_CMYK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_OYSTER_UNCOATED_PMS, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_COATED_CMYK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_COATED_PMS, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_RGB, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_UNCOATED_CMYK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_RESORT_FRENCH_GRAY_UNCOATED_PMS, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_COATED_CMYK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_COATED_PMS, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_RGB, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_CMYK, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_PMS, isCustomStructure, colorsMap);
+        addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_US_NAVY, isCustomStructure, colorsMap);
 
         addAttribute(attributes, propertyVariantFields, PropertyVariantFields.AFFILIATE_NAME, TEXT, malPropertyEntity != null ? malPropertyEntity.getName() : "", isCustomStructure);
         addAttribute(attributes, propertyVariantFields, PropertyVariantFields.AFFILIATES_CODE, TEXT, malPropertyEntity != null ? malPropertyEntity.getPropertyId() : "", isCustomStructure);
@@ -449,7 +464,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     }
 
     private void addLogoAttribute(MALPropertyEntity malPropertyEntity, List<Object> attributes, List<String> propertyVariantFields,
-                                  PropertyVariantFields propertyVariantField, boolean isCustomStructure) {
+                                  PropertyVariantFields propertyVariantField, boolean isCustomStructure, Map<String, String> colorsMap) {
         if (propertyVariantFields.contains(propertyVariantField.getPropertyName())) {
             if (isCustomStructure) {
                 attributes.add(new AttributeCS(propertyVariantField.getOrderNumber(),
@@ -458,15 +473,12 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                         propertyVariantField.getOrder(),
                         MEDIA));
             } else {
-                String bmColorThemeId = themeRestService.getColorIdByName(propertyVariantField.getPropertyName());
-                if (bmColorThemeId != null) {
-                    String logo = assetRestService.getAssetIdsByThemeIdAndPropertyId(bmColorThemeId, malPropertyEntity.getPropertyId());
-                    if (logo != null) {
-                        attributes.add(new AttributeCO(propertyVariantField.getOrderNumber(),
-                                propertyVariantField.getPropertyName(),
-                                MEDIA,
-                                logo));
-                    }
+                String logo = assetRestService.getAssetIdsByThemeIdAndPropertyId(colorsMap.get(propertyVariantField.getColorId()), malPropertyEntity.getPropertyId());
+                if (logo != null) {
+                    attributes.add(new AttributeCO(propertyVariantField.getOrderNumber(),
+                            propertyVariantField.getPropertyName(),
+                            MEDIA,
+                            logo));
                 }
             }
         }
@@ -593,7 +605,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
                 final List<String> propertyVariantFields = new ArrayList<>();
                 Collections.addAll(propertyVariantFields, malPropertyVariant.getFieldsArray());
-                String newValue = getJsonAttributes(null, null, propertyVariantFields, true);
+                String newValue = getJsonAttributes(null, null, propertyVariantFields, true, null);
                 row.createCell(colIndex).setCellValue(newValue);
 
                 // substructure floor plans
