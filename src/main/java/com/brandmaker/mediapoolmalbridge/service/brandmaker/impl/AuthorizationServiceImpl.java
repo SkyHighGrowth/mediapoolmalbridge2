@@ -80,7 +80,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         HttpHeaders headers = new HttpHeaders();
         if (authenticationToken != null) {
             String bearerToken = String.format("Bearer %s", authenticationToken.getAccessToken());
-            headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set("Authorization", bearerToken);
         }
 

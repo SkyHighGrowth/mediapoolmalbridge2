@@ -4,12 +4,13 @@ import com.brandmaker.mediapoolmalbridge.model.mal.MALAssetStructures;
 import com.brandmaker.mediapoolmalbridge.model.mal.propertyvariants.MALPropertyVariant;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.ReportsEntity;
-import com.brandmaker.mediapoolmalbridge.persistence.entity.mal.MALPropertyEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportTo;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportType;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.property.MALPropertyStatus;
+import com.brandmaker.mediapoolmalbridge.persistence.entity.mal.MALPropertyEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.repository.mal.MALPropertyRepository;
+import com.brandmaker.mediapoolmalbridge.service.brandmaker.AssetRestService;
 import com.brandmaker.mediapoolmalbridge.service.bridge.AbstractBridgeUniqueThreadService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -54,10 +55,14 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
     private final MALPropertyRepository malPropertyRepository;
 
-    public BridgeCreateExcelXSSFFileUniqueThreadService(final MALAssetStructures assetStructures, MALPropertyRepository malPropertyRepository) {
+    private final AssetRestService assetRestService;
+
+    public BridgeCreateExcelXSSFFileUniqueThreadService(final MALAssetStructures assetStructures, MALPropertyRepository malPropertyRepository, AssetRestService assetRestService) {
         this.assetStructures = assetStructures;
         this.malPropertyRepository = malPropertyRepository;
+        this.assetRestService = assetRestService;
     }
+
 
     @Override
     protected void run() {
@@ -448,13 +453,12 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                         propertyVariantField.getOrder(),
                         MEDIA));
             } else {
-                List<AssetEntity> logo = assetRepository.findAssetDetails(malPropertyEntity.getPropertyId(), ASSET_TYPE_ID, propertyVariantField.getColorId(), TransferringAssetStatus.DONE);
-                if (logo != null && !logo.isEmpty()) {
-                    String value = getPropertyMedia(logo.get(0).getBmAssetId());
+                String logo = assetRestService.getAssetsByThemeId(propertyVariantField.getColorId(), malPropertyEntity.getPropertyId());
+                if (logo != null) {
                     attributes.add(new AttributeCO(propertyVariantField.getOrderNumber(),
                             propertyVariantField.getPropertyName(),
                             MEDIA,
-                            value));
+                            logo));
                 }
             }
         }
