@@ -1,5 +1,6 @@
 package com.brandmaker.mediapoolmalbridge.service.bridge.excelcreator.excelfilesserver6_5;
 
+import com.brandmaker.mediapoolmalbridge.model.brandmaker.asset.BMAsset;
 import com.brandmaker.mediapoolmalbridge.model.mal.MALAssetStructures;
 import com.brandmaker.mediapoolmalbridge.model.mal.propertyvariants.MALPropertyVariant;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetEntity;
@@ -79,7 +80,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private void createFile(String fileName, LinkedHashSet<MALPropertyPair> allProperties, boolean isBrand, Map<String, String> colorsMap) {
+    private void createFile(String fileName, LinkedHashSet<MALPropertyPair> allProperties, boolean isBrand, Map<String, List<BMAsset>> colorsMap) {
         try {
             final Workbook workbook = new XSSFWorkbook();
             createStructuresSheet(workbook);
@@ -108,7 +109,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         final List<MALPropertyVariant> propertyVariants = new ArrayList<>(assetStructures.getPropertyVariants().values());
         LinkedHashSet<MALPropertyPair> malPropertyPairSet = new LinkedHashSet<>();
         LinkedHashSet<MALPropertyPair> malPropertyBrandPairSet = new LinkedHashSet<>();
-        Map<String, String> colorsMap = getColorsMap();
+        Map<String, List<BMAsset>> colorsMap = getColorsMap();
         int count = 0;
         int countProperties = 0;
 
@@ -143,14 +144,19 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         createFile(fileName, malPropertyBrandPairSet, true, colorsMap);
     }
 
-    private HashMap<String, String> getColorsMap() {
-        HashMap<String, String> map = new HashMap<>();
+    private HashMap<String, List<BMAsset>> getColorsMap() {
+        HashMap<String, List<BMAsset>> map = new HashMap<>();
         for (PropertyVariantFields propertyVariantField : PropertyVariantFields.values()) {
             if (!propertyVariantField.getColorId().equals("")) {
                 String colorId = propertyVariantField.getColorId();
                 String colorName = assetStructures.getColors().get(colorId);
                 String bmColorThemeId = themeRestService.getColorIdByName(colorName);
-                map.put(colorId, bmColorThemeId);
+                if (bmColorThemeId != null) {
+                    List<BMAsset> assetIdsByThemeIdAndPropertyId = assetRestService.getAssetIdsByThemeIdAndPropertyId(bmColorThemeId);
+                    map.put(colorId, assetIdsByThemeIdAndPropertyId);
+                } else {
+                    map.put(colorId, null);
+                }
             }
         }
         return map;
@@ -167,7 +173,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
     }
 
-    private void createObjectsSheet(final Workbook workbook, LinkedHashSet<MALPropertyPair> malPropertyPairSet, Map<String, String> colorsMap) {
+    private void createObjectsSheet(final Workbook workbook, LinkedHashSet<MALPropertyPair> malPropertyPairSet, Map<String, List<BMAsset>> colorsMap) {
         final Sheet sheet = getObjectsHeader(workbook);
 
         for (MALPropertyPair malProperty : malPropertyPairSet) {
@@ -352,14 +358,14 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     }
 
     private void digestLogos(final Sheet sheet, MALPropertyVariant propertyVariant,
-                             final MALPropertyEntity malPropertyEntity, final String[] combinedAddressFields, Map<String, String> colorsMap) {
+                             final MALPropertyEntity malPropertyEntity, final String[] combinedAddressFields, Map<String, List<BMAsset>> colorsMap) {
         final List<String> propertyVariantFields = Arrays.asList(propertyVariant.getFieldsArray());
         String jsonAttributes = getJsonAttributes(malPropertyEntity, combinedAddressFields, propertyVariantFields, false, colorsMap);
         addRow(sheet, propertyVariant.getStructureName(), malPropertyEntity.getPropertyId(), malPropertyEntity.getName(), jsonAttributes, null);
     }
 
     public String getJsonAttributes(MALPropertyEntity malPropertyEntity, String[] combinedAddressFields,
-                                    List<String> propertyVariantFields, boolean isCustomStructure, Map<String, String> colorsMap) {
+                                    List<String> propertyVariantFields, boolean isCustomStructure, Map<String, List<BMAsset>> colorsMap) {
         final List<Object> attributes = new ArrayList<>();
         addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_1C, isCustomStructure, colorsMap);
         addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_4C, isCustomStructure, colorsMap);
@@ -464,7 +470,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     }
 
     private void addLogoAttribute(MALPropertyEntity malPropertyEntity, List<Object> attributes, List<String> propertyVariantFields,
-                                  PropertyVariantFields propertyVariantField, boolean isCustomStructure, Map<String, String> colorsMap) {
+                                  PropertyVariantFields propertyVariantField, boolean isCustomStructure, Map<String, List<BMAsset>> colorsMap) {
         if (propertyVariantFields.contains(propertyVariantField.getPropertyName())) {
             if (isCustomStructure) {
                 attributes.add(new AttributeCS(propertyVariantField.getOrderNumber(),
@@ -473,12 +479,24 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                         propertyVariantField.getOrder(),
                         MEDIA));
             } else {
-                String logo = assetRestService.getAssetIdsByThemeIdAndPropertyId(colorsMap.get(propertyVariantField.getColorId()), malPropertyEntity.getPropertyId());
-                if (logo != null) {
-                    attributes.add(new AttributeCO(propertyVariantField.getOrderNumber(),
-                            propertyVariantField.getPropertyName(),
-                            MEDIA,
-                            logo));
+                Optional<BMAsset> firstAsset = Optional.empty();
+                List<BMAsset> bmAssets = colorsMap.get(propertyVariantField.getColorId());
+                if (bmAssets != null) {
+                    firstAsset = bmAssets
+                            .stream()
+                            .filter(asset -> asset != null
+                                    && asset.getAffiliateNumber() != null
+                                    && asset.getAffiliateNumber().equals(malPropertyEntity.getPropertyId()))
+                            .findFirst().map(Optional::of).orElse(firstAsset);
+                }
+                if (firstAsset.isPresent()) {
+                    String logo = firstAsset.get().getId();
+                    if (logo != null) {
+                        attributes.add(new AttributeCO(propertyVariantField.getOrderNumber(),
+                                propertyVariantField.getPropertyName(),
+                                MEDIA,
+                                logo));
+                    }
                 }
             }
         }

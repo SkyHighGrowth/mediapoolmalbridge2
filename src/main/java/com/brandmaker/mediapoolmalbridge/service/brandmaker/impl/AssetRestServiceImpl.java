@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ import java.util.List;
 @Service
 public class AssetRestServiceImpl implements AssetRestService {
 
-    public static final String SEARCH_URL = "/rest/mp/v1.0/search?filter={value}";
+    public static final String SEARCH_URL = "/rest/mp/v1.0/search?filter={filter}&limit={limit}";
     public static final int ASSET_TYPE_LOGO = 28;
 
     private final AuthorizationService authorizationService;
@@ -45,25 +46,18 @@ public class AssetRestServiceImpl implements AssetRestService {
     /**
      * {@inheritDoc}
      */
-    public String getAssetIdsByThemeIdAndPropertyId(String themeId, String propertyId) {
+    public List<BMAsset> getAssetIdsByThemeIdAndPropertyId(String themeId) {
 
         String filter = getFilterByThemeId(themeId);
         String url = authorizationService.getDomainUrl() + SEARCH_URL;
         HttpEntity<String> httpEntity = authorizationService.getHttpEntity();
         ResponseEntity<BMAssetResponse> responseEntity = getRestTemplate()
-                .exchange(url, HttpMethod.GET, httpEntity, BMAssetResponse.class, filter);
+                .exchange(url, HttpMethod.GET, httpEntity, BMAssetResponse.class, filter, "3000");
         BMAssetResponse responseEntityBody = responseEntity.getBody();
-        if (responseEntityBody != null) {
-            List<BMAsset> bmAssets = responseEntityBody.getAssets();
-            if (bmAssets != null && !bmAssets.isEmpty()) {
-                for (BMAsset bmAsset : bmAssets) {
-                    if (bmAsset.getAffiliateNumber() != null && bmAsset.getAffiliateNumber().equals(propertyId)) {
-                        return bmAsset.getId();
-                    }
-                }
-            }
+        if (responseEntityBody != null && responseEntityBody.getAssets() != null && !responseEntityBody.getAssets().isEmpty()) {
+            return responseEntityBody.getAssets();
         }
-        return null;
+        return new ArrayList<>();
     }
 
     private String getFilterByThemeId(String themeId) {
