@@ -13,7 +13,7 @@ public interface AssetRestService {
      * Method that returns assets from BM by BM theme id and property id
      *
      * @param bmColorThemeId String color theme id
-     * @return String asset id
+     * @return List<BMAsset>
      */
     List<BMAsset> getAssetIdsByThemeIdAndPropertyId(String bmColorThemeId);
 }
