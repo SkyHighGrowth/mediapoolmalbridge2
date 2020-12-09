@@ -525,6 +525,34 @@
     "structureNameRadiobutton": "",
     "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
+  "41": {
+    "id": "41",
+    "brandName": "MOXY HOTELS",
+    "structureName": "AFFILIATES_V000_MXY",
+    "structureNameRadiobutton": "",
+    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+  },
+  "42": {
+    "id": "42",
+    "brandName": "AC Hotels by Marriott",
+    "structureName": "AFFILIATES_V000_ACH",
+    "structureNameRadiobutton": "",
+    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+  },
+  "43": {
+    "id": "43",
+    "brandName": "JW Marriott",
+    "structureName": "AFFILIATES_V000_JWM",
+    "structureNameRadiobutton": "",
+    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+  },
+  "44": {
+    "id": "44",
+    "brandName": "Renaissance Hotels",
+    "structureName": "AFFILIATES_V000_RHR",
+    "structureNameRadiobutton": "",
+    "fields": ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+  },
   "100": {
     "id": "100",
     "structureName": "BRAND_Aloft_Lifestyle_Images_alf",
