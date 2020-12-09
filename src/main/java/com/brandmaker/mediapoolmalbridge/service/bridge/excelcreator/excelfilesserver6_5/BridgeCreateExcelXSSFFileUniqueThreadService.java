@@ -519,7 +519,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             field = field.trim();
             switch (field) {
                 case "AFFILIATE_NAME":
-                    replacement = malPropertyEntity.getBrand();
+                    replacement = malPropertyEntity.getName();
                     break;
                 case "STREET":
                     replacement = malPropertyEntity.getAddress2();
