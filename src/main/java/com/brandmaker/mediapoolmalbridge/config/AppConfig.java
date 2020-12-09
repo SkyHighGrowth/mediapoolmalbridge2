@@ -1,21 +1,27 @@
 package com.brandmaker.mediapoolmalbridge.config;
 
 import com.brandmaker.mediapoolmalbridge.constants.Constants;
+import com.brandmaker.mediapoolmalbridge.exception.AppPropertiesParseException;
+import com.brandmaker.mediapoolmalbridge.exception.ProfileMissingException;
+import com.brandmaker.mediapoolmalbridge.model.mal.propertyvariants.MALPropertyVariant;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +35,7 @@ public class AppConfig {
     private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
 
     private AppConfigData appConfigData;
+    private Map<String, MALPropertyVariant> propertyVariants;
 
     private static final String WORK_DIR = "/data/skyhigh"; //change to /data/skyhigh
 
@@ -39,7 +46,7 @@ public class AppConfig {
         if (Arrays.asList(environment.getActiveProfiles()).contains("dev") &&
                 Arrays.asList(environment.getActiveProfiles()).contains("production")) {
             logger.error("Can not start with profiles dev and production set at the same time");
-            throw new RuntimeException("Can not start with profiles dev and production set at the same time");
+            throw new ProfileMissingException("Can not start with profiles dev and production set at the same time");
         }
 
         File file = new File(WORK_DIR + File.separator + Constants.APPLICATION_DIR);
@@ -52,7 +59,7 @@ public class AppConfig {
                 this.appConfigData = objectMapper.readValue(file, AppConfigData.class);
             } catch (final Exception e) {
                 logger.error("Fatal: Can not parse application.properties.json", e);
-                throw new RuntimeException("Fatal: Can not parse application.properties.json");
+                throw new AppPropertiesParseException("Fatal: Can not parse application.properties.json");
             }
         } else {
             try {
@@ -68,10 +75,21 @@ public class AppConfig {
             InputStream propertyVariantsFile;
             String destinationPath = getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON;
             File dataPropertyVariantsFile = new File(destinationPath);
+
+            try {
+                TypeReference<HashMap<String,MALPropertyVariant>> typeRef
+                        = new TypeReference<HashMap<String,MALPropertyVariant>>() {};
+
+                this.setPropertyVariants(objectMapper.readValue(dataPropertyVariantsFile,typeRef));
+            } catch (IOException e) {
+                logger.error("Reading of propertyVariants.json file failed!", e);
+            }
+
             try {
                 if (!dataPropertyVariantsFile.exists()) {
                     ClassLoader classLoader = getClass().getClassLoader();
                     propertyVariantsFile = classLoader.getResourceAsStream("propertyVariants.json");
+
                     assert propertyVariantsFile != null;
                     Files.copy(propertyVariantsFile, Paths.get(destinationPath), StandardCopyOption.REPLACE_EXISTING);
 
@@ -101,7 +119,38 @@ public class AppConfig {
     }
 
     public AppConfigData getAppConfigData() {
-        return appConfigData;
+        final String filePath = WORK_DIR + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
+        File file = new File(filePath);
+        try {
+            return new ObjectMapper().readValue(file, AppConfigData.class);
+        } catch (IOException e) {
+            logger.error("Fatal: Can not parse application.properties.json", e);
+        }
+        return null;
+    }
+
+    public void setAppConfigData(AppConfigData appConfigData) {
+        this.appConfigData = appConfigData;
+    }
+
+    public Map<String, MALPropertyVariant> getPropertyVariants() {
+        final String filePath = WORK_DIR + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON;
+        File file = new File(filePath);
+        FileReader reader = null;
+        try {
+            reader = new FileReader(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Type type = new TypeToken<Map<String, MALPropertyVariant>>() {
+        }.getType();
+
+        assert reader != null;
+        return (new Gson()).fromJson(new JsonReader(reader), type);
+    }
+
+    public void setPropertyVariants(Map<String, MALPropertyVariant> propertyVariants) {
+        this.propertyVariants = propertyVariants;
     }
 
     public String getTempDir() {
@@ -441,7 +490,7 @@ public class AppConfig {
         return appConfigData.getFilterEndDate();
     }
 
-    public int getFileMaxRecords(){
+    public int getFileMaxRecords() {
         return appConfigData.getFileMaxRecords();
     }
 
@@ -457,7 +506,7 @@ public class AppConfig {
         return appConfigData.getFilterOnlyMalProperties();
     }
 
-    public List<String> getFilterOnlyAssetType(){
+    public List<String> getFilterOnlyAssetType() {
         return appConfigData.getFilterOnlyAssetType();
     }
 

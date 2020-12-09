@@ -1,9 +1,9 @@
 package com.brandmaker.mediapoolmalbridge.config;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -390,11 +390,17 @@ public class AppConfigData {
     @Value("#{${mal.priorities}}")
     private Map<Integer, List<String>> malPriorities;
 
+    @JsonIgnore
+    private String malPrioritiesString;
+
     @Value("${working.directory}")
     private String workingDirectory;
 
     @Value("#{${included.asset.types}}")
     private Map<String, String> includedAssetTypes;
+
+    @JsonIgnore
+    private String includedAssetTypesString;
 
     @Value("${bridge.disable.absolutedelete}")
     private boolean disableAbsoluteDelete;
@@ -418,7 +424,7 @@ public class AppConfigData {
     private int fileMaxRecords;
 
     @Value("${file.formats.order}")
-    private String[] fileFormatsOrder;
+    private List<String> fileFormatsOrder;
 
     @Value("${download.folder.size.limit}")
     private long downloadFolderSizeLimit;
@@ -761,7 +767,7 @@ public class AppConfigData {
     }
 
     public List<String> getFileFormatsOrder() {
-        return Arrays.asList(fileFormatsOrder);
+        return fileFormatsOrder;
     }
 
     public long getDownloadFolderSizeLimit() {
@@ -780,4 +786,367 @@ public class AppConfigData {
         return filterOnlyColorIds;
     }
 
+    public String getIncludedAssetTypesString() {
+        return includedAssetTypesString;
+    }
+
+    public String getMalPrioritiesString() {
+        return malPrioritiesString;
+    }
+
+    public void setUseSftp(boolean useSftp) {
+        this.useSftp = useSftp;
+    }
+
+    public void setSftpUsername(String sftpUsername) {
+        this.sftpUsername = sftpUsername;
+    }
+
+    public void setSftpPassword(String sftpPassword) {
+        this.sftpPassword = sftpPassword;
+    }
+
+    public void setSftpHostname(String sftpHostname) {
+        this.sftpHostname = sftpHostname;
+    }
+
+    public void setSftpPort(int sftpPort) {
+        this.sftpPort = sftpPort;
+    }
+
+    public void setSftpPublicKey(String sftpPublicKey) {
+        this.sftpPublicKey = sftpPublicKey;
+    }
+
+    public void setMalHostname(String malHostname) {
+        this.malHostname = malHostname;
+    }
+
+    public void setMalLogin(String malLogin) {
+        this.malLogin = malLogin;
+    }
+
+    public void setMalApiKey(String malApiKey) {
+        this.malApiKey = malApiKey;
+    }
+
+    public void setMediapoolUsernameDev(String mediapoolUsernameDev) {
+        this.mediapoolUsernameDev = mediapoolUsernameDev;
+    }
+
+    public void setMediapoolPasswordDev(String mediapoolPasswordDev) {
+        this.mediapoolPasswordDev = mediapoolPasswordDev;
+    }
+
+    public void setMediapoolUrlDev(String mediapoolUrlDev) {
+        this.mediapoolUrlDev = mediapoolUrlDev;
+    }
+
+    public void setThemeUrlDev(String themeUrlDev) {
+        this.themeUrlDev = themeUrlDev;
+    }
+
+    public void setMediapoolUsernameProduction(String mediapoolUsernameProduction) {
+        this.mediapoolUsernameProduction = mediapoolUsernameProduction;
+    }
+
+    public void setMediapoolPasswordProduction(String mediapoolPasswordProduction) {
+        this.mediapoolPasswordProduction = mediapoolPasswordProduction;
+    }
+
+    public void setMediapoolUrlProduction(String mediapoolUrlProduction) {
+        this.mediapoolUrlProduction = mediapoolUrlProduction;
+    }
+
+    public void setThemeUrlProduction(String themeUrlProduction) {
+        this.themeUrlProduction = themeUrlProduction;
+    }
+
+    public void setThreadschedulerPoolSize(int threadschedulerPoolSize) {
+        this.threadschedulerPoolSize = threadschedulerPoolSize;
+    }
+
+    public void setMalThreadexecutorPoolSize(int malThreadexecutorPoolSize) {
+        this.malThreadexecutorPoolSize = malThreadexecutorPoolSize;
+    }
+
+    public void setMalThreadexecutorQueueSize(int malThreadexecutorQueueSize) {
+        this.malThreadexecutorQueueSize = malThreadexecutorQueueSize;
+    }
+
+    public void setMalThreadexecutorQueueLengthMax(int malThreadexecutorQueueLengthMax) {
+        this.malThreadexecutorQueueLengthMax = malThreadexecutorQueueLengthMax;
+    }
+
+    public void setBmThreadexecutorPoolSize(int bmThreadexecutorPoolSize) {
+        this.bmThreadexecutorPoolSize = bmThreadexecutorPoolSize;
+    }
+
+    public void setBmThreadexecutorQueueSize(int bmThreadexecutorQueueSize) {
+        this.bmThreadexecutorQueueSize = bmThreadexecutorQueueSize;
+    }
+
+    public void setBmThreadexecutorQueueLengthMax(int bmThreadexecutorQueueLengthMax) {
+        this.bmThreadexecutorQueueLengthMax = bmThreadexecutorQueueLengthMax;
+    }
+
+    public void setMailHostname(String mailHostname) {
+        this.mailHostname = mailHostname;
+    }
+
+    public void setMailPort(int mailPort) {
+        this.mailPort = mailPort;
+    }
+
+    public void setMailUsername(String mailUsername) {
+        this.mailUsername = mailUsername;
+    }
+
+    public void setMailPassword(String mailPassword) {
+        this.mailPassword = mailPassword;
+    }
+
+    public void setMailTransportProtocol(String mailTransportProtocol) {
+        this.mailTransportProtocol = mailTransportProtocol;
+    }
+
+    public void setMailSmtpAuth(boolean mailSmtpAuth) {
+        this.mailSmtpAuth = mailSmtpAuth;
+    }
+
+    public void setMailSmtpStarttlsEnable(boolean mailSmtpStarttlsEnable) {
+        this.mailSmtpStarttlsEnable = mailSmtpStarttlsEnable;
+    }
+
+    public void setMailDebug(boolean mailDebug) {
+        this.mailDebug = mailDebug;
+    }
+
+    public void setMailBmAddress(String mailBmAddress) {
+        this.mailBmAddress = mailBmAddress;
+    }
+
+    public void setMailMalAddress(String mailMalAddress) {
+        this.mailMalAddress = mailMalAddress;
+    }
+
+    public void setAssetStateRepetitionMax(int assetStateRepetitionMax) {
+        this.assetStateRepetitionMax = assetStateRepetitionMax;
+    }
+
+    public void setMalLookInThePastDays(int malLookInThePastDays) {
+        this.malLookInThePastDays = malLookInThePastDays;
+    }
+
+    public void setAssetFileMaximalLivingDaysOnDisc(int assetFileMaximalLivingDaysOnDisc) {
+        this.assetFileMaximalLivingDaysOnDisc = assetFileMaximalLivingDaysOnDisc;
+    }
+
+    public void setBridgeLookInThePastDays(int bridgeLookInThePastDays) {
+        this.bridgeLookInThePastDays = bridgeLookInThePastDays;
+    }
+
+    public void setBridgeResolverWindow(int bridgeResolverWindow) {
+        this.bridgeResolverWindow = bridgeResolverWindow;
+    }
+
+    public void setBridgeDatabaseRowsDeleterDays(int bridgeDatabaseRowsDeleterDays) {
+        this.bridgeDatabaseRowsDeleterDays = bridgeDatabaseRowsDeleterDays;
+    }
+
+    public void setDatabasePageSize(int databasePageSize) {
+        this.databasePageSize = databasePageSize;
+    }
+
+    public void setMalPageSize(int malPageSize) {
+        this.malPageSize = malPageSize;
+    }
+
+    public void setBmExchangeSchedulerCronExpression(String bmExchangeSchedulerCronExpression) {
+        this.bmExchangeSchedulerCronExpression = bmExchangeSchedulerCronExpression;
+    }
+
+    public void setBmUploadSchedulerCronExpression(String bmUploadSchedulerCronExpression) {
+        this.bmUploadSchedulerCronExpression = bmUploadSchedulerCronExpression;
+    }
+
+    public void setBmGetThemeIdCronExpression(String bmGetThemeIdCronExpression) {
+        this.bmGetThemeIdCronExpression = bmGetThemeIdCronExpression;
+    }
+
+    public void setBridgeExchangeAssetsCronExpression(String bridgeExchangeAssetsCronExpression) {
+        this.bridgeExchangeAssetsCronExpression = bridgeExchangeAssetsCronExpression;
+    }
+
+    public void setBridgeDeleteFileCronExpression(String bridgeDeleteFileCronExpression) {
+        this.bridgeDeleteFileCronExpression = bridgeDeleteFileCronExpression;
+    }
+
+    public void setBridgeDatabaseRowsDeleterCronExpression(String bridgeDatabaseRowsDeleterCronExpression) {
+        this.bridgeDatabaseRowsDeleterCronExpression = bridgeDatabaseRowsDeleterCronExpression;
+    }
+
+    public void setBridgeExcelFilesCronExpression(String bridgeExcelFilesCronExpression) {
+        this.bridgeExcelFilesCronExpression = bridgeExcelFilesCronExpression;
+    }
+
+    public void setBridgeUploadExcelFilesCronExpression(String bridgeUploadExcelFilesCronExpression) {
+        this.bridgeUploadExcelFilesCronExpression = bridgeUploadExcelFilesCronExpression;
+    }
+
+    public void setBridgeTransferThemeCronExpression(String bridgeTransferThemeCronExpression) {
+        this.bridgeTransferThemeCronExpression = bridgeTransferThemeCronExpression;
+    }
+
+    public void setBridgeSendMailCronExpression(String bridgeSendMailCronExpression) {
+        this.bridgeSendMailCronExpression = bridgeSendMailCronExpression;
+    }
+
+    public void setBridgeAssetOnBoardingCronExpression(String bridgeAssetOnBoardingCronExpression) {
+        this.bridgeAssetOnBoardingCronExpression = bridgeAssetOnBoardingCronExpression;
+    }
+
+    public void setBridgeAssetResolverCronExpression(String bridgeAssetResolverCronExpression) {
+        this.bridgeAssetResolverCronExpression = bridgeAssetResolverCronExpression;
+    }
+
+    public void setMalAssetCronExpression(String malAssetCronExpression) {
+        this.malAssetCronExpression = malAssetCronExpression;
+    }
+
+    public void setMalDownloadAssetCronExpression(String malDownloadAssetCronExpression) {
+        this.malDownloadAssetCronExpression = malDownloadAssetCronExpression;
+    }
+
+    public void setMalAssetStructureCronExpression(String malAssetStructureCronExpression) {
+        this.malAssetStructureCronExpression = malAssetStructureCronExpression;
+    }
+
+    public void setMalPropertiesCronExpression(String malPropertiesCronExpression) {
+        this.malPropertiesCronExpression = malPropertiesCronExpression;
+    }
+
+    public void setDatasourceUrlDev(String datasourceUrlDev) {
+        this.datasourceUrlDev = datasourceUrlDev;
+    }
+
+    public void setDatasourceUsernameDev(String datasourceUsernameDev) {
+        this.datasourceUsernameDev = datasourceUsernameDev;
+    }
+
+    public void setDatasourcePasswordDev(String datasourcePasswordDev) {
+        this.datasourcePasswordDev = datasourcePasswordDev;
+    }
+
+    public void setDatasourceUrlProduction(String datasourceUrlProduction) {
+        this.datasourceUrlProduction = datasourceUrlProduction;
+    }
+
+    public void setDatasourceUsernameProduction(String datasourceUsernameProduction) {
+        this.datasourceUsernameProduction = datasourceUsernameProduction;
+    }
+
+    public void setDatasourcePasswordProduction(String datasourcePasswordProduction) {
+        this.datasourcePasswordProduction = datasourcePasswordProduction;
+    }
+
+    public void setHibernateDialect(String hibernateDialect) {
+        this.hibernateDialect = hibernateDialect;
+    }
+
+    public void setHibernateShowSql(boolean hibernateShowSql) {
+        this.hibernateShowSql = hibernateShowSql;
+    }
+
+    public void setHibernateHbm2dlAuto(String hibernateHbm2dlAuto) {
+        this.hibernateHbm2dlAuto = hibernateHbm2dlAuto;
+    }
+
+    public void setHikariConnectionTimeout(int hikariConnectionTimeout) {
+        this.hikariConnectionTimeout = hikariConnectionTimeout;
+    }
+
+    public void setHikariIdleTimeout(int hikariIdleTimeout) {
+        this.hikariIdleTimeout = hikariIdleTimeout;
+    }
+
+    public void setHikariMaxLifeTime(int hikariMaxLifeTime) {
+        this.hikariMaxLifeTime = hikariMaxLifeTime;
+    }
+
+    public void setHikariAutoCommit(boolean hikariAutoCommit) {
+        this.hikariAutoCommit = hikariAutoCommit;
+    }
+
+    public void setHikariMaximumPoolSize(int hikariMaximumPoolSize) {
+        this.hikariMaximumPoolSize = hikariMaximumPoolSize;
+    }
+
+    public void setMalPriorities(Map<Integer, List<String>> malPriorities) {
+        this.malPriorities = malPriorities;
+    }
+
+    public void setWorkingDirectory(String workingDirectory) {
+        this.workingDirectory = workingDirectory;
+    }
+
+    public void setIncludedAssetTypes(Map<String, String> includedAssetTypes) {
+        this.includedAssetTypes = includedAssetTypes;
+    }
+
+    public void setDisableAbsoluteDelete(boolean disableAbsoluteDelete) {
+        this.disableAbsoluteDelete = disableAbsoluteDelete;
+    }
+
+    public void setDoNotCreateExcelFiles(boolean doNotCreateExcelFiles) {
+        this.doNotCreateExcelFiles = doNotCreateExcelFiles;
+    }
+
+    public void setFailSaveCategoryName(String failSaveCategoryName) {
+        this.failSaveCategoryName = failSaveCategoryName;
+    }
+
+    public void setIntervalFilterEnable(boolean intervalFilterEnable) {
+        this.intervalFilterEnable = intervalFilterEnable;
+    }
+
+    public void setFilterStartDate(String filterStartDate) {
+        this.filterStartDate = filterStartDate;
+    }
+
+    public void setFilterEndDate(String filterEndDate) {
+        this.filterEndDate = filterEndDate;
+    }
+
+    public void setFileMaxRecords(int fileMaxRecords) {
+        this.fileMaxRecords = fileMaxRecords;
+    }
+
+    public void setFileFormatsOrder(List<String> fileFormatsOrder) {
+        this.fileFormatsOrder = fileFormatsOrder;
+    }
+
+    public void setDownloadFolderSizeLimit(long downloadFolderSizeLimit) {
+        this.downloadFolderSizeLimit = downloadFolderSizeLimit;
+    }
+
+    public void setFilterOnlyMalProperties(List<String> filterOnlyMalProperties) {
+        this.filterOnlyMalProperties = filterOnlyMalProperties;
+    }
+
+    public void setFilterOnlyAssetType(List<String> filterOnlyAssetType) {
+        this.filterOnlyAssetType = filterOnlyAssetType;
+    }
+
+    public void setFilterOnlyColorIds(List<String> filterOnlyColorIds) {
+        this.filterOnlyColorIds = filterOnlyColorIds;
+    }
+
+    public void setIncludedAssetTypesString(String includedAssetTypesString) {
+        this.includedAssetTypesString = includedAssetTypesString;
+    }
+
+    public void setMalPrioritiesString(String malPrioritiesString) {
+        this.malPrioritiesString = malPrioritiesString;
+    }
 }

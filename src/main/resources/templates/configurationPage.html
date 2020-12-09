@@ -1,0 +1,831 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <title>Application Properties Configuration</title>
+    <script src="./webjars/jquery/3.0.0/jquery.min.js"></script>
+    <script src="./webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col" class="col-sm-11 align-middle">SAL MW Application Configuration Properties</th>
+            <th scope="col" class="col-sm-1"><a href="." class="btn btn-info">Back</a></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td colspan="6">
+                <form th:object="${configProperties}" method="POST" action="#"
+                      th:action="@{/updateConfigurationProperties}">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-cronjob-tab" data-toggle="tab"
+                               href="#nav-cronjob"
+                               role="tab" aria-controls="nav-cronjob" aria-selected="false">Cronjob</a>
+                            <a class="nav-item nav-link" id="nav-filter-tab" data-toggle="tab" href="#nav-filter"
+                               role="tab" aria-controls="nav-filter" aria-selected="false">Filter & Prioritization</a>
+                            <a class="nav-item nav-link" id="nav-excel-tab" data-toggle="tab" href="#nav-excel"
+                               role="tab" aria-controls="nav-excel" aria-selected="false">Excel Generation</a>
+                            <a class="nav-item nav-link" id="nav-api-tab" data-toggle="tab" href="#nav-api"
+                               role="tab" aria-controls="nav-api" aria-selected="false">API</a>
+                            <a class="nav-item nav-link" id="nav-database-tab" data-toggle="tab" href="#nav-database"
+                               role="tab" aria-controls="nav-database" aria-selected="false">Database</a>
+                            <a class="nav-item nav-link" id="nav-sftp-tab" data-toggle="tab" href="#nav-sftp"
+                               role="tab" aria-controls="nav-sftp" aria-selected="true">Mail and SFTP</a>
+                            <a class="nav-item nav-link" id="nav-other-tab" data-toggle="tab" href="#nav-other"
+                               role="tab" aria-controls="nav-other" aria-selected="false">Other</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent" style="padding-top:15px;">
+
+                        <div class="tab-pane fade show active" id="nav-cronjob" role="tabpanel"
+                             aria-labelledby="nav-cronjob-tab">
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bmExchangeSchedulerCronExpression">BM
+                                    Exchange Scheduler Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{bmExchangeSchedulerCronExpression}"
+                                           id="bmExchangeSchedulerCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bmUploadSchedulerCronExpression">BM
+                                    Upload Scheduler Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{bmUploadSchedulerCronExpression}"
+                                           id="bmUploadSchedulerCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bmGetThemeIdCronExpression">BM
+                                    Get Theme Id Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{bmGetThemeIdCronExpression}"
+                                           id="bmGetThemeIdCronExpression"/>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bridgeExchangeAssetsCronExpression">Bridge
+                                    Exchange Assets Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{bridgeExchangeAssetsCronExpression}"
+                                           id="bridgeExchangeAssetsCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bridgeDeleteFileCronExpression">Bridge
+                                    Delete Files Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{bridgeDeleteFileCronExpression}"
+                                           id="bridgeDeleteFileCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bridgeDatabaseRowsDeleterCronExpression">Bridge
+                                    Excel Database Rows Deleter Cronjob (Cleaner)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{bridgeDatabaseRowsDeleterCronExpression}"
+                                           id="bridgeDatabaseRowsDeleterCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bridgeExcelFilesCronExpression">Bridge
+                                    Excel Files Generator Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{bridgeExcelFilesCronExpression}"
+                                           id="bridgeExcelFilesCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bridgeUploadExcelFilesCronExpression">Bridge
+                                    Upload Excel Files Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{bridgeUploadExcelFilesCronExpression}"
+                                           id="bridgeUploadExcelFilesCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bridgeTransferThemeCronExpression">Bridge
+                                    Transfer
+                                    Theme Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{bridgeTransferThemeCronExpression}"
+                                           id="bridgeTransferThemeCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bridgeSendMailCronExpression">Bridge Send
+                                    Mail Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{bridgeSendMailCronExpression}"
+                                           id="bridgeSendMailCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bridgeAssetOnBoardingCronExpression">Bridge
+                                    Asset on Boarding Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{bridgeAssetOnBoardingCronExpression}"
+                                           id="bridgeAssetOnBoardingCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bridgeAssetResolverCronExpression">Bridge
+                                    Asset Resolver
+                                    Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{bridgeAssetResolverCronExpression}"
+                                           id="bridgeAssetResolverCronExpression"/>
+                                </div>
+                            </div>
+
+                            <hr/>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malAssetCronExpression">MAL Asset
+                                    Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{malAssetCronExpression}"
+                                           id="malAssetCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malDownloadAssetCronExpression">MAL Download
+                                    Asset Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{malDownloadAssetCronExpression}"
+                                           id="malDownloadAssetCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malAssetStructureCronExpression">MAL
+                                    Asset Structure Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{malAssetStructureCronExpression}"
+                                           id="malAssetStructureCronExpression"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malPropertiesCronExpression">MAL
+                                    Properties Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{malPropertiesCronExpression}"
+                                           id="malPropertiesCronExpression"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="nav-filter" role="tabpanel" aria-labelledby="nav-filter-tab">
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malPriorities">Mal Priorities
+                                    prioritization</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:value="*{malPrioritiesString}"
+                                           th:name="malPrioritiesString"
+                                           id="malPriorities"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="includedAssetTypes">Asset types
+                                    prioritization</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:value="*{includedAssetTypesString}"
+                                           th:name="includedAssetTypesString"
+                                           id="includedAssetTypes"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="filterOnlyMalProperties">Filter only mal
+                                    properties</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{filterOnlyMalProperties}"
+                                           id="filterOnlyMalProperties"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="filterOnlyAssetType">Filter only asset
+                                    type</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{filterOnlyAssetType}"
+                                           id="filterOnlyAssetType"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="filterOnlyColorIds">Filter only color
+                                    ids</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{filterOnlyColorIds}"
+                                           id="filterOnlyColorIds"
+                                    />
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="intervalFilterEnable">Interval filter
+                                    enable</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="checkbox" class="form-control" th:field="*{intervalFilterEnable}"
+                                           th:checked="*{intervalFilterEnable}" id="intervalFilterEnable"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="filterStartDate">Filter Start Date</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{filterStartDate}"
+                                           id="filterStartDate"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="filterEndDate">Filter End Date</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{filterEndDate}"
+                                           id="filterEndDate"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="nav-excel" role="tabpanel" aria-labelledby="nav-excel-tab">
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="doNotCreateExcelFiles">Do not create excel
+                                    files</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="checkbox" class="form-control" th:field="*{doNotCreateExcelFiles}"
+                                           th:checked="*{doNotCreateExcelFiles}" id="doNotCreateExcelFiles"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="fileMaxRecords">Maximum records per file
+                                    (Excel export)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{fileMaxRecords}"
+                                           id="fileMaxRecords"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="nav-api" role="tabpanel"
+                             aria-labelledby="nav-api-tab">
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malHostname">MAL Hostname URL</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{malHostname}"
+                                           id="malHostname"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malLogin">MAL Login Username</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{malLogin}"
+                                           id="malLogin"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malApiKey">MAL API Key</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{malApiKey}"
+                                           id="malApiKey"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malThreadexecutorPoolSize">MAL Thread Pool
+                                    size</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{malThreadexecutorPoolSize}"
+                                           id="malThreadexecutorPoolSize"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malThreadexecutorQueueSize">MAL Thread Queue
+                                    size</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{malThreadexecutorQueueSize}"
+                                           id="malThreadexecutorQueueSize"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malThreadexecutorQueueLengthMax">MAL Thread
+                                    Queue
+                                    Max Length</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control"
+                                           th:field="*{malThreadexecutorQueueLengthMax}"
+                                           id="malThreadexecutorQueueLengthMax"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malPageSize">MAL Page Size</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control"
+                                           th:field="*{malPageSize}"
+                                           id="malPageSize"/>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mediapoolUsernameDev">BM MediaPool Username
+                                    (QA)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{mediapoolUsernameDev}"
+                                           id="mediapoolUsernameDev"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mediapoolPasswordDev">BM MediaPool Password
+                                    (QA)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{mediapoolPasswordDev}"
+                                           id="mediapoolPasswordDev"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mediapoolUrlDev">BM MediaPool URL
+                                    (QA)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{mediapoolUrlDev}"
+                                           id="mediapoolUrlDev"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="themeUrlDev">BM Theme URL (QA)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{themeUrlDev}"
+                                           id="themeUrlDev"/>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mediapoolUsernameProduction">BM MediaPool
+                                    Username (Production)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{mediapoolUsernameProduction}"
+                                           id="mediapoolUsernameProduction"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mediapoolPasswordProduction">BM MediaPool
+                                    Password (Production)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{mediapoolPasswordProduction}"
+                                           id="mediapoolPasswordProduction"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mediapoolUrlProduction">BM MediaPool URL
+                                    (Production)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{mediapoolUrlProduction}"
+                                           id="mediapoolUrlProduction"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="themeUrlProduction">BM Theme URL
+                                    (Production)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{themeUrlProduction}"
+                                           id="themeUrlProduction"/>
+                                </div>
+                            </div>
+                            <hr/>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bmThreadexecutorPoolSize">BM Thread Pool
+                                    size</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{bmThreadexecutorPoolSize}"
+                                           id="bmThreadexecutorPoolSize"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bmThreadexecutorQueueSize">BM Thread Queue
+                                    size</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{bmThreadexecutorQueueSize}"
+                                           id="bmThreadexecutorQueueSize"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bmThreadexecutorQueueLengthMax">BM Thread
+                                    Queue
+                                    Max Length</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control"
+                                           th:field="*{bmThreadexecutorQueueLengthMax}"
+                                           id="bmThreadexecutorQueueLengthMax"/>
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="threadschedulerPoolSize">Thread Scheduler
+                                    Pool Size</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{threadschedulerPoolSize}"
+                                           id="threadschedulerPoolSize"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="nav-database" role="tabpanel"
+                             aria-labelledby="nav-database-tab">
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="databasePageSize">Database Page Size</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{databasePageSize}"
+                                           id="databasePageSize"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="datasourceUrlDev">Database
+                                    URL (QA)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{datasourceUrlDev}"
+                                           id="datasourceUrlDev"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="datasourceUsernameDev">Database
+                                    username (QA)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{datasourceUsernameDev}"
+                                           id="datasourceUsernameDev"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="datasourcePasswordDev">Database
+                                    password (QA)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{datasourcePasswordDev}"
+                                           id="datasourcePasswordDev"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="datasourceUrlProduction">Database
+                                    URL (Production)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{datasourceUrlProduction}"
+                                           id="datasourceUrlProduction"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="datasourceUsernameProduction">Database
+                                    username (Production)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{datasourceUsernameProduction}"
+                                           id="datasourceUsernameProduction"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="datasourcePasswordProduction">Database
+                                    password (Production)</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control"
+                                           th:field="*{datasourcePasswordProduction}"
+                                           id="datasourcePasswordProduction"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="hibernateDialect">Hibernate
+                                    dialect</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{hibernateDialect}"
+                                           id="hibernateDialect"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="hibernateShowSql">Hibernate show
+                                    SQL</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{hibernateShowSql}"
+                                           id="hibernateShowSql"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="hibernateHbm2dlAuto">Hibernate hbm2dl
+                                    auto</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{hibernateHbm2dlAuto}"
+                                           id="hibernateHbm2dlAuto"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="hikariConnectionTimeout">Connection
+                                    timeout</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{hikariConnectionTimeout}"
+                                           id="hikariConnectionTimeout"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="hikariIdleTimeout">Idle timeout</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{hikariIdleTimeout}"
+                                           id="hikariIdleTimeout"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="hikariMaxLifeTime">Maximum life
+                                    time</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{hikariMaxLifeTime}"
+                                           id="hikariMaxLifeTime"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="hikariAutoCommit">Auto commit</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="checkbox" class="form-control" th:field="*{hikariAutoCommit}"
+                                           th:checked="*{hikariAutoCommit}" id="hikariAutoCommit"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="hikariMaximumPoolSize">Maximum pool
+                                    size</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{hikariMaximumPoolSize}"
+                                           id="hikariMaximumPoolSize"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="nav-sftp" role="tabpanel"
+                             aria-labelledby="nav-sftp-tab">
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="useSftp">Use SFTP</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="checkbox" class="form-control" th:field="*{useSftp}"
+                                           th:checked="*{useSftp}" id="useSftp"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="sftpUsername">SFTP Username</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{sftpUsername}"
+                                           id="sftpUsername"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="sftpPassword">SFTP Password</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{sftpPassword}"
+                                           id="sftpPassword"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="sftpHostname">SFTP Hostname</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{sftpHostname}"
+                                           id="sftpHostname"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="sftpPort">SFTP Port</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{sftpPort}"
+                                           id="sftpPort"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="sftpPublicKey">SFTP Public Key</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{sftpPublicKey}"
+                                           id="sftpPublicKey"/>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mailHostname">Mail Hostname</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{mailHostname}"
+                                           id="mailHostname"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mailPort">Mail Port</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{mailPort}"
+                                           id="mailPort"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mailUsername">Mail Username</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{mailUsername}"
+                                           id="mailUsername"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mailPassword">Mail Password</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{mailPassword}"
+                                           id="mailPassword"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mailTransportProtocol">Mail Transport
+                                    Protocol</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{mailTransportProtocol}"
+                                           id="mailTransportProtocol"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mailSmtpAuth">Mail SMTP
+                                    Authorization</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="checkbox" class="form-control" th:field="*{mailSmtpAuth}"
+                                           th:checked="*{useSftp}" id="mailSmtpAuth"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mailSmtpStarttlsEnable">Mail SMTP SMTP
+                                    Start
+                                    TLS enabled</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="checkbox" class="form-control" th:field="*{mailSmtpStarttlsEnable}"
+                                           th:checked="*{useSftp}" id="mailSmtpStarttlsEnable"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mailDebug">Mail Debug</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="checkbox" class="form-control" th:field="*{mailDebug}"
+                                           th:checked="*{useSftp}" id="mailDebug"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mailBmAddress">Mail BM Address</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{mailBmAddress}"
+                                           id="mailBmAddress"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="mailMalAddress">Mail MAL Address</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{mailMalAddress}"
+                                           id="mailMalAddress"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="nav-other" role="tabpanel" aria-labelledby="nav-other-tab">
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="fileFormatsOrder">File format order</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{fileFormatsOrder}"
+                                           id="fileFormatsOrder"/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="failSaveCategoryName">Fail safe category
+                                    name</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{failSaveCategoryName}"
+                                           id="failSaveCategoryName"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="downloadFolderSizeLimit">Download folder
+                                    size
+                                    limit</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{downloadFolderSizeLimit}"
+                                           id="downloadFolderSizeLimit"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="workingDirectory">Working directory</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{workingDirectory}"
+                                           id="workingDirectory"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="disableAbsoluteDelete">Disable absolute
+                                    delete</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="checkbox" class="form-control" th:field="*{disableAbsoluteDelete}"
+                                           th:checked="*{disableAbsoluteDelete}" id="disableAbsoluteDelete"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="assetStateRepetitionMax">Maximum Asset State
+                                    Repetition</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{assetStateRepetitionMax}"
+                                           id="assetStateRepetitionMax"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bridgeLookInThePastDays">Bridge Look In the
+                                    Past Days</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{bridgeLookInThePastDays}"
+                                           id="bridgeLookInThePastDays"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bridgeResolverWindow">Bridge Resolver
+                                    Window</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{bridgeResolverWindow}"
+                                           id="bridgeResolverWindow"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="bridgeDatabaseRowsDeleterDays">Bridge
+                                    Database Rows Deleter Days</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control"
+                                           th:field="*{bridgeDatabaseRowsDeleterDays}"
+                                           id="bridgeDatabaseRowsDeleterDays"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malLookInThePastDays">Mal Look In the Past
+                                    Days</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control" th:field="*{malLookInThePastDays}"
+                                           id="malLookInThePastDays"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="assetFileMaximalLivingDaysOnDisc">Asset
+                                    Maximum file living days on Disc</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="number" class="form-control"
+                                           th:field="*{assetFileMaximalLivingDaysOnDisc}"
+                                           id="assetFileMaximalLivingDaysOnDisc"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group-sm row">
+                        <div class="col-sm-6 col-sm-6 input-group input-group-sm mb-3">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group-sm row">
+                        <div class="col-sm-6 col-sm-6 input-group input-group-sm mb-3">
+                            <a th:href="@{/exportAppConfigFile}" class="btn btn-primary">Export</a>
+                        </div>
+                    </div>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
