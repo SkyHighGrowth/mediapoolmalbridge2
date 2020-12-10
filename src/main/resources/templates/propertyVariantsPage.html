@@ -2,8 +2,16 @@
 <head>
     <title>Property Variants Configuration</title>
     <script src="./webjars/jquery/3.0.0/jquery.min.js"></script>
-    <script src="./webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="./webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="./webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-item').click(function () {
+                $('.panelcollapse').hide();
+                $(this.getAttribute('data-target')).show()
+            });
+        });
+    </script>
 </head>
 <body>
 
@@ -19,15 +27,25 @@
         <tr>
             <td colspan="2">
 
-
-                <div th:each="propertyVariant : ${propertyVariants}">
-                    <p>
-                        <a class="btn btn-secondary btn-lg btn-block" data-toggle="collapse"
+                <div class="btn-group-justified">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        Choose Property Variants
+                    </button>
+                    <div class="dropdown-menu">
+                        <a data-toggle="collapse"
+                           class="dropdown-item"
+                           th:each="propertyVariant : ${propertyVariants}"
                            th:href="${'#propertyVariant'+propertyVariant.key}" role="button" aria-expanded="false"
+                           th:data-target="${'#propertyVariant'+propertyVariant.key}"
                            th:aria-controls="${'#propertyVariant'+propertyVariant.key}"
                            th:text="${propertyVariant.key + '  ' + propertyVariant.value.structureName}"></a>
-                    </p>
+                    </div>
+                    <a type="button" th:href="@{/exportPropertyVariantsFile}" class="btn btn-primary">Export</a>
+                </div>
 
+                <div th:each="propertyVariant : ${propertyVariants}" class="collapse panelcollapse hide"
+                     th:id="${'propertyVariant'+propertyVariant.key}">
                     <div th:each="object : ${propertyVariant.value}">
                         <div class="row">
                             <div class="col">
@@ -153,8 +171,9 @@
                                                     Field 01</label>
                                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                                     <textarea class="form-control"
-                                                           th:text="${object.addressField01}"
-                                                           name="addressField01"
+                                                              th:text="${object.addressField01}"
+                                                              name="addressField01"
+                                                              rows="5"
                                                               id="addressField01"></textarea>
                                                 </div>
                                             </div>
@@ -164,9 +183,10 @@
                                                     Field 02</label>
                                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                                     <textarea class="form-control"
-                                                           th:text="${object.addressField02}"
-                                                           name="addressField02"
-                                                           id="addressField02"></textarea>
+                                                              th:text="${object.addressField02}"
+                                                              name="addressField02"
+                                                              rows="5"
+                                                              id="addressField02"></textarea>
                                                 </div>
                                             </div>
 
@@ -175,9 +195,10 @@
                                                     Field 03</label>
                                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                                      <textarea class="form-control"
-                                                           th:text="${object.addressField03}"
-                                                           name="addressField03"
-                                                           id="addressField03"></textarea>
+                                                               th:text="${object.addressField03}"
+                                                               name="addressField03"
+                                                               rows="5"
+                                                               id="addressField03"></textarea>
                                                 </div>
                                             </div>
 
@@ -186,9 +207,10 @@
                                                     Field 04</label>
                                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                                     <textarea class="form-control"
-                                                           th:text="${object.addressField04}"
-                                                           name="addressField04"
-                                                           id="addressField04"></textarea>
+                                                              th:text="${object.addressField04}"
+                                                              name="addressField04"
+                                                              rows="5"
+                                                              id="addressField04"></textarea>
                                                 </div>
                                             </div>
 
@@ -196,10 +218,11 @@
                                                 <label class="col-sm-6 col-form-label" for="addressField05">Address
                                                     Field 05</label>
                                                 <div class="col-sm-6 input-group input-group-sm mb-3">
-                                                    <textarea  class="form-control"
-                                                           th:text="${object.addressField05}"
-                                                           name="addressField05"
-                                                           id="addressField05"></textarea>
+                                                    <textarea class="form-control"
+                                                              th:text="${object.addressField05}"
+                                                              name="addressField05"
+                                                              rows="5"
+                                                              id="addressField05"></textarea>
                                                 </div>
                                             </div>
 
@@ -207,9 +230,10 @@
                                                 <label class="col-sm-6 col-form-label" for="fields">Fields</label>
                                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                                     <textarea class="form-control"
-                                                           th:text="${object.fields}"
-                                                           name="fields"
-                                                           id="fields"></textarea>
+                                                              th:text="${object.fields}"
+                                                              name="fields"
+                                                              rows="5"
+                                                              id="fields"></textarea>
                                                 </div>
                                             </div>
 
@@ -226,12 +250,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group-sm row">
-                    <div class="col-sm-6 col-sm-6 input-group input-group-sm mb-3">
-                        <a th:href="@{/exportPropertyVariantsFile}" class="btn btn-primary">Export</a>
-                    </div>
-                </div>
-
             </td>
         </tr>
         </tbody>
