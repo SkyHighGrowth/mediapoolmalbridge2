@@ -31,4 +31,12 @@ public interface PropertyVariantService {
      * @return map of all latest version of property variants
      */
     Map<String, MALPropertyVariant> savePropertyVariant(MALPropertyVariant malPropertyVariant);
+
+    /**
+     * Delete Mal Property Variant
+     *
+     * @param malPropertyVariant {@link MALPropertyVariant}
+     * @return map of all latest version of property variants without the deleted property variant
+     */
+    Map<String, MALPropertyVariant> deletePropertyVariant(MALPropertyVariant malPropertyVariant);
 }

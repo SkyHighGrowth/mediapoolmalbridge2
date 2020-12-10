@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -55,8 +56,12 @@ public class PropertyVariantController {
      */
     @PostMapping("/updatePropertyVariants")
     public String updatePropertyVariants(
-            @ModelAttribute MALPropertyVariant malPropertyVariant, Model model) {
-        model.addAttribute("propertyVariants", propertyVariantService.savePropertyVariant(malPropertyVariant));
+            @ModelAttribute MALPropertyVariant malPropertyVariant, @RequestParam String isDelete, Model model) {
+        if (isDelete.equals("false")) {
+            model.addAttribute("propertyVariants", propertyVariantService.savePropertyVariant(malPropertyVariant));
+        } else if (isDelete.equals("true")) {
+            model.addAttribute("propertyVariants", propertyVariantService.deletePropertyVariant(malPropertyVariant));
+        }
         return PROPERTY_VARIANTS_PAGE;
     }
 

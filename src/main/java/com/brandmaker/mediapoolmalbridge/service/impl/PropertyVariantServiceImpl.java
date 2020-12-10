@@ -46,6 +46,7 @@ public class PropertyVariantServiceImpl implements PropertyVariantService {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Map<String, MALPropertyVariant> getPropertyVariantsSorted() {
         return appConfig.getPropertyVariants()
                 .entrySet()
@@ -57,6 +58,7 @@ public class PropertyVariantServiceImpl implements PropertyVariantService {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void exportPropertyVariantsAsFile(HttpServletResponse response) {
         try {
             String myString = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(appConfig.getPropertyVariants());
@@ -75,11 +77,30 @@ public class PropertyVariantServiceImpl implements PropertyVariantService {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Map<String, MALPropertyVariant> savePropertyVariant(MALPropertyVariant malPropertyVariant) {
         String propertyVariantsFilePath = appConfig.getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR
                 + File.separator + Constants.PROPERTY_VARIANTS_JSON;
         File propertiesFile = new File(propertyVariantsFilePath);
         ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, MALPropertyVariant> propertyVariantsMap = getPropertyVariantMap();
+
+        try {
+            if (malPropertyVariant != null && malPropertyVariant.getId() != null) {
+                propertyVariantsMap.put(malPropertyVariant.getId(), malPropertyVariant);
+                objectMapper.writerWithDefaultPrettyPrinter().writeValue(propertiesFile, propertyVariantsMap);
+                appConfig.setPropertyVariants(propertyVariantsMap);
+            }
+        } catch (IOException e) {
+            logger.error(String.format("Saving in %s failed!", propertyVariantsFilePath), e);
+        }
+        return propertyVariantsMap;
+    }
+
+    private Map<String, MALPropertyVariant> getPropertyVariantMap() {
+        String propertyVariantsFilePath = appConfig.getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR
+                + File.separator + Constants.PROPERTY_VARIANTS_JSON;
+        File propertiesFile = new File(propertyVariantsFilePath);
         FileReader reader = null;
 
         try {
@@ -91,17 +112,33 @@ public class PropertyVariantServiceImpl implements PropertyVariantService {
         assert reader != null;
         Type type = new TypeToken<Map<String, MALPropertyVariant>>() {
         }.getType();
-        Map<String, MALPropertyVariant> propertyVariantsMap = (new Gson()).fromJson(new JsonReader(reader), type);
+        return (new Gson()).fromJson(new JsonReader(reader), type);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Map<String, MALPropertyVariant> deletePropertyVariant(MALPropertyVariant malPropertyVariant) {
+        String propertyVariantsFilePath = appConfig.getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR
+                + File.separator + Constants.PROPERTY_VARIANTS_JSON;
+        File propertiesFile = new File(propertyVariantsFilePath);
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, MALPropertyVariant> propertyVariantsMap = getPropertyVariantMap();
+
 
         try {
             if (malPropertyVariant != null && malPropertyVariant.getId() != null) {
-                propertyVariantsMap.put(malPropertyVariant.getId(), malPropertyVariant);
+                if (propertyVariantsMap.get(malPropertyVariant.getId()) != null) {
+                    propertyVariantsMap.remove(malPropertyVariant.getId());
+                }
                 objectMapper.writerWithDefaultPrettyPrinter().writeValue(propertiesFile, propertyVariantsMap);
                 appConfig.setPropertyVariants(propertyVariantsMap);
             }
         } catch (IOException e) {
             logger.error(String.format("Saving in %s failed!", propertyVariantsFilePath), e);
         }
+
         return propertyVariantsMap;
     }
 }

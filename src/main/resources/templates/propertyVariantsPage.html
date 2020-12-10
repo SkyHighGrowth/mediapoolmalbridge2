@@ -5,13 +5,13 @@
     <script src="./webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="./webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <script>
-    $(document).ready(function () {
+        $(document).ready(function () {
             $('.dropdown-item').click(function () {
                 $('.panelcollapse').hide();
                 $(this.getAttribute('data-target')).show()
             });
 
-            $("#createNew").click(function(){
+            $("#createNew").click(function () {
                 $('.panelcollapse').hide();
                 $('#panelCreateNew').show();
                 $('#panelCreateNewCollapse').show();
@@ -48,7 +48,8 @@
                            th:text="${propertyVariant.key + '  ' + propertyVariant.value.structureName}"></a>
                     </div>
                     <a type="button" th:href="@{/exportPropertyVariantsFile}" class="btn btn-primary">Export</a>
-                    <a type="button" href="#" id="createNew" class="btn btn-info" data-target="panelCreateNew">Create</a>
+                    <a type="button" href="#" id="createNew" class="btn btn-info"
+                       data-target="panelCreateNew">Create</a>
                 </div>
 
                 <div th:each="propertyVariant : ${propertyVariants}" class="collapse panelcollapse hide"
@@ -245,8 +246,14 @@
                                             </div>
 
                                             <div class="form-group-sm row">
-                                                <div class="col-sm-6 col-sm-6 input-group input-group-sm mb-3">
+                                                <div class="col-sm-2 input-group input-group-sm mb-3">
                                                     <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
+                                                <div class="col-sm-2 input-group input-group-sm mb-3">
+                                                    <input type="hidden" id="isDelete" name="isDelete" value="false"/>
+                                                    <button type="submit" onclick="$('#isDelete').val('true');"
+                                                            class="btn btn-danger">Delete
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -298,7 +305,8 @@
                                             </div>
 
                                             <div class="form-group-sm row">
-                                                <label class="col-sm-6 col-form-label" for="structureNameRadiobuttonNew">Structure
+                                                <label class="col-sm-6 col-form-label"
+                                                       for="structureNameRadiobuttonNew">Structure
                                                     Name
                                                     Radio Button</label>
                                                 <div class="col-sm-6 input-group input-group-sm mb-3">
@@ -319,7 +327,8 @@
                                             </div>
 
                                             <div class="form-group-sm row">
-                                                <label class="col-sm-6 col-form-label" for="subNameRadiobuttonNew">Sub name
+                                                <label class="col-sm-6 col-form-label" for="subNameRadiobuttonNew">Sub
+                                                    name
                                                     radio button
                                                     (Images)</label>
                                                 <div class="col-sm-6 input-group input-group-sm mb-3">
@@ -351,7 +360,8 @@
                                             </div>
 
                                             <div class="form-group-sm row">
-                                                <label class="col-sm-6 col-form-label" for="subNameFloorPlansNew">Sub name
+                                                <label class="col-sm-6 col-form-label" for="subNameFloorPlansNew">Sub
+                                                    name
                                                     (Floor
                                                     Plans)</label>
                                                 <div class="col-sm-6 input-group input-group-sm mb-3">
