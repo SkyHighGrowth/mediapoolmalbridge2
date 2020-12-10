@@ -495,7 +495,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                         attributes.add(new AttributeCO(propertyVariantField.getOrderNumber(),
                                 propertyVariantField.getPropertyName(),
                                 MEDIA,
-                                logo));
+                                getPropertyMedia(logo)));
                     }
                 }
             }
