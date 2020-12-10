@@ -5,10 +5,16 @@
     <script src="./webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="./webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
             $('.dropdown-item').click(function () {
                 $('.panelcollapse').hide();
                 $(this.getAttribute('data-target')).show()
+            });
+
+            $("#createNew").click(function(){
+                $('.panelcollapse').hide();
+                $('#panelCreateNew').show();
+                $('#panelCreateNewCollapse').show();
             });
         });
     </script>
@@ -42,6 +48,7 @@
                            th:text="${propertyVariant.key + '  ' + propertyVariant.value.structureName}"></a>
                     </div>
                     <a type="button" th:href="@{/exportPropertyVariantsFile}" class="btn btn-primary">Export</a>
+                    <a type="button" href="#" id="createNew" class="btn btn-info" data-target="panelCreateNew">Create</a>
                 </div>
 
                 <div th:each="propertyVariant : ${propertyVariants}" class="collapse panelcollapse hide"
@@ -240,6 +247,199 @@
                                             <div class="form-group-sm row">
                                                 <div class="col-sm-6 col-sm-6 input-group input-group-sm mb-3">
                                                     <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="collapse panelcollapse hide"
+                     id="panelCreateNew">
+                    <div>
+                        <div class="row">
+                            <div class="col">
+                                <form th:object="${malPropertyVariant}" method="POST" action="#"
+                                      th:action="@{/updatePropertyVariants}">
+                                    <div class="collapse multi-collapse"
+                                         id="panelCreateNewCollapse">
+                                        <div class="card card-body">
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="idNew">ID</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <input type="text" class="form-control"
+                                                           name="id"
+                                                           id="idNew"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="brandNameNew">Brand
+                                                    Name</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <input type="text" class="form-control"
+                                                           name="brandName"
+                                                           id="brandNameNew"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="structureNameNew">Structure
+                                                    Name</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <input type="text" class="form-control"
+                                                           name="structureName"
+                                                           id="structureNameNew"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="structureNameRadiobuttonNew">Structure
+                                                    Name
+                                                    Radio Button</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <input type="text" class="form-control"
+                                                           name="structureNameRadiobutton"
+                                                           id="structureNameRadiobuttonNew"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="subNameNew">Sub name
+                                                    (Images)</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <input type="text" class="form-control"
+                                                           name="subName"
+                                                           id="subNameNew"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="subNameRadiobuttonNew">Sub name
+                                                    radio button
+                                                    (Images)</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <input type="text" class="form-control"
+                                                           name="subNameRadiobutton"
+                                                           id="subNameRadiobuttonNew"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="subNameMapsNew">Sub name
+                                                    (Maps)</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <input type="text" class="form-control"
+                                                           name="subNameMaps"
+                                                           id="subNameMapsNew"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="subNameMapsRadiobuttonNew">Sub
+                                                    name radio
+                                                    button (Maps)</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <input type="text" class="form-control"
+                                                           name="subNameMapsRadiobutton"
+                                                           id="subNameMapsRadiobuttonNew"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="subNameFloorPlansNew">Sub name
+                                                    (Floor
+                                                    Plans)</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <input type="text" class="form-control"
+                                                           name="subNameFloorPlans"
+                                                           id="subNameFloorPlansNew"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label"
+                                                       for="subNameFloorPlansRadiobuttonNew">Sub name radio
+                                                    button (Floor Plans)</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <input type="text" class="form-control"
+                                                           name="subNameFloorPlansRadiobutton"
+                                                           id="subNameFloorPlansRadiobuttonNew"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="addressField01New">Address
+                                                    Field 01</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <textarea class="form-control"
+                                                              name="addressField01"
+                                                              rows="5"
+                                                              id="addressField01New"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="addressField02New">Address
+                                                    Field 02</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <textarea class="form-control"
+                                                              name="addressField02"
+                                                              rows="5"
+                                                              id="addressField02New"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="addressField03New">Address
+                                                    Field 03</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                     <textarea class="form-control"
+                                                               name="addressField03"
+                                                               rows="5"
+                                                               id="addressField03New"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="addressField04New">Address
+                                                    Field 04</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <textarea class="form-control"
+                                                              name="addressField04"
+                                                              rows="5"
+                                                              id="addressField04New"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="addressField05New">Address
+                                                    Field 05</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <textarea class="form-control"
+                                                              name="addressField05"
+                                                              rows="5"
+                                                              id="addressField05New"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <label class="col-sm-6 col-form-label" for="fieldsNew">Fields</label>
+                                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                                    <textarea class="form-control"
+                                                              name="fields"
+                                                              rows="5"
+                                                              id="fieldsNew"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-sm row">
+                                                <div class="col-sm-6 col-sm-6 input-group input-group-sm mb-3">
+                                                    <button type="submit" class="btn btn-primary">Create</button>
                                                 </div>
                                             </div>
                                         </div>
