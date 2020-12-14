@@ -26,7 +26,7 @@ public class MALGetPropertiesSchedulerService extends AbstractMALSchedulerServic
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getMalPropertiesCronExpression()));
+        jobSchedule(new CronTrigger(appConfig.getMalPropertiesCronExpression()));
     }
 
     @Override

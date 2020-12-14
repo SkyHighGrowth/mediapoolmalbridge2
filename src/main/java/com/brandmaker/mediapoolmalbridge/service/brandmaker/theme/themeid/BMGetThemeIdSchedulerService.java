@@ -30,7 +30,7 @@ public class BMGetThemeIdSchedulerService extends AbstractSchedulerService {
 
     //@PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule( this::scheduled, new CronTrigger( appConfig.getBmGetThemeIdCronExpression() ) );
+        jobSchedule(new CronTrigger(appConfig.getBmGetThemeIdCronExpression()));
     }
 
     @Override

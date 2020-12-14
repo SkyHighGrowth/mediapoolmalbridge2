@@ -22,7 +22,7 @@ public class BridgeSendMailSchedulerService extends AbstractSchedulerService {
     @PostConstruct
     public void init()
     {
-        taskSchedulerWrapper.getTaskScheduler().schedule( this::run, new CronTrigger(appConfig.getBridgeSendMailCronExpression() ) );
+        jobSchedule(new CronTrigger(appConfig.getBridgeSendMailCronExpression() ) );
     }
 
     @Override

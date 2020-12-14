@@ -32,7 +32,7 @@ public class BridgeDatabaseRowsDeleterSchedulerService extends AbstractScheduler
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getBridgeDatabaseRowsDeleterCronExpression()));
+        jobSchedule(new CronTrigger(appConfig.getBridgeDatabaseRowsDeleterCronExpression()));
     }
 
     @Override

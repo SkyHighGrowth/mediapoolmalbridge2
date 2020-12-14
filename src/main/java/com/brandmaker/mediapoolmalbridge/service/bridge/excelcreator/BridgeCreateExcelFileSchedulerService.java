@@ -12,28 +12,29 @@ import javax.annotation.PostConstruct;
  * Scheduler service which triggers execution of excel creation
  */
 @Service
-@DependsOn( "BridgeDatabaseNormalizerService" )
+@DependsOn("BridgeDatabaseNormalizerService")
 public class BridgeCreateExcelFileSchedulerService extends AbstractSchedulerService {
 
     private final BridgeCreateExcelXSSFFileUniqueThreadService bridgeCreateExcelXSSFFileUniqueThreadService;
 
-    public BridgeCreateExcelFileSchedulerService(final BridgeCreateExcelXSSFFileUniqueThreadService bridgeCreateExcelXSSFFileUniqueThreadService)
-    {
+    public BridgeCreateExcelFileSchedulerService(final BridgeCreateExcelXSSFFileUniqueThreadService bridgeCreateExcelXSSFFileUniqueThreadService) {
         this.bridgeCreateExcelXSSFFileUniqueThreadService = bridgeCreateExcelXSSFFileUniqueThreadService;
     }
 
     @PostConstruct
-    public void scheduleExcelFileCreation()
-    {
-        if( !appConfig.isDoNotCreateExcelFiles() ) {
-            taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getBridgeExcelFilesCronExpression()));
+    public void scheduleExcelFileCreation() {
+        jobScheduleExcel(new CronTrigger(appConfig.getBridgeExcelFilesCronExpression()));
+    }
+
+    public void jobScheduleExcel(CronTrigger trigger) {
+        if (!appConfig.isDoNotCreateExcelFiles()) {
+            jobSchedule(trigger);
         }
     }
 
     @Override
-    public void scheduled()
-    {
-        if( !appConfig.isDoNotCreateExcelFiles() ) {
+    public void scheduled() {
+        if (!appConfig.isDoNotCreateExcelFiles()) {
             logger.info("Creation of excel files started...");
             bridgeCreateExcelXSSFFileUniqueThreadService.start();
             logger.info("Creation of excel files ended...");

@@ -17,7 +17,7 @@ public class BridgeDatabaseAssetResolverSchedulerService extends AbstractSchedul
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getBridgeAssetResolverCronExpression()));
+        jobSchedule(new CronTrigger(appConfig.getBridgeAssetResolverCronExpression()));
     }
 
     @Override

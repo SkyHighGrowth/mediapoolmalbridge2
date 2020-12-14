@@ -4,11 +4,26 @@ import com.brandmaker.mediapoolmalbridge.config.AppConfig;
 import com.brandmaker.mediapoolmalbridge.config.AppConfigData;
 import com.brandmaker.mediapoolmalbridge.constants.Constants;
 import com.brandmaker.mediapoolmalbridge.service.ConfigurationService;
+import com.brandmaker.mediapoolmalbridge.service.brandmaker.assetmetadata.BMExchangeAssetMetadataSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.brandmaker.assets.BMUploadAssetSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.bridge.database.assetresolver.BridgeDatabaseAssetResolverSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.bridge.database.assetunlocker.BridgeDatabaseUnlockerSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.bridge.database.rowsdeleter.BridgeDatabaseRowsDeleterSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.bridge.deletefiles.BridgeDeleteFilesSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.bridge.excelcreator.BridgeCreateExcelFileSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.bridge.exceluploader.BridgeUploadExcelFilesSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.bridge.ktistotheme.BridgeTransferThemeSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.bridge.sendmail.BridgeSendMailSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.mal.assets.MALAssetsSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.mal.assets.MALDownloadAssetSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.mal.assetstructures.MALGetAssetStructureSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.mal.properties.MALGetPropertiesSchedulerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletOutputStream;
@@ -29,13 +44,72 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
     private final AppConfig appConfig;
 
+    private final MALAssetsSchedulerService malAssetsSchedulerService;
+    private final MALDownloadAssetSchedulerService malDownloadAssetSchedulerService;
+    private final MALGetAssetStructureSchedulerService malGetAssetStructureSchedulerService;
+    private final MALGetPropertiesSchedulerService malGetPropertiesSchedulerService;
+
+    private final BridgeCreateExcelFileSchedulerService bridgeCreateExcelFileSchedulerService;
+    private final BridgeDatabaseAssetResolverSchedulerService bridgeDatabaseAssetResolverSchedulerService;
+    private final BridgeDatabaseUnlockerSchedulerService bridgeDatabaseUnlockerSchedulerService;
+    private final BridgeDatabaseRowsDeleterSchedulerService bridgeDatabaseRowsDeleterSchedulerService;
+    private final BridgeDeleteFilesSchedulerService bridgeDeleteFilesSchedulerService;
+    private final BridgeTransferThemeSchedulerService bridgeTransferThemeSchedulerService;
+    private final BridgeSendMailSchedulerService bridgeSendMailSchedulerService;
+    private final BridgeUploadExcelFilesSchedulerService bridgeUploadExcelFilesSchedulerService;
+
+    private final BMExchangeAssetMetadataSchedulerService bmExchangeAssetMetadataSchedulerService;
+    private final BMUploadAssetSchedulerService bmUploadAssetSchedulerService;
+
     /**
-     * ConfigurationServiceImpl constructor
+     * ConfigurationController constructor
      *
-     * @param appConfig {@link AppConfig}
+     * @param appConfig                                   {@link AppConfig}
+     * @param malAssetsSchedulerService                   {@link MALAssetsSchedulerService}
+     * @param malDownloadAssetSchedulerService            {@link MALDownloadAssetSchedulerService}
+     * @param malGetAssetStructureSchedulerService        {@link MALGetAssetStructureSchedulerService}
+     * @param malGetPropertiesSchedulerService            {@link MALGetPropertiesSchedulerService}
+     * @param bridgeCreateExcelFileSchedulerService       {@link BridgeCreateExcelFileSchedulerService}
+     * @param bridgeDatabaseAssetResolverSchedulerService {@link BridgeDatabaseAssetResolverSchedulerService}
+     * @param bridgeDatabaseUnlockerSchedulerService      {@link BridgeDatabaseUnlockerSchedulerService}
+     * @param bridgeDatabaseRowsDeleterSchedulerService   {@link BridgeDatabaseRowsDeleterSchedulerService}
+     * @param bridgeDeleteFilesSchedulerService           {@link BridgeDeleteFilesSchedulerService}
+     * @param bridgeTransferThemeSchedulerService         {@link BridgeTransferThemeSchedulerService}
+     * @param bridgeSendMailSchedulerService              {@link BridgeSendMailSchedulerService}
+     * @param bridgeUploadExcelFilesSchedulerService      {@link BridgeUploadExcelFilesSchedulerService}
+     * @param bmExchangeAssetMetadataSchedulerService     {@link BMExchangeAssetMetadataSchedulerService}
+     * @param bmUploadAssetSchedulerService               {@link BMUploadAssetSchedulerService}
      */
-    public ConfigurationServiceImpl(AppConfig appConfig) {
+    public ConfigurationServiceImpl(AppConfig appConfig,
+                                    MALAssetsSchedulerService malAssetsSchedulerService,
+                                    MALDownloadAssetSchedulerService malDownloadAssetSchedulerService,
+                                    MALGetAssetStructureSchedulerService malGetAssetStructureSchedulerService,
+                                    MALGetPropertiesSchedulerService malGetPropertiesSchedulerService,
+                                    BridgeCreateExcelFileSchedulerService bridgeCreateExcelFileSchedulerService,
+                                    BridgeDatabaseAssetResolverSchedulerService bridgeDatabaseAssetResolverSchedulerService,
+                                    BridgeDatabaseUnlockerSchedulerService bridgeDatabaseUnlockerSchedulerService,
+                                    BridgeDatabaseRowsDeleterSchedulerService bridgeDatabaseRowsDeleterSchedulerService,
+                                    BridgeDeleteFilesSchedulerService bridgeDeleteFilesSchedulerService,
+                                    BridgeTransferThemeSchedulerService bridgeTransferThemeSchedulerService,
+                                    BridgeSendMailSchedulerService bridgeSendMailSchedulerService,
+                                    BridgeUploadExcelFilesSchedulerService bridgeUploadExcelFilesSchedulerService,
+                                    BMExchangeAssetMetadataSchedulerService bmExchangeAssetMetadataSchedulerService,
+                                    BMUploadAssetSchedulerService bmUploadAssetSchedulerService) {
         this.appConfig = appConfig;
+        this.malAssetsSchedulerService = malAssetsSchedulerService;
+        this.malDownloadAssetSchedulerService = malDownloadAssetSchedulerService;
+        this.malGetAssetStructureSchedulerService = malGetAssetStructureSchedulerService;
+        this.malGetPropertiesSchedulerService = malGetPropertiesSchedulerService;
+        this.bridgeCreateExcelFileSchedulerService = bridgeCreateExcelFileSchedulerService;
+        this.bridgeDatabaseAssetResolverSchedulerService = bridgeDatabaseAssetResolverSchedulerService;
+        this.bridgeDatabaseUnlockerSchedulerService = bridgeDatabaseUnlockerSchedulerService;
+        this.bridgeDatabaseRowsDeleterSchedulerService = bridgeDatabaseRowsDeleterSchedulerService;
+        this.bridgeDeleteFilesSchedulerService = bridgeDeleteFilesSchedulerService;
+        this.bridgeTransferThemeSchedulerService = bridgeTransferThemeSchedulerService;
+        this.bridgeSendMailSchedulerService = bridgeSendMailSchedulerService;
+        this.bridgeUploadExcelFilesSchedulerService = bridgeUploadExcelFilesSchedulerService;
+        this.bmExchangeAssetMetadataSchedulerService = bmExchangeAssetMetadataSchedulerService;
+        this.bmUploadAssetSchedulerService = bmUploadAssetSchedulerService;
     }
 
     /**
@@ -106,6 +180,28 @@ public class ConfigurationServiceImpl implements ConfigurationService {
             logger.error(String.format("Saving in %s failed!", applicationPropertyFile), e);
         }
         appConfig.setAppConfigData(appConfigData);
+
+
+        updateCronjobTriggers(appConfigData);
         return appConfigData;
+    }
+
+    private void updateCronjobTriggers(AppConfigData appConfigData) {
+        malAssetsSchedulerService.jobSchedule(new CronTrigger(appConfigData.getMalAssetCronExpression()));
+        malDownloadAssetSchedulerService.jobSchedule(new CronTrigger(appConfigData.getMalDownloadAssetCronExpression()));
+        malGetAssetStructureSchedulerService.jobSchedule(new CronTrigger(appConfigData.getMalAssetStructureCronExpression()));
+        malGetPropertiesSchedulerService.jobSchedule(new CronTrigger(appConfigData.getMalPropertiesCronExpression()));
+
+        bridgeCreateExcelFileSchedulerService.jobScheduleExcel(new CronTrigger(appConfigData.getBridgeExcelFilesCronExpression()));
+        bridgeDatabaseAssetResolverSchedulerService.jobSchedule(new CronTrigger(appConfigData.getBridgeAssetResolverCronExpression()));
+        bridgeDatabaseUnlockerSchedulerService.jobSchedule(new CronTrigger(appConfigData.getBridgeAssetOnBoardingCronExpression()));
+        bridgeDatabaseRowsDeleterSchedulerService.jobSchedule(new CronTrigger(appConfigData.getBridgeDatabaseRowsDeleterCronExpression()));
+        bridgeTransferThemeSchedulerService.jobSchedule(new CronTrigger(appConfigData.getBridgeTransferThemeCronExpression()));
+        bridgeSendMailSchedulerService.jobSchedule(new CronTrigger(appConfigData.getBridgeSendMailCronExpression()));
+        bridgeDeleteFilesSchedulerService.jobSchedule(new CronTrigger(appConfigData.getBridgeDeleteFileCronExpression()));
+        bridgeUploadExcelFilesSchedulerService.jobSchedule(new CronTrigger(appConfigData.getBridgeUploadExcelFilesCronExpression()));
+
+        bmExchangeAssetMetadataSchedulerService.jobSchedule(new CronTrigger(appConfigData.getBmExchangeSchedulerCronExpression()));
+        bmUploadAssetSchedulerService.jobSchedule(new CronTrigger(appConfigData.getBmUploadSchedulerCronExpression()));
     }
 }
