@@ -16,4 +16,12 @@ public interface AuthenticationService {
      */
     UsernamePasswordAuthenticationToken authenticateUser(String username, String password);
 
+    /**
+     * This method is used for authenticating users from cookie.
+     *
+     * @param jSessionIdSso {@link String}
+     * @return {@link UsernamePasswordAuthenticationToken}
+     */
+    UsernamePasswordAuthenticationToken authenticateUser(String jSessionIdSso);
+
 }

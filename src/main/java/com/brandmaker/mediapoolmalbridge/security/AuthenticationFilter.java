@@ -7,12 +7,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -37,11 +39,24 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        Cookie[] cookies = request.getCookies();
+
+        UsernamePasswordAuthenticationToken user = null;
+
+        try {
+            user = getUserThroughCookies(cookies);
+        } catch (AuthenticationException e) {
+            logger.error("Failed to authenticate", e);
+        }
+
+
         try {
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-            UsernamePasswordAuthenticationToken user = getUserThroughAuthorizationHeader(authorizationHeader);
             if (user == null) {
-                throw new AccessDeniedException("You are not authorized!");
+                user = getUserThroughAuthorizationHeader(authorizationHeader);
+                if (user == null) {
+                    throw new AccessDeniedException("You are not authorized!");
+                }
             }
 
             SecurityContextHolder.getContext().setAuthentication(user);
@@ -54,6 +69,26 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         }
     }
 
+
+    private UsernamePasswordAuthenticationToken getUserThroughCookies(Cookie[] cookies) {
+        if (cookies == null) {
+            return null;
+        }
+
+        String jSessionIdSoo = null;
+        for (Cookie cookie : cookies) {
+            if (StringUtils.equals(cookie.getName(), "JSESSIONIDSSO")) {
+                jSessionIdSoo = cookie.getValue();
+                break;
+            }
+        }
+
+        if (StringUtils.isBlank(jSessionIdSoo)) {
+            return null;
+        }
+
+        return authenticationService.authenticateUser(jSessionIdSoo);
+    }
 
     private UsernamePasswordAuthenticationToken getUserThroughAuthorizationHeader(String authorizationHeader) {
         if (StringUtils.isBlank(authorizationHeader)) {

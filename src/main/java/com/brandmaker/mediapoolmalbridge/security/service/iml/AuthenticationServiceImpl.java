@@ -4,6 +4,10 @@ import com.brandmaker.mediapoolmalbridge.security.JwtResponse;
 import com.brandmaker.mediapoolmalbridge.security.service.AuthenticationService;
 import com.brandmaker.mediapoolmalbridge.service.brandmaker.AuthorizationService;
 import com.brandmaker.mediapoolmalbridge.service.brandmaker.impl.AuthorizationServiceImpl;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,6 +87,46 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ADMIN");
         return new UsernamePasswordAuthenticationToken(username, password, grantedAuthorities);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UsernamePasswordAuthenticationToken authenticateUser(String jSessionIdSso) {
+        if (StringUtils.isBlank(jSessionIdSso)) {
+            return null;
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cookie", "JSESSIONIDSSO=" + jSessionIdSso);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(headers);
+
+        ResponseEntity<JwtResponse> responseEntity = null;
+        try {
+            responseEntity = new RestTemplate().postForEntity(authenticationServerUrl + "/" + AUTHENTICATION_PATH, request, JwtResponse.class);
+        } catch (RestClientException e) {
+            logger.error("Authentication service is not available using SSO.", e);
+        }
+
+        if (responseEntity == null || responseEntity.getBody() == null) {
+            return null;
+        }
+
+        JwtResponse responseBody = responseEntity.getBody();
+        if (responseBody == null || StringUtils.isBlank(responseBody.getAccess_token())) {
+            return null;
+        }
+
+
+        String jwtBody = responseBody.getAccess_token().split("\\.")[1];
+        String json = new String(Base64.decodeBase64(jwtBody));
+        JsonElement parse = new JsonParser().parse(json);
+        String username = ((JsonObject) parse).get("sub").getAsString();
+
+        List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ADMIN");
+        return new UsernamePasswordAuthenticationToken(username, null, grantedAuthorities);
     }
 
 }
