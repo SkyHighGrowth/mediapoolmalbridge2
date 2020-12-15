@@ -188,22 +188,33 @@ public class ConfigurationServiceImpl implements ConfigurationService {
         }
 
 
-        updateCronjobTriggers(appConfigData);
+        try {
+            updateCronjobTriggers(appConfigData);
+        } catch (IllegalArgumentException ex) {
+            revertPreviousVersion(currentConfigData, objectMapper, applicationPropertyFile, propertiesFile);
+            model.addAttribute(IS_SUCCESS, false);
+            return currentConfigData;
+        }
+
         if (model != null) {
             Object attribute = model.getAttribute(IS_SUCCESS);
             if (attribute == null || !attribute.equals(false)) {
                 appConfig.setAppConfigData(appConfigData);
                 model.addAttribute(IS_SUCCESS, true);
             } else {
-                //if update failed return previous values
-                try {
-                    objectMapper.writerWithDefaultPrettyPrinter().writeValue(propertiesFile, currentConfigData);
-                } catch (IOException e) {
-                    logger.error(String.format("Saving in %s failed! (Revert changes)", applicationPropertyFile), e);
-                }
+                revertPreviousVersion(currentConfigData, objectMapper, applicationPropertyFile, propertiesFile);
+                return currentConfigData;
             }
         }
         return appConfigData;
+    }
+
+    private void revertPreviousVersion(AppConfigData currentConfigData, ObjectMapper objectMapper, String applicationPropertyFile, File propertiesFile) {
+        try {
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(propertiesFile, currentConfigData);
+        } catch (IOException e) {
+            logger.error(String.format("Saving in %s failed! (Revert changes)", applicationPropertyFile), e);
+        }
     }
 
     private void updateCronjobTriggers(AppConfigData appConfigData) {
