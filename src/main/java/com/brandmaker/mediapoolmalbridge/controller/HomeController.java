@@ -25,7 +25,7 @@ public class HomeController {
      * @return root url
      */
     @GetMapping("/")
-    public String listConfigProperties(Model model) {
+    public String home(Model model) {
         model.addAttribute("version", buildProperties.getVersion());
         return HOME_TEMPLATE;
     }
