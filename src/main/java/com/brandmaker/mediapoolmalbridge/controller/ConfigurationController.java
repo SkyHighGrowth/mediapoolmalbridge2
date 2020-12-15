@@ -62,7 +62,7 @@ public class ConfigurationController {
     @PostMapping("/updateConfigurationProperties")
     public String updateConfigurationProperties(
             @ModelAttribute AppConfigData appConfigData, Model model) {
-        model.addAttribute("configProperties", configurationService.saveAppConfigData(appConfigData));
+        model.addAttribute("configProperties", configurationService.saveAppConfigData(appConfigData, model));
         return HOME_TEMPLATE;
     }
 

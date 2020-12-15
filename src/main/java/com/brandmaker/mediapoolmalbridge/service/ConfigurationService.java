@@ -1,6 +1,7 @@
 package com.brandmaker.mediapoolmalbridge.service;
 
 import com.brandmaker.mediapoolmalbridge.config.AppConfigData;
+import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,7 +27,8 @@ public interface ConfigurationService {
      * Save application configuration data
      *
      * @param appConfigData {@link AppConfigData}
+     * @param model
      * @return list of all updated configuration properties
      */
-    AppConfigData saveAppConfigData(AppConfigData appConfigData);
+    AppConfigData saveAppConfigData(AppConfigData appConfigData, Model model);
 }

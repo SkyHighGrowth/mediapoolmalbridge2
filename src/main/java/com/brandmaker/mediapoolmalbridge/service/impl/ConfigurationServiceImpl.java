@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +41,7 @@ import java.util.Map;
 @Service
 public class ConfigurationServiceImpl implements ConfigurationService {
 
+    public static final String IS_SUCCESS = "isSuccess";
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final AppConfig appConfig;
@@ -147,7 +149,9 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     /**
      * {@inheritDoc}
      */
-    public AppConfigData saveAppConfigData(AppConfigData appConfigData) {
+    public AppConfigData saveAppConfigData(AppConfigData appConfigData, Model model) {
+        AppConfigData currentConfigData = getAppConfigData();
+
         ObjectMapper objectMapper = new ObjectMapper();
         String applicationPropertyFile = appConfig.getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.APPLICATION_PROPERTIES_JSON;
 
@@ -160,6 +164,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
             appConfigData.setIncludedAssetTypes(includedAssetTypes);
         } catch (JsonProcessingException e) {
             logger.error("Parsing of Included asset types values failed! ", e);
+            model.addAttribute(IS_SUCCESS, false);
         }
 
 
@@ -171,18 +176,33 @@ public class ConfigurationServiceImpl implements ConfigurationService {
             appConfigData.setMalPriorities(malPriorities);
         } catch (JsonProcessingException e) {
             logger.error("Parsing of Mal priorities values failed! ", e);
+            model.addAttribute(IS_SUCCESS, false);
         }
 
+        File propertiesFile = new File(applicationPropertyFile);
         try {
-            File propertiesFile = new File(applicationPropertyFile);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(propertiesFile, appConfigData);
         } catch (IOException e) {
             logger.error(String.format("Saving in %s failed!", applicationPropertyFile), e);
+            model.addAttribute(IS_SUCCESS, false);
         }
-        appConfig.setAppConfigData(appConfigData);
 
 
         updateCronjobTriggers(appConfigData);
+        if (model != null) {
+            Object attribute = model.getAttribute(IS_SUCCESS);
+            if (attribute == null || !attribute.equals(false)) {
+                appConfig.setAppConfigData(appConfigData);
+                model.addAttribute(IS_SUCCESS, true);
+            } else {
+                //if update failed return previous values
+                try {
+                    objectMapper.writerWithDefaultPrettyPrinter().writeValue(propertiesFile, currentConfigData);
+                } catch (IOException e) {
+                    logger.error(String.format("Saving in %s failed! (Revert changes)", applicationPropertyFile), e);
+                }
+            }
+        }
         return appConfigData;
     }
 
