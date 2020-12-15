@@ -1,6 +1,7 @@
 package com.brandmaker.mediapoolmalbridge.service;
 
 import com.brandmaker.mediapoolmalbridge.model.mal.propertyvariants.MALPropertyVariant;
+import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -28,15 +29,17 @@ public interface PropertyVariantService {
      * Save Mal Property Variant
      *
      * @param malPropertyVariant {@link MALPropertyVariant}
+     * @param model {@link Model}
      * @return map of all latest version of property variants
      */
-    Map<String, MALPropertyVariant> savePropertyVariant(MALPropertyVariant malPropertyVariant);
+    Map<String, MALPropertyVariant> savePropertyVariant(MALPropertyVariant malPropertyVariant, Model model);
 
     /**
      * Delete Mal Property Variant
      *
      * @param malPropertyVariant {@link MALPropertyVariant}
+     * @param model {@link Model}
      * @return map of all latest version of property variants without the deleted property variant
      */
-    Map<String, MALPropertyVariant> deletePropertyVariant(MALPropertyVariant malPropertyVariant);
+    Map<String, MALPropertyVariant> deletePropertyVariant(MALPropertyVariant malPropertyVariant, Model model);
 }

@@ -27,7 +27,7 @@ public interface ConfigurationService {
      * Save application configuration data
      *
      * @param appConfigData {@link AppConfigData}
-     * @param model
+     * @param model {@link Model}
      * @return list of all updated configuration properties
      */
     AppConfigData saveAppConfigData(AppConfigData appConfigData, Model model);

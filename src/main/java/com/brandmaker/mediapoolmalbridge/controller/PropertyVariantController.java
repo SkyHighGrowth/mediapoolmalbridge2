@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PropertyVariantController {
 
     private static final String PROPERTY_VARIANTS_PAGE = "propertyVariantsPage";
+    private static final String PROPERTY_VARIANTS = "propertyVariants";
 
     private final PropertyVariantService propertyVariantService;
 
@@ -33,7 +34,7 @@ public class PropertyVariantController {
      */
     @GetMapping("/listPropertyVariants")
     public String listPropertyVariants(Model model) {
-        model.addAttribute("propertyVariants", propertyVariantService.getPropertyVariantsSorted());
+        model.addAttribute(PROPERTY_VARIANTS, propertyVariantService.getPropertyVariantsSorted());
         return PROPERTY_VARIANTS_PAGE;
     }
 
@@ -56,11 +57,11 @@ public class PropertyVariantController {
      */
     @PostMapping("/updatePropertyVariants")
     public String updatePropertyVariants(
-            @ModelAttribute MALPropertyVariant malPropertyVariant, @RequestParam String isDelete, Model model) {
-        if (isDelete.equals("false")) {
-            model.addAttribute("propertyVariants", propertyVariantService.savePropertyVariant(malPropertyVariant));
+            @ModelAttribute MALPropertyVariant malPropertyVariant, @RequestParam(required = false) String isDelete, Model model) {
+        if (isDelete == null || isDelete.equals("false")) {
+            model.addAttribute(PROPERTY_VARIANTS, propertyVariantService.savePropertyVariant(malPropertyVariant, model));
         } else if (isDelete.equals("true")) {
-            model.addAttribute("propertyVariants", propertyVariantService.deletePropertyVariant(malPropertyVariant));
+            model.addAttribute(PROPERTY_VARIANTS, propertyVariantService.deletePropertyVariant(malPropertyVariant, model));
         }
         return PROPERTY_VARIANTS_PAGE;
     }

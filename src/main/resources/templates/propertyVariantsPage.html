@@ -32,7 +32,14 @@
         <tbody>
         <tr>
             <td colspan="2">
-
+                <th:block th:switch="${isSuccess}">
+                    <div th:case="true" class="alert alert-primary" id="saveNotification" role="alert">
+                        Update is successful!
+                    </div>
+                    <div th:case="false" class="alert alert-danger" id="errorNotification" role="alert">
+                        Update failed!
+                    </div>
+                </th:block>
                 <div class="btn-group-justified">
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
@@ -280,7 +287,7 @@
                                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                                     <input type="text" class="form-control"
                                                            name="id"
-                                                           id="idNew"/>
+                                                           id="idNew" required/>
                                                 </div>
                                             </div>
 
