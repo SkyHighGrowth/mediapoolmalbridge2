@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta charset="utf-8">
     <title>SAL MW Configuration</title>
@@ -11,6 +11,7 @@
 
 <div>
     <h1 class="jumbotron-heading text-center">SAL MW Configuration</h1>
+    <div class="text-center" th:text="'version : ' + ${version}"></div>
     <br/>
     <div class="d-flex justify-content-center">
         <div class="col-md-2">
