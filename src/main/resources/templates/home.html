@@ -27,6 +27,23 @@
             </div>
         </div>
     </div>
+    <br/>
+    <div class="d-flex justify-content-center">
+        <table class="table table-sm table-responsive-md col-md-5">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Status</th>
+                <th scope="col">Assets</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="object : ${mapCurrentStatus}">
+                <th scope="col" th:text="${object.key}"></th>
+                <th scope="col" th:text="${object.value}"></th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>
