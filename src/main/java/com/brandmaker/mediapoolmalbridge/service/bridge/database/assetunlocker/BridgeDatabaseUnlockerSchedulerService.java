@@ -17,7 +17,7 @@ public class BridgeDatabaseUnlockerSchedulerService extends AbstractSchedulerSer
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getBridgeAssetOnBoardingCronExpression()));
+        jobSchedule(new CronTrigger(appConfig.getBridgeAssetOnBoardingCronExpression()));
     }
 
     @Override

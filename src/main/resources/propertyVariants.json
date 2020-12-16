@@ -124,7 +124,7 @@
     "subNameMapsRadiobutton": "VALUE_MEDIA_24",
     "subNameFloorPlans": "AFFILIATES_V009_Element_Floorplans",
     "subNameFloorPlansRadiobutton": "VALUE_MEDIA_24",
-    "addressField01": "{ADDRESS}    {CITY}, {PropertyState} {ZIP}{AFFILIATE_NAME} • {ADDRESS}, {CITY}, {PropertyState} {ZIP} • {telephone}",
+    "addressField01": "{ADDRESS}    {CITY}, {PropertyState} {ZIP}{AFFILIATE_NAME} &bull; {ADDRESS}, {CITY}, {PropertyState} {ZIP} &bull; {telephone}",
     "addressField02": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{AFFILIATE_NAME}</span><br/>\r\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>",
     "addressField03": "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{AFFILIATE_NAME}<br/>\r\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</span></div>",
     "addressField04": "<div/>\n<div class=\"stylebc8e96d9c7afda5f01ffe44f7459e368\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1_Big\" data-quark-style=\"Address 1 Big\" ext:qtip=\"Address 1 Big\" title=\"Address 1 Big\">{AFFILIATE_NAME}<br/>\r\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>\r\n</div>",

@@ -114,7 +114,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         return restTemplate;
     }
 
-    private Credentials getCredentials() {
+    public Credentials getCredentials() {
         Credentials credentials = new Credentials();
         if (Arrays.asList(environment.getActiveProfiles()).contains(DEV) && !Arrays.asList(environment.getActiveProfiles()).contains(PRODUCTION)) {
             credentials.setUsername(appConfig.getMediapoolUsernameDev());
@@ -130,7 +130,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         return credentials;
     }
 
-    static class Credentials {
+    /**
+     * {@inheritDoc}
+     */
+    public static class Credentials {
         private String username;
         private String password;
         private String url;

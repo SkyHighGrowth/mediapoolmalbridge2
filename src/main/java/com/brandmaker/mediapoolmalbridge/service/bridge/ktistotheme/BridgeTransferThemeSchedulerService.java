@@ -31,7 +31,7 @@ public class BridgeTransferThemeSchedulerService extends AbstractSchedulerServic
 
     @PostConstruct
     public void exchangeKitsToThemes() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getBridgeTransferThemeCronExpression()));
+        jobSchedule(new CronTrigger(appConfig.getBridgeTransferThemeCronExpression()));
     }
 
     public void scheduled() {

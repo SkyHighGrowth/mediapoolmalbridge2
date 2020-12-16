@@ -23,7 +23,7 @@ public class MALDownloadAssetSchedulerService extends AbstractSchedulerService {
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getMalDownloadAssetCronExpression()));
+        jobSchedule(new CronTrigger(appConfig.getMalDownloadAssetCronExpression()));
     }
 
     @Override

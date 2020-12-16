@@ -38,7 +38,7 @@ public class BMUploadAssetSchedulerService extends AbstractSchedulerService {
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getBmUploadSchedulerCronExpression()));
+        jobSchedule(new CronTrigger(appConfig.getBmUploadSchedulerCronExpression()));
     }
 
     @Override

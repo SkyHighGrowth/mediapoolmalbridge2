@@ -1,5 +1,6 @@
 package com.brandmaker.mediapoolmalbridge.service.brandmaker;
 
+import com.brandmaker.mediapoolmalbridge.service.brandmaker.impl.AuthorizationServiceImpl;
 import org.springframework.http.HttpEntity;
 
 /**
@@ -20,4 +21,11 @@ public interface AuthorizationService {
      * @return the domain URL
      */
     String getDomainUrl();
+
+    /**
+     * Get Credentials
+     *
+     * @return Credentials {@link AuthorizationServiceImpl.Credentials}
+     */
+    AuthorizationServiceImpl.Credentials getCredentials();
 }

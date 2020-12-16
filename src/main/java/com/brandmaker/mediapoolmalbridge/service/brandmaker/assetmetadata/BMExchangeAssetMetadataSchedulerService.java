@@ -28,7 +28,7 @@ public class BMExchangeAssetMetadataSchedulerService extends AbstractSchedulerSe
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getBmExchangeSchedulerCronExpression()));
+        jobSchedule(new CronTrigger(appConfig.getBmExchangeSchedulerCronExpression()));
     }
 
     @Override

@@ -31,7 +31,7 @@ public class MALAssetsSchedulerService extends AbstractMALSchedulerService {
 
     @PostConstruct
     public void init() {
-        taskSchedulerWrapper.getTaskScheduler().schedule(this::run, new CronTrigger(appConfig.getMalAssetCronExpression()));
+        jobSchedule(new CronTrigger(appConfig.getMalAssetCronExpression()));
     }
 
     @Override
