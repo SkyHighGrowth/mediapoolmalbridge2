@@ -1,28 +1,19 @@
 package com.brandmaker.mediapoolmalbridge.service;
 
-import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.asset.TransferringAssetStatus;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Map;
 
 /**
  * Service for assets
  */
 public interface AssetService {
-    /**
-     * Count number of assets by their status and date
-     * @param from date
-     * @param to date
-     * @param transferringAssetStatus {@link TransferringAssetStatus}
-     * @return number of assets
-     */
-    long countAllByUpdatedIsAfterAndUpdatedIsBeforeAndTransferringAssetStatus(
-            final LocalDateTime from, final LocalDateTime to, final TransferringAssetStatus transferringAssetStatus);
 
     /**
+     * Get count of all current statuses
      *
-     * @param transferringAssetStatus {@link TransferringAssetStatus}
-     * @return number of assets
+     * @param dateFrom Date from
+     * @param dateTo   Date to
+     * @return map with count of all current status
      */
-    long countAllByTransferringAssetStatus(final TransferringAssetStatus transferringAssetStatus);
-
+    Map<String, Long> getMapCurrentAssetStatus(LocalDate dateFrom, LocalDate dateTo);
 }
