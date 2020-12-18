@@ -5,8 +5,8 @@
     <script src="./webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <script>
-        window.setTimeout(function() {
-            $(".alert").fadeTo(2000, 0).slideUp(2000, function(){
+        window.setTimeout(function () {
+            $(".alert").fadeTo(2000, 0).slideUp(2000, function () {
                 $(this).remove();
             });
         }, 2000);
@@ -271,7 +271,7 @@
                                 <label class="col-sm-6 col-form-label" for="filterStartDate">Filter Start Date</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{filterStartDate}"
-                                           id="filterStartDate" />
+                                           id="filterStartDate"/>
                                 </div>
                             </div>
 
@@ -279,7 +279,7 @@
                                 <label class="col-sm-6 col-form-label" for="filterEndDate">Filter End Date</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{filterEndDate}"
-                                           id="filterEndDate" />
+                                           id="filterEndDate"/>
                                 </div>
                             </div>
                         </div>
@@ -290,7 +290,7 @@
                                     files</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="checkbox" class="form-control" th:field="*{doNotCreateExcelFiles}"
-                                           th:checked="*{doNotCreateExcelFiles}" id="doNotCreateExcelFiles" />
+                                           th:checked="*{doNotCreateExcelFiles}" id="doNotCreateExcelFiles"/>
                                 </div>
                             </div>
 
@@ -299,7 +299,7 @@
                                     (Excel export)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{fileMaxRecords}"
-                                           id="fileMaxRecords" required />
+                                           id="fileMaxRecords" required/>
                                 </div>
                             </div>
                         </div>
@@ -310,21 +310,21 @@
                                 <label class="col-sm-6 col-form-label" for="malHostname">MAL Hostname URL</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{malHostname}"
-                                           id="malHostname" required />
+                                           id="malHostname" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="malLogin">MAL Login Username</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{malLogin}"
-                                           id="malLogin" required />
+                                           id="malLogin" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="malApiKey">MAL API Key</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{malApiKey}"
-                                           id="malApiKey" required />
+                                           id="malApiKey" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -332,7 +332,7 @@
                                     size</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{malThreadexecutorPoolSize}"
-                                           id="malThreadexecutorPoolSize" required />
+                                           id="malThreadexecutorPoolSize" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -340,7 +340,7 @@
                                     size</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{malThreadexecutorQueueSize}"
-                                           id="malThreadexecutorQueueSize" required />
+                                           id="malThreadexecutorQueueSize" required/>
                                 </div>
                             </div>
 
@@ -351,7 +351,7 @@
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control"
                                            th:field="*{malThreadexecutorQueueLengthMax}"
-                                           id="malThreadexecutorQueueLengthMax" required />
+                                           id="malThreadexecutorQueueLengthMax" required/>
                                 </div>
                             </div>
 
@@ -360,7 +360,7 @@
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control"
                                            th:field="*{malPageSize}"
-                                           id="malPageSize" required />
+                                           id="malPageSize" required/>
                                 </div>
                             </div>
                             <hr/>
@@ -369,7 +369,7 @@
                                     (QA)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{mediapoolUsernameDev}"
-                                           id="mediapoolUsernameDev" required />
+                                           id="mediapoolUsernameDev" required/>
                                 </div>
                             </div>
 
@@ -377,8 +377,9 @@
                                 <label class="col-sm-6 col-form-label" for="mediapoolPasswordDev">BM MediaPool Password
                                     (QA)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
-                                    <input type="password" class="form-control" name="mediapoolPasswordDev" th:value="*{mediapoolPasswordDev}"
-                                           id="mediapoolPasswordDev" required />
+                                    <input type="password" class="form-control" name="mediapoolPasswordDev"
+                                           th:value="*{mediapoolPasswordDev}"
+                                           id="mediapoolPasswordDev" required/>
                                 </div>
                             </div>
 
@@ -387,7 +388,7 @@
                                     (QA)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{mediapoolUrlDev}"
-                                           id="mediapoolUrlDev" required />
+                                           id="mediapoolUrlDev" required/>
                                 </div>
                             </div>
 
@@ -395,7 +396,7 @@
                                 <label class="col-sm-6 col-form-label" for="themeUrlDev">BM Theme URL (QA)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{themeUrlDev}"
-                                           id="themeUrlDev" required />
+                                           id="themeUrlDev" required/>
                                 </div>
                             </div>
                             <hr/>
@@ -404,7 +405,7 @@
                                     Username (Production)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{mediapoolUsernameProduction}"
-                                           id="mediapoolUsernameProduction" required />
+                                           id="mediapoolUsernameProduction" required/>
                                 </div>
                             </div>
 
@@ -412,8 +413,9 @@
                                 <label class="col-sm-6 col-form-label" for="mediapoolPasswordProduction">BM MediaPool
                                     Password (Production)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
-                                    <input type="password" class="form-control" name="mediapoolPasswordProduction" th:value="*{mediapoolPasswordProduction}"
-                                           id="mediapoolPasswordProduction" required />
+                                    <input type="password" class="form-control" name="mediapoolPasswordProduction"
+                                           th:value="*{mediapoolPasswordProduction}"
+                                           id="mediapoolPasswordProduction" required/>
                                 </div>
                             </div>
 
@@ -422,7 +424,7 @@
                                     (Production)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{mediapoolUrlProduction}"
-                                           id="mediapoolUrlProduction" required />
+                                           id="mediapoolUrlProduction" required/>
                                 </div>
                             </div>
 
@@ -431,7 +433,7 @@
                                     (Production)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{themeUrlProduction}"
-                                           id="themeUrlProduction" required />
+                                           id="themeUrlProduction" required/>
                                 </div>
                             </div>
                             <hr/>
@@ -441,7 +443,7 @@
                                     size</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{bmThreadexecutorPoolSize}"
-                                           id="bmThreadexecutorPoolSize" required />
+                                           id="bmThreadexecutorPoolSize" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -449,7 +451,7 @@
                                     size</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{bmThreadexecutorQueueSize}"
-                                           id="bmThreadexecutorQueueSize" required />
+                                           id="bmThreadexecutorQueueSize" required/>
                                 </div>
                             </div>
 
@@ -460,7 +462,7 @@
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control"
                                            th:field="*{bmThreadexecutorQueueLengthMax}"
-                                           id="bmThreadexecutorQueueLengthMax" required />
+                                           id="bmThreadexecutorQueueLengthMax" required/>
                                 </div>
                             </div>
 
@@ -471,7 +473,7 @@
                                     Pool Size</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{threadschedulerPoolSize}"
-                                           id="threadschedulerPoolSize" required />
+                                           id="threadschedulerPoolSize" required/>
                                 </div>
                             </div>
                         </div>
@@ -482,7 +484,7 @@
                                 <label class="col-sm-6 col-form-label" for="databasePageSize">Database Page Size</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{databasePageSize}"
-                                           id="databasePageSize" required />
+                                           id="databasePageSize" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -490,7 +492,7 @@
                                     URL (QA)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{datasourceUrlDev}"
-                                           id="datasourceUrlDev" required />
+                                           id="datasourceUrlDev" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -498,15 +500,16 @@
                                     username (QA)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{datasourceUsernameDev}"
-                                           id="datasourceUsernameDev" required />
+                                           id="datasourceUsernameDev" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="datasourcePasswordDev">Database
                                     password (QA)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
-                                    <input type="password" class="form-control" name="datasourcePasswordDev" th:value="*{datasourcePasswordDev}"
-                                           id="datasourcePasswordDev" required />
+                                    <input type="password" class="form-control" name="datasourcePasswordDev"
+                                           th:value="*{datasourcePasswordDev}"
+                                           id="datasourcePasswordDev" required/>
                                 </div>
                             </div>
 
@@ -515,7 +518,7 @@
                                     URL (Production)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{datasourceUrlProduction}"
-                                           id="datasourceUrlProduction" required />
+                                           id="datasourceUrlProduction" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -524,7 +527,7 @@
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control"
                                            th:field="*{datasourceUsernameProduction}"
-                                           id="datasourceUsernameProduction" required />
+                                           id="datasourceUsernameProduction" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -532,8 +535,9 @@
                                     password (Production)</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="password" class="form-control"
-                                           name="datasourcePasswordProduction" th:value="*{datasourcePasswordProduction}"
-                                           id="datasourcePasswordProduction" required />
+                                           name="datasourcePasswordProduction"
+                                           th:value="*{datasourcePasswordProduction}"
+                                           id="datasourcePasswordProduction" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -541,7 +545,7 @@
                                     dialect</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{hibernateDialect}"
-                                           id="hibernateDialect" required />
+                                           id="hibernateDialect" required/>
                                 </div>
                             </div>
 
@@ -550,7 +554,7 @@
                                     SQL</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{hibernateShowSql}"
-                                           id="hibernateShowSql" required />
+                                           id="hibernateShowSql" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -558,7 +562,7 @@
                                     auto</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{hibernateHbm2dlAuto}"
-                                           id="hibernateHbm2dlAuto" required />
+                                           id="hibernateHbm2dlAuto" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -566,14 +570,14 @@
                                     timeout</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{hikariConnectionTimeout}"
-                                           id="hikariConnectionTimeout" required />
+                                           id="hikariConnectionTimeout" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="hikariIdleTimeout">Idle timeout</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{hikariIdleTimeout}"
-                                           id="hikariIdleTimeout" required />
+                                           id="hikariIdleTimeout" required/>
                                 </div>
                             </div>
 
@@ -582,7 +586,7 @@
                                     time</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{hikariMaxLifeTime}"
-                                           id="hikariMaxLifeTime" required />
+                                           id="hikariMaxLifeTime" required/>
                                 </div>
                             </div>
 
@@ -590,7 +594,7 @@
                                 <label class="col-sm-6 col-form-label" for="hikariAutoCommit">Auto commit</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="checkbox" class="form-control" th:field="*{hikariAutoCommit}"
-                                           th:checked="*{hikariAutoCommit}" id="hikariAutoCommit" />
+                                           th:checked="*{hikariAutoCommit}" id="hikariAutoCommit"/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -598,7 +602,7 @@
                                     size</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{hikariMaximumPoolSize}"
-                                           id="hikariMaximumPoolSize" required />
+                                           id="hikariMaximumPoolSize" required/>
                                 </div>
                             </div>
                         </div>
@@ -609,42 +613,43 @@
                                 <label class="col-sm-6 col-form-label" for="useSftp">Use SFTP</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="checkbox" class="form-control" th:field="*{useSftp}"
-                                           th:checked="*{useSftp}" id="useSftp" />
+                                           th:checked="*{useSftp}" id="useSftp"/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="sftpUsername">SFTP Username</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{sftpUsername}"
-                                           id="sftpUsername" required />
+                                           id="sftpUsername" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="sftpPassword">SFTP Password</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
-                                    <input type="password" class="form-control" name="sftpPassword" th:value="*{sftpPassword}"
-                                           id="sftpPassword" required />
+                                    <input type="password" class="form-control" name="sftpPassword"
+                                           th:value="*{sftpPassword}"
+                                           id="sftpPassword" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="sftpHostname">SFTP Hostname</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{sftpHostname}"
-                                           id="sftpHostname" required />
+                                           id="sftpHostname" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="sftpPort">SFTP Port</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{sftpPort}"
-                                           id="sftpPort" required />
+                                           id="sftpPort" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="sftpPublicKey">SFTP Public Key</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{sftpPublicKey}"
-                                           id="sftpPublicKey" required />
+                                           id="sftpPublicKey" required/>
                                 </div>
                             </div>
                             <hr/>
@@ -652,28 +657,29 @@
                                 <label class="col-sm-6 col-form-label" for="mailHostname">Mail Hostname</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{mailHostname}"
-                                           id="mailHostname" required />
+                                           id="mailHostname" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="mailPort">Mail Port</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{mailPort}"
-                                           id="mailPort" required />
+                                           id="mailPort" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="mailUsername">Mail Username</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{mailUsername}"
-                                           id="mailUsername" />
+                                           id="mailUsername"/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="mailPassword">Mail Password</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
-                                    <input type="password" class="form-control" name="mailPassword" th:value="*{mailPassword}"
-                                           id="mailPassword" />
+                                    <input type="password" class="form-control" name="mailPassword"
+                                           th:value="*{mailPassword}"
+                                           id="mailPassword"/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -681,7 +687,7 @@
                                     Protocol</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{mailTransportProtocol}"
-                                           id="mailTransportProtocol" required />
+                                           id="mailTransportProtocol" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -689,7 +695,7 @@
                                     Authorization</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="checkbox" class="form-control" th:field="*{mailSmtpAuth}"
-                                           th:checked="*{useSftp}" id="mailSmtpAuth" />
+                                           th:checked="*{useSftp}" id="mailSmtpAuth"/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -698,28 +704,28 @@
                                     TLS enabled</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="checkbox" class="form-control" th:field="*{mailSmtpStarttlsEnable}"
-                                           th:checked="*{useSftp}" id="mailSmtpStarttlsEnable" />
+                                           th:checked="*{useSftp}" id="mailSmtpStarttlsEnable"/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="mailDebug">Mail Debug</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="checkbox" class="form-control" th:field="*{mailDebug}"
-                                           th:checked="*{useSftp}" id="mailDebug" />
+                                           th:checked="*{useSftp}" id="mailDebug"/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="mailBmAddress">Mail BM Address</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{mailBmAddress}"
-                                           id="mailBmAddress" required />
+                                           id="mailBmAddress" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="mailMalAddress">Mail MAL Address</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{mailMalAddress}"
-                                           id="mailMalAddress" required />
+                                           id="mailMalAddress" required/>
                                 </div>
                             </div>
                         </div>
@@ -729,7 +735,7 @@
                                 <label class="col-sm-6 col-form-label" for="fileFormatsOrder">File format order</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{fileFormatsOrder}"
-                                           id="fileFormatsOrder" required />
+                                           id="fileFormatsOrder" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -737,7 +743,7 @@
                                     name</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{failSaveCategoryName}"
-                                           id="failSaveCategoryName" required />
+                                           id="failSaveCategoryName" required/>
                                 </div>
                             </div>
 
@@ -747,7 +753,7 @@
                                     limit</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{downloadFolderSizeLimit}"
-                                           id="downloadFolderSizeLimit" required />
+                                           id="downloadFolderSizeLimit" required/>
                                 </div>
                             </div>
 
@@ -755,16 +761,7 @@
                                 <label class="col-sm-6 col-form-label" for="workingDirectory">Working directory</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{workingDirectory}"
-                                           id="workingDirectory" required />
-                                </div>
-                            </div>
-
-                            <div class="form-group-sm row">
-                                <label class="col-sm-6 col-form-label" for="disableAbsoluteDelete">Disable absolute
-                                    delete</label>
-                                <div class="col-sm-6 input-group input-group-sm mb-3">
-                                    <input type="checkbox" class="form-control" th:field="*{disableAbsoluteDelete}"
-                                           th:checked="*{disableAbsoluteDelete}" id="disableAbsoluteDelete" />
+                                           id="workingDirectory" required/>
                                 </div>
                             </div>
 
@@ -773,16 +770,18 @@
                                     Repetition</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{assetStateRepetitionMax}"
-                                           id="assetStateRepetitionMax" required />
+                                           id="assetStateRepetitionMax" required/>
                                 </div>
                             </div>
+
+                            <hr/>
 
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="bridgeLookInThePastDays">Bridge Look In the
                                     Past Days</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{bridgeLookInThePastDays}"
-                                           id="bridgeLookInThePastDays" required />
+                                           id="bridgeLookInThePastDays" required/>
                                 </div>
                             </div>
 
@@ -791,7 +790,7 @@
                                     Window</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{bridgeResolverWindow}"
-                                           id="bridgeResolverWindow" required />
+                                           id="bridgeResolverWindow" required/>
                                 </div>
                             </div>
 
@@ -801,7 +800,7 @@
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control"
                                            th:field="*{bridgeDatabaseRowsDeleterDays}"
-                                           id="bridgeDatabaseRowsDeleterDays" required />
+                                           id="bridgeDatabaseRowsDeleterDays" required/>
                                 </div>
                             </div>
 
@@ -810,7 +809,17 @@
                                     Days</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control" th:field="*{malLookInThePastDays}"
-                                           id="malLookInThePastDays" required />
+                                           id="malLookInThePastDays" required/>
+                                </div>
+                            </div>
+
+                            <hr/>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="disableAbsoluteDelete">Disable absolute
+                                    delete</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="checkbox" class="form-control" th:field="*{disableAbsoluteDelete}"
+                                           th:checked="*{disableAbsoluteDelete}" id="disableAbsoluteDelete"/>
                                 </div>
                             </div>
 
@@ -820,9 +829,10 @@
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="number" class="form-control"
                                            th:field="*{assetFileMaximalLivingDaysOnDisc}"
-                                           id="assetFileMaximalLivingDaysOnDisc" required />
+                                           id="assetFileMaximalLivingDaysOnDisc" required/>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="form-group-sm row">
