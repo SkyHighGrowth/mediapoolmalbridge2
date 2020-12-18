@@ -80,8 +80,8 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
         try {
             for (int page = 0; true; ++page) {
                 final List<UploadedFileEntity> fileEntities = uploadedFileRepository.findByDeletedAndCreatedIsBefore(
-                        false,  getTodayMidnight().minusDays( appConfig.getBridgeLookInThePastDays() + appConfig.getBridgeResolverWindow() + 1L ), PageRequest.of(0, appConfig.getDatabasePageSize()));
-                if( fileEntities.isEmpty() || page > 1000 ) {
+                        false, getTodayMidnight().minusDays(appConfig.getAssetFileMaximalLivingDaysOnDisc()), PageRequest.of(0, appConfig.getDatabasePageSize()));
+                if (fileEntities.isEmpty() || page > 1000) {
                     break;
                 }
                 deletePage(fileEntities);
