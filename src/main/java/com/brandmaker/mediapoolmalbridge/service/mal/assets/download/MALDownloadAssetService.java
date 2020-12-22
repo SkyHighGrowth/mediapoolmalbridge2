@@ -71,7 +71,7 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
     private long getCurrentDownloadFolderSize() {
         File tempDir = new File(appConfig.getTempDir());
         long size = 0;
-        try (Stream<Path> walkStream = Files.walk(tempDir.toPath())){
+        try (Stream<Path> walkStream = Files.walk(tempDir.toPath())) {
             size = walkStream
                     .filter(p -> p.toFile().isFile())
                     .mapToLong(p -> p.toFile().length())
@@ -90,7 +90,7 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
 
     private long getDownloadFolderSizeLimitInBytes() {
         //For Windows server change this to 1024
-        return appConfig.getDownloadFolderSizeLimit() * 1000 * 1000 * 1000;
+        return appConfig.getAppConfigData().getDownloadFolderSizeLimit() * 1000 * 1000 * 1000;
     }
 
     @Transactional

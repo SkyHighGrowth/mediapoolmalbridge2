@@ -76,7 +76,7 @@ public class MALToBMTransformer {
         if (StringUtils.isEmpty(collectionId) && StringUtils.isEmpty(destinationId)
                 && StringUtils.isEmpty(subjectId) && StringUtils.isEmpty(colorId)) {
             themeDto = new ThemeDto();
-            themeDto.setName(appConfig.getFailSaveCategoryName());
+            themeDto.setName(appConfig.getAppConfigData().getFailSaveCategoryName());
             uploadMetadataArgument.getAssociations().add(themeDto);
         }
 

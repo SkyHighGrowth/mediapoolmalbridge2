@@ -1,6 +1,7 @@
 package com.brandmaker.mediapoolmalbridge.clients.brandmaker;
 
 import com.brandmaker.mediapoolmalbridge.config.AppConfig;
+import com.brandmaker.mediapoolmalbridge.config.AppConfigData;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.ReportsEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportTo;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportType;
@@ -69,38 +70,40 @@ public abstract class BrandMakerSoapClient {
 
     public MediaPoolWebServicePortV2 getMediaPoolPort() {
         final MediaPoolWebServicePortV2 port = mediaPoolService.getMediaPoolPortV2();
+        AppConfigData appConfigData = appConfig.getAppConfigData();
         if( Arrays.asList( environment.getActiveProfiles() ).contains(DEV) &&
             !Arrays.asList( environment.getActiveProfiles() ).contains(PRODUCTION) ) {
             Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-            reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfig.getMediapoolUsernameDev());
-            reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfig.getMediapoolPasswordDev());
-            reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfig.getMediapoolUrlDev());
+            reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfigData.getMediapoolUsernameDev());
+            reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfigData.getMediapoolPasswordDev());
+            reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfigData.getMediapoolUrlDev());
         }
         if( Arrays.asList( environment.getActiveProfiles() ).contains(PRODUCTION) &&
             !Arrays.asList( environment.getActiveProfiles() ).contains(DEV) ) {
             Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-            reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfig.getMediapoolUsernameProduction());
-            reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfig.getMediapoolPasswordProduction());
-            reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfig.getMediapoolUrlProduction());
+            reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfigData.getMediapoolUsernameProduction());
+            reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfigData.getMediapoolPasswordProduction());
+            reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfigData.getMediapoolUrlProduction());
         }
         return port;
     }
 
     protected ThemeWebServicePort getThemeWebServicePort() {
         final ThemeWebServicePort port = themeService.getThemePort();
+        AppConfigData appConfigData = appConfig.getAppConfigData();
         if( Arrays.asList( environment.getActiveProfiles() ).contains(DEV) &&
             !Arrays.asList( environment.getActiveProfiles() ).contains(PRODUCTION) ) {
             Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-            reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfig.getMediapoolUsernameDev());
-            reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfig.getMediapoolPasswordDev());
-            reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfig.getThemeUrlDev());
+            reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfigData.getMediapoolUsernameDev());
+            reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfigData.getMediapoolPasswordDev());
+            reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfigData.getThemeUrlDev());
         }
         if( Arrays.asList( environment.getActiveProfiles() ).contains(PRODUCTION) &&
             !Arrays.asList( environment.getActiveProfiles() ).contains(DEV) ) {
             Map<String, Object> reqContext = ((BindingProvider) port).getRequestContext();
-            reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfig.getMediapoolUsernameProduction());
-            reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfig.getMediapoolPasswordProduction());
-            reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfig.getThemeUrlProduction());
+            reqContext.put(BindingProvider.USERNAME_PROPERTY, appConfigData.getMediapoolUsernameProduction());
+            reqContext.put(BindingProvider.PASSWORD_PROPERTY, appConfigData.getMediapoolPasswordProduction());
+            reqContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, appConfigData.getThemeUrlProduction());
 
         }
         return port;

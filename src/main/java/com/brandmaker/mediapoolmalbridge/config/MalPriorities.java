@@ -20,7 +20,7 @@ public class MalPriorities {
 
     public MalPriorities(final AppConfig appConfig) {
 
-        priorityToListOfBrands = appConfig.getMalPriorities();
+        priorityToListOfBrands = appConfig.getAppConfigData().getMalPriorities();
 
         priorityToListOfBrands.forEach((key, value) -> value.forEach(y -> brandIdToPriority.put(y, key)));
 

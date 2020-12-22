@@ -50,7 +50,7 @@ public abstract class AbstractService {
         return Instant.ofEpochMilli(System.currentTimeMillis())
                 .atOffset(ZoneOffset.UTC)
                 .toLocalDateTime()
-                .minusDays(appConfig.getBridgeLookInThePastDays())
+                .minusDays(appConfig.getAppConfigData().getBridgeLookInThePastDays())
                 .withHour(0)
                 .withMinute(0)
                 .withSecond(0);
