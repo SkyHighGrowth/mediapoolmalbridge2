@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 
 @Service
-@DependsOn( "BridgeDatabaseNormalizerService" )
+@DependsOn("BridgeDatabaseNormalizerService")
 public class BridgeDatabaseRowsDeleterSchedulerService extends AbstractSchedulerService {
 
     private final AssetRepository assetRepository;
@@ -21,10 +21,9 @@ public class BridgeDatabaseRowsDeleterSchedulerService extends AbstractScheduler
 
     private final ServiceRepository serviceRepository;
 
-    public BridgeDatabaseRowsDeleterSchedulerService( final AssetRepository assetRepository,
-                                                      final UploadedFileRepository uploadedFileRepository,
-                                                      final ServiceRepository serviceRepository )
-    {
+    public BridgeDatabaseRowsDeleterSchedulerService(final AssetRepository assetRepository,
+                                                     final UploadedFileRepository uploadedFileRepository,
+                                                     final ServiceRepository serviceRepository) {
         this.assetRepository = assetRepository;
         this.uploadedFileRepository = uploadedFileRepository;
         this.serviceRepository = serviceRepository;
@@ -32,43 +31,41 @@ public class BridgeDatabaseRowsDeleterSchedulerService extends AbstractScheduler
 
     @PostConstruct
     public void init() {
-        jobSchedule(new CronTrigger(appConfig.getBridgeDatabaseRowsDeleterCronExpression()));
+        String bridgeDatabaseRowsDeleterCronExpression = appConfig.getBridgeDatabaseRowsDeleterCronExpression();
+        if (bridgeDatabaseRowsDeleterCronExpression != null) {
+            jobSchedule(new CronTrigger(bridgeDatabaseRowsDeleterCronExpression));
+        }
     }
 
     @Override
     public void scheduled() {
 
-        final LocalDateTime dateTime = getTodayMidnight().minusDays( appConfig.getBridgeDatabaseRowsDeleterDays() );
+        final LocalDateTime dateTime = getTodayMidnight().minusDays(appConfig.getBridgeDatabaseRowsDeleterDays());
 
-        deleteAssetRows( dateTime );
-        deleteFilesToBeDeletedRows( dateTime );
-        deleteReportsRows( dateTime );
-        deleteScheduledJobsRows( dateTime );
-        deleteServiceExecutionRows( dateTime );
+        deleteAssetRows(dateTime);
+        deleteFilesToBeDeletedRows(dateTime);
+        deleteReportsRows(dateTime);
+        deleteScheduledJobsRows(dateTime);
+        deleteServiceExecutionRows(dateTime);
     }
 
-    protected void deleteAssetRows( final LocalDateTime dateTime )
-    {
-        assetRepository.deleteRowsInThePast( dateTime );
+    protected void deleteAssetRows(final LocalDateTime dateTime) {
+        assetRepository.deleteRowsInThePast(dateTime);
     }
 
-    protected void deleteFilesToBeDeletedRows( final LocalDateTime dateTime )
-    {
-        uploadedFileRepository.deleteRowsInThePast( dateTime );
+    protected void deleteFilesToBeDeletedRows(final LocalDateTime dateTime) {
+        uploadedFileRepository.deleteRowsInThePast(dateTime);
     }
 
-    protected void deleteReportsRows( final LocalDateTime dateTime )
-    {
-        reportsRepository.deleteRowsInThePast( dateTime );
+    protected void deleteReportsRows(final LocalDateTime dateTime) {
+        reportsRepository.deleteRowsInThePast(dateTime);
     }
 
-    protected void deleteScheduledJobsRows( final LocalDateTime dateTime )
-    {
-        jobRepository.deleteRowsInThePast( dateTime );
+    protected void deleteScheduledJobsRows(final LocalDateTime dateTime) {
+        jobRepository.deleteRowsInThePast(dateTime);
     }
 
-    protected void deleteServiceExecutionRows( final LocalDateTime dateTime )
-    {
-        serviceRepository.deleteRowsInThePast( dateTime );
+    protected void deleteServiceExecutionRows(final LocalDateTime dateTime) {
+        serviceRepository.deleteRowsInThePast(dateTime);
     }
 }

@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
  * Scheduler service for metadata exchange between Mediapool server and MALToMediapoolBridge
  */
 @Service
-@DependsOn( "BridgeDatabaseNormalizerService" )
+@DependsOn("BridgeDatabaseNormalizerService")
 public class BMExchangeAssetMetadataSchedulerService extends AbstractSchedulerService {
 
     private final BMFireUploadAssetsMetadataUniqueThreadService bmFireUploadAssetsMetadataUniqueThreadService;
@@ -28,7 +28,10 @@ public class BMExchangeAssetMetadataSchedulerService extends AbstractSchedulerSe
 
     @PostConstruct
     public void init() {
-        jobSchedule(new CronTrigger(appConfig.getBmExchangeSchedulerCronExpression()));
+        String bmExchangeSchedulerCronExpression = appConfig.getBmExchangeSchedulerCronExpression();
+        if (bmExchangeSchedulerCronExpression != null) {
+            jobSchedule(new CronTrigger(bmExchangeSchedulerCronExpression));
+        }
     }
 
     @Override

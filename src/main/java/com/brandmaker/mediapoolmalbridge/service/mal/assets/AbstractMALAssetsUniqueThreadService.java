@@ -1,9 +1,8 @@
 package com.brandmaker.mediapoolmalbridge.service.mal.assets;
 
 import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.MALGetAssetsClient;
-import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.model.MALGetAsset;
-import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.model.MALGetAssetsRequest;
-import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.model.MALGetAssetsResponse;
+import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.MALGetNewBrandAssetsClient;
+import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.model.*;
 import com.brandmaker.mediapoolmalbridge.clients.mal.model.MALAssetType;
 import com.brandmaker.mediapoolmalbridge.clients.rest.RestResponse;
 import com.brandmaker.mediapoolmalbridge.config.MalIncludedAssetTypes;
@@ -49,6 +48,9 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
 
     @Autowired
     private MalIncludedAssetTypes includedAssetTypes;
+
+    @Autowired
+    private MALGetNewBrandAssetsClient getNewAssetsClient;
 
     private String since;
 
@@ -98,6 +100,56 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
         transformPagesIntoAssets(request, totalPages);
     }
 
+    protected void downloadNewAssets(final MALGetNewBrandAssetsRequest request) {
+        request.setPage(1);
+
+        RestResponse<MALGetNewAssetsResponse> response = getNewAssetsClient.download(request);
+        if (!response.isSuccess() ||
+                response.getResponse() == null ||
+                response.getResponse().getMeta().getTotal() == null ||
+                response.getResponse().getData() == null) {
+            return;
+        }
+        String jsonResponse = GSON.toJson(response);
+        logger.debug("response asset created, modified {}", jsonResponse);
+        final int totalPages;
+        try {
+            totalPages = response.getResponse().getMeta().getTotal() / response.getResponse().getMeta().getLimit();
+        } catch (final Exception e) {
+            final String message = String.format("Can not parse totalPages of created asset since [%s], with httpStatus [%s], and responseBody [%s]",
+                    since,
+                    response.getHttpStatus(),
+                    GSON.toJson(response.getResponse()));
+            final ReportsEntity reportsEntity = new ReportsEntity(ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, null, null, null);
+            reportsRepository.save(reportsEntity);
+            logger.error(message, e);
+            return;
+        }
+
+        transformPagesIntoNewAssets(request, totalPages);
+    }
+
+    private void transformPagesIntoNewAssets(final MALGetNewBrandAssetsRequest request, final int totalPages) {
+        for (int page = 0; page < totalPages; ++page) {
+            try {
+                request.setPage(page + 1);
+                RestResponse<MALGetNewAssetsResponse> response = getNewAssetsClient.download(request);
+                if (!response.isSuccess() ||
+                        response.getResponse() == null ||
+                        response.getResponse().getData() == null) {
+                    continue;
+                }
+
+                transformPagesIntoNewAssets(response.getResponse().getData());
+            } catch (final Exception e) {
+                final String message = String.format("Problem storing page [%s] to database with message [%s]", page, e.getMessage());
+                final ReportsEntity reportsEntity = new ReportsEntity(ReportType.WARNING, getClass().getName(), null, message, ReportTo.BM, null, null, null);
+                reportsRepository.save(reportsEntity);
+                logger.error(message);
+            }
+        }
+    }
+
     private void transformPagesIntoAssets(final MALGetAssetsRequest request, final int totalPages) {
         for (int page = 0; page < totalPages; ++page) {
             try {
@@ -108,7 +160,6 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                         response.getResponse().getAssets() == null) {
                     continue;
                 }
-
                 transformPageIntoAssets(response.getResponse().getAssets());
             } catch (final Exception e) {
                 final String message = String.format("Problem storing page [%s] to database with message [%s]", page, e.getMessage());
@@ -118,6 +169,94 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
             }
         }
     }
+
+    @Transactional
+    public void transformPagesIntoNewAssets(final List<MALGetData> malGetDatas) {
+        malGetDatas.forEach(malGetData -> {
+
+            MALGetAsset malGetAsset = objectMapping(malGetData);
+
+            if (includedAssetTypes.isIncludedAssetType(malGetAsset.getAssetTypeId())
+                    && (!malGetAsset.getAssetTypeId().equals(LOGO_ASSET_TYPE_ID) || isNotEPS(malGetAsset))) {
+                setAssetEntityByFileFormat(malGetAsset);
+            }
+        });
+    }
+
+    protected MALGetAsset objectMapping(MALGetData malGetData) {
+        MALGetAsset malGetAsset = new MALGetAsset();
+        malGetAsset.setAssetId(malGetData.getAssetId());
+        malGetAsset.setAssetTypeId(malGetData.getAssetTypeId());
+        malGetAsset.setCollectionId(malGetData.getDefaultCollectionId());
+        malGetAsset.setColorId(malGetData.getColorId());
+        malGetAsset.setAssociation(malGetData.getAssociation());
+        malGetAsset.setInstructions(malGetData.getInstructions());
+        malGetAsset.setBrandId(malGetData.getBrandId());
+        malGetAsset.setCaption(malGetData.getCaption());
+        malGetAsset.setDateCreated(malGetData.getDateCreated());
+        malGetAsset.setDescription(malGetData.getDescription());
+        malGetAsset.setDestionationId(malGetData.getDestinationId());
+        malGetAsset.setFilename(malGetData.getFilename());
+        malGetAsset.setFileTypeId(malGetData.getFileTypeId());
+        malGetAsset.setName(malGetData.getName());
+        malGetAsset.setMetadata(malGetData.getMetadata());
+        malGetAsset.setUsageDescription(malGetData.getUsageDescription());
+        malGetAsset.setSubjectId(malGetData.getSubjectId());
+        malGetAsset.setStatus(malGetData.getStatus());
+        malGetAsset.setLastModified(malGetData.getLastModified());
+        if (malGetData.getStock() != null) {
+            malGetAsset.setStock(malGetData.getStock());
+        }
+        malGetAsset.setPropertyId(malGetData.getPropertyId());
+        if (malGetData.getRightsManaged() != null) {
+            malGetAsset.setRightsManaged(malGetData.getRightsManaged());
+        }
+        if (malGetData.getLimitedRights() != null) {
+            malGetAsset.setLimitedRights(malGetData.getLimitedRights());
+        }
+        if (malGetData.getZipped() != null) {
+            malGetAsset.setZipped(malGetData.getZipped());
+        }
+
+        if (malGetData.getProperty() != null && malGetData.getProperty().getData() != null) {
+            malGetAsset.setMarshaCode(malGetData.getProperty().getData().getMarshaCode());
+        }
+
+        if (malGetData.getFiles() != null && malGetData.getFiles().getData() != null && !malGetData.getFiles().getData().isEmpty()) {
+            for (MALFilesData malFilesData : malGetData.getFiles().getData()) {
+                switch (malFilesData.getType()) {
+                    case "xl":
+                        malGetAsset.setXlUrl(malFilesData.getUrl());
+                        break;
+                    case "large":
+                        malGetAsset.setLargeUrl(malFilesData.getUrl());
+                        break;
+                    case "high":
+                        malGetAsset.setHighUrl(malFilesData.getUrl());
+                        break;
+                    case "medium":
+                        malGetAsset.setMediumUrl(malFilesData.getUrl());
+                        break;
+                    case "low":
+                        malGetAsset.setThumbnailUrl(malFilesData.getUrl());
+                        break;
+                    case "logo_jpg":
+                        malGetAsset.setLogoJpgUrl(malFilesData.getUrl());
+                        break;
+                    case "logo_png":
+                        malGetAsset.setLogoPngUrl(malFilesData.getUrl());
+                        break;
+                    case "offer":
+                        malGetAsset.setOfferUrl(malFilesData.getUrl());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return malGetAsset;
+    }
+
 
     @Transactional
     public void transformPageIntoAssets(final List<MALGetAsset> malGetAssets) {

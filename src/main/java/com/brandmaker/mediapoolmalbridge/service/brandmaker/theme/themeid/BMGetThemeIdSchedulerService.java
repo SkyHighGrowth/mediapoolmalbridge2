@@ -22,30 +22,32 @@ public class BMGetThemeIdSchedulerService extends AbstractSchedulerService {
     private final BMThemePathToId bmThemePathToId;
 
     public BMGetThemeIdSchedulerService(final BMDownloadThemeIdClient bmDownloadThemeIdClient,
-                                        final BMThemePathToId bmThemePathToId)
-    {
+                                        final BMThemePathToId bmThemePathToId) {
         this.bmDownloadThemeIdClient = bmDownloadThemeIdClient;
         this.bmThemePathToId = bmThemePathToId;
     }
 
     //@PostConstruct
     public void init() {
-        jobSchedule(new CronTrigger(appConfig.getBmGetThemeIdCronExpression()));
+        String bmGetThemeIdCronExpression = appConfig.getBmGetThemeIdCronExpression();
+        if (bmGetThemeIdCronExpression != null) {
+            jobSchedule(new CronTrigger(bmGetThemeIdCronExpression));
+        }
     }
 
     @Override
     protected void scheduled() {
-        for( final String themePath : bmThemePathToId.keySet() ) {
+        for (final String themePath : bmThemePathToId.keySet()) {
             final BMTheme theme = new BMTheme();
-            theme.setThemePath( themePath );
-            final DownloadThemeIdResponse response = bmDownloadThemeIdClient.downloadThemeId( theme );
-            if( response.isStatus() ) {
-                bmThemePathToId.put( themePath, String.valueOf( response.getTheme().getId() ) );
+            theme.setThemePath(themePath);
+            final DownloadThemeIdResponse response = bmDownloadThemeIdClient.downloadThemeId(theme);
+            if (response.isStatus()) {
+                bmThemePathToId.put(themePath, String.valueOf(response.getTheme().getId()));
             } else {
-                final String message = String.format( "Can not download theme id from theme path [%s], with messages [%s] and warnings [%s]", themePath, response.getErrorAsString(), response.getWarningsAsString() );
-                final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null );
-                reportsRepository.save( reportsEntity );
-                logger.error( message );
+                final String message = String.format("Can not download theme id from theme path [%s], with messages [%s] and warnings [%s]", themePath, response.getErrorAsString(), response.getWarningsAsString());
+                final ReportsEntity reportsEntity = new ReportsEntity(ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null);
+                reportsRepository.save(reportsEntity);
+                logger.error(message);
             }
         }
     }

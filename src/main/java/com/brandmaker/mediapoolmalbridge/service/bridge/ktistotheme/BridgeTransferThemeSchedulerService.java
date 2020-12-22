@@ -22,8 +22,8 @@ public class BridgeTransferThemeSchedulerService extends AbstractSchedulerServic
     private final BMFireUploadThemeUniqueThreadService bmFireUploadThemeUniqueThreadService;
 
     public BridgeTransferThemeSchedulerService(final MALGetKitsUniqueThreadService malGetKitsUniqueThreadService,
-                                                final BMDownloadThemeUniqueThreadService bmDownloadThemeUniqueThreadService,
-                                                final BMFireUploadThemeUniqueThreadService bmFireUploadThemeUniqueThreadService) {
+                                               final BMDownloadThemeUniqueThreadService bmDownloadThemeUniqueThreadService,
+                                               final BMFireUploadThemeUniqueThreadService bmFireUploadThemeUniqueThreadService) {
         this.malGetKitsUniqueThreadService = malGetKitsUniqueThreadService;
         this.bmDownloadThemeUniqueThreadService = bmDownloadThemeUniqueThreadService;
         this.bmFireUploadThemeUniqueThreadService = bmFireUploadThemeUniqueThreadService;
@@ -31,7 +31,10 @@ public class BridgeTransferThemeSchedulerService extends AbstractSchedulerServic
 
     @PostConstruct
     public void exchangeKitsToThemes() {
-        jobSchedule(new CronTrigger(appConfig.getBridgeTransferThemeCronExpression()));
+        String bridgeTransferThemeCronExpression = appConfig.getBridgeTransferThemeCronExpression();
+        if (bridgeTransferThemeCronExpression != null) {
+            jobSchedule(new CronTrigger(bridgeTransferThemeCronExpression));
+        }
     }
 
     public void scheduled() {

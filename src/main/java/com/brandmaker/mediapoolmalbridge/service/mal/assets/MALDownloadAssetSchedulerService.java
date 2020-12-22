@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
  * Scheduler service which triggers {@link MALFireDownloadAssetsUniqueThreadService}
  */
 @Service
-@DependsOn( "BridgeDatabaseNormalizerService" )
+@DependsOn("BridgeDatabaseNormalizerService")
 public class MALDownloadAssetSchedulerService extends AbstractSchedulerService {
 
     private final MALFireDownloadAssetsUniqueThreadService malFireDownloadAssetsUniqueThreadService;
@@ -23,7 +23,10 @@ public class MALDownloadAssetSchedulerService extends AbstractSchedulerService {
 
     @PostConstruct
     public void init() {
-        jobSchedule(new CronTrigger(appConfig.getMalDownloadAssetCronExpression()));
+        String malDownloadAssetCronExpression = appConfig.getMalDownloadAssetCronExpression();
+        if (malDownloadAssetCronExpression != null) {
+            jobSchedule(new CronTrigger(malDownloadAssetCronExpression));
+        }
     }
 
     @Override

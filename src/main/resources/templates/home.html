@@ -31,35 +31,50 @@
                    aria-pressed="true">Property variants configuration</a>
             </div>
         </div>
+        <div class="col-md-2">
+            <div class="card border-warning mx-sm-1 p-3">
+                <a href="../ShowLog.do" class="btn btn-secondary btn-lg btn-block" role="button"
+                   aria-pressed="true">Application<br/>Log</a>
+            </div>
+        </div>
     </div>
     <br/>
-
     <div class="d-flex justify-content-center">
-        <form method="GET" action="#" th:action="@{/}">
-            <label for="dateFrom">Date from:</label>
-            <input type="date" id="dateFrom" name="dateFrom" th:value="${dateFrom}" onchange="this.form.submit()">
+        <div class="card w-50">
+            <div class="card-header">
+                <b>Assets status overview</b>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                    <form method="GET" action="#" th:action="@{/}">
+                        <label for="dateFrom">Date from:</label>
+                        <input type="date" id="dateFrom" name="dateFrom" th:value="${dateFrom}"
+                               onchange="this.form.submit()">
 
-            <label for="dateTo">Date to:</label>
-            <input type="date" id="dateTo" name="dateTo" th:value="${dateTo}" onchange="this.form.submit()">
-        </form>
-    </div>
+                        <label for="dateTo">Date to:</label>
+                        <input type="date" id="dateTo" name="dateTo" th:value="${dateTo}" onchange="this.form.submit()">
+                    </form>
+                </div>
 
-    <br/>
-    <div class="d-flex justify-content-center">
-        <table class="table table-sm table-responsive-md col-md-5">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">Status</th>
-                <th scope="col">Assets</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="object : ${mapCurrentStatus}">
-                <th scope="col" th:text="${object.key}"></th>
-                <th scope="col" th:text="${object.value}"></th>
-            </tr>
-            </tbody>
-        </table>
+                <br/>
+                <div>
+                    <table class="table table-sm table-responsive-md">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Status</th>
+                            <th scope="col">Assets</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="object : ${mapCurrentStatus}">
+                            <th scope="col" th:text="${object.key}"></th>
+                            <th scope="col" th:text="${object.value}"></th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

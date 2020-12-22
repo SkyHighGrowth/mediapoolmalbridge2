@@ -16,6 +16,7 @@ import com.brandmaker.mediapoolmalbridge.service.bridge.ktistotheme.BridgeTransf
 import com.brandmaker.mediapoolmalbridge.service.bridge.sendmail.BridgeSendMailSchedulerService;
 import com.brandmaker.mediapoolmalbridge.service.mal.assets.MALAssetsSchedulerService;
 import com.brandmaker.mediapoolmalbridge.service.mal.assets.MALDownloadAssetSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.mal.assets.MALNewBrandAssetsSchedulerService;
 import com.brandmaker.mediapoolmalbridge.service.mal.assetstructures.MALGetAssetStructureSchedulerService;
 import com.brandmaker.mediapoolmalbridge.service.mal.properties.MALGetPropertiesSchedulerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -47,6 +48,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     private final AppConfig appConfig;
 
     private final MALAssetsSchedulerService malAssetsSchedulerService;
+    private final MALNewBrandAssetsSchedulerService malNewBrandAssetsSchedulerService;
     private final MALDownloadAssetSchedulerService malDownloadAssetSchedulerService;
     private final MALGetAssetStructureSchedulerService malGetAssetStructureSchedulerService;
     private final MALGetPropertiesSchedulerService malGetPropertiesSchedulerService;
@@ -68,6 +70,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
      *
      * @param appConfig                                   {@link AppConfig}
      * @param malAssetsSchedulerService                   {@link MALAssetsSchedulerService}
+     * @param malNewBrandAssetsSchedulerService           {@link MALNewBrandAssetsSchedulerService}
      * @param malDownloadAssetSchedulerService            {@link MALDownloadAssetSchedulerService}
      * @param malGetAssetStructureSchedulerService        {@link MALGetAssetStructureSchedulerService}
      * @param malGetPropertiesSchedulerService            {@link MALGetPropertiesSchedulerService}
@@ -84,7 +87,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
      */
     public ConfigurationServiceImpl(AppConfig appConfig,
                                     MALAssetsSchedulerService malAssetsSchedulerService,
-                                    MALDownloadAssetSchedulerService malDownloadAssetSchedulerService,
+                                    MALNewBrandAssetsSchedulerService malNewBrandAssetsSchedulerService, MALDownloadAssetSchedulerService malDownloadAssetSchedulerService,
                                     MALGetAssetStructureSchedulerService malGetAssetStructureSchedulerService,
                                     MALGetPropertiesSchedulerService malGetPropertiesSchedulerService,
                                     BridgeCreateExcelFileSchedulerService bridgeCreateExcelFileSchedulerService,
@@ -99,6 +102,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
                                     BMUploadAssetSchedulerService bmUploadAssetSchedulerService) {
         this.appConfig = appConfig;
         this.malAssetsSchedulerService = malAssetsSchedulerService;
+        this.malNewBrandAssetsSchedulerService = malNewBrandAssetsSchedulerService;
         this.malDownloadAssetSchedulerService = malDownloadAssetSchedulerService;
         this.malGetAssetStructureSchedulerService = malGetAssetStructureSchedulerService;
         this.malGetPropertiesSchedulerService = malGetPropertiesSchedulerService;
@@ -219,6 +223,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
     private void updateCronjobTriggers(AppConfigData appConfigData) {
         malAssetsSchedulerService.jobSchedule(new CronTrigger(appConfigData.getMalAssetCronExpression()));
+        malNewBrandAssetsSchedulerService.jobSchedule(new CronTrigger(appConfigData.getMalNewAssetCronExpression()));
         malDownloadAssetSchedulerService.jobSchedule(new CronTrigger(appConfigData.getMalDownloadAssetCronExpression()));
         malGetAssetStructureSchedulerService.jobSchedule(new CronTrigger(appConfigData.getMalAssetStructureCronExpression()));
         malGetPropertiesSchedulerService.jobSchedule(new CronTrigger(appConfigData.getMalPropertiesCronExpression()));

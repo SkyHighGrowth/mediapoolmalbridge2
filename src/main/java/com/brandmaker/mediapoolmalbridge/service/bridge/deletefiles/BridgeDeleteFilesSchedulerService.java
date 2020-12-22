@@ -37,7 +37,10 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
 
     @PostConstruct
     public void init() {
-        jobSchedule(new CronTrigger(appConfig.getBridgeDeleteFileCronExpression()));
+        String bridgeDeleteFileCronExpression = appConfig.getBridgeDeleteFileCronExpression();
+        if (bridgeDeleteFileCronExpression != null) {
+            jobSchedule(new CronTrigger(bridgeDeleteFileCronExpression));
+        }
     }
 
     @Override

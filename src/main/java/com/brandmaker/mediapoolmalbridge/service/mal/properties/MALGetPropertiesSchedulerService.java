@@ -26,7 +26,10 @@ public class MALGetPropertiesSchedulerService extends AbstractMALSchedulerServic
 
     @PostConstruct
     public void init() {
-        jobSchedule(new CronTrigger(appConfig.getMalPropertiesCronExpression()));
+        String malPropertiesCronExpression = appConfig.getMalPropertiesCronExpression();
+        if (malPropertiesCronExpression != null) {
+            jobSchedule(new CronTrigger(malPropertiesCronExpression));
+        }
     }
 
     @Override
@@ -36,7 +39,7 @@ public class MALGetPropertiesSchedulerService extends AbstractMALSchedulerServic
         getPropertiesService.start();
         logger.info("Collecting properties from MAL ended");
         logger.info("Collecting deleted properties from MAL started");
-        getPropertiesDeletedSinceService.setUnavailableSince( since );
+        getPropertiesDeletedSinceService.setUnavailableSince(since);
         getPropertiesDeletedSinceService.start();
         logger.info("Collecting deleted properties from MAL ended");
     }

@@ -14,15 +14,16 @@ public class BridgeSendMailSchedulerService extends AbstractSchedulerService {
 
     private final BridgeSendMailUniqueThreadService bridgeSendMailUniqueThreadService;
 
-    public BridgeSendMailSchedulerService( final BridgeSendMailUniqueThreadService bridgeSendMailUniqueThreadService)
-    {
+    public BridgeSendMailSchedulerService(final BridgeSendMailUniqueThreadService bridgeSendMailUniqueThreadService) {
         this.bridgeSendMailUniqueThreadService = bridgeSendMailUniqueThreadService;
     }
 
     @PostConstruct
-    public void init()
-    {
-        jobSchedule(new CronTrigger(appConfig.getBridgeSendMailCronExpression() ) );
+    public void init() {
+        String bridgeSendMailCronExpression = appConfig.getBridgeSendMailCronExpression();
+        if (bridgeSendMailCronExpression != null) {
+            jobSchedule(new CronTrigger(bridgeSendMailCronExpression));
+        }
     }
 
     @Override
