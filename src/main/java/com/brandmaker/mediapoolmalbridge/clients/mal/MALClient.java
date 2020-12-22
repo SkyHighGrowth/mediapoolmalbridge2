@@ -1,6 +1,7 @@
 package com.brandmaker.mediapoolmalbridge.clients.mal;
 
 import com.brandmaker.mediapoolmalbridge.config.AppConfig;
+import com.brandmaker.mediapoolmalbridge.config.AppConfigData;
 import com.brandmaker.mediapoolmalbridge.persistence.repository.bridge.ReportsRepository;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
@@ -38,9 +39,10 @@ public abstract class MALClient {
     }
 
     protected URI createURL(final String urlSegment, final MultiValueMap<String, String> queryParameters) {
-        queryParameters.set("login", appConfig.getMalLogin());
-        queryParameters.set("api_key", appConfig.getMalApiKey());
-        return UriComponentsBuilder.fromHttpUrl(appConfig.getMalHostname() + urlSegment)
+        AppConfigData appConfigData = appConfig.getAppConfigData();
+        queryParameters.set("login", appConfigData.getMalLogin());
+        queryParameters.set("api_key", appConfigData.getMalApiKey());
+        return UriComponentsBuilder.fromHttpUrl(appConfigData.getMalHostname() + urlSegment)
                 .queryParams(queryParameters)
                 .build()
                 .encode()

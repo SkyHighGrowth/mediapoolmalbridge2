@@ -299,6 +299,11 @@ public class AppConfigData {
     @Value("${scheduler.malasset.cron.expression: 0 0 */1 * * *}")
     private String malAssetCronExpression;
     /**
+     * MAL server collect new assets scheduler cron expression
+     */
+    @Value("${scheduler.malnewasset.cron.expression: 0 0 */1 * * *}")
+    private String malNewAssetCronExpression;
+    /**
      * MAL server download files scheduler cron expression
      */
     @Value("${scheduler.maldownloadasset.cron.expression: 0 0 */1 * * *}")
@@ -1148,5 +1153,13 @@ public class AppConfigData {
 
     public void setMalPrioritiesString(String malPrioritiesString) {
         this.malPrioritiesString = malPrioritiesString;
+    }
+
+    public String getMalNewAssetCronExpression() {
+        return malNewAssetCronExpression;
+    }
+
+    public void setMalNewAssetCronExpression(String malNewAssetCronExpression) {
+        this.malNewAssetCronExpression = malNewAssetCronExpression;
     }
 }

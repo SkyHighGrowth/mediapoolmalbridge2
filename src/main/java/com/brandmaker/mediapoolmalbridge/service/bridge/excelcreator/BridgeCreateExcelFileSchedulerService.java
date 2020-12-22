@@ -23,7 +23,10 @@ public class BridgeCreateExcelFileSchedulerService extends AbstractSchedulerServ
 
     @PostConstruct
     public void scheduleExcelFileCreation() {
-        jobScheduleExcel(new CronTrigger(appConfig.getBridgeExcelFilesCronExpression()));
+        String bridgeExcelFilesCronExpression = appConfig.getBridgeExcelFilesCronExpression();
+        if (bridgeExcelFilesCronExpression != null) {
+            jobScheduleExcel(new CronTrigger(bridgeExcelFilesCronExpression));
+        }
     }
 
     public void jobScheduleExcel(CronTrigger trigger) {

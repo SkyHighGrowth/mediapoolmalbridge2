@@ -11,13 +11,16 @@ public class BridgeDatabaseAssetResolverSchedulerService extends AbstractSchedul
 
     private final BridgeDatabaseAssetResolverUniqueThreadService bridgeDatabaseAssetResolverUniqueThreadService;
 
-    public BridgeDatabaseAssetResolverSchedulerService(final BridgeDatabaseAssetResolverUniqueThreadService bridgeDatabaseAssetResolverUniqueThreadService ) {
+    public BridgeDatabaseAssetResolverSchedulerService(final BridgeDatabaseAssetResolverUniqueThreadService bridgeDatabaseAssetResolverUniqueThreadService) {
         this.bridgeDatabaseAssetResolverUniqueThreadService = bridgeDatabaseAssetResolverUniqueThreadService;
     }
 
     @PostConstruct
     public void init() {
-        jobSchedule(new CronTrigger(appConfig.getBridgeAssetResolverCronExpression()));
+        String bridgeAssetResolverCronExpression = appConfig.getBridgeAssetResolverCronExpression();
+        if (bridgeAssetResolverCronExpression != null) {
+            jobSchedule(new CronTrigger(bridgeAssetResolverCronExpression));
+        }
     }
 
     @Override

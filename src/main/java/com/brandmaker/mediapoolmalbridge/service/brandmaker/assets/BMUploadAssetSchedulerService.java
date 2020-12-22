@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct;
  * Scheduler service for creating, modifying, deleting and obtaining asset id from Mediapool server
  */
 @Service
-@DependsOn( "BridgeDatabaseNormalizerService" )
+@DependsOn("BridgeDatabaseNormalizerService")
 public class BMUploadAssetSchedulerService extends AbstractSchedulerService {
 
     private final BMFireCreateAssetsUniqueThreadService bmFireCreateAssetsUniqueThreadService;
@@ -38,7 +38,10 @@ public class BMUploadAssetSchedulerService extends AbstractSchedulerService {
 
     @PostConstruct
     public void init() {
-        jobSchedule(new CronTrigger(appConfig.getBmUploadSchedulerCronExpression()));
+        String bmUploadSchedulerCronExpression = appConfig.getBmUploadSchedulerCronExpression();
+        if (bmUploadSchedulerCronExpression != null) {
+            jobSchedule(new CronTrigger(bmUploadSchedulerCronExpression));
+        }
     }
 
     @Override
@@ -63,7 +66,9 @@ public class BMUploadAssetSchedulerService extends AbstractSchedulerService {
         bmFireUploadAssetsUniqueThreadService.start();
     }
 
-    public void getAssetId() { bmFireGetAssetIdFromHashUniqueThreadService.start(); }
+    public void getAssetId() {
+        bmFireGetAssetIdFromHashUniqueThreadService.start();
+    }
 
     public void delete() {
         bmFireDeleteAssetsUniqueThreadService.start();

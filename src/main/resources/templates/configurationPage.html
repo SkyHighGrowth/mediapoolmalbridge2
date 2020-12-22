@@ -121,11 +121,11 @@
                                            id="bridgeExcelFilesCronExpression" required/>
                                 </div>
                             </div>
-                            <div class="form-group-sm row">
+                            <div class="form-group-sm row" style="color: #c16d6d;">
                                 <label class="col-sm-6 col-form-label" for="bridgeUploadExcelFilesCronExpression">Bridge
                                     Upload Excel Files Cronjob</label>
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
-                                    <input type="text" class="form-control"
+                                    <input type="text" class="form-control" style="color: #c16d6d;"
                                            th:field="*{bridgeUploadExcelFilesCronExpression}"
                                            id="bridgeUploadExcelFilesCronExpression" required/>
                                 </div>
@@ -176,6 +176,14 @@
                                 <div class="col-sm-6 input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" th:field="*{malAssetCronExpression}"
                                            id="malAssetCronExpression" required/>
+                                </div>
+                            </div>
+                            <div class="form-group-sm row">
+                                <label class="col-sm-6 col-form-label" for="malNewAssetCronExpression">MAL New Asset
+                                    Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" th:field="*{malNewAssetCronExpression}"
+                                           id="malNewAssetCronExpression" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">

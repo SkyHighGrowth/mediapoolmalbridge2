@@ -12,24 +12,25 @@ import javax.annotation.PostConstruct;
  * Scheduler service which triggers execution of {@link BridgeUploadExcelFilesSchedulerService}
  */
 @Service
-@DependsOn( "BridgeDatabaseNormalizerService" )
+@DependsOn("BridgeDatabaseNormalizerService")
 public class BridgeUploadExcelFilesSchedulerService extends AbstractSchedulerService {
 
     private final BridgeUploadExcelFilesUniqueThreadService bridgeUploadExcelFilesUniqueThreadService;
 
-    public BridgeUploadExcelFilesSchedulerService( final BridgeUploadExcelFilesUniqueThreadService bridgeUploadExcelFilesUniqueThreadService)
-    {
+    public BridgeUploadExcelFilesSchedulerService(final BridgeUploadExcelFilesUniqueThreadService bridgeUploadExcelFilesUniqueThreadService) {
         this.bridgeUploadExcelFilesUniqueThreadService = bridgeUploadExcelFilesUniqueThreadService;
     }
 
     @PostConstruct
-    public void init()
-    {
-        jobSchedule(new CronTrigger(appConfig.getBridgeUploadExcelFilesCronExpression()));
+    public void init() {
+        String bridgeUploadExcelFilesCronExpression = appConfig.getBridgeUploadExcelFilesCronExpression();
+        if (bridgeUploadExcelFilesCronExpression != null) {
+            jobSchedule(new CronTrigger(bridgeUploadExcelFilesCronExpression));
+        }
     }
 
-    public void scheduled( ) {
-        if ( appConfig.isUseSftp() ) {
+    public void scheduled() {
+        if (appConfig.isUseSftp()) {
             bridgeUploadExcelFilesUniqueThreadService.start();
         }
     }

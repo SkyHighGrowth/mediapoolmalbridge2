@@ -47,7 +47,10 @@ public class MALGetAssetStructureSchedulerService extends AbstractSchedulerServi
     @PostConstruct
     public void init() {
         scheduled();
-        jobSchedule(new CronTrigger(appConfig.getMalAssetStructureCronExpression()));
+        String malAssetStructureCronExpression = appConfig.getMalAssetStructureCronExpression();
+        if (malAssetStructureCronExpression != null) {
+            jobSchedule(new CronTrigger(malAssetStructureCronExpression));
+        }
     }
 
     @Override

@@ -11,13 +11,16 @@ public class BridgeDatabaseUnlockerSchedulerService extends AbstractSchedulerSer
 
     private final BridgeDatabaseUnlockerUniqueThreadService bridgeDatabaseUnlockerUniqueThreadService;
 
-    public BridgeDatabaseUnlockerSchedulerService( final BridgeDatabaseUnlockerUniqueThreadService bridgeDatabaseUnlockerUniqueThreadService ) {
+    public BridgeDatabaseUnlockerSchedulerService(final BridgeDatabaseUnlockerUniqueThreadService bridgeDatabaseUnlockerUniqueThreadService) {
         this.bridgeDatabaseUnlockerUniqueThreadService = bridgeDatabaseUnlockerUniqueThreadService;
     }
 
     @PostConstruct
     public void init() {
-        jobSchedule(new CronTrigger(appConfig.getBridgeAssetOnBoardingCronExpression()));
+        String bridgeAssetOnBoardingCronExpression = appConfig.getBridgeAssetOnBoardingCronExpression();
+        if (bridgeAssetOnBoardingCronExpression != null) {
+            jobSchedule(new CronTrigger(bridgeAssetOnBoardingCronExpression));
+        }
     }
 
     @Override

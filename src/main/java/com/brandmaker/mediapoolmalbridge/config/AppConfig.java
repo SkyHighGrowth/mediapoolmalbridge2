@@ -378,6 +378,10 @@ public class AppConfig {
         return appConfigData.getMalAssetStructureCronExpression();
     }
 
+    public String getMalNewAssetCronExpression(){
+        return appConfigData.getMalNewAssetCronExpression();
+    }
+
     public String getMalPropertiesCronExpression() {
         return appConfigData.getMalPropertiesCronExpression();
     }
