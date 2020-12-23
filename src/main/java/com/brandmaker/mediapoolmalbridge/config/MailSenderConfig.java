@@ -15,26 +15,25 @@ public class MailSenderConfig {
 
     private final AppConfig appConfig;
 
-    public MailSenderConfig(final AppConfig appConfig)
-    {
+    public MailSenderConfig(final AppConfig appConfig) {
         this.appConfig = appConfig;
     }
 
     @Bean
-    public JavaMailSender getJavaMailSender()
-    {
+    public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost( appConfig.getMailHostname() );
-        mailSender.setPort( appConfig.getMailPort() );
+        AppConfigData appConfigData = appConfig.getAppConfigData();
+        mailSender.setHost(appConfigData.getMailHostname());
+        mailSender.setPort(appConfigData.getMailPort());
 
-        mailSender.setUsername( appConfig.getMailUsername() );
-        mailSender.setPassword( appConfig.getMailPassword() );
+        mailSender.setUsername(appConfigData.getMailUsername());
+        mailSender.setPassword(appConfigData.getMailPassword());
 
         Properties props = mailSender.getJavaMailProperties();
-        props.put( "mail.transport.protocol", appConfig.getMailTransportProtocol() );
-        props.put( "mail.smtp.auth", String.valueOf( appConfig.isMailSmtpAuth() ) );
-        props.put( "mail.smtp.starttls.enable", String.valueOf( appConfig.isMailSmtpStarttlsEnable() ) );
-        props.put( "mail.debug", String.valueOf( appConfig.isMailDebug() ) );
+        props.put("mail.transport.protocol", appConfigData.getMailTransportProtocol());
+        props.put("mail.smtp.auth", String.valueOf(appConfigData.isMailSmtpAuth()));
+        props.put("mail.smtp.starttls.enable", String.valueOf(appConfigData.isMailSmtpStarttlsEnable()));
+        props.put("mail.debug", String.valueOf(appConfigData.isMailDebug()));
 
         return mailSender;
     }

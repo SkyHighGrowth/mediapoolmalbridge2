@@ -47,8 +47,9 @@ public class AssetServiceImpl implements AssetService {
         mapCurrentStatus.put(ASSETS_WITH_ERROR, 0L);
         mapCurrentStatus.put(ASSETS_COMPLETED, 0L);
         mapCurrentStatus.put(TOTAL_ASSETS, 0L);
-        if (dateFrom != null && dateTo != null) {
+        if (dateFrom != null) {
             LocalDateTime dateTimeFrom = dateFrom.atStartOfDay();
+            dateTo = dateTo != null ? dateTo.plusDays(1) : LocalDate.now().plusDays(1);
             LocalDateTime dateTimeTo = dateTo.atStartOfDay();
             for (TransferringAssetStatus status : TransferringAssetStatus.values()) {
                 Long value = assetRepository.countAllByUpdatedIsAfterAndUpdatedIsBeforeAndTransferringAssetStatus(dateTimeFrom, dateTimeTo, status);

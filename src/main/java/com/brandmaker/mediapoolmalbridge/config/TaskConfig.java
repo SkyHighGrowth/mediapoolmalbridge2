@@ -27,13 +27,14 @@ public class TaskConfig {
     public TaskExecutorWrapper malTaskExecutorWrapper() {
         final ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
         threadPoolTaskExecutor.setThreadNamePrefix("mal-task-executor-");
-        threadPoolTaskExecutor.setCorePoolSize(appConfig.getMalThreadexecutorPoolSize());
-        threadPoolTaskExecutor.setMaxPoolSize(appConfig.getMalThreadexecutorPoolSize());
-        threadPoolTaskExecutor.setQueueCapacity(appConfig.getMalThreadexecutorQueueSize());
+        AppConfigData appConfigData = appConfig.getAppConfigData();
+        threadPoolTaskExecutor.setCorePoolSize(appConfigData.getMalThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setMaxPoolSize(appConfigData.getMalThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setQueueCapacity(appConfigData.getMalThreadexecutorQueueSize());
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
         final TaskExecutorWrapper taskExecutorWrapper = new TaskExecutorWrapper(threadPoolTaskExecutor);
-        taskExecutorWrapper.setMaximalQueueSize( appConfig.getMalThreadexecutorQueueLengthMax() );
+        taskExecutorWrapper.setMaximalQueueSize( appConfigData.getMalThreadexecutorQueueLengthMax() );
         return taskExecutorWrapper;
     }
 
@@ -41,13 +42,14 @@ public class TaskConfig {
     public TaskExecutorWrapper bmTaskExecutorWrapper() {
         final ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
         threadPoolTaskExecutor.setThreadNamePrefix("bm-task-executor-");
-        threadPoolTaskExecutor.setCorePoolSize(appConfig.getBmThreadexecutorPoolSize());
-        threadPoolTaskExecutor.setMaxPoolSize(appConfig.getBmThreadexecutorPoolSize());
-        threadPoolTaskExecutor.setQueueCapacity(appConfig.getBmThreadexecutorQueueSize());
+        AppConfigData appConfigData = appConfig.getAppConfigData();
+        threadPoolTaskExecutor.setCorePoolSize(appConfigData.getBmThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setMaxPoolSize(appConfigData.getBmThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setQueueCapacity(appConfigData.getBmThreadexecutorQueueSize());
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
         final TaskExecutorWrapper taskExecutorWrapper = new TaskExecutorWrapper(threadPoolTaskExecutor);
-        taskExecutorWrapper.setMaximalQueueSize( appConfig.getBmThreadexecutorQueueLengthMax() );
+        taskExecutorWrapper.setMaximalQueueSize( appConfigData.getBmThreadexecutorQueueLengthMax() );
         return taskExecutorWrapper;
     }
 
@@ -55,13 +57,14 @@ public class TaskConfig {
     public TaskPriorityExecutorWrapper bmTaskPriorityExecutorWrapper() {
         final ThreadPoolPriorityTaskExecutor threadPoolTaskExecutor = new ThreadPoolPriorityTaskExecutor();
         threadPoolTaskExecutor.setThreadNamePrefix("bm-task-priority-executor-");
-        threadPoolTaskExecutor.setCorePoolSize(appConfig.getBmThreadexecutorPoolSize());
-        threadPoolTaskExecutor.setMaxPoolSize(appConfig.getBmThreadexecutorPoolSize());
-        threadPoolTaskExecutor.setQueueCapacity(appConfig.getBmThreadexecutorQueueSize());
+        AppConfigData appConfigData = appConfig.getAppConfigData();
+        threadPoolTaskExecutor.setCorePoolSize(appConfigData.getBmThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setMaxPoolSize(appConfigData.getBmThreadexecutorPoolSize());
+        threadPoolTaskExecutor.setQueueCapacity(appConfigData.getBmThreadexecutorQueueSize());
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
         final TaskPriorityExecutorWrapper taskExecutorWrapper = new TaskPriorityExecutorWrapper(threadPoolTaskExecutor);
-        taskExecutorWrapper.setMaximalQueueSize( appConfig.getBmThreadexecutorQueueLengthMax() );
+        taskExecutorWrapper.setMaximalQueueSize( appConfigData.getBmThreadexecutorQueueLengthMax() );
         return taskExecutorWrapper;
     }
 
@@ -69,7 +72,7 @@ public class TaskConfig {
     public TaskSchedulerWrapper taskSchedulerWrapper() {
         final ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.setThreadNamePrefix("task-scheduler-");
-        threadPoolTaskScheduler.setPoolSize(appConfig.getThreadschedulerPoolSize());
+        threadPoolTaskScheduler.setPoolSize(appConfig.getAppConfigData().getThreadschedulerPoolSize());
         return new TaskSchedulerWrapper(threadPoolTaskScheduler);
     }
 }

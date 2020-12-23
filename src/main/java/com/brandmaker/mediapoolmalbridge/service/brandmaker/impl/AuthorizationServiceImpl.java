@@ -1,6 +1,7 @@
 package com.brandmaker.mediapoolmalbridge.service.brandmaker.impl;
 
 import com.brandmaker.mediapoolmalbridge.config.AppConfig;
+import com.brandmaker.mediapoolmalbridge.config.AppConfigData;
 import com.brandmaker.mediapoolmalbridge.service.brandmaker.AuthorizationService;
 import com.brandmaker.mediapoolmalbridge.service.brandmaker.RestAccessToken;
 import org.slf4j.Logger;
@@ -61,11 +62,12 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public String getDomainUrl() {
         final URL url;
         try {
+            AppConfigData appConfigData = appConfig.getAppConfigData();
             if (Arrays.asList(environment.getActiveProfiles()).contains(DEV) && !Arrays.asList(environment.getActiveProfiles()).contains(PRODUCTION)) {
-                url = new URL(appConfig.getMediapoolUrlDev());
+                url = new URL(appConfigData.getMediapoolUrlDev());
                 return "https://" + url.getHost();
             } else if (Arrays.asList(environment.getActiveProfiles()).contains(PRODUCTION) && !Arrays.asList(environment.getActiveProfiles()).contains(DEV)) {
-                url = new URL(appConfig.getMediapoolUrlProduction());
+                url = new URL(appConfigData.getMediapoolUrlProduction());
                 return "https://" + url.getHost();
             }
 
@@ -116,14 +118,15 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     public Credentials getCredentials() {
         Credentials credentials = new Credentials();
+        AppConfigData appConfigData = appConfig.getAppConfigData();
         if (Arrays.asList(environment.getActiveProfiles()).contains(DEV) && !Arrays.asList(environment.getActiveProfiles()).contains(PRODUCTION)) {
-            credentials.setUsername(appConfig.getMediapoolUsernameDev());
-            credentials.setPassword(appConfig.getMediapoolPasswordDev());
+            credentials.setUsername(appConfigData.getMediapoolUsernameDev());
+            credentials.setPassword(appConfigData.getMediapoolPasswordDev());
             credentials.setUrl(getDomainUrl());
         }
         if (Arrays.asList(environment.getActiveProfiles()).contains(PRODUCTION) && !Arrays.asList(environment.getActiveProfiles()).contains(DEV)) {
-            credentials.setUsername(appConfig.getMediapoolUsernameProduction());
-            credentials.setPassword(appConfig.getMediapoolPasswordProduction());
+            credentials.setUsername(appConfigData.getMediapoolUsernameProduction());
+            credentials.setPassword(appConfigData.getMediapoolPasswordProduction());
             credentials.setUrl(getDomainUrl());
         }
 
