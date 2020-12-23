@@ -150,7 +150,7 @@ public class MALToBMTransformer {
         if (malGetAsset.getStatus().equals("active")) {
             uploadMetadataArgument.setVirtualDbName("Standard");
         } else {
-            uploadMetadataArgument.setVirtualDbName("Recycle bin");
+            uploadMetadataArgument.setVirtualDbName("SAL Recycle bin");
         }
     }
 
