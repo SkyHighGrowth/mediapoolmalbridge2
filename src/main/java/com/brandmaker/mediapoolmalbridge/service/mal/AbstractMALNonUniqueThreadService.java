@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * Class that implements common fields and methods of MAL server non unique thread services
- * @param <RUN_ARGUMENT>
+ * @param <T>
  */
-public abstract class AbstractMALNonUniqueThreadService<RUN_ARGUMENT> extends AbstractNonUniqueThreadService<RUN_ARGUMENT> {
+public abstract class AbstractMALNonUniqueThreadService<T> extends AbstractNonUniqueThreadService<T> {
 
     @Autowired
     @Qualifier( "MALTaskExecutorWrapper" )

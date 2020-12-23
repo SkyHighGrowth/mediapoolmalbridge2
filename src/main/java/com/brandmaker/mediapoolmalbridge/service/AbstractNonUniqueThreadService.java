@@ -12,18 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Class that collects common fields and properties for non unique thread services
- * @param <RUN_ARGUMENT>
+ * @param <T>
  */
-public abstract class AbstractNonUniqueThreadService<RUN_ARGUMENT> extends AbstractService {
+public abstract class AbstractNonUniqueThreadService<T> extends AbstractService {
 
     @Autowired
     protected AssetRepository assetRepository;
 
-    protected abstract void run( final RUN_ARGUMENT run_argument );
+    protected abstract void run( final T run_argument );
 
     protected abstract TaskExecutorWrapper getTaskExecutorWrapper();
 
-    public void start( final RUN_ARGUMENT runArgument )
+    public void start( final T runArgument )
     {
         final TaskExecutorWrapper taskExecutorWrapper = getTaskExecutorWrapper();
         storeServiceEntity( new ServiceEntity( ServiceState.SERVICE_START, getClass().getCanonicalName(), Thread.currentThread().getName(), taskExecutorWrapper.getTaskExecutor().getActiveCount(), taskExecutorWrapper.getQueueSize() ) );

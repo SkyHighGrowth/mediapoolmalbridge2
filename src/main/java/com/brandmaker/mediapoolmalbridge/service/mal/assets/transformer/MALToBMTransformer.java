@@ -112,6 +112,13 @@ public class MALToBMTransformer {
             setFreeFieldValue(uploadMetadataArgument.getFreeField8(), toZeroAndOne(malGetAsset.isRightsManaged()));
         }
 
+        if (malGetAsset.isHws()) {
+            setFreeFieldValue(uploadMetadataArgument.getFreeField11(), "HWS");
+        } else {
+            setFreeFieldValue(uploadMetadataArgument.getFreeField11(), "Legacy");
+        }
+
+
         return uploadMetadataArgument;
     }
 

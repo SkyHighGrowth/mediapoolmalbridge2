@@ -15,32 +15,32 @@ import java.net.URI;
 
 /**
  * Class that holds common fields and method for the MAL server clients
- * @param <REQUEST> - client request
- * @param <RESPONSE> - client response
+ * @param <A> - client request
+ * @param <B> - client response
  */
-public abstract class MALSingleResponseClient<REQUEST, RESPONSE> extends MALClient {
+public abstract class MALSingleResponseClient<A, B> extends MALClient {
 
-    private final Class<RESPONSE> responseType;
+    private final Class<B> responseType;
 
-    protected MALSingleResponseClient(final Class<RESPONSE> responseType) {
+    protected MALSingleResponseClient(final Class<B> responseType) {
         this.responseType = responseType;
     }
 
-    protected RestResponse<RESPONSE> exchange(final String urlSegment, final REQUEST request, final HttpMethod httpMetod) {
+    protected RestResponse<B> exchange(final String urlSegment, final A request, final HttpMethod httpMetod) {
         return exchange(urlSegment, request, httpMetod, new LinkedMultiValueMap<>());
     }
 
-    protected RestResponse<RESPONSE> exchange(final String urlSegment, final REQUEST request, final HttpMethod httpMetod, final MultiValueMap<String, String> queryParameters) {
+    protected RestResponse<B> exchange(final String urlSegment, final A request, final HttpMethod httpMetod, final MultiValueMap<String, String> queryParameters) {
         final URI url = createURL(urlSegment, queryParameters);
         return exchange(url, request, httpMetod);
     }
 
-    protected RestResponse<RESPONSE> exchange(final URI url, final REQUEST request, final HttpMethod httpMethod) {
+    protected RestResponse<B> exchange(final URI url, final A request, final HttpMethod httpMethod) {
         final HttpEntity<String> requestEntity = new HttpEntity<>(serializeRequestBody(request), new HttpHeaders());
         try {
             final ResponseEntity<String> response = restTemplate.exchange(url, httpMethod, requestEntity, String.class);
             logger.debug("REST RESPONSE {}", response);
-            final RESPONSE fromJson = GSON.fromJson(response.getBody(), responseType);
+            final B fromJson = GSON.fromJson(response.getBody(), responseType);
             return new RestResponse<>(response.getStatusCode(), response.getHeaders(), fromJson);
         } catch (final Exception e) {
             final String message = String.format("While requesting from url [%s], with http method [%s], with http entity [%s], exception occured with message [%s]", httpMethod.name(), url.toString(), GSON.toJson(requestEntity), e.getMessage());

@@ -30,14 +30,14 @@ public class BridgeCreateExcelFileSchedulerService extends AbstractSchedulerServ
     }
 
     public void jobScheduleExcel(CronTrigger trigger) {
-        if (!appConfig.isDoNotCreateExcelFiles()) {
+        if (!appConfig.getAppConfigData().isDoNotCreateExcelFiles()) {
             jobSchedule(trigger);
         }
     }
 
     @Override
     public void scheduled() {
-        if (!appConfig.isDoNotCreateExcelFiles()) {
+        if (!appConfig.getAppConfigData().isDoNotCreateExcelFiles()) {
             logger.info("Creation of excel files started...");
             bridgeCreateExcelXSSFFileUniqueThreadService.start();
             logger.info("Creation of excel files ended...");

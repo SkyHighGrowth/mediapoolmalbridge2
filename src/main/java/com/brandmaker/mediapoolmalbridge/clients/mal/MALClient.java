@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 /**
- * Class that holds common fields and mothods of MAL server clients
+ * Class that holds common fields and methods of MAL server clients
  */
 public abstract class MALClient {
 
@@ -31,7 +31,7 @@ public abstract class MALClient {
     @Autowired
     protected RestTemplate restTemplate;
 
-    protected <REQUEST> String serializeRequestBody(final REQUEST request) {
+    protected <T> String serializeRequestBody(final T request) {
         if (request == null) {
             return null;
         }
