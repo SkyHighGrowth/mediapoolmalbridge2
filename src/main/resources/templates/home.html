@@ -7,7 +7,7 @@
     <script src="./webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <style>
-        table tr:last-child {
+        .statuses tr:last-child {
             background-color: #d6d6d6;
         }
     </style>
@@ -58,7 +58,7 @@
 
                 <br/>
                 <div>
-                    <table class="table table-sm table-responsive-md">
+                    <table class="table statuses table-sm table-responsive-md">
                         <thead class="thead-dark">
                         <tr>
                             <th scope="col">Status</th>
@@ -69,6 +69,37 @@
                         <tr th:each="object : ${mapCurrentStatus}">
                             <th scope="col" th:text="${object.key}"></th>
                             <th scope="col" th:text="${object.value}"></th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="d-flex justify-content-center">
+        <div class="card w-50">
+            <div class="card-header">
+                <b>Files:</b>
+            </div>
+            <div class="card-body">
+                <div>
+                    <table class="table table-sm table-responsive-md">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" th:text="'Current folder size: ' + ${folderSize}"></th>
+                        </tr>
+                        </thead>
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Data Structure files:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="file : ${files}">
+                            <th>
+                            <a th:href="'./downloadFile/' + ${file}"><p th:text="${file}"></p></a>
+                            </th>
                         </tr>
                         </tbody>
                     </table>
