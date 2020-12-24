@@ -106,6 +106,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
         RestResponse<MALGetNewAssetsResponse> response = getNewAssetsClient.download(request);
         if (!response.isSuccess() ||
                 response.getResponse() == null ||
+                response.getResponse().getMeta() == null ||
                 response.getResponse().getMeta().getTotal() == null ||
                 response.getResponse().getData() == null) {
             return;
@@ -204,6 +205,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
         malGetAsset.setSubjectId(malGetData.getSubjectId());
         malGetAsset.setStatus(malGetData.getStatus());
         malGetAsset.setLastModified(malGetData.getLastModified());
+        malGetAsset.setHws(true);
         if (malGetData.getStock() != null) {
             malGetAsset.setStock(malGetData.getStock());
         }
@@ -263,6 +265,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
         malGetAssets.forEach(malGetAsset -> {
             if (includedAssetTypes.isIncludedAssetType(malGetAsset.getAssetTypeId())
                     && (!malGetAsset.getAssetTypeId().equals(LOGO_ASSET_TYPE_ID) || isNotEPS(malGetAsset))) {
+                malGetAsset.setHws(false);
                 setAssetEntityByFileFormat(malGetAsset);
             }
         });

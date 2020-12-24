@@ -21,7 +21,7 @@ public class MALGetAssetsClient extends MALSingleResponseClient<MALGetAssetsRequ
     }
 
     public RestResponse<MALGetAssetsResponse> download(final MALGetAssetsRequest request) {
-        final MultiValueMap<String, String> params = request.trnasformToGetParams();
+        final MultiValueMap<String, String> params = request.transformToGetParams();
         return exchange(URL_SEGMENT, null, HttpMethod.GET, params);
     }
 }

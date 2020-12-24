@@ -2,8 +2,8 @@ package com.brandmaker.mediapoolmalbridge.service.mal.assets.created;
 
 import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.model.MALGetAssetsRequest;
 import com.brandmaker.mediapoolmalbridge.config.AppConfigData;
-import com.brandmaker.mediapoolmalbridge.service.mal.assets.AbstractMALAssetsUniqueThreadService;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetEntity;
+import com.brandmaker.mediapoolmalbridge.service.mal.assets.AbstractMALAssetsUniqueThreadService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,14 +16,14 @@ public class MALCollectCreatedAssetsUniqueThreadSinceService extends AbstractMAL
     @Override
     protected void run() {
         final MALGetAssetsRequest request = new MALGetAssetsRequest();
+        AppConfigData appConfigData = appConfig.getAppConfigData();
         if (appConfig.intervalFilterEnable()) {
-            request.setDateCreatedStart(appConfig.getFilterStartDate());
-            request.setDateCreatedEnd(appConfig.getFilterEndDate());
+            request.setDateCreatedStart(appConfigData.getFilterStartDate());
+            request.setDateCreatedEnd(appConfigData.getFilterEndDate());
         } else {
             request.setDateCreatedStart(getSince());
         }
-
-        request.setPerPage(appConfig.getMalPageSize());
+        request.setPerPage(appConfigData.getMalPageSize());
         downloadAssets(request);
     }
 }

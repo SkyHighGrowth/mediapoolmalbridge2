@@ -368,7 +368,7 @@ public class MALGetAssetsRequest {
         this.extraFields = extraFields;
     }
 
-    public MultiValueMap<String, String> trnasformToGetParams() {
+    public MultiValueMap<String, String> transformToGetParams() {
         final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         isParam(params, !assetIds.isEmpty(), "asset_ids", transfromToString(assetIds));
         isParam(params, !collectionIds.isEmpty(), "collection_ids", transfromToString(collectionIds));

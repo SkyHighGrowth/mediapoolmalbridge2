@@ -1,6 +1,7 @@
 package com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -232,6 +233,9 @@ public class MALGetAsset {
      */
     @SerializedName("mime_type")
     private String mimeType;
+
+    @Expose(deserialize = false, serialize = false)
+    private boolean hws;
 
     public String getAssetId() {
         return assetId;
@@ -527,5 +531,13 @@ public class MALGetAsset {
 
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
+    }
+
+    public boolean isHws() {
+        return hws;
+    }
+
+    public void setHws(boolean hws) {
+        this.hws = hws;
     }
 }
