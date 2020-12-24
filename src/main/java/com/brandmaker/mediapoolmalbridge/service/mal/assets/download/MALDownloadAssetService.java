@@ -68,7 +68,7 @@ public class MALDownloadAssetService extends AbstractMALNonUniqueThreadService<A
         }
     }
 
-    private long getCurrentDownloadFolderSize() {
+    public long getCurrentDownloadFolderSize() {
         File tempDir = new File(appConfig.getTempDir());
         long size = 0;
         try (Stream<Path> walkStream = Files.walk(tempDir.toPath())) {
