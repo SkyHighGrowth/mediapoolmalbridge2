@@ -11,6 +11,15 @@
             background-color: #d6d6d6;
         }
     </style>
+    <script>
+        $(document).ready(function () {
+            $('#overview-list a').on('click', function (e) {
+                debugger;
+                e.preventDefault()
+                $(this).tab('show')
+            });
+        });
+    </script>
 </head>
 <body class="jumbotron">
 
@@ -42,67 +51,84 @@
     <div class="d-flex justify-content-center">
         <div class="card w-50">
             <div class="card-header">
-                <b>Assets status overview</b>
+                <ul class="nav nav-tabs card-header-tabs" id="overview-list" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#assets-overview" aria-selected="true" role="tab"
+                           aria-controls="assets-overview">Assets status
+                            overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#excel-overview" aria-selected="false" role="tab"
+                           aria-controls="excel-overview">Excel
+                            Files
+                            overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#folder-size-overview" aria-selected="false" role="tab"
+                           aria-controls="folder-size-overview">Image folder size</a>
+                    </li>
+                </ul>
             </div>
             <div class="card-body">
-                <div class="d-flex justify-content-center">
-                    <form method="GET" action="#" th:action="@{/}">
-                        <label for="dateFrom">Date from:</label>
-                        <input type="date" id="dateFrom" name="dateFrom" th:value="${dateFrom}"
-                               onchange="this.form.submit()">
+                <div class="tab-content mt-3">
+                    <div class="tab-pane active" id="assets-overview" role="tabpanel"
+                         aria-labelledby="assets-overview-tab">
+                        <div class="d-flex justify-content-center">
+                            <form method="GET" action="#" th:action="@{/}">
+                                <label for="dateFrom">Date from:</label>
+                                <input type="date" id="dateFrom" name="dateFrom" th:value="${dateFrom}"
+                                       onchange="this.form.submit()">
 
-                        <label for="dateTo">Date to:</label>
-                        <input type="date" id="dateTo" name="dateTo" th:value="${dateTo}" onchange="this.form.submit()">
-                    </form>
-                </div>
+                                <label for="dateTo">Date to:</label>
+                                <input type="date" id="dateTo" name="dateTo" th:value="${dateTo}"
+                                       onchange="this.form.submit()">
+                            </form>
+                        </div>
 
-                <br/>
-                <div>
-                    <table class="table statuses table-sm table-responsive-md">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Status</th>
-                            <th scope="col">Assets</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="object : ${mapCurrentStatus}">
-                            <th scope="col" th:text="${object.key}"></th>
-                            <th scope="col" th:text="${object.value}"></th>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br/>
-    <div class="d-flex justify-content-center">
-        <div class="card w-50">
-            <div class="card-header">
-                <b>Files:</b>
-            </div>
-            <div class="card-body">
-                <div>
-                    <table class="table table-sm table-responsive-md">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col" th:text="'Current folder size: ' + ${folderSize}"></th>
-                        </tr>
-                        </thead>
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Data Structure files:</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="file : ${files}">
-                            <th>
-                            <a th:href="'./downloadFile/' + ${file}"><p th:text="${file}"></p></a>
-                            </th>
-                        </tr>
-                        </tbody>
-                    </table>
+                        <br/>
+                        <div>
+                            <table class="table statuses table-sm table-responsive-md">
+                                <caption></caption>
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Assets</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="object : ${mapCurrentStatus}">
+                                    <th scope="col" th:text="${object.key}"></th>
+                                    <th scope="col" th:text="${object.value}"></th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="excel-overview" role="tabpanel" aria-labelledby="excel-overview-tab">
+                        <div>
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-info">Excel file list</li>
+                                <li class="list-group-item" th:each="file : ${files}">
+                                    <a th:href="'./downloadFile/' + ${file}" th:text="${file}"></a>
+                                </li>
+                                <li class="list-group-item" th:if="${files==null or files.isEmpty()}">No files
+                                    currently!
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="folder-size-overview" role="tabpanel"
+                         aria-labelledby="folder-size-overview-tab">
+                        <div>
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-warning">Current folder size</li>
+                                <li class="list-group-item">
+                                    <div th:text="${folderSize} + ' GB'"></div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

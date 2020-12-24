@@ -47,7 +47,7 @@ public class HomeController {
         model.addAttribute("dateFrom", dateFrom);
         model.addAttribute("dateTo", dateTo);
         model.addAttribute("files", fileService.listFiles());
-        model.addAttribute("folderSize", fileService.getCurrentDownloadFolderSize());
+        model.addAttribute("folderSize", String.format("%.2f", fileService.getCurrentDownloadFolderSize()));
         return HOME_TEMPLATE;
 
     }
