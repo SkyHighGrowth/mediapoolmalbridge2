@@ -1,5 +1,6 @@
 package com.brandmaker.mediapoolmalbridge.service.bridge.sendmail;
 
+import com.brandmaker.mediapoolmalbridge.config.AppConfigData;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.ReportsEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportTo;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportType;
@@ -48,19 +49,20 @@ public class BridgeSendMailUniqueThreadService extends AbstractBridgeUniqueThrea
     private void sendToBM( final LocalDateTime since )
     {
         for( int page = 0; true; ++page ) {
+            AppConfigData appConfigData = appConfig.getAppConfigData();
             try {
-                List<ReportsEntity> reports = reportsRepository.findAllByReportToAndSentNotAndCreatedIsAfter(ReportTo.BM, false, since, PageRequest.of(0, appConfig.getDatabasePageSize()));
+                List<ReportsEntity> reports = reportsRepository.findAllByReportToAndSentNotAndCreatedIsAfter(ReportTo.BM, false, since, PageRequest.of(0, appConfigData.getDatabasePageSize()));
                 if( reports.isEmpty() || page > 1000 ) {
                     break;
                 }
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setTo(appConfig.getMailBmAddress());
+                message.setTo(appConfigData.getMailBmAddress());
                 message.setSubject( "Automatic report from MALToBMBridge" );
                 message.setText( bmMailFormat.transform( reports ) );
                 emailSender.send(message);
                 markAsSent( reports );
             } catch( final Exception e ) {
-                final String message = String.format( "Can not send mail reports for page [%s] on date [%s] to mail address [%s] with error [%s]", page, since.format(DATE_TIME_FORMATTER), appConfig.getMailBmAddress(), e.getMessage() );
+                final String message = String.format( "Can not send mail reports for page [%s] on date [%s] to mail address [%s] with error [%s]", page, since.format(DATE_TIME_FORMATTER), appConfigData.getMailBmAddress(), e.getMessage() );
                 final ReportsEntity report = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.BM, null, null, null );
                 reportsRepository.save( report );
                 logger.error( message, e );
@@ -71,19 +73,20 @@ public class BridgeSendMailUniqueThreadService extends AbstractBridgeUniqueThrea
     private void sendToMAL( final LocalDateTime since )
     {
         for( int page = 0; true; ++page ) {
+            AppConfigData appConfigData = appConfig.getAppConfigData();
             try {
-                List<ReportsEntity> reports = reportsRepository.findAllByReportToAndSentNotAndCreatedIsAfter(ReportTo.MAL, false, since, PageRequest.of(0, appConfig.getDatabasePageSize()));
+                List<ReportsEntity> reports = reportsRepository.findAllByReportToAndSentNotAndCreatedIsAfter(ReportTo.MAL, false, since, PageRequest.of(0, appConfigData.getDatabasePageSize()));
                 if( reports.isEmpty() || page > 1000 ) {
                     break;
                 }
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setTo(appConfig.getMailMalAddress());
+                message.setTo(appConfigData.getMailMalAddress());
                 message.setSubject( "Automatic report from MALToBMBridge" );
                 message.setText( malMailFormat.transform( reports ) );
                 emailSender.send(message);
                 markAsSent( reports );
             } catch( final Exception e ) {
-                final String message = String.format( "Can not send mail reports for page [%s] on date [%s] to mail address [%s] with error [%s]", page, since.format(DATE_TIME_FORMATTER), appConfig.getMailMalAddress(), e.getMessage() );
+                final String message = String.format( "Can not send mail reports for page [%s] on date [%s] to mail address [%s] with error [%s]", page, since.format(DATE_TIME_FORMATTER), appConfigData.getMailMalAddress(), e.getMessage() );
                 final ReportsEntity report = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, null, null, null );
                 reportsRepository.save( report );
                 logger.error( message, e );

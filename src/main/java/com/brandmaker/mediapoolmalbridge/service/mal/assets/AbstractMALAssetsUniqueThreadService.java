@@ -5,6 +5,7 @@ import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.MALGetNewBrand
 import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.model.*;
 import com.brandmaker.mediapoolmalbridge.clients.mal.model.MALAssetType;
 import com.brandmaker.mediapoolmalbridge.clients.rest.RestResponse;
+import com.brandmaker.mediapoolmalbridge.config.AppConfigData;
 import com.brandmaker.mediapoolmalbridge.config.MalIncludedAssetTypes;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bm.BMAssetIdEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetEntity;
@@ -58,17 +59,18 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
         request.setPage(1);
 
         //filter based on the properties from application.properties.json file
-        List<String> filterOnlyMalProperties = appConfig.getFilterOnlyMalProperties();
+        AppConfigData appConfigData = appConfig.getAppConfigData();
+        List<String> filterOnlyMalProperties = appConfigData.getFilterOnlyMalProperties();
         if (filterOnlyMalProperties != null && !filterOnlyMalProperties.isEmpty()) {
             request.setBrandIds(filterOnlyMalProperties);
         }
 
-        List<String> filterOnlyAssetType = appConfig.getFilterOnlyAssetType();
+        List<String> filterOnlyAssetType = appConfigData.getFilterOnlyAssetType();
         if (filterOnlyAssetType != null && !filterOnlyAssetType.isEmpty()) {
             request.setAssetTypeIds(filterOnlyAssetType);
         }
 
-        List<String> filterOnlyColorIds = appConfig.getFilterOnlyColorIds();
+        List<String> filterOnlyColorIds = appConfigData.getFilterOnlyColorIds();
         if (filterOnlyColorIds != null && !filterOnlyColorIds.isEmpty()) {
             request.setColorIds(filterOnlyColorIds);
         }
@@ -272,7 +274,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
     }
 
     private void setAssetEntityByFileFormat(MALGetAsset malGetAsset) {
-        for (final String fileFormat : appConfig.getFileFormatsOrder()) {
+        for (final String fileFormat : appConfig.getAppConfigData().getFileFormatsOrder()) {
             if (isMatchingFileFormat(fileFormat, "xl_url", malGetAsset.getXlUrl())) {
                 final AssetEntity assetEntity = putIntoAssetMap(malGetAsset, MALAssetType.FILE);
                 saveAssetEntity(assetEntity);

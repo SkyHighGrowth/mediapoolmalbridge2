@@ -10,7 +10,7 @@ public class MalIncludedAssetTypes {
     private final Set<String> includeAssetTypes;
 
     public MalIncludedAssetTypes(final AppConfig appConfig ) {
-        includeAssetTypes = appConfig.getIncludedAssetTypes().keySet();
+        includeAssetTypes = appConfig.getAppConfigData().getIncludedAssetTypes().keySet();
     }
 
     public boolean isIncludedAssetType( final String assetType ) {

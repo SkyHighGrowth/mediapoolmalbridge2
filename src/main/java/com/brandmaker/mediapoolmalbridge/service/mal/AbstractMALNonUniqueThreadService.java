@@ -29,7 +29,7 @@ public abstract class AbstractMALNonUniqueThreadService<T> extends AbstractNonUn
 
     protected boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription, final MALAbstractResponse malAbstractResponse, final Exception e ) {
         assetEntity.increaseMalStatesRepetitions();
-        if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
+        if( assetEntity.getMalStatesRepetitions() > appConfig.getAppConfigData().getAssetStateRepetitionMax() ) {
             final String message;
             if( malAbstractResponse == null ) {
                 message = String.format( "Max retries for %s achieved for asset id [%s], with message [%s]", serviceDescription, assetEntity.getMalAssetId(), e.getMessage() );

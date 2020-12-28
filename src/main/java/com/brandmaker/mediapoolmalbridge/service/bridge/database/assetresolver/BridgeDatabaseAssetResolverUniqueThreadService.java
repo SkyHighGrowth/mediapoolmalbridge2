@@ -1,5 +1,6 @@
 package com.brandmaker.mediapoolmalbridge.service.bridge.database.assetresolver;
 
+import com.brandmaker.mediapoolmalbridge.config.AppConfigData;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.ReportsEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.UploadedFileEntity;
@@ -32,8 +33,9 @@ public class BridgeDatabaseAssetResolverUniqueThreadService extends AbstractBrid
     @Override
     protected void run() {
         for (int page = 0; true; ++page) {
+            AppConfigData appConfigData = appConfig.getAppConfigData();
             final List<AssetEntity> assetEntities = assetRepository.findAllByUpdatedIsAfterAndUpdatedIsBeforeAndTransferringAssetStatusIsNotAndTransferringAssetStatusIsNot(
-                    getMidnightBridgeLookInThePast().minusDays(appConfig.getBridgeResolverWindow()), getMidnightBridgeLookInThePast(), TransferringAssetStatus.DONE, TransferringAssetStatus.ERROR, PageRequest.of(0, appConfig.getDatabasePageSize()));
+                    getMidnightBridgeLookInThePast().minusDays(appConfigData.getBridgeResolverWindow()), getMidnightBridgeLookInThePast(), TransferringAssetStatus.DONE, TransferringAssetStatus.ERROR, PageRequest.of(0, appConfig.getDatabasePageSize()));
             if (assetEntities.isEmpty() || page > 1000) {
                 break;
             }

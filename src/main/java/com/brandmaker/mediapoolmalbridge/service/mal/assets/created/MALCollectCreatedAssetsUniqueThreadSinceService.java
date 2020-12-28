@@ -17,7 +17,7 @@ public class MALCollectCreatedAssetsUniqueThreadSinceService extends AbstractMAL
     protected void run() {
         final MALGetAssetsRequest request = new MALGetAssetsRequest();
         AppConfigData appConfigData = appConfig.getAppConfigData();
-        if (appConfig.intervalFilterEnable()) {
+        if (appConfigData.isIntervalFilterEnable()) {
             request.setDateCreatedStart(appConfigData.getFilterStartDate());
             request.setDateCreatedEnd(appConfigData.getFilterEndDate());
         } else {

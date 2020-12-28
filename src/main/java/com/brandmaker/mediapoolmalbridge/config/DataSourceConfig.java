@@ -18,20 +18,21 @@ public class DataSourceConfig {
     /**
      * dev profile
      *
-     * @param appConfig
-     * @return
+     * @param appConfig {@link AppConfig}
+     * @return datasource for qa
      */
     @Bean("DataSource")
     @Profile({"standalone", "dev", "!production"})
     public DataSource getDataSourceDev(final AppConfig appConfig) {
+        AppConfigData appConfigData = appConfig.getAppConfigData();
         final HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setUsername(appConfig.getDatasourceUsernameDev());
-        hikariConfig.setPassword(appConfig.getDatasourcePasswordDev());
-        hikariConfig.setJdbcUrl(appConfig.getDatasourceUrlDev());
-        hikariConfig.setAutoCommit(appConfig.isHikariAutoCommit());
-        hikariConfig.setMaximumPoolSize(appConfig.getHikariMaximumPoolSize());
-        hikariConfig.setConnectionTimeout(appConfig.getHikariConnectionTimeout());
-        hikariConfig.setIdleTimeout(appConfig.getHikariIdleTimeout());
+        hikariConfig.setUsername(appConfigData.getDatasourceUsernameDev());
+        hikariConfig.setPassword(appConfigData.getDatasourcePasswordDev());
+        hikariConfig.setJdbcUrl(appConfigData.getDatasourceUrlDev());
+        hikariConfig.setAutoCommit(appConfigData.isHikariAutoCommit());
+        hikariConfig.setMaximumPoolSize(appConfigData.getHikariMaximumPoolSize());
+        hikariConfig.setConnectionTimeout(appConfigData.getHikariConnectionTimeout());
+        hikariConfig.setIdleTimeout(appConfigData.getHikariIdleTimeout());
         return new HikariDataSource(hikariConfig);
 
     }
@@ -39,20 +40,21 @@ public class DataSourceConfig {
     /**
      * production profile
      *
-     * @param appConfig
-     * @return
+     * @param appConfig {@link AppConfig}
+     * @return datasource for production
      */
     @Bean("DataSource")
     @Profile({"standalone", "production", "!dev"})
     public DataSource getDataSourceProduction(final AppConfig appConfig) {
+        AppConfigData appConfigData = appConfig.getAppConfigData();
         final HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setUsername(appConfig.getDatasourceUsernameProduction());
-        hikariConfig.setPassword(appConfig.getDatasourcePasswordProduction());
-        hikariConfig.setJdbcUrl(appConfig.getDatasourceUrlProduction());
-        hikariConfig.setAutoCommit(appConfig.isHikariAutoCommit());
-        hikariConfig.setMaximumPoolSize(appConfig.getHikariMaximumPoolSize());
-        hikariConfig.setConnectionTimeout(appConfig.getHikariConnectionTimeout());
-        hikariConfig.setIdleTimeout(appConfig.getHikariIdleTimeout());
+        hikariConfig.setUsername(appConfigData.getDatasourceUsernameProduction());
+        hikariConfig.setPassword(appConfigData.getDatasourcePasswordProduction());
+        hikariConfig.setJdbcUrl(appConfigData.getDatasourceUrlProduction());
+        hikariConfig.setAutoCommit(appConfigData.isHikariAutoCommit());
+        hikariConfig.setMaximumPoolSize(appConfigData.getHikariMaximumPoolSize());
+        hikariConfig.setConnectionTimeout(appConfigData.getHikariConnectionTimeout());
+        hikariConfig.setIdleTimeout(appConfigData.getHikariIdleTimeout());
         return new HikariDataSource(hikariConfig);
     }
 
