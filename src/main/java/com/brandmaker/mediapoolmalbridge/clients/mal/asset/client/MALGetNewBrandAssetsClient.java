@@ -14,7 +14,7 @@ import org.springframework.util.MultiValueMap;
 @Component
 public class MALGetNewBrandAssetsClient extends MALSingleResponseClient<MALGetNewBrandAssetsRequest, MALGetNewAssetsResponse> {
 
-    private static final String URL_SEGMENT = "api/syncs";
+    private static final String URL_SEGMENT = "syncs";
 
     public MALGetNewBrandAssetsClient() {
         super(MALGetNewAssetsResponse.class);
