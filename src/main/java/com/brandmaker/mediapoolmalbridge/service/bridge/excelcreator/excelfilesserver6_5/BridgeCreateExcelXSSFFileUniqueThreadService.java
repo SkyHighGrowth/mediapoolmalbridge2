@@ -1,5 +1,6 @@
 package com.brandmaker.mediapoolmalbridge.service.bridge.excelcreator.excelfilesserver6_5;
 
+import com.brandmaker.mediapoolmalbridge.config.AppConfigData;
 import com.brandmaker.mediapoolmalbridge.model.brandmaker.asset.BMAsset;
 import com.brandmaker.mediapoolmalbridge.model.mal.MALAssetStructures;
 import com.brandmaker.mediapoolmalbridge.model.mal.propertyvariants.MALPropertyVariant;
@@ -117,7 +118,8 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
             final String brandName = propertyVariant.getBrandName();
             final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findByBrandAndMalPropertyStatus(brandName, MALPropertyStatus.OBSERVED);
             for (MALPropertyEntity malPropertyEntity : malPropertyEntities) {
-                if (!propertyVariant.isBrandStructure() && countProperties == appConfig.getFileMaxRecords() && appConfig.getFileMaxRecords() > 0) {
+                AppConfigData appConfigData = appConfig.getAppConfigData();
+                if (!propertyVariant.isBrandStructure() && countProperties == appConfigData.getFileMaxRecords() && appConfigData.getFileMaxRecords() > 0) {
                     count++;
                     String fileName = String.format("DataStructures_%s.xlsx", count);
                     createFile(fileName, malPropertyPairSet, false, colorsMap);

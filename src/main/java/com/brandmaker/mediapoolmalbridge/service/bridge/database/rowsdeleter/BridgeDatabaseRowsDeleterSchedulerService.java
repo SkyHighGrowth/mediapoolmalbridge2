@@ -40,7 +40,7 @@ public class BridgeDatabaseRowsDeleterSchedulerService extends AbstractScheduler
     @Override
     public void scheduled() {
 
-        final LocalDateTime dateTime = getTodayMidnight().minusDays(appConfig.getBridgeDatabaseRowsDeleterDays());
+        final LocalDateTime dateTime = getTodayMidnight().minusDays(appConfig.getAppConfigData().getBridgeDatabaseRowsDeleterDays());
 
         deleteAssetRows(dateTime);
         deleteFilesToBeDeletedRows(dateTime);

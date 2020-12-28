@@ -5,11 +5,12 @@ import com.brandmaker.mediapoolmalbridge.clients.mal.properties.client.model.MAL
 import com.brandmaker.mediapoolmalbridge.clients.mal.properties.client.model.MALGetPropertiesResponse;
 import com.brandmaker.mediapoolmalbridge.clients.mal.properties.client.model.MALProperty;
 import com.brandmaker.mediapoolmalbridge.clients.rest.RestResponse;
+import com.brandmaker.mediapoolmalbridge.config.AppConfigData;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.ReportsEntity;
-import com.brandmaker.mediapoolmalbridge.persistence.entity.mal.MALPropertyEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportTo;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportType;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.property.MALPropertyStatus;
+import com.brandmaker.mediapoolmalbridge.persistence.entity.mal.MALPropertyEntity;
 import com.brandmaker.mediapoolmalbridge.service.mal.AbstractMALUniqueThreadService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +34,8 @@ public class MALGetPropertiesUniqueThreadService extends AbstractMALUniqueThread
     @Override
     protected void run() {
         final MALGetPropertiesRequest request = new MALGetPropertiesRequest();
-        request.setPerPage(appConfig.getMalPageSize());
+        AppConfigData appConfigData = appConfig.getAppConfigData();
+        request.setPerPage(appConfigData.getMalPageSize());
         request.setPage(0);
         final RestResponse<MALGetPropertiesResponse> response = getPropertiesClient.download(request);
         if (!response.isSuccess() ||

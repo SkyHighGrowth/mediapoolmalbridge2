@@ -13,7 +13,7 @@ public class MALCollectNewBrandAssetsUniqueThreadService extends AbstractMALAsse
     @Override
     protected void run() {
         final MALGetNewBrandAssetsRequest request = new MALGetNewBrandAssetsRequest();
-        request.setLimit(appConfig.getMalPageSize());
+        request.setLimit(appConfig.getAppConfigData().getMalPageSize());
         downloadNewAssets(request);
     }
 }

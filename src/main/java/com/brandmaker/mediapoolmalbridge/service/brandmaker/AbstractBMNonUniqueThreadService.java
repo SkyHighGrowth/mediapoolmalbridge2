@@ -32,7 +32,7 @@ public abstract class AbstractBMNonUniqueThreadService<RUN_ARGUMENT> extends Abs
     @Transactional
     public boolean isGateOpen(final AssetEntity assetEntity, final String serviceDescription, AbstractBMResponse abstractBMResponse ) {
         assetEntity.increaseMalStatesRepetitions();
-        if( assetEntity.getMalStatesRepetitions() > appConfig.getAssetStateRepetitionMax() ) {
+        if( assetEntity.getMalStatesRepetitions() > appConfig.getAppConfigData().getAssetStateRepetitionMax() ) {
             final String message = String.format( "Max retries for %s for asset id [%s], with messages [%s] and warnings [%s]", serviceDescription, assetEntity.getBmAssetId(), abstractBMResponse.getErrorAsString(), abstractBMResponse.getWarningsAsString() );
             final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), assetEntity.getMalAssetId(), message, ReportTo.BM, GSON.toJson(assetEntity), null, null );
             reportsRepository.save( reportsEntity );

@@ -31,10 +31,11 @@ class PersistenceContextConfig {
 
         Properties jpaProperties = new Properties();
 
-        jpaProperties.put("hibernate.dialect", appConfig.getHibernateDialect());
-        jpaProperties.put("hibernate.hbm2ddl.auto", appConfig.getHibernateHbm2dlAuto() );
+        AppConfigData appConfigData = appConfig.getAppConfigData();
+        jpaProperties.put("hibernate.dialect", appConfigData.getHibernateDialect());
+        jpaProperties.put("hibernate.hbm2ddl.auto", appConfigData.getHibernateHbm2dlAuto() );
 
-        jpaProperties.put("hibernate.show_sql", appConfig.isHibernateShowSql());
+        jpaProperties.put("hibernate.show_sql", appConfigData.isHibernateShowSql());
         jpaProperties.put("hibernate.format_sql", true);
 
         entityManagerFactoryBean.setJpaProperties(jpaProperties);

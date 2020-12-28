@@ -30,7 +30,7 @@ public class BridgeUploadExcelFilesSchedulerService extends AbstractSchedulerSer
     }
 
     public void scheduled() {
-        if (appConfig.isUseSftp()) {
+        if (appConfig.getAppConfigData().isUseSftp()) {
             bridgeUploadExcelFilesUniqueThreadService.start();
         }
     }

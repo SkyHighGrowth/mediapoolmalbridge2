@@ -22,7 +22,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -161,178 +160,6 @@ public class AppConfig {
         return getWorkingDirectory() + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.EXCEL_DIR + File.separator;
     }
 
-    public boolean isUseSftp() {
-        return appConfigData.isUseSftp();
-    }
-
-    public String getSftpUsername() {
-        return appConfigData.getSftpUsername();
-    }
-
-    public String getSftpPassword() {
-        return appConfigData.getSftpPassword();
-    }
-
-    public String getSftpHostname() {
-        return appConfigData.getSftpHostname();
-    }
-
-    public int getSftpPort() {
-        return appConfigData.getSftpPort();
-    }
-
-    public String getSftpPublicKey() {
-        return appConfigData.getSftpPublicKey();
-    }
-
-    public String getMalHostname() {
-        return appConfigData.getMalHostname();
-    }
-
-    public String getMalLogin() {
-        return appConfigData.getMalLogin();
-    }
-
-    public String getMalApiKey() {
-        return appConfigData.getMalApiKey();
-    }
-
-    public String getMediapoolUsernameDev() {
-        return appConfigData.getMediapoolUsernameDev();
-    }
-
-    public String getMediapoolPasswordDev() {
-        return appConfigData.getMediapoolPasswordDev();
-    }
-
-    public String getMediapoolUrlDev() {
-        return appConfigData.getMediapoolUrlDev();
-    }
-
-    public String getThemeUrlDev() {
-        return appConfigData.getThemeUrlDev();
-    }
-
-    public String getMediapoolUsernameProduction() {
-        return appConfigData.getMediapoolUsernameProduction();
-    }
-
-    public String getMediapoolPasswordProduction() {
-        return appConfigData.getMediapoolPasswordProduction();
-    }
-
-    public String getMediapoolUrlProduction() {
-        return appConfigData.getMediapoolUrlProduction();
-    }
-
-    public String getThemeUrlProduction() {
-        return appConfigData.getThemeUrlProduction();
-    }
-
-    public int getThreadschedulerPoolSize() {
-        return appConfigData.getThreadschedulerPoolSize();
-    }
-
-    public int getMalThreadexecutorPoolSize() {
-        return appConfigData.getMalThreadexecutorPoolSize();
-    }
-
-    public int getMalThreadexecutorQueueSize() {
-        return appConfigData.getMalThreadexecutorQueueSize();
-    }
-
-    public int getMalThreadexecutorQueueLengthMax() {
-        return appConfigData.getMalThreadexecutorQueueLengthMax();
-    }
-
-    public int getBmThreadexecutorPoolSize() {
-        return appConfigData.getBmThreadexecutorPoolSize();
-    }
-
-    public int getBmThreadexecutorQueueSize() {
-        return appConfigData.getBmThreadexecutorQueueSize();
-    }
-
-    public int getBmThreadexecutorQueueLengthMax() {
-        return appConfigData.getBmThreadexecutorQueueLengthMax();
-    }
-
-    public String getMailHostname() {
-        return appConfigData.getMailHostname();
-    }
-
-    public int getMailPort() {
-        return appConfigData.getMailPort();
-    }
-
-    public String getMailUsername() {
-        return appConfigData.getMailUsername();
-    }
-
-    public String getMailPassword() {
-        return appConfigData.getMailPassword();
-    }
-
-    public String getMailTransportProtocol() {
-        return appConfigData.getMailTransportProtocol();
-    }
-
-    public boolean isMailSmtpAuth() {
-        return appConfigData.isMailSmtpAuth();
-    }
-
-    public boolean isMailSmtpStarttlsEnable() {
-        return appConfigData.isMailSmtpStarttlsEnable();
-    }
-
-    public boolean isMailDebug() {
-        return appConfigData.isMailDebug();
-    }
-
-    public String getMailBmAddress() {
-        return appConfigData.getMailBmAddress();
-    }
-
-    public String getMailMalAddress() {
-        return appConfigData.getMailMalAddress();
-    }
-
-    public int getAssetStateRepetitionMax() {
-        return appConfigData.getAssetStateRepetitionMax();
-    }
-
-    public int getMalLookInThePastDays() {
-        return appConfigData.getMalLookInThePastDays();
-    }
-
-    public int getBridgeLookInThePastDays() {
-        return appConfigData.getBridgeLookInThePastDays();
-    }
-
-    public int getBridgeResolverWindow() {
-        return appConfigData.getBridgeResolverWindow();
-    }
-
-    public int getBridgeDatabaseRowsDeleterDays() {
-        return appConfigData.getBridgeDatabaseRowsDeleterDays();
-    }
-
-    public String getBmExchangeSchedulerCronExpression() {
-        return appConfigData.getBmExchangeSchedulerCronExpression();
-    }
-
-    public String getBmUploadSchedulerCronExpression() {
-        return appConfigData.getBmUploadSchedulerCronExpression();
-    }
-
-    public String getBmGetThemeIdCronExpression() {
-        return appConfigData.getBmGetThemeIdCronExpression();
-    }
-
-    @SuppressWarnings("unused method")
-    public String getBridgeExchangeAssetsCronExpression() {
-        return appConfigData.getBridgeExchangeAssetsCronExpression();
-    }
 
     public String getBridgeDeleteFileCronExpression() {
         return appConfigData.getBridgeDeleteFileCronExpression();
@@ -340,6 +167,18 @@ public class AppConfig {
 
     public String getBridgeDatabaseRowsDeleterCronExpression() {
         return appConfigData.getBridgeDatabaseRowsDeleterCronExpression();
+    }
+
+    public String getBmExchangeSchedulerCronExpression() {
+        return appConfigData.getBmExchangeSchedulerCronExpression();
+    }
+
+    public String getBmGetThemeIdCronExpression() {
+        return appConfigData.getBmGetThemeIdCronExpression();
+    }
+
+    public String getBmUploadSchedulerCronExpression() {
+        return appConfigData.getBmUploadSchedulerCronExpression();
     }
 
     public String getBridgeExcelFilesCronExpression() {
@@ -386,135 +225,16 @@ public class AppConfig {
         return appConfigData.getMalPropertiesCronExpression();
     }
 
-    public String getDatasourceUrlDev() {
-        return appConfigData.getDatasourceUrlDev();
-    }
-
-    public String getDatasourceUsernameDev() {
-        return appConfigData.getDatasourceUsernameDev();
-    }
-
-    public String getDatasourcePasswordDev() {
-        return appConfigData.getDatasourcePasswordDev();
-    }
-
-    public String getDatasourceUrlProduction() {
-        return appConfigData.getDatasourceUrlProduction();
-    }
-
-    public String getDatasourceUsernameProduction() {
-        return appConfigData.getDatasourceUsernameProduction();
-    }
-
-    public String getDatasourcePasswordProduction() {
-        return appConfigData.getDatasourcePasswordProduction();
-    }
-
-    public String getHibernateDialect() {
-        return appConfigData.getHibernateDialect();
-    }
-
-    public boolean isHibernateShowSql() {
-        return appConfigData.isHibernateShowSql();
-    }
-
-    public String getHibernateHbm2dlAuto() {
-        return appConfigData.getHibernateHbm2dlAuto();
-    }
-
-    public int getHikariConnectionTimeout() {
-        return appConfigData.getHikariConnectionTimeout();
-    }
-
-    public int getHikariIdleTimeout() {
-        return appConfigData.getHikariIdleTimeout();
-    }
-
-    @SuppressWarnings("unused method")
-    public int getHikariMaxLifeTime() {
-        return appConfigData.getHikariMaxLifeTime();
-    }
-
-    public boolean isHikariAutoCommit() {
-        return appConfigData.isHikariAutoCommit();
-    }
-
-    public int getHikariMaximumPoolSize() {
-        return appConfigData.getHikariMaximumPoolSize();
-    }
-
     public int getDatabasePageSize() {
-        if (appConfigData.getDatabasePageSize() <= 0) {
+        AppConfigData loadConfigData = getAppConfigData();
+        if (loadConfigData.getDatabasePageSize() <= 0) {
             throw new IllegalArgumentException("Database page size has to be positive number");
         }
-        return appConfigData.getDatabasePageSize();
-    }
-
-    public int getMalPageSize() {
-        return appConfigData.getMalPageSize();
-    }
-
-    public Map<Integer, List<String>> getMalPriorities() {
-        return appConfigData.getMalPriorities();
+        return loadConfigData.getDatabasePageSize();
     }
 
     public String getWorkingDirectory() {
         return appConfigData.getWorkingDirectory();
     }
 
-    public int getAssetFileMaximalLivingDaysOnDisc() {
-        return appConfigData.getAssetFileMaximalLivingDaysOnDisc();
-    }
-
-    public Map<String, String> getIncludedAssetTypes() {
-        return appConfigData.getIncludedAssetTypes();
-    }
-
-    public boolean isDisableAbsoluteDelete() {
-        return appConfigData.isDisableAbsoluteDelete();
-    }
-
-    public boolean isDoNotCreateExcelFiles() {
-        return appConfigData.isDoNotCreateExcelFiles();
-    }
-
-    public String getFailSaveCategoryName() {
-        return appConfigData.getFailSaveCategoryName();
-    }
-
-    public boolean intervalFilterEnable() {
-        return appConfigData.isIntervalFilterEnable();
-    }
-
-    public String getFilterStartDate() {
-        return appConfigData.getFilterStartDate();
-    }
-
-    public String getFilterEndDate() {
-        return appConfigData.getFilterEndDate();
-    }
-
-    public int getFileMaxRecords() {
-        return appConfigData.getFileMaxRecords();
-    }
-
-    public long getDownloadFolderSizeLimit() {
-        return appConfigData.getDownloadFolderSizeLimit();
-    }
-
-    public List<String> getFileFormatsOrder() {
-        return appConfigData.getFileFormatsOrder();
-    }
-
-    public List<String> getFilterOnlyMalProperties() {
-        return appConfigData.getFilterOnlyMalProperties();
-    }
-
-    public List<String> getFilterOnlyAssetType() {
-        return appConfigData.getFilterOnlyAssetType();
-    }
-
-    public List<String> getFilterOnlyColorIds() {
-        return appConfigData.getFilterOnlyColorIds();
-    }
 }

@@ -47,7 +47,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
     public void scheduled() {
         logger.info("Deleting files from uploaded file entity table started");
         deleteFiles();
-        if (!appConfig.isDisableAbsoluteDelete()) {
+        if (!appConfig.getAppConfigData().isDisableAbsoluteDelete()) {
             listFilesInTempFolder();
         }
         logger.info("Deleting files from uploaded file entity table ended");
@@ -58,7 +58,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
         if (files == null || files.length == 0) {
             return;
         }
-        final LocalDateTime pointInTime = getTodayMidnight().minusDays(appConfig.getAssetFileMaximalLivingDaysOnDisc());
+        final LocalDateTime pointInTime = getTodayMidnight().minusDays(appConfig.getAppConfigData().getAssetFileMaximalLivingDaysOnDisc());
         BasicFileAttributes attributes;
         for (final File file : files) {
             if (file.isFile()) {
@@ -83,7 +83,7 @@ public class BridgeDeleteFilesSchedulerService extends AbstractSchedulerService 
         try {
             for (int page = 0; true; ++page) {
                 final List<UploadedFileEntity> fileEntities = uploadedFileRepository.findByDeletedAndCreatedIsBefore(
-                        false, getTodayMidnight().minusDays(appConfig.getAssetFileMaximalLivingDaysOnDisc()), PageRequest.of(0, appConfig.getDatabasePageSize()));
+                        false, getTodayMidnight().minusDays(appConfig.getAppConfigData().getAssetFileMaximalLivingDaysOnDisc()), PageRequest.of(0, appConfig.getDatabasePageSize()));
                 if (fileEntities.isEmpty() || page > 1000) {
                     break;
                 }
