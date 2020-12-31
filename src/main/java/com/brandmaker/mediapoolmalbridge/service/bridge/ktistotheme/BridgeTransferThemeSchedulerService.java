@@ -44,8 +44,8 @@ public class BridgeTransferThemeSchedulerService extends AbstractSchedulerServic
         logger.info("Downloading themes from MAL started...");
         bmDownloadThemeUniqueThreadService.start();
         logger.info("Downloading themes from MAL ended...");
-        logger.info("Uploading specific theme started...");
+        logger.info("Uploading kits theme started...");
         bmFireUploadThemeUniqueThreadService.start();
-        logger.info("Uploading specific theme ended...");
+        logger.info("Uploading kits theme ended...");
     }
 }

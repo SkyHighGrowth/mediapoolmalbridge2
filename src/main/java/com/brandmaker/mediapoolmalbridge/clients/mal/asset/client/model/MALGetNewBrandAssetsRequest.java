@@ -24,6 +24,8 @@ public class MALGetNewBrandAssetsRequest {
     private int page;
     //the number of results you wish to be returned. Default is 100
     private int limit;
+    //this field includes amazon url for asset images
+    private boolean s3_url;
 
     public boolean isProperty() {
         return property;
@@ -81,12 +83,21 @@ public class MALGetNewBrandAssetsRequest {
         this.limit = limit;
     }
 
+    public boolean isS3_url() {
+        return s3_url;
+    }
+
+    public void setS3_url(boolean s3_url) {
+        this.s3_url = s3_url;
+    }
+
     public MultiValueMap<String, String> transformToGetParams() {
         final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.set("hws", "true");
         params.set("property", "true");
         params.set("page", String.valueOf(getPage()));
         params.set("limit", String.valueOf(getLimit()));
+        params.set("s3_url", "true");
         return params;
     }
 

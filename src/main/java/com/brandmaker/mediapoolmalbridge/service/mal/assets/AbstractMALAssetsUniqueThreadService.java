@@ -230,28 +230,28 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
             for (MALFilesData malFilesData : malGetData.getFiles().getData()) {
                 switch (malFilesData.getType()) {
                     case "xl":
-                        malGetAsset.setXlUrl(malFilesData.getUrl());
+                        malGetAsset.setXlUrl(malFilesData.getS3Url());
                         break;
                     case "large":
-                        malGetAsset.setLargeUrl(malFilesData.getUrl());
+                        malGetAsset.setLargeUrl(malFilesData.getS3Url());
                         break;
                     case "high":
-                        malGetAsset.setHighUrl(malFilesData.getUrl());
+                        malGetAsset.setHighUrl(malFilesData.getS3Url());
                         break;
                     case "medium":
-                        malGetAsset.setMediumUrl(malFilesData.getUrl());
+                        malGetAsset.setMediumUrl(malFilesData.getS3Url());
                         break;
                     case "low":
-                        malGetAsset.setThumbnailUrl(malFilesData.getUrl());
+                        malGetAsset.setThumbnailUrl(malFilesData.getS3Url());
                         break;
                     case "logo_jpg":
-                        malGetAsset.setLogoJpgUrl(malFilesData.getUrl());
+                        malGetAsset.setLogoJpgUrl(malFilesData.getS3Url());
                         break;
                     case "logo_png":
-                        malGetAsset.setLogoPngUrl(malFilesData.getUrl());
+                        malGetAsset.setLogoPngUrl(malFilesData.getS3Url());
                         break;
                     case "offer":
-                        malGetAsset.setOfferUrl(malFilesData.getUrl());
+                        malGetAsset.setOfferUrl(malFilesData.getS3Url());
                         break;
                     default:
                         break;
