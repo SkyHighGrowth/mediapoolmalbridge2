@@ -36,11 +36,11 @@ public class BMExchangeAssetMetadataSchedulerService extends AbstractSchedulerSe
 
     @Override
     public void scheduled() {
-        logger.info("Uploading specific assets started...");
+        logger.info("Uploading asset metadata started...");
         bmFireUploadAssetsMetadataUniqueThreadService.start();
-        logger.info("Uploading specific assets ended...");
-        logger.info("Downloading specific assets started...");
+        logger.info("Uploading asset metadata ended...");
+        logger.info("Downloading assets BM data started...");
         bmFireDownloadAssetsMetadataUniqueThreadService.start();
-        logger.info("Downloading specific assets ended...");
+        logger.info("Downloading assets BM data ended...");
     }
 }

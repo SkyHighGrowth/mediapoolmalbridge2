@@ -20,6 +20,8 @@ public class MALFilesData {
     public Integer height;
     @SerializedName("metadata")
     public Object metadata;
+    @SerializedName("s3Url")
+    public String s3Url;
 
     public String getAssetFileId() {
         return assetFileId;
@@ -75,5 +77,13 @@ public class MALFilesData {
 
     public void setMetadata(Object metadata) {
         this.metadata = metadata;
+    }
+
+    public String getS3Url() {
+        return s3Url;
+    }
+
+    public void setS3Url(String s3Url) {
+        this.s3Url = s3Url;
     }
 }
