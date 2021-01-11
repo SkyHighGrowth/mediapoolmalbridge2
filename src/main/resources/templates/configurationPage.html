@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="./webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <script>
         window.setTimeout(function () {
-            $(".alert").fadeTo(2000, 0).slideUp(2000, function () {
+            $(".notification").fadeTo(2000, 0).slideUp(2000, function () {
                 $(this).remove();
             });
         }, 2000);
@@ -25,10 +25,10 @@
         <tr>
             <td colspan="6">
                 <th:block th:switch="${isSuccess}">
-                    <div th:case="true" class="alert alert-primary" id="saveNotification" role="alert">
+                    <div th:case="true" class="alert alert-primary notification" id="saveNotification" role="alert">
                         Update is successful!
                     </div>
-                    <div th:case="false" class="alert alert-danger" id="errorNotification" role="alert">
+                    <div th:case="false" class="alert alert-danger notification" id="errorNotification" role="alert">
                         Update failed!
                     </div>
                 </th:block>
@@ -75,25 +75,7 @@
                                            id="bmUploadSchedulerCronExpression" required/>
                                 </div>
                             </div>
-                            <div class="form-group-sm row">
-                                <label class="col-sm-6 col-form-label" for="bmGetThemeIdCronExpression">BM
-                                    Get Theme Id Cronjob</label>
-                                <div class="col-sm-6 input-group input-group-sm mb-3">
-                                    <input type="text" class="form-control"
-                                           th:field="*{bmGetThemeIdCronExpression}"
-                                           id="bmGetThemeIdCronExpression" required/>
-                                </div>
-                            </div>
                             <hr/>
-                            <div class="form-group-sm row">
-                                <label class="col-sm-6 col-form-label" for="bridgeExchangeAssetsCronExpression">Bridge
-                                    Exchange Assets Cronjob</label>
-                                <div class="col-sm-6 input-group input-group-sm mb-3">
-                                    <input type="text" class="form-control"
-                                           th:field="*{bridgeExchangeAssetsCronExpression}"
-                                           id="bridgeExchangeAssetsCronExpression" required/>
-                                </div>
-                            </div>
                             <div class="form-group-sm row">
                                 <label class="col-sm-6 col-form-label" for="bridgeDeleteFileCronExpression">Bridge
                                     Delete Files Cronjob</label>
@@ -121,6 +103,9 @@
                                            id="bridgeExcelFilesCronExpression" required/>
                                 </div>
                             </div>
+                            <div class="alert alert-warning" role="alert">
+                                If you need this job to be run, configure the SFTP settings correctly.
+                            </div>
                             <div class="form-group-sm row" style="color: #c16d6d;">
                                 <label class="col-sm-6 col-form-label" for="bridgeUploadExcelFilesCronExpression">Bridge
                                     Upload Excel Files Cronjob</label>
@@ -128,6 +113,19 @@
                                     <input type="text" class="form-control" style="color: #c16d6d;"
                                            th:field="*{bridgeUploadExcelFilesCronExpression}"
                                            id="bridgeUploadExcelFilesCronExpression" required/>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-warning" role="alert">
+                                If you need this job to be run, configure the Mail settings correctly.
+                            </div>
+                            <div class="form-group-sm row" style="color: #c16d6d;">
+                                <label class="col-sm-6 col-form-label" for="bridgeSendMailCronExpression">Bridge Send
+                                    Mail Cronjob</label>
+                                <div class="col-sm-6 input-group input-group-sm mb-3">
+                                    <input type="text" class="form-control" style="color: #c16d6d;"
+                                           th:field="*{bridgeSendMailCronExpression}"
+                                           id="bridgeSendMailCronExpression" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
@@ -138,15 +136,6 @@
                                     <input type="text" class="form-control"
                                            th:field="*{bridgeTransferThemeCronExpression}"
                                            id="bridgeTransferThemeCronExpression" required/>
-                                </div>
-                            </div>
-                            <div class="form-group-sm row">
-                                <label class="col-sm-6 col-form-label" for="bridgeSendMailCronExpression">Bridge Send
-                                    Mail Cronjob</label>
-                                <div class="col-sm-6 input-group input-group-sm mb-3">
-                                    <input type="text" class="form-control"
-                                           th:field="*{bridgeSendMailCronExpression}"
-                                           id="bridgeSendMailCronExpression" required/>
                                 </div>
                             </div>
                             <div class="form-group-sm row">
