@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,37 +30,10 @@ public class MALAssetStructures {
     private Map<String, String> assetTypes = new HashMap<>();
     private Map<String, String> fileTypes = new HashMap<>();
     private Map<String, String> propertyTypes = new HashMap<>();
-    private Map<Integer, MALPropertyVariant> propertyVariants = new HashMap<>();
 
     public MALAssetStructures(AppConfig appConfig) {
         this.appConfig = appConfig;
-        initAssetStructures();
     }
-
-    private void initAssetStructures() {
-        FileReader reader = null;
-        File propertyVariantsFile;
-        String workingDirectoryPath = appConfig.getWorkingDirectory();
-        File workingDirectory = new File(workingDirectoryPath);
-        if (workingDirectory.exists()) {
-            String filePath = workingDirectoryPath + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON;
-            propertyVariantsFile = new File(filePath);
-            if (propertyVariantsFile.exists()) {
-                try {
-                    reader = new FileReader(propertyVariantsFile);
-                } catch (FileNotFoundException e) {
-                    logger.error("Can not find file {}", propertyVariantsFile.getAbsolutePath(), e);
-                }
-
-                assert reader != null;
-                Type type = new TypeToken<Map<Integer, MALPropertyVariant>>() {
-                }.getType();
-                Map<Integer, MALPropertyVariant> propertyVariantsMap = (new Gson()).fromJson(new JsonReader(reader), type);
-                this.setPropertyVariants(propertyVariantsMap);
-            }
-        }
-    }
-
 
     public Map<String, String> getBrands() {
         return brands;
@@ -125,10 +100,25 @@ public class MALAssetStructures {
     }
 
     public Map<Integer, MALPropertyVariant> getPropertyVariants() {
-        return propertyVariants;
+        FileReader reader = null;
+        File propertyVariantsFile;
+        String workingDirectoryPath = appConfig.getWorkingDirectory();
+        File workingDirectory = new File(workingDirectoryPath);
+        if (workingDirectory.exists()) {
+            String filePath = workingDirectoryPath + File.separator + Constants.APPLICATION_DIR + File.separator + Constants.PROPERTY_VARIANTS_JSON;
+            propertyVariantsFile = new File(filePath);
+            if (propertyVariantsFile.exists()) {
+                try {
+                    reader = new FileReader(propertyVariantsFile);
+                } catch (FileNotFoundException e) {
+                    logger.error("Can not find file {}", propertyVariantsFile.getAbsolutePath(), e);
+                }
+            }
+        }
+        Type type = new TypeToken<Map<Integer, MALPropertyVariant>>() {
+        }.getType();
+        assert reader != null;
+        return (new Gson()).fromJson(new JsonReader(reader), type);
     }
 
-    public void setPropertyVariants(Map<Integer, MALPropertyVariant> propertyVariants) {
-        this.propertyVariants = propertyVariants;
-    }
 }

@@ -114,11 +114,11 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         int count = 0;
         int countProperties = 0;
 
+        AppConfigData appConfigData = appConfig.getAppConfigData();
         for (MALPropertyVariant propertyVariant : propertyVariants) {
             final String brandName = propertyVariant.getBrandName();
             final List<MALPropertyEntity> malPropertyEntities = malPropertyRepository.findByBrandAndMalPropertyStatus(brandName, MALPropertyStatus.OBSERVED);
             for (MALPropertyEntity malPropertyEntity : malPropertyEntities) {
-                AppConfigData appConfigData = appConfig.getAppConfigData();
                 if (!propertyVariant.isBrandStructure() && countProperties == appConfigData.getFileMaxRecords() && appConfigData.getFileMaxRecords() > 0) {
                     count++;
                     String fileName = String.format("DataStructures_%s.xlsx", count);

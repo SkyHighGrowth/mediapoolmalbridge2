@@ -6,7 +6,6 @@ import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.model.*;
 import com.brandmaker.mediapoolmalbridge.clients.mal.model.MALAssetType;
 import com.brandmaker.mediapoolmalbridge.clients.rest.RestResponse;
 import com.brandmaker.mediapoolmalbridge.config.AppConfigData;
-import com.brandmaker.mediapoolmalbridge.config.MalIncludedAssetTypes;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bm.BMAssetIdEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetJsonedValuesEntity;
@@ -26,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class that collects common fields and methods of services that collects data from MAL server
@@ -46,9 +46,6 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
 
     @Autowired
     private BMAssetIdRepository bmAssetIdRepository;
-
-    @Autowired
-    private MalIncludedAssetTypes includedAssetTypes;
 
     @Autowired
     private MALGetNewBrandAssetsClient getNewAssetsClient;
@@ -133,6 +130,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
     }
 
     private void transformPagesIntoNewAssets(final MALGetNewBrandAssetsRequest request, final int totalPages) {
+        Map<String, String> includedAssetTypes = appConfig.getAppConfigData().getIncludedAssetTypes();
         for (int page = 0; page < totalPages; ++page) {
             try {
                 request.setPage(page + 1);
@@ -143,7 +141,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                     continue;
                 }
 
-                transformPagesIntoNewAssets(response.getResponse().getData());
+                transformPagesIntoNewAssets(response.getResponse().getData(), includedAssetTypes);
             } catch (final Exception e) {
                 final String message = String.format("Problem storing page [%s] to database with message [%s]", page, e.getMessage());
                 final ReportsEntity reportsEntity = new ReportsEntity(ReportType.WARNING, getClass().getName(), null, message, ReportTo.BM, null, null, null);
@@ -154,6 +152,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
     }
 
     private void transformPagesIntoAssets(final MALGetAssetsRequest request, final int totalPages) {
+        Map<String, String> includedAssetTypes = appConfig.getAppConfigData().getIncludedAssetTypes();
         for (int page = 0; page < totalPages; ++page) {
             try {
                 request.setPage(page + 1);
@@ -163,7 +162,7 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
                         response.getResponse().getAssets() == null) {
                     continue;
                 }
-                transformPageIntoAssets(response.getResponse().getAssets());
+                transformPageIntoAssets(response.getResponse().getAssets(), includedAssetTypes);
             } catch (final Exception e) {
                 final String message = String.format("Problem storing page [%s] to database with message [%s]", page, e.getMessage());
                 final ReportsEntity reportsEntity = new ReportsEntity(ReportType.WARNING, getClass().getName(), null, message, ReportTo.BM, null, null, null);
@@ -174,12 +173,10 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
     }
 
     @Transactional
-    public void transformPagesIntoNewAssets(final List<MALGetData> malGetDatas) {
+    public void transformPagesIntoNewAssets(final List<MALGetData> malGetDatas, Map<String, String> includedAssetTypes) {
         malGetDatas.forEach(malGetData -> {
-
             MALGetAsset malGetAsset = objectMapping(malGetData);
-
-            if (includedAssetTypes.isIncludedAssetType(malGetAsset.getAssetTypeId())
+            if (includedAssetTypes.containsKey(malGetAsset.getAssetTypeId())
                     && (!malGetAsset.getAssetTypeId().equals(LOGO_ASSET_TYPE_ID) || isNotEPS(malGetAsset))) {
                 setAssetEntityByFileFormat(malGetAsset);
             }
@@ -263,9 +260,9 @@ public abstract class AbstractMALAssetsUniqueThreadService extends AbstractMALUn
 
 
     @Transactional
-    public void transformPageIntoAssets(final List<MALGetAsset> malGetAssets) {
+    public void transformPageIntoAssets(final List<MALGetAsset> malGetAssets, Map<String, String> includedAssetTypes) {
         malGetAssets.forEach(malGetAsset -> {
-            if (includedAssetTypes.isIncludedAssetType(malGetAsset.getAssetTypeId())
+            if (includedAssetTypes.containsKey(malGetAsset.getAssetTypeId())
                     && (!malGetAsset.getAssetTypeId().equals(LOGO_ASSET_TYPE_ID) || isNotEPS(malGetAsset))) {
                 malGetAsset.setHws(false);
                 setAssetEntityByFileFormat(malGetAsset);
