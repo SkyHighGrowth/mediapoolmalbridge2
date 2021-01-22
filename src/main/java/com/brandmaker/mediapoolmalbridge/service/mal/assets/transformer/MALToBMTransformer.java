@@ -2,7 +2,8 @@ package com.brandmaker.mediapoolmalbridge.service.mal.assets.transformer;
 
 import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.model.MALGetAsset;
 import com.brandmaker.mediapoolmalbridge.config.AppConfig;
-import com.brandmaker.mediapoolmalbridge.model.mal.MALAssetStructures;
+import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.StructureType;
+import com.brandmaker.mediapoolmalbridge.service.StructuresService;
 import com.brandmaker.mediapoolmalbridge.service.brandmaker.theme.themeid.model.BMThemePathToId;
 import com.brandmaker.webservices.mediapool.LanguageItem;
 import com.brandmaker.webservices.mediapool.ThemeDto;
@@ -18,17 +19,17 @@ import java.util.List;
 @Component
 public class MALToBMTransformer {
 
-    private final MALAssetStructures assetStructures;
-
     private final BMThemePathToId bmThemePathToId;
 
     private final AppConfig appConfig;
 
-    public MALToBMTransformer(final MALAssetStructures assetStructures,
-                              final BMThemePathToId bmThemePathToId, AppConfig appConfig) {
-        this.assetStructures = assetStructures;
+    private final StructuresService structuresService;
+
+    public MALToBMTransformer(final BMThemePathToId bmThemePathToId, AppConfig appConfig,
+                              final StructuresService structuresService) {
         this.bmThemePathToId = bmThemePathToId;
         this.appConfig = appConfig;
+        this.structuresService = structuresService;
     }
 
     public UploadMetadataArgument transformToUploadMetadataArgument(final MALGetAsset malGetAsset) {
@@ -48,25 +49,25 @@ public class MALToBMTransformer {
         themeDto.setName("Implementation/Pictures");
         uploadMetadataArgument.getAssociations().add(themeDto);
 
-        String assetType = assetStructures.getAssetTypes().get(malGetAsset.getAssetTypeId());
+        String assetType = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getAssetTypeId(), StructureType.ASSETTYPE).getStructureName();
         setAssociation(uploadMetadataArgument, "Asset Types/", assetType, StringUtils.isNotBlank(assetType));
 
-        String brandId = assetStructures.getBrands().get(malGetAsset.getBrandId());
+        String brandId = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getBrandId(), StructureType.BRAND).getStructureName();
         setAssociation(uploadMetadataArgument, "Brands/", brandId, StringUtils.isNotEmpty(brandId));
 
-        String collectionId = assetStructures.getCollections().get(malGetAsset.getCollectionId());
+        String collectionId = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getCollectionId(), StructureType.COLLECTION).getStructureName();
         setAssociation(uploadMetadataArgument, "Collections/", collectionId, StringUtils.isNotEmpty(collectionId));
 
-        String destinationId = assetStructures.getDestinations().get(malGetAsset.getDestionationId());
+        String destinationId = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getDestionationId(), StructureType.DESTINATION).getStructureName();
         if (StringUtils.isNotEmpty(destinationId)) {
             bmThemePathToId.addThemePath("Destinations/" + destinationId);
             setAssociation(uploadMetadataArgument, "Destinations/", destinationId, true);
         }
 
-        String subjectId = assetStructures.getSubjects().get(malGetAsset.getSubjectId());
+        String subjectId = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getSubjectId(), StructureType.SUBJECT).getStructureName();
         setAssociation(uploadMetadataArgument, "Subjects/", subjectId, StringUtils.isNotEmpty(subjectId));
 
-        String colorId = assetStructures.getColors().get(malGetAsset.getColorId());
+        String colorId = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getColorId(), StructureType.COLOR).getStructureName();
         if (StringUtils.isNotEmpty(colorId)) {
             setAssociation(uploadMetadataArgument, "Colors/", colorId, true);
             setFreeFieldValue(uploadMetadataArgument.getFreeField10(), "MAL_" + colorId);

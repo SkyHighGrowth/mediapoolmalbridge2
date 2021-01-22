@@ -4,14 +4,17 @@ import com.brandmaker.mediapoolmalbridge.clients.mal.brands.client.MALGetBrandsC
 import com.brandmaker.mediapoolmalbridge.clients.mal.brands.client.model.Brand;
 import com.brandmaker.mediapoolmalbridge.clients.mal.brands.client.model.MALGetBrandsResponse;
 import com.brandmaker.mediapoolmalbridge.clients.rest.RestResponse;
-import com.brandmaker.mediapoolmalbridge.model.mal.MALAssetStructures;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.ReportsEntity;
+import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.StructuresEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportTo;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportType;
+import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.StructureType;
+import com.brandmaker.mediapoolmalbridge.service.StructuresService;
 import com.brandmaker.mediapoolmalbridge.service.mal.AbstractMALUniqueThreadService;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Service that downloads asset brands form MAL server
@@ -21,12 +24,12 @@ public class MALGetAssetBrandUniqueThreadService extends AbstractMALUniqueThread
 
     private final MALGetBrandsClient getBrandsClient;
 
-    private final MALAssetStructures assetStructures;
+    private final StructuresService structuresService;
 
     public MALGetAssetBrandUniqueThreadService(final MALGetBrandsClient getBrandsClient,
-                                               final MALAssetStructures assetStructures) {
+                                               final StructuresService structuresService) {
         this.getBrandsClient = getBrandsClient;
-        this.assetStructures = assetStructures;
+        this.structuresService = structuresService;
     }
 
     @Override
@@ -36,15 +39,20 @@ public class MALGetAssetBrandUniqueThreadService extends AbstractMALUniqueThread
                 response.getResponse() == null ||
                 response.getResponse().getBrands() == null) {
             final String message = String.format("Invalid Brands response [%s]", GSON.toJson(response));
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, null, null, null );
-            reportsRepository.save( reportsEntity );
+            final ReportsEntity reportsEntity = new ReportsEntity(ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, null, null, null);
+            reportsRepository.save(reportsEntity);
             logger.error(message);
             return;
         }
 
-        assetStructures.setBrands(response.getResponse()
-                .getBrands()
-                .stream()
-                .collect(Collectors.toMap(Brand::getBrandId, Brand::getName)));
+        List<StructuresEntity> structures = new ArrayList<>();
+        for (Brand brand : response.getResponse().getBrands()) {
+            StructuresEntity entity = new StructuresEntity();
+            entity.setStructureId(brand.getBrandId());
+            entity.setStructureName(brand.getName());
+            entity.setStructureType(StructureType.BRAND);
+            structures.add(entity);
+        }
+        structuresService.saveStructures(structures);
     }
 }
