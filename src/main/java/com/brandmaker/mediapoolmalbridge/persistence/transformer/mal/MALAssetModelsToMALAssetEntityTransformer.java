@@ -3,9 +3,10 @@ package com.brandmaker.mediapoolmalbridge.persistence.transformer.mal;
 import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.model.MALGetAsset;
 import com.brandmaker.mediapoolmalbridge.clients.mal.model.MALAssetType;
 import com.brandmaker.mediapoolmalbridge.constants.Constants;
-import com.brandmaker.mediapoolmalbridge.model.mal.MALAssetStructures;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetJsonedValuesEntity;
+import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.StructureType;
+import com.brandmaker.mediapoolmalbridge.service.StructuresService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -22,14 +23,14 @@ import java.time.Instant;
 @Component
 public class MALAssetModelsToMALAssetEntityTransformer {
 
-    private final MALAssetStructures assetStructures;
-
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public MALAssetModelsToMALAssetEntityTransformer(final MALAssetStructures assetStructures) {
-        this.assetStructures = assetStructures;
+    private final StructuresService structuresService;
+
+    public MALAssetModelsToMALAssetEntityTransformer(final StructuresService structuresService) {
+        this.structuresService = structuresService;
     }
 
     /**
@@ -157,7 +158,7 @@ public class MALAssetModelsToMALAssetEntityTransformer {
      * @return
      */
     private String getFileExtension(final String fileTypeId) {
-        String fileExtension = assetStructures.getFileTypes().get(fileTypeId);
+        String fileExtension = structuresService.getStructureByStructureIdAndStructureType(fileTypeId, StructureType.FILETYPE).getStructureName();
         if (!StringUtils.isBlank(fileExtension) &&
                 !"mixed".equals(fileExtension) &&
                 !"none".equals(fileExtension)) {

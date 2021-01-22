@@ -8,10 +8,12 @@ import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.AssetEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.ReportsEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportTo;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportType;
+import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.StructureType;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.asset.TransferringAssetStatus;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.property.MALPropertyStatus;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.mal.MALPropertyEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.repository.mal.MALPropertyRepository;
+import com.brandmaker.mediapoolmalbridge.service.StructuresService;
 import com.brandmaker.mediapoolmalbridge.service.brandmaker.AssetRestService;
 import com.brandmaker.mediapoolmalbridge.service.brandmaker.ThemeRestService;
 import com.brandmaker.mediapoolmalbridge.service.bridge.AbstractBridgeUniqueThreadService;
@@ -60,15 +62,19 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
     private final ThemeRestService themeRestService;
 
+    private final StructuresService structuresService;
+
 
     public BridgeCreateExcelXSSFFileUniqueThreadService(final MALAssetStructures assetStructures,
                                                         MALPropertyRepository malPropertyRepository,
                                                         AssetRestService assetRestService,
-                                                        ThemeRestService themeRestService) {
+                                                        ThemeRestService themeRestService,
+                                                        final StructuresService structuresService) {
         this.assetStructures = assetStructures;
         this.malPropertyRepository = malPropertyRepository;
         this.assetRestService = assetRestService;
         this.themeRestService = themeRestService;
+        this.structuresService = structuresService;
     }
 
 
@@ -151,7 +157,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         for (PropertyVariantFields propertyVariantField : PropertyVariantFields.values()) {
             if (!propertyVariantField.getColorId().equals("")) {
                 String colorId = propertyVariantField.getColorId();
-                String colorName = assetStructures.getColors().get(colorId);
+                String colorName = structuresService.getStructureByStructureIdAndStructureType(colorId, StructureType.COLOR).getStructureName();
                 String bmColorThemeId = themeRestService.getColorIdByName(colorName);
                 if (bmColorThemeId != null) {
                     List<BMAsset> assetIdsByThemeIdAndPropertyId = assetRestService.getAssetIdsByThemeIdAndPropertyId(bmColorThemeId);

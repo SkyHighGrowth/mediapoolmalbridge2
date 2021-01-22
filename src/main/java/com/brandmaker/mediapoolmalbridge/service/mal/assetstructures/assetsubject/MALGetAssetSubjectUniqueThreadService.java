@@ -4,14 +4,17 @@ import com.brandmaker.mediapoolmalbridge.clients.mal.subjects.client.MALGetSubje
 import com.brandmaker.mediapoolmalbridge.clients.mal.subjects.client.model.MALGetSubjectsResponse;
 import com.brandmaker.mediapoolmalbridge.clients.mal.subjects.client.model.Subject;
 import com.brandmaker.mediapoolmalbridge.clients.rest.RestResponse;
-import com.brandmaker.mediapoolmalbridge.model.mal.MALAssetStructures;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.ReportsEntity;
+import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.StructuresEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportTo;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.ReportType;
+import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.StructureType;
+import com.brandmaker.mediapoolmalbridge.service.StructuresService;
 import com.brandmaker.mediapoolmalbridge.service.mal.AbstractMALUniqueThreadService;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Service that collects subjects from MAL server
@@ -20,13 +23,12 @@ import java.util.stream.Collectors;
 public class MALGetAssetSubjectUniqueThreadService extends AbstractMALUniqueThreadService {
 
     private final MALGetSubjectsClient getSubjectsClient;
-
-    private final MALAssetStructures assetStructures;
+    private final StructuresService structuresService;
 
     public MALGetAssetSubjectUniqueThreadService(final MALGetSubjectsClient getSubjectsClient,
-                                                 final MALAssetStructures assetStructures) {
+                                                 final StructuresService structuresService) {
         this.getSubjectsClient = getSubjectsClient;
-        this.assetStructures = assetStructures;
+        this.structuresService = structuresService;
     }
 
     @Override
@@ -36,15 +38,19 @@ public class MALGetAssetSubjectUniqueThreadService extends AbstractMALUniqueThre
                 response.getResponse() == null ||
                 response.getResponse().getSubjects() == null) {
             final String message = String.format("Invalid Subjects response [%s]", GSON.toJson(response));
-            final ReportsEntity reportsEntity = new ReportsEntity( ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, null, null, null );
-            reportsRepository.save( reportsEntity );
+            final ReportsEntity reportsEntity = new ReportsEntity(ReportType.ERROR, getClass().getName(), null, message, ReportTo.MAL, null, null, null);
+            reportsRepository.save(reportsEntity);
             logger.error(message);
             return;
         }
-
-        assetStructures.setSubjects(response.getResponse()
-                .getSubjects()
-                .stream()
-                .collect(Collectors.toMap(Subject::getSubjectId, Subject::getName)));
+        List<StructuresEntity> structures = new ArrayList<>();
+        for (Subject subject : response.getResponse().getSubjects()) {
+            StructuresEntity entity = new StructuresEntity();
+            entity.setStructureId(subject.getSubjectId());
+            entity.setStructureName(subject.getName());
+            entity.setStructureType(StructureType.SUBJECT);
+            structures.add(entity);
+        }
+        structuresService.saveStructures(structures);
     }
 }

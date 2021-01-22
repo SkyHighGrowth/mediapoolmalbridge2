@@ -1,6 +1,7 @@
 package com.brandmaker.mediapoolmalbridge.service.mal.assetstructures;
 
 import com.brandmaker.mediapoolmalbridge.service.AbstractSchedulerService;
+import com.brandmaker.mediapoolmalbridge.service.StructuresService;
 import com.brandmaker.mediapoolmalbridge.service.mal.assetstructures.assetbrand.MALGetAssetBrandUniqueThreadService;
 import com.brandmaker.mediapoolmalbridge.service.mal.assetstructures.assetcollection.MALGetAssetCollectionUniqueThreadService;
 import com.brandmaker.mediapoolmalbridge.service.mal.assetstructures.assetcolor.MALGetAssetColorUniqueThreadService;
@@ -25,6 +26,7 @@ public class MALGetAssetStructureSchedulerService extends AbstractSchedulerServi
     private final MALGetAssetSubjectUniqueThreadService malGetAssetSubjectUniqueThreadService;
     private final MALGetAssetTypeUniqueThreadService malGetAssetTypeUniqueThreadService;
     private final MALGetPropertyTypesUniqueThreadService malGetPropertyTypesUniqueThreadService;
+    private final StructuresService structuresService;
 
     public MALGetAssetStructureSchedulerService(final MALGetAssetBrandUniqueThreadService malGetAssetBrandUniqueThreadService,
                                                 final MALGetAssetCollectionUniqueThreadService malGetAssetCollectionUniqueThreadService,
@@ -33,7 +35,8 @@ public class MALGetAssetStructureSchedulerService extends AbstractSchedulerServi
                                                 final MALGetAssetFileTypesUniqueThreadService malGetAssetFileTypesUniqueThreadService,
                                                 final MALGetAssetSubjectUniqueThreadService malGetAssetSubjectUniqueThreadService,
                                                 final MALGetAssetTypeUniqueThreadService malGetAssetTypeUniqueThreadService,
-                                                final MALGetPropertyTypesUniqueThreadService malGetPropertyTypesUniqueThreadService) {
+                                                final MALGetPropertyTypesUniqueThreadService malGetPropertyTypesUniqueThreadService,
+                                                final StructuresService structuresService) {
         this.malGetAssetBrandUniqueThreadService = malGetAssetBrandUniqueThreadService;
         this.malGetAssetCollectionUniqueThreadService = malGetAssetCollectionUniqueThreadService;
         this.malGetAssetColorUniqueThreadService = malGetAssetColorUniqueThreadService;
@@ -42,11 +45,11 @@ public class MALGetAssetStructureSchedulerService extends AbstractSchedulerServi
         this.malGetAssetSubjectUniqueThreadService = malGetAssetSubjectUniqueThreadService;
         this.malGetAssetTypeUniqueThreadService = malGetAssetTypeUniqueThreadService;
         this.malGetPropertyTypesUniqueThreadService = malGetPropertyTypesUniqueThreadService;
+        this.structuresService = structuresService;
     }
 
     @PostConstruct
     public void init() {
-        scheduled();
         String malAssetStructureCronExpression = appConfig.getMalAssetStructureCronExpression();
         if (malAssetStructureCronExpression != null) {
             jobSchedule(new CronTrigger(malAssetStructureCronExpression));
@@ -55,6 +58,7 @@ public class MALGetAssetStructureSchedulerService extends AbstractSchedulerServi
 
     @Override
     public void scheduled() {
+        structuresService.deleteAllStructures();
         logger.info("Downloading asset brands form MAL started");
         malGetAssetBrandUniqueThreadService.start();
         logger.info("Downloading asset brands form MAL ended");
