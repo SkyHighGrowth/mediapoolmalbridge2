@@ -35,8 +35,6 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
             "order by ae.updated desc")
     List<AssetEntity> findPropertyAssets(final String propertyId, final String assetTypeId, final TransferringAssetStatus transferringAssetStatus);
 
-    List<AssetEntity> findAllByBrandIdAndMalAssetIdAndAssetTypeIdAndTransferringAssetStatus(final String brandId, String malAssetId, final String assetTypeId, final TransferringAssetStatus transferringAssetStatus);
-
     List<AssetEntity> findAllByTransferringAssetStatusAndUpdatedIsAfter(final TransferringAssetStatus transferringAssetStatus, final LocalDateTime updated, final Pageable page);
 
     List<AssetEntity> findAllByTransferringAssetStatusAndBrandIdAndUpdatedIsAfter(final TransferringAssetStatus transferringAssetStatus, final String brandIds, final LocalDateTime updated, final Pageable page);
@@ -72,10 +70,18 @@ public interface AssetRepository extends CrudRepository<AssetEntity, Long> {
             "and ae.bmMd5Hash is not null")
     List<AssetEntity> findAssetEntitiesByCollection(String brandId, String assetTypeId, String collectionId);
 
-    List<AssetEntity> findAllByTransferringAssetStatus(final TransferringAssetStatus status);
-
     long countAllByUpdatedIsAfterAndUpdatedIsBeforeAndTransferringAssetStatus(
             final LocalDateTime from, final LocalDateTime to, final TransferringAssetStatus transferringAssetStatus);
 
     long countAllByTransferringAssetStatus(final TransferringAssetStatus transferringAssetStatus);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value =
+            "DELETE a.*, aa.*, ba.* " +
+            "FROM maltobmbridge.asset a " +
+            "inner join maltobmbridge.asset_jsoned_values as aa on aa.id = a.asset_jsoned_values_id " +
+            "inner join bm_asset ba on a.bm_asset_id = ba.id " +
+            "where a.transferring_status = 'ERROR';")
+    void deleteAssetsWithStatusError();
 }

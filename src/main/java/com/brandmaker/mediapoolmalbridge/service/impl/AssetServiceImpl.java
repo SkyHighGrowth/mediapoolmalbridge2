@@ -65,6 +65,14 @@ public class AssetServiceImpl implements AssetService {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deleteAssetsWithError() {
+        assetRepository.deleteAssetsWithStatusError();
+    }
+
+    /**
      * Method that put value into the map
      *
      * @param map    {@link HashMap}

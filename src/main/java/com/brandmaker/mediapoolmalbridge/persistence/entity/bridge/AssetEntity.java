@@ -17,15 +17,15 @@ import java.time.LocalDateTime;
  * Table where asset entities are stored
  */
 @Entity
-@Table( name = "asset",
-        indexes = { @Index( columnList = "property_id, mal_asset_type, color_id, transferring_status, updated" ),
-                    @Index( columnList = "property_id, mal_asset_type, updated" ),
-                    @Index( columnList = "transferring_status, brand_id, updated" ),
-                    @Index( columnList = "mal_asset_id, mal_asset_type, transferring_status, updated" ),
-                    @Index( columnList = "updated" ),
-                    @Index( columnList = "mal_asset_id, mal_asset_type, updated" ),
-                    @Index( columnList = "mal_asset_id, mal_asset_type" ),
-                    @Index( columnList = "updated, transferring_status" )} )
+@Table(name = "asset",
+        indexes = {@Index(columnList = "property_id, mal_asset_type, color_id, transferring_status, updated"),
+                @Index(columnList = "property_id, mal_asset_type, updated"),
+                @Index(columnList = "transferring_status, brand_id, updated"),
+                @Index(columnList = "mal_asset_id, mal_asset_type, transferring_status, updated"),
+                @Index(columnList = "updated"),
+                @Index(columnList = "mal_asset_id, mal_asset_type, updated"),
+                @Index(columnList = "mal_asset_id, mal_asset_type"),
+                @Index(columnList = "updated, transferring_status")})
 public class AssetEntity extends AbstractEntity {
 
     @Id
@@ -34,8 +34,8 @@ public class AssetEntity extends AbstractEntity {
     @Expose()
     private long id;
 
-    @Column( name = "mal_asset_operation" )
-    @Enumerated( EnumType.STRING )
+    @Column(name = "mal_asset_operation")
+    @Enumerated(EnumType.STRING)
     @Expose()
     private MALAssetOperation malAssetOperation;
 
@@ -44,90 +44,90 @@ public class AssetEntity extends AbstractEntity {
     private String malAssetId;
 
     @Column(name = "mal_asset_type")
-    @Enumerated( EnumType.STRING )
+    @Enumerated(EnumType.STRING)
     @Expose()
     private MALAssetType assetType;
 
-    @ManyToOne
-    @JoinColumn( name = "bm_asset_id", referencedColumnName = "id", nullable = false )
-    @Expose( serialize = false, deserialize = false )
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bm_asset_id", referencedColumnName = "id", nullable = false)
+    @Expose(serialize = false, deserialize = false)
     @JsonIgnore
     private BMAssetIdEntity bmAssetIdEntity;
 
-    @Column( name = "property_id" )
+    @Column(name = "property_id")
     @Expose()
     private String propertyId;
 
-    @Column( name = "marsha_code" )
+    @Column(name = "marsha_code")
     @Expose()
     private String marshaCode;
 
-    @Column( name = "brand_id" )
+    @Column(name = "brand_id")
     @Expose()
     private String brandId;
 
-    @Column( name = "mal_asset_type_id" )
+    @Column(name = "mal_asset_type_id")
     @Expose()
     private String assetTypeId;
 
-    @Column( name = "color_id" )
+    @Column(name = "color_id")
     @Expose()
     private String colorId;
 
-    @Column( name = "caption" )
+    @Column(name = "caption")
     @Expose()
     private String caption;
 
-    @Column( name = "file_name_on_disc" )
+    @Column(name = "file_name_on_disc")
     @Expose()
     private String fileNameOnDisc;
 
-    @Column( name = "file_name_in_mal" )
+    @Column(name = "file_name_in_mal")
     @Expose()
     private String fileNameInMal;
 
-    @Column( name = "url" )
+    @Column(name = "url")
     @Expose()
     private String url;
 
-    @Column( name = "mal_states_repetitions" )
+    @Column(name = "mal_states_repetitions")
     @Expose()
     private int malStatesRepetitions = 0;
 
-    @Column( name = "transferring_status" )
-    @Enumerated( EnumType.STRING )
+    @Column(name = "transferring_status")
+    @Enumerated(EnumType.STRING)
     @Expose()
     private TransferringAssetStatus transferringAssetStatus = TransferringAssetStatus.INVALID;
 
     @CreationTimestamp
-    @Column( name = "created" )
+    @Column(name = "created")
     @Expose()
     private LocalDateTime created;
 
     @UpdateTimestamp
-    @Column( name = "updated" )
+    @Column(name = "updated")
     @Expose()
     private LocalDateTime updated;
 
-    @Column( name = "mal_last_modified" )
+    @Column(name = "mal_last_modified")
     @Expose()
     private String malLastModified;
 
-    @Column( name = "mal_created" )
+    @Column(name = "mal_created")
     @Expose()
     private String malCreated;
 
-    @OneToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "asset_jsoned_values_id", referencedColumnName = "id", nullable = false)
-    @Expose( serialize = false, deserialize = false )
+    @Expose(serialize = false, deserialize = false)
     @JsonIgnore
     private AssetJsonedValuesEntity assetJsonedValuesEntity;
 
-    @Column( name = "mal_md5_hash" )
+    @Column(name = "mal_md5_hash")
     @Expose()
     private String malMd5Hash;
 
-    @Column( name = "bm_md5_hash" )
+    @Column(name = "bm_md5_hash")
     @Expose()
     @JsonIgnore
     private String bmMd5Hash;
@@ -291,7 +291,7 @@ public class AssetEntity extends AbstractEntity {
     }
 
     public void setBmUploadMetadataArgumentJson(String bmUploadMetadataArgumentJson) {
-        assetJsonedValuesEntity.setBmUploadMetadataArgumentJson( bmUploadMetadataArgumentJson );
+        assetJsonedValuesEntity.setBmUploadMetadataArgumentJson(bmUploadMetadataArgumentJson);
     }
 
     public AssetJsonedValuesEntity getAssetJsonedValuesEntity() {
