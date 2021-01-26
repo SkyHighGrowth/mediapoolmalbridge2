@@ -16,4 +16,9 @@ public interface AssetService {
      * @return map with count of all current status
      */
     Map<String, Long> getMapCurrentAssetStatus(LocalDate dateFrom, LocalDate dateTo);
+
+    /**
+     * Method that deletes assets with status Error
+     */
+    void deleteAssetsWithError();
 }

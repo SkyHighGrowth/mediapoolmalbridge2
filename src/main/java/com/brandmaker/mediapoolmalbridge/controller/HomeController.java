@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
@@ -66,6 +67,18 @@ public class HomeController {
     @GetMapping("/downloadFile/{filename}")
     public void export(HttpServletResponse response, @PathVariable String filename) {
         fileService.exportExcelFile(response, filename);
+    }
+
+
+    /**
+     * Remove assets with error
+     *
+     * @return ModelAndView
+     */
+    @GetMapping("/removeAssetsWithError")
+    public ModelAndView removeAssetsWithError() {
+        assetService.deleteAssetsWithError();
+        return new ModelAndView("redirect:/");
     }
 
 }
