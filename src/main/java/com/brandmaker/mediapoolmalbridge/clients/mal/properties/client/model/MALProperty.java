@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
  */
 @JsonPropertyOrder( { "propertyId", "name", "address", "state", "address", "state", "zip",
         "city", "country", "telephone", "url", "vanityUrl", "latitude", "longitude", "brand",
-        "parentBrand", "primaryPropertyImage" })
+        "parentBrand", "primaryPropertyImage", "marsha_code" })
 public class MALProperty {
 
     @SerializedName("property_id")
@@ -44,6 +44,9 @@ public class MALProperty {
 
     @SerializedName("primary_property_image")
     private int primaryPropertyImage;
+
+    @SerializedName("marsha_code")
+    private String marshaCode;
 
 
     public String getPropertyId() {
@@ -164,5 +167,13 @@ public class MALProperty {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public String getMarshaCode() {
+        return marshaCode;
+    }
+
+    public void setMarshaCode(String marshaCode) {
+        this.marshaCode = marshaCode;
     }
 }

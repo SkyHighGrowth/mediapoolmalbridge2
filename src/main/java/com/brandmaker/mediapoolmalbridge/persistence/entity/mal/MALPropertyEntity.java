@@ -99,6 +99,9 @@ public class MALPropertyEntity extends AbstractEntity {
     @UpdateTimestamp
     private LocalDateTime updated;
 
+    @Column(name = "marsha_code")
+    private String marshaCode;
+
     public MALPropertyEntity() {
     }
 
@@ -120,6 +123,7 @@ public class MALPropertyEntity extends AbstractEntity {
         this.primaryPropertyImage = malProperty.getPrimaryPropertyImage();
         this.md5Hash = md5Hash;
         this.malPropertyStatus = malPropertyStatus;
+        this.marshaCode = malProperty.getMarshaCode();
     }
 
     public void update(final MALProperty malProperty, final String md5Hash, final MALPropertyStatus malPropertyStatus ) {
@@ -139,6 +143,7 @@ public class MALPropertyEntity extends AbstractEntity {
         this.primaryPropertyImage = malProperty.getPrimaryPropertyImage();
         this.md5Hash = md5Hash;
         this.malPropertyStatus = malPropertyStatus;
+        this.marshaCode = malProperty.getMarshaCode();
     }
 
     public long getId() {
@@ -307,5 +312,13 @@ public class MALPropertyEntity extends AbstractEntity {
 
     public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
+    }
+
+    public String getMarshaCode() {
+        return marshaCode;
+    }
+
+    public void setMarshaCode(String marshaCode) {
+        this.marshaCode = marshaCode;
     }
 }
