@@ -2,6 +2,7 @@ package com.brandmaker.mediapoolmalbridge.service;
 
 import com.brandmaker.mediapoolmalbridge.config.AppConfig;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.schedule.JobEntity;
+import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.schedule.JobNameEnum;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.schedule.JobState;
 import com.brandmaker.mediapoolmalbridge.persistence.repository.bridge.ReportsRepository;
 import com.brandmaker.mediapoolmalbridge.persistence.repository.bridge.schedule.JobRepository;
@@ -54,16 +55,28 @@ public abstract class AbstractSchedulerService {
 
     protected abstract void scheduled();
 
-    protected void run()
-    {
-        logger.debug( "Job started" );
-        storeJobEntity( new JobEntity( JobState.JOB_START, getClass().getName(), Thread.currentThread().getName(), taskSchedulerWrapper.getTaskScheduler().getActiveCount(), taskSchedulerWrapper.getTaskScheduler().getScheduledThreadPoolExecutor().getQueue().size() ) );
+    protected void run() {
+        logger.debug("Job started");
 
-        if( isRunScheduler() ) {
+        String clazz = getClass().getName();
+        String name = Thread.currentThread().getName();
+        String jobName = JobNameEnum.getJobName(getClass().getSimpleName());
+
+        JobEntity databaseJobEntity = storeJobEntity(new JobEntity(JobState.JOB_START, clazz, jobName, name,
+                taskSchedulerWrapper.getTaskScheduler().getActiveCount(),
+                taskSchedulerWrapper.getTaskScheduler().getScheduledThreadPoolExecutor().getQueue().size()));
+
+        if (isRunScheduler()) {
             scheduled();
         }
 
-        storeJobEntity(new JobEntity(JobState.JOB_END, getClass().getName(), Thread.currentThread().getName(), taskSchedulerWrapper.getTaskScheduler().getActiveCount(), taskSchedulerWrapper.getTaskScheduler().getScheduledThreadPoolExecutor().getQueue().size() ) );
+        databaseJobEntity.setJobState(JobState.JOB_END);
+        databaseJobEntity.setTaskActiveCount(taskSchedulerWrapper.getTaskScheduler().getActiveCount());
+        databaseJobEntity.setTaskQueueSize(taskSchedulerWrapper.getTaskScheduler().getScheduledThreadPoolExecutor().getQueue().size());
+        databaseJobEntity.setEndDate(LocalDateTime.now());
+
+        storeJobEntity(databaseJobEntity);
+
         logger.debug("Job finished");
     }
 
@@ -80,9 +93,8 @@ public abstract class AbstractSchedulerService {
     }
 
     @Transactional
-    public void storeJobEntity( final JobEntity jobEntity )
-    {
-        jobRepository.save( jobEntity );
+    public JobEntity storeJobEntity(final JobEntity jobEntity) {
+        return jobRepository.save(jobEntity);
     }
 
     protected LocalDateTime getTodayMidnight() {

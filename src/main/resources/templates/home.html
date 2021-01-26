@@ -67,6 +67,10 @@
                         <a class="nav-link" href="#folder-size-overview" aria-selected="false" role="tab"
                            aria-controls="folder-size-overview">Image folder size</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#jobs-overview" aria-selected="false" role="tab"
+                           aria-controls="jobs-overview">Running jobs</a>
+                    </li>
                 </ul>
             </div>
             <div class="card-body">
@@ -127,6 +131,29 @@
                                 </li>
                             </ul>
 
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="jobs-overview" role="tabpanel"
+                         aria-labelledby="jobs-overview-tab">
+                        <div>
+                                <table class="table">
+                                    <thead>
+                                    <tr class="table-success">
+                                        <th>Job name</th>
+                                        <th>Last scheduled date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="job : ${currentJobs}">
+                                        <td th:text="${job.jobName}"></td>
+                                        <td th:text="${job.created}"></td>
+                                    </tr>
+                                    <tr th:if="${currentJobs==null or currentJobs.isEmpty()}">
+                                        <td colspan="2">No running jobs at the moment.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                         </div>
                     </div>
                 </div>
