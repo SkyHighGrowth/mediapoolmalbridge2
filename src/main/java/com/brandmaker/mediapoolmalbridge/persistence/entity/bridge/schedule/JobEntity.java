@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
  * Job entity table where scheduler services logs their execution
  */
 @Entity
-@Table( name = "scheduled_jobs",
-        indexes  = @Index( columnList = "created" ) )
+@Table(name = "scheduled_jobs",
+        indexes = @Index(columnList = "created"))
 public class JobEntity {
 
     @Id
@@ -25,6 +25,9 @@ public class JobEntity {
     @Column(name = "clazz")
     private String clazz;
 
+    @Column(name = "job_name")
+    private String jobName;
+
     @CreationTimestamp
     private LocalDateTime created;
 
@@ -37,11 +40,16 @@ public class JobEntity {
     @Column(name = "task_queue_size")
     private int taskQueueSize;
 
-    public JobEntity() {}
+    @Column(name = "end_date")
+    private LocalDateTime endDate;
 
-    public JobEntity(final JobState jobState, final String clazz, final String threadId, final int taskActiveCount, final int taskQueueSize) {
+    public JobEntity() {
+    }
+
+    public JobEntity(final JobState jobState, final String clazz, String jobName, final String threadId, final int taskActiveCount, final int taskQueueSize) {
         this.jobState = jobState;
         this.clazz = clazz;
+        this.jobName = jobName;
         this.threadId = threadId;
         this.taskActiveCount = taskActiveCount;
         this.taskQueueSize = taskQueueSize;
@@ -69,6 +77,14 @@ public class JobEntity {
 
     public void setClazz(String clazz) {
         this.clazz = clazz;
+    }
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
     }
 
     public LocalDateTime getCreated() {
@@ -101,5 +117,13 @@ public class JobEntity {
 
     public void setTaskQueueSize(int taskQueueSize) {
         this.taskQueueSize = taskQueueSize;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
     }
 }

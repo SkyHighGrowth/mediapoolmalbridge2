@@ -1,5 +1,6 @@
 package com.brandmaker.mediapoolmalbridge.controller;
 
+import com.brandmaker.mediapoolmalbridge.persistence.repository.bridge.schedule.JobRepository;
 import com.brandmaker.mediapoolmalbridge.service.AssetService;
 import com.brandmaker.mediapoolmalbridge.service.FileService;
 import org.springframework.boot.info.BuildProperties;
@@ -26,10 +27,14 @@ public class HomeController {
 
     private final FileService fileService;
 
-    public HomeController(BuildProperties buildProperties, AssetService assetService, FileService fileService) {
+    private final JobRepository jobRepository;
+
+
+    public HomeController(BuildProperties buildProperties, AssetService assetService, FileService fileService, JobRepository jobRepository) {
         this.buildProperties = buildProperties;
         this.assetService = assetService;
         this.fileService = fileService;
+        this.jobRepository = jobRepository;
     }
 
     /**
@@ -48,6 +53,7 @@ public class HomeController {
         model.addAttribute("dateTo", dateTo);
         model.addAttribute("files", fileService.listFiles());
         model.addAttribute("folderSize", String.format("%.2f", fileService.getCurrentDownloadFolderSize()));
+        model.addAttribute("currentJobs", jobRepository.findAllRunningJobs(LocalDate.now().atTime(0, 0)));
         return HOME_TEMPLATE;
 
     }
