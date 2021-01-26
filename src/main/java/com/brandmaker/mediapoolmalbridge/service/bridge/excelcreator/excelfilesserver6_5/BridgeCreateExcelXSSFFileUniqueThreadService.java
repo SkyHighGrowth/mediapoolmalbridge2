@@ -258,7 +258,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                                     "Image",
                                     getPropertyMedia(assetEntity.getBmAssetId()),
                                     MEDIA));
-                            addRow(sheet, propertyVariant.getStructureName(), "", assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
+                            addRow(sheet, propertyVariant.getStructureName(), "", assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId(), assetEntity.getMarshaCode());
                             hasRows = true;
                         }
                         structureNameAlreadyAdded.add(propertyVariant.getStructureName());
@@ -289,7 +289,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                             "Floorplan" + order,
                             getPropertyMedia(assetEntity.getBmAssetId()),
                             MEDIA));
-                    addRow(sheet, propertyVariant.getSubNameFloorPlans(), malPropertyEntity.getPropertyId(), assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
+                    addRow(sheet, propertyVariant.getSubNameFloorPlans(), malPropertyEntity.getPropertyId(), assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId(), assetEntity.getMarshaCode());
                 }
                 ++order;
             }
@@ -312,7 +312,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                             "Map" + order,
                             getPropertyMedia(assetEntity.getBmAssetId()),
                             MEDIA));
-                    addRow(sheet, propertyVariant.getSubNameMaps(), malPropertyEntity.getPropertyId(), assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
+                    addRow(sheet, propertyVariant.getSubNameMaps(), malPropertyEntity.getPropertyId(), assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId(), assetEntity.getMarshaCode());
                 }
                 ++order;
             }
@@ -334,13 +334,13 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                 if (StringUtils.isBlank(structureName)) {
                     structureName = propertyVariant.getStructureName();
                 }
-                addRow(sheet, structureName, malPropertyEntity.getPropertyId(), assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId());
+                addRow(sheet, structureName, malPropertyEntity.getPropertyId(), assetEntity.getCaption(), gsonWithNulls.toJson(attributes), assetEntity.getMalAssetId(), assetEntity.getMarshaCode());
             }
         }
     }
 
     private void addRow(final Sheet sheet, final String subName, final String propertyId, String name,
-                        final String jsonAttributes, final String malAssetId) {
+                        final String jsonAttributes, final String malAssetId, final String marshaCode) {
         Row row = sheet.createRow(rowIndex++);
         int colIndex = 0;
 
@@ -349,7 +349,11 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         if (StringUtils.isNotBlank(malAssetId)) {
             row.createCell(colIndex++).setCellValue(subName);
             row.createCell(colIndex++).setCellValue(malAssetId);
-            row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING, malAssetId + " - " + name));
+            if (marshaCode != null) {
+                row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING, malAssetId + " - " + marshaCode + " - " + name));
+            } else {
+                row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING, malAssetId + " - " + name));
+            }
             row.createCell(colIndex++).setCellValue(propertyId);
             row.createCell(colIndex++).setCellValue("EDIT_AND_ADD");
             row.createCell(colIndex++).setCellValue(malAssetId);
@@ -357,7 +361,11 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         } else {
             row.createCell(colIndex++).setCellValue(subName);
             row.createCell(colIndex++).setCellValue(propertyId);
-            row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING, propertyId + " - " + name));
+            if (marshaCode != null) {
+                row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING, propertyId + " - " + marshaCode + " - " + name));
+            } else {
+                row.createCell(colIndex++).setCellValue(String.format(DEFAULT_STRING, propertyId + " - " + name));
+            }
             row.createCell(colIndex++).setCellValue("");
             row.createCell(colIndex++).setCellValue("EDIT_AND_ADD");
             row.createCell(colIndex++).setCellValue(propertyId);
@@ -369,7 +377,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                              final MALPropertyEntity malPropertyEntity, final String[] combinedAddressFields, Map<String, List<BMAsset>> colorsMap) {
         final List<String> propertyVariantFields = Arrays.asList(propertyVariant.getFieldsArray());
         String jsonAttributes = getJsonAttributes(malPropertyEntity, combinedAddressFields, propertyVariantFields, false, colorsMap);
-        addRow(sheet, propertyVariant.getStructureName(), malPropertyEntity.getPropertyId(), malPropertyEntity.getName(), jsonAttributes, null);
+        addRow(sheet, propertyVariant.getStructureName(), malPropertyEntity.getPropertyId(), malPropertyEntity.getName(), jsonAttributes, null, malPropertyEntity.getMarshaCode());
     }
 
     public String getJsonAttributes(MALPropertyEntity malPropertyEntity, String[] combinedAddressFields,
