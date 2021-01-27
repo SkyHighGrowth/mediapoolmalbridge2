@@ -420,6 +420,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_PMS, isCustomStructure, colorsMap);
         addLogoAttribute(malPropertyEntity, attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_LOGO_US_NAVY, isCustomStructure, colorsMap);
 
+        addAttribute(attributes, propertyVariantFields, PropertyVariantFields.MARSHA_CODE, TEXT, malPropertyEntity != null ? malPropertyEntity.getMarshaCode() : "", isCustomStructure);
         addAttribute(attributes, propertyVariantFields, PropertyVariantFields.AFFILIATE_NAME, TEXT, malPropertyEntity != null ? malPropertyEntity.getName() : "", isCustomStructure);
         addAttribute(attributes, propertyVariantFields, PropertyVariantFields.AFFILIATES_CODE, TEXT, malPropertyEntity != null ? malPropertyEntity.getPropertyId() : "", isCustomStructure);
         addAttribute(attributes, propertyVariantFields, PropertyVariantFields.PROPERTY_STATE, TEXT, malPropertyEntity != null ? malPropertyEntity.getState() : "", isCustomStructure);
