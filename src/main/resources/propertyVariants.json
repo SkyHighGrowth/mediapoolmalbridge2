@@ -13,7 +13,7 @@
     "addressField02" : "<div class>\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color>\"\" data-bullet-symbol>\"\" data-class-old>\"Address_1\" data-quark-style>\"Address 1\" ext:qtip>\"Address 1\" title>\"Address 1\"/><span class>\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old>\"Bold\" data-quark-text-style>\"Bold\" ext:qtip>\"Bold\" title>\"Bold\"/>{AFFILIATE_NAME}<br //>{ADDRESS}, {CITY}, {PropertyState} {ZIP}</span/></div/>",
     "addressField03" : "<div/>\r\n<div class>\"stylebc8e96d9c7afda5f01ffe44f7459e368\" data-bullet-color>\"\" data-bullet-symbol>\"\" data-class-old>\"Address_1_Big\" data-quark-style>\"Address 1 Big\" ext:qtip>\"Address 1 Big\" title>\"Address 1 Big\"/>{AFFILIATE_NAME}<br //>\r\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div/>\r\n</div/>",
     "addressField04" : "<div class>\"stylebc8e96d9c7afda5f01ffe44f7459e368\" data-bullet-color>\"\" data-bullet-symbol>\"\" data-class-old>\"Address_1_Big\" data-quark-style>\"Address 1 Big\" ext:qtip>\"Address 1 Big\" title>\"Address 1 Big\"/>{AFFILIATE_NAME}</div/>\r\n\r\n<div class>\"stylee556ef31c1e0062389356069dbb8d77a\" data-bullet-color>\"\" data-bullet-symbol>\"\" data-class-old>\"Address_2_Big\" data-quark-style>\"Address 2 Big\" ext:qtip>\"Address 2 Big\" title>\"Address 2 Big\"/>{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div/>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "2" : {
     "id" : "2",
@@ -26,7 +26,7 @@
     "subNameFloorPlans" : "AFFILIATES_V002_Aloft_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{AFFILIATE_NAME}<br/></div><div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{CITY}, {PropertyState},&nbsp;{COUNTRY}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "3" : {
     "id" : "3",
@@ -39,7 +39,7 @@
     "subNameFloorPlans" : "AFFILIATES_V003_Aloft_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\"/>{AFFILIATE_NAME}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\"data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{ADDRESS}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\"data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{CITY}, {PropertyState} {ZIP}<br/></div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "4" : {
     "id" : "4",
@@ -51,7 +51,7 @@
     "subNameFloorPlans" : "AFFILIATES_V004_Element_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{AFFILIATE_NAME},</span> {ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "5" : {
     "id" : "5",
@@ -64,7 +64,7 @@
     "subNameFloorPlans" : "AFFILIATES_V005_Element_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{AFFILIATE_NAME}</span><br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{ADDRESS}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{CITY}, {PropertyState} {ZIP}<br/></div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "6" : {
     "id" : "6",
@@ -77,7 +77,7 @@
     "subNameFloorPlans" : "AFFILIATES_V006_Four_Points_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{AFFILIATE_NAME}</div><div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{ADDRESS}<br/>{CITY}, {PropertyState} {ZIP}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "7" : {
     "id" : "7",
@@ -90,7 +90,7 @@
     "subNameFloorPlans" : "AFFILIATES_V007_Element_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{AFFILIATE_NAME}</div><div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{ADDRESS}, {CITY}, {PropertyState}<br/></div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "8" : {
     "id" : "8",
@@ -103,7 +103,7 @@
     "subNameFloorPlans" : "AFFILIATES_V008_Element_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "{ADDRESS}    {CITY}, {PropertyState} {ZIP}",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "9" : {
     "id" : "9",
@@ -120,7 +120,7 @@
     "addressField03" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{AFFILIATE_NAME}<br/>\r\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</span></div>",
     "addressField04" : "<div/>\r\n<div class=\"stylebc8e96d9c7afda5f01ffe44f7459e368\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1_Big\" data-quark-style=\"Address 1 Big\" ext:qtip=\"Address 1 Big\" title=\"Address 1 Big\">{AFFILIATE_NAME}<br/>\r\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>\r\n</div>",
     "addressField05" : "<div class=\"stylebc8e96d9c7afda5f01ffe44f7459e368\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1_Big\" data-quark-style=\"Address 1 Big\" ext:qtip=\"Address 1 Big\" title=\"Address 1 Big\">{AFFILIATE_NAME}</div>\r\n\r\n<div class=\"stylee556ef31c1e0062389356069dbb8d77a\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2_Big\" data-quark-style=\"Address 2 Big\" ext:qtip=\"Address 2 Big\" title=\"Address 2 Big\">{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "10" : {
     "id" : "10",
@@ -136,7 +136,7 @@
     "addressField02" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{AFFILIATE_NAME}<br/>\r\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</span></div>",
     "addressField03" : "<div><div class=\"stylebc8e96d9c7afda5f01ffe44f7459e368\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1_Big\" data-quark-style=\"Address 1 Big\" ext:qtip=\"Address 1 Big\" title=\"Address 1 Big\">{AFFILIATE_NAME}<br/>\r\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>\r\n</div>",
     "addressField04" : "<div class=\"stylebc8e96d9c7afda5f01ffe44f7459e368\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1_Big\" data-quark-style=\"Address 1 Big\" ext:qtip=\"Address 1 Big\" title=\"Address 1 Big\">{AFFILIATE_NAME}</div>\r\n\r\n<div class=\"stylee556ef31c1e0062389356069dbb8d77a\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2_Big\" data-quark-style=\"Address 2 Big\" ext:qtip=\"Address 2 Big\" title=\"Address 2 Big\">{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "11" : {
     "id" : "11",
@@ -152,7 +152,7 @@
     "addressField02" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{AFFILIATE_NAME}<br/>\r\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</span></div>",
     "addressField03" : "<div><div class=\"stylebc8e96d9c7afda5f01ffe44f7459e368\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1_Big\" data-quark-style=\"Address 1 Big\" ext:qtip=\"Address 1 Big\" title=\"Address 1 Big\">{AFFILIATE_NAME}<br/>\r\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>\r\n</div>",
     "addressField04" : "<div class=\"stylebc8e96d9c7afda5f01ffe44f7459e368\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1_Big\" data-quark-style=\"Address 1 Big\" ext:qtip=\"Address 1 Big\" title=\"Address 1 Big\">{AFFILIATE_NAME}</div>\r\n\r\n<div class=\"stylee556ef31c1e0062389356069dbb8d77a\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2_Big\" data-quark-style=\"Address 2 Big\" ext:qtip=\"Address 2 Big\" title=\"Address 2 Big\">{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,CombinedAddress,PropertyLogoSheratonBlack,PropertyLogoSheratonDusk,PropertyLogoSheratonGraphiteCodedCMYK,PropertyLogoSheratonGraphiteCodedPMS,PropertyLogoSheratonGraphiteRGB,PropertyLogoSheratonGraphiteUncoatedCMYK,PropertyLogoSheratonGraphiteUncoatedPMS,PropertyLogoSheratonIvory,PropertyLogoSheratonKnockout,PropertyLogoSheratonLogoSpecs,PropertyLogoSheratonOysterCoatedCMYK,PropertyLogoSheratonOysterCoatedPMS,PropertyLogoSheratonOysterRGB,PropertyLogoSheratonOysterUncoatedCMYK,PropertyLogoSheratonOysterUncoatedPMS,PropertyLogoSheratonResortFrenchGrayCoatedCMYK,PropertyLogoSheratonResortFrenchGrayCoatedPMS,PropertyLogoSheratonResortFrenchGrayRGB,PropertyLogoSheratonResortFrenchGrayUncoatedCMYK,PropertyLogoSheratonResortFrenchGrayUncoatedPMS,PropertyLogoSheratonTungstenCoatedCMYK,PropertyLogoSheratonTungstenCoatedPMS,PropertyLogoSheratonTungstenRGB,PropertyLogoSheratonTungstenUncoatedCMYK,PropertyLogoSheratonTungstenUncoatedPMS,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,CombinedAddress,PropertyLogoSheratonBlack,PropertyLogoSheratonDusk,PropertyLogoSheratonGraphiteCodedCMYK,PropertyLogoSheratonGraphiteCodedPMS,PropertyLogoSheratonGraphiteRGB,PropertyLogoSheratonGraphiteUncoatedCMYK,PropertyLogoSheratonGraphiteUncoatedPMS,PropertyLogoSheratonIvory,PropertyLogoSheratonKnockout,PropertyLogoSheratonLogoSpecs,PropertyLogoSheratonOysterCoatedCMYK,PropertyLogoSheratonOysterCoatedPMS,PropertyLogoSheratonOysterRGB,PropertyLogoSheratonOysterUncoatedCMYK,PropertyLogoSheratonOysterUncoatedPMS,PropertyLogoSheratonResortFrenchGrayCoatedCMYK,PropertyLogoSheratonResortFrenchGrayCoatedPMS,PropertyLogoSheratonResortFrenchGrayRGB,PropertyLogoSheratonResortFrenchGrayUncoatedCMYK,PropertyLogoSheratonResortFrenchGrayUncoatedPMS,PropertyLogoSheratonTungstenCoatedCMYK,PropertyLogoSheratonTungstenCoatedPMS,PropertyLogoSheratonTungstenRGB,PropertyLogoSheratonTungstenUncoatedCMYK,PropertyLogoSheratonTungstenUncoatedPMS,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "12" : {
     "id" : "12",
@@ -165,7 +165,7 @@
     "subNameFloorPlans" : "AFFILIATES_V002_Four_Points_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{AFFILIATE_NAME}<br/></div><div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{CITY}, {PropertyState},&nbsp;{COUNTRY}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "13" : {
     "id" : "13",
@@ -181,7 +181,7 @@
     "addressField02" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{AFFILIATE_NAME}<br/>\r\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</span></div>",
     "addressField03" : "<div><div class=\"stylebc8e96d9c7afda5f01ffe44f7459e368\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1_Big\" data-quark-style=\"Address 1 Big\" ext:qtip=\"Address 1 Big\" title=\"Address 1 Big\">{AFFILIATE_NAME}<br/>\r\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>\r\n</div>",
     "addressField04" : "<div class=\"stylebc8e96d9c7afda5f01ffe44f7459e368\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1_Big\" data-quark-style=\"Address 1 Big\" ext:qtip=\"Address 1 Big\" title=\"Address 1 Big\">{AFFILIATE_NAME}</div>\r\n\r\n<div class=\"stylee556ef31c1e0062389356069dbb8d77a\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2_Big\" data-quark-style=\"Address 2 Big\" ext:qtip=\"Address 2 Big\" title=\"Address 2 Big\">{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "14" : {
     "id" : "14",
@@ -194,7 +194,7 @@
     "subNameFloorPlans" : "AFFILIATES_V003_W_Hotels_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{AFFILIATE_NAME}</span><br/>\n{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "15" : {
     "id" : "15",
@@ -207,7 +207,7 @@
     "subNameFloorPlans" : "AFFILIATES_V010_alf_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{AFFILIATE_NAME}</span></div>\r\n<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{ADDRESS}, {CITY}, {PropertyState} {ZIP}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "16" : {
     "id" : "16",
@@ -220,7 +220,7 @@
     "subNameFloorPlans" : "AFFILIATES_V011_mer_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{AFFILIATE_NAME}</div>\r\n<div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{ADDRESS}<br/>\r\n{PropertyState}, {CITY} {ZIP}<br/>\r\n{COUNTRY}<br/>\r\nT {PropertyTelephone}<br/>\r\n{PropertyURL}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "17" : {
     "id" : "17",
@@ -233,7 +233,7 @@
     "subNameFloorPlans" : "AFFILIATES_V012_she_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{AFFILIATE_NAME}</div>\r\n<div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{ADDRESS}<br/>\r\n{CITY} {ZIP}, {COUNTRY}<br/>\r\nT&nbsp;&nbsp;&nbsp;{PropertyTelephone}<br/>\r\n{PropertyURL}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,CombinedAddress,PropertyLogoSheratonBlack,PropertyLogoSheratonDusk,PropertyLogoSheratonGraphiteCodedCMYK,PropertyLogoSheratonGraphiteCodedPMS,PropertyLogoSheratonGraphiteRGB,PropertyLogoSheratonGraphiteUncoatedCMYK,PropertyLogoSheratonGraphiteUncoatedPMS,PropertyLogoSheratonIvory,PropertyLogoSheratonKnockout,PropertyLogoSheratonLogoSpecs,PropertyLogoSheratonOysterCoatedCMYK,PropertyLogoSheratonOysterCoatedPMS,PropertyLogoSheratonOysterRGB,PropertyLogoSheratonOysterUncoatedCMYK,PropertyLogoSheratonOysterUncoatedPMS,PropertyLogoSheratonResortFrenchGrayCoatedCMYK,PropertyLogoSheratonResortFrenchGrayCoatedPMS,PropertyLogoSheratonResortFrenchGrayRGB,PropertyLogoSheratonResortFrenchGrayUncoatedCMYK,PropertyLogoSheratonResortFrenchGrayUncoatedPMS,PropertyLogoSheratonTungstenCoatedCMYK,PropertyLogoSheratonTungstenCoatedPMS,PropertyLogoSheratonTungstenRGB,PropertyLogoSheratonTungstenUncoatedCMYK,PropertyLogoSheratonTungstenUncoatedPMS,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,CombinedAddress,PropertyLogoSheratonBlack,PropertyLogoSheratonDusk,PropertyLogoSheratonGraphiteCodedCMYK,PropertyLogoSheratonGraphiteCodedPMS,PropertyLogoSheratonGraphiteRGB,PropertyLogoSheratonGraphiteUncoatedCMYK,PropertyLogoSheratonGraphiteUncoatedPMS,PropertyLogoSheratonIvory,PropertyLogoSheratonKnockout,PropertyLogoSheratonLogoSpecs,PropertyLogoSheratonOysterCoatedCMYK,PropertyLogoSheratonOysterCoatedPMS,PropertyLogoSheratonOysterRGB,PropertyLogoSheratonOysterUncoatedCMYK,PropertyLogoSheratonOysterUncoatedPMS,PropertyLogoSheratonResortFrenchGrayCoatedCMYK,PropertyLogoSheratonResortFrenchGrayCoatedPMS,PropertyLogoSheratonResortFrenchGrayRGB,PropertyLogoSheratonResortFrenchGrayUncoatedCMYK,PropertyLogoSheratonResortFrenchGrayUncoatedPMS,PropertyLogoSheratonTungstenCoatedCMYK,PropertyLogoSheratonTungstenCoatedPMS,PropertyLogoSheratonTungstenRGB,PropertyLogoSheratonTungstenUncoatedCMYK,PropertyLogoSheratonTungstenUncoatedPMS,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "18" : {
     "id" : "18",
@@ -246,7 +246,7 @@
     "subNameFloorPlans" : "AFFILIATES_V013_mer_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{AFFILIATE_NAME}</div>\r\n<div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{ADDRESS}<br/>\r\n{PropertyState}<br/>\r\n{CITY} {ZIP}<br/>\r\n{COUNTRY}<br/>\r\n{PropertyTelephone}<br/>\r\n{PropertyURL}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "19" : {
     "id" : "19",
@@ -258,7 +258,7 @@
     "subNameMapsRadiobutton" : "VALUE_MEDIA_24",
     "subNameFloorPlans" : "AFFILIATES_V000_str_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "20" : {
     "id" : "20",
@@ -270,7 +270,7 @@
     "subNameMapsRadiobutton" : "VALUE_MEDIA_24",
     "subNameFloorPlans" : "AFFILIATES_V000_wes_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "21" : {
     "id" : "21",
@@ -282,7 +282,7 @@
     "subNameMapsRadiobutton" : "VALUE_MEDIA_24",
     "subNameFloorPlans" : "AFFILIATES_V000_lux_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "22" : {
     "id" : "22",
@@ -295,7 +295,7 @@
     "subNameFloorPlans" : "AFFILIATES_V006_wes_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{AFFILIATE_NAME}</div><div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{ADDRESS}<br/>{CITY}, {PropertyState} {ZIP}<br/>{COUNTRY}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "23" : {
     "id" : "23",
@@ -307,7 +307,7 @@
     "subNameMapsRadiobutton" : "VALUE_MEDIA_24",
     "subNameFloorPlans" : "AFFILIATES_V000_swh_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "24" : {
     "id" : "24",
@@ -320,7 +320,7 @@
     "subNameFloorPlans" : "AFFILIATES_V015_lux_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "{AFFILIATE_NAME}<br/>{ADDRESS}, {CITY}, {PropertyState} {ZIP} {COUNTRY}",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "25" : {
     "id" : "25",
@@ -333,7 +333,7 @@
     "subNameFloorPlans" : "AFFILIATES_V003_she_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\"/>{AFFILIATE_NAME}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{ADDRESS}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{CITY}, {PropertyState} {ZIP}<br/></div>\"",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,CombinedAddress,PropertyLogoSheratonBlack,PropertyLogoSheratonDusk,PropertyLogoSheratonGraphiteCodedCMYK,PropertyLogoSheratonGraphiteCodedPMS,PropertyLogoSheratonGraphiteRGB,PropertyLogoSheratonGraphiteUncoatedCMYK,PropertyLogoSheratonGraphiteUncoatedPMS,PropertyLogoSheratonIvory,PropertyLogoSheratonKnockout,PropertyLogoSheratonLogoSpecs,PropertyLogoSheratonOysterCoatedCMYK,PropertyLogoSheratonOysterCoatedPMS,PropertyLogoSheratonOysterRGB,PropertyLogoSheratonOysterUncoatedCMYK,PropertyLogoSheratonOysterUncoatedPMS,PropertyLogoSheratonResortFrenchGrayCoatedCMYK,PropertyLogoSheratonResortFrenchGrayCoatedPMS,PropertyLogoSheratonResortFrenchGrayRGB,PropertyLogoSheratonResortFrenchGrayUncoatedCMYK,PropertyLogoSheratonResortFrenchGrayUncoatedPMS,PropertyLogoSheratonTungstenCoatedCMYK,PropertyLogoSheratonTungstenCoatedPMS,PropertyLogoSheratonTungstenRGB,PropertyLogoSheratonTungstenUncoatedCMYK,PropertyLogoSheratonTungstenUncoatedPMS,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,CombinedAddress,PropertyLogoSheratonBlack,PropertyLogoSheratonDusk,PropertyLogoSheratonGraphiteCodedCMYK,PropertyLogoSheratonGraphiteCodedPMS,PropertyLogoSheratonGraphiteRGB,PropertyLogoSheratonGraphiteUncoatedCMYK,PropertyLogoSheratonGraphiteUncoatedPMS,PropertyLogoSheratonIvory,PropertyLogoSheratonKnockout,PropertyLogoSheratonLogoSpecs,PropertyLogoSheratonOysterCoatedCMYK,PropertyLogoSheratonOysterCoatedPMS,PropertyLogoSheratonOysterRGB,PropertyLogoSheratonOysterUncoatedCMYK,PropertyLogoSheratonOysterUncoatedPMS,PropertyLogoSheratonResortFrenchGrayCoatedCMYK,PropertyLogoSheratonResortFrenchGrayCoatedPMS,PropertyLogoSheratonResortFrenchGrayRGB,PropertyLogoSheratonResortFrenchGrayUncoatedCMYK,PropertyLogoSheratonResortFrenchGrayUncoatedPMS,PropertyLogoSheratonTungstenCoatedCMYK,PropertyLogoSheratonTungstenCoatedPMS,PropertyLogoSheratonTungstenRGB,PropertyLogoSheratonTungstenUncoatedCMYK,PropertyLogoSheratonTungstenUncoatedPMS,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "26" : {
     "id" : "26",
@@ -346,7 +346,7 @@
     "subNameFloorPlans" : "AFFILIATES_V016_lux_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "{AFFILIATE_NAME}<br/>{ADDRESS}<br/>{CITY}, {PropertyState} {ZIP} {COUNTRY}",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "27" : {
     "id" : "27",
@@ -359,7 +359,7 @@
     "subNameFloorPlans" : "AFFILIATES_V017_Four_Points_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{AFFILIATE_NAME}</span></div>\r\n<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{ADDRESS}, {CITY}, {PropertyState} {ZIP} {COUNTRY}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "28" : {
     "id" : "28",
@@ -372,7 +372,7 @@
     "subNameFloorPlans" : "AFFILIATES_V018_Four_Points_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "{ADDRESS}, {CITY}, {PropertyState} {ZIP} {COUNTRY}",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "29" : {
     "id" : "29",
@@ -385,7 +385,7 @@
     "subNameFloorPlans" : "AFFILIATES_V019_str_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "{AFFILIATE_NAME}<br/>{ADDRESS}, {CITY}, {PropertyState} {ZIP}<br/>{PropertyTelephone}<br/>{PropertyURL}",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "30" : {
     "id" : "30",
@@ -398,7 +398,7 @@
     "subNameFloorPlans" : "AFFILIATES_V020_str_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "{AFFILIATE_NAME}<br/>{ADDRESS}<br/>{CITY}, {PropertyState} {ZIP}",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "31" : {
     "id" : "31",
@@ -411,7 +411,7 @@
     "subNameFloorPlans" : "AFFILIATES_V021_who_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\">{AFFILIATE_NAME}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{ADDRESS}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{CITY}, {PropertyState}, {ZIP}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{COUNTRY}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{PropertyURL}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{PropertyTelephone}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "32" : {
     "id" : "32",
@@ -424,7 +424,7 @@
     "subNameFloorPlans" : "AFFILIATES_V022_str_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "{ADDRESS}, {CITY}, {PropertyState} {ZIP} {COUNTRY} {PropertyURL}",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,PropertyLogo1c,PropertyLogo4c,PropertyLogo4cb,PropertyLogo1cblack,PropertyLogopms,PropertyLogopmsc,PropertyLogo4cc,PropertyLogokod,PropertyLogoblackK,PropertyLogo4cK,CombinedAddress,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "33" : {
     "id" : "33",
@@ -437,76 +437,76 @@
     "subNameFloorPlans" : "AFFILIATES_V006_she_Floorplans",
     "subNameFloorPlansRadiobutton" : "VALUE_MEDIA_24",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\">{AFFILIATE_NAME}</div><div class=\"styleef0a6cb908e6b0b10fcd3307979503f6\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_2\" data-quark-style=\"Address 2\" ext:qtip=\"Address 2\" title=\"Address 2\">{ADDRESS}<br/>{CITY}, {PropertyState} {ZIP}<br/>{COUNTRY}</div>",
-    "fields" : ",PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,CombinedAddress,PropertyLogoSheratonBlack,PropertyLogoSheratonDusk,PropertyLogoSheratonGraphiteCodedCMYK,PropertyLogoSheratonGraphiteCodedPMS,PropertyLogoSheratonGraphiteRGB,PropertyLogoSheratonGraphiteUncoatedCMYK,PropertyLogoSheratonGraphiteUncoatedPMS,PropertyLogoSheratonIvory,PropertyLogoSheratonKnockout,PropertyLogoSheratonLogoSpecs,PropertyLogoSheratonOysterCoatedCMYK,PropertyLogoSheratonOysterCoatedPMS,PropertyLogoSheratonOysterRGB,PropertyLogoSheratonOysterUncoatedCMYK,PropertyLogoSheratonOysterUncoatedPMS,PropertyLogoSheratonResortFrenchGrayCoatedCMYK,PropertyLogoSheratonResortFrenchGrayCoatedPMS,PropertyLogoSheratonResortFrenchGrayRGB,PropertyLogoSheratonResortFrenchGrayUncoatedCMYK,PropertyLogoSheratonResortFrenchGrayUncoatedPMS,PropertyLogoSheratonTungstenCoatedCMYK,PropertyLogoSheratonTungstenCoatedPMS,PropertyLogoSheratonTungstenRGB,PropertyLogoSheratonTungstenUncoatedCMYK,PropertyLogoSheratonTungstenUncoatedPMS,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
+    "fields" : ",MARSHA_CODE,PropertyState,PropertyURL,PropertyTelephone,Latitude,Longitude,CombinedAddress,PropertyLogoSheratonBlack,PropertyLogoSheratonDusk,PropertyLogoSheratonGraphiteCodedCMYK,PropertyLogoSheratonGraphiteCodedPMS,PropertyLogoSheratonGraphiteRGB,PropertyLogoSheratonGraphiteUncoatedCMYK,PropertyLogoSheratonGraphiteUncoatedPMS,PropertyLogoSheratonIvory,PropertyLogoSheratonKnockout,PropertyLogoSheratonLogoSpecs,PropertyLogoSheratonOysterCoatedCMYK,PropertyLogoSheratonOysterCoatedPMS,PropertyLogoSheratonOysterRGB,PropertyLogoSheratonOysterUncoatedCMYK,PropertyLogoSheratonOysterUncoatedPMS,PropertyLogoSheratonResortFrenchGrayCoatedCMYK,PropertyLogoSheratonResortFrenchGrayCoatedPMS,PropertyLogoSheratonResortFrenchGrayRGB,PropertyLogoSheratonResortFrenchGrayUncoatedCMYK,PropertyLogoSheratonResortFrenchGrayUncoatedPMS,PropertyLogoSheratonTungstenCoatedCMYK,PropertyLogoSheratonTungstenCoatedPMS,PropertyLogoSheratonTungstenRGB,PropertyLogoSheratonTungstenUncoatedCMYK,PropertyLogoSheratonTungstenUncoatedPMS,AFFILIATES_CODE,AFFILIATE_NAME,ADDRESS,STREET,ZIP,CITY,COUNTRY"
   },
   "34" : {
     "id" : "34",
     "brandName" : "Residence Inn By Marriott",
     "structureName" : "AFFILIATES_V003_RIBM",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\"/>{AFFILIATE_NAME}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{ADDRESS}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{CITY}, {PropertyState} {ZIP}<br/></div>\"",
-    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,MARSHA_CODE,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "35" : {
     "id" : "35",
     "brandName" : "Marriott Hotels & Resorts",
     "structureName" : "AFFILIATES_V000_MHRS",
-    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,MARSHA_CODE,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "36" : {
     "id" : "36",
     "brandName" : "Courtyard By Marriott",
     "structureName" : "AFFILIATES_V012_CY",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\"/>{AFFILIATE_NAME}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{ADDRESS}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{CITY}, {PropertyState} {ZIP}<br/></div>\"",
-    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,MARSHA_CODE,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "37" : {
     "id" : "37",
     "brandName" : "Fairfield Inn By Marriott",
     "structureName" : "AFFILIATES_V003_ffi",
     "addressField01" : "<div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/><span class=\"stylee2aa17a81d0267572ee5f09591c3538b\" data-class-old=\"Bold\" data-quark-text-style=\"Bold\" ext:qtip=\"Bold\" title=\"Bold\"/>{AFFILIATE_NAME}</span></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{ADDRESS}<br/></div><div class=\"stylea3bbb4c7d3c1f4e2729cbdffda563ed3\" data-bullet-color=\"\" data-bullet-symbol=\"\" data-class-old=\"Address_1\" data-quark-style=\"Address 1\" ext:qtip=\"Address 1\" title=\"Address 1\"/>{CITY}, {PropertyState} {ZIP}<br/></div>\"",
-    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,MARSHA_CODE,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "38" : {
     "id" : "38",
     "brandName" : "SpringHill Suites By Marriott",
     "structureName" : "AFFILIATES_V000_SHS",
-    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,MARSHA_CODE,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "39" : {
     "id" : "39",
     "brandName" : "TownePlace Suites By Marriott",
     "structureName" : "AFFILIATES_V000_TPS",
-    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,MARSHA_CODE,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "40" : {
     "id" : "40",
     "brandName" : "Delta Hotels and Resorts",
     "structureName" : "AFFILIATES_V000_DE",
-    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,MARSHA_CODE,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "41" : {
     "id" : "41",
     "brandName" : "MOXY HOTELS",
     "structureName" : "AFFILIATES_V000_MXY",
-    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,MARSHA_CODE,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "42" : {
     "id" : "42",
     "brandName" : "AC Hotels by Marriott",
     "structureName" : "AFFILIATES_V000_ACH",
-    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,MARSHA_CODE,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "43" : {
     "id" : "43",
     "brandName" : "JW Marriott",
     "structureName" : "AFFILIATES_V000_JWM",
-    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,MARSHA_CODE,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "44" : {
     "id" : "44",
     "brandName" : "Renaissance Hotels",
     "structureName" : "AFFILIATES_V000_RHR",
-    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,MARSHA_CODE,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   },
   "100" : {
     "id" : "100",
@@ -744,6 +744,6 @@
     "id" : "45",
     "brandName" : "The Ritz-Carlton",
     "structureName" : "AFFILIATE_V000_RITZ",
-    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
+    "fields" : ",ZIP,PropertyURL,PropertyTelephone,STREET,MARSHA_CODE,PropertyState,AFFILIATES_CODE,AFFILIATE_NAME,COUNTRY,CITY,ADDRESS,Longitude,Latitude,CombinedAddress"
   }
 }

@@ -39,6 +39,7 @@ public enum PropertyVariantFields {
     PROPERTY_LOGO_SHERATON_TUNGSTEN_UNCOATED_PMS("PropertyLogoSheratonTungstenUncoatedPMS", "Property Logo Sheraton Tungsten Uncoated PMS", "Tungsten_U_pms", 63, 0),
     PROPERTY_LOGO_US_NAVY("PropertyLogoUSNavy", "Property Logo US Navy", "usna", 64, 0),
 
+    MARSHA_CODE("MARSHA_CODE", "Marsha code", "", 65, -1),
     AFFILIATE_NAME("AFFILIATE_NAME", "Property Name", "", 1, 2),
     AFFILIATES_CODE("AFFILIATES_CODE", "Property Number", "", 2, 1),
     PROPERTY_STATE("PropertyState", "Property State", "", 3, -1),
