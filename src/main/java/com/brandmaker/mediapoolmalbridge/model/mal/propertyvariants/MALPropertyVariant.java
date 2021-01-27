@@ -15,6 +15,9 @@ public class MALPropertyVariant {
     private String structureName;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String collectionName;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String structureNameRadiobutton;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -132,7 +135,7 @@ public class MALPropertyVariant {
     }
 
     @JsonIgnore
-    public boolean isBrandStructure(){
+    public boolean isBrandStructure() {
         return this.structureName.startsWith("BRAND_");
     }
 
@@ -206,5 +209,13 @@ public class MALPropertyVariant {
 
     public void setFields(String fields) {
         this.fields = fields;
+    }
+
+    public String getCollectionName() {
+        return collectionName;
+    }
+
+    public void setCollectionName(String collectionName) {
+        this.collectionName = collectionName;
     }
 }
