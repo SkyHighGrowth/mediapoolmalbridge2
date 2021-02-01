@@ -48,7 +48,7 @@ public class MALGetAssetFileTypesUniqueThreadService extends AbstractMALUniqueTh
         for (FileType fileType : response.getResponse().getFileTypes()) {
             StructuresEntity entity = new StructuresEntity();
             entity.setStructureId(fileType.getFileTypeId());
-            entity.setStructureName(fileType.getName());
+            entity.setStructureName(fileType.getName().toLowerCase());
             entity.setStructureType(StructureType.FILETYPE);
             structures.add(entity);
         }
