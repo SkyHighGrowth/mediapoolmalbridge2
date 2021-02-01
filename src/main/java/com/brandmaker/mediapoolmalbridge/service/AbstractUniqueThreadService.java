@@ -79,15 +79,12 @@ public abstract class AbstractUniqueThreadService extends AbstractService {
         }
     }
 
-    protected List<AssetEntity> getAssetEntities(final TransferringAssetStatus fromStatus) {
-        return assetRepository.findAllByTransferringAssetStatusAndUpdatedIsAfter(
-                fromStatus, getMidnightBridgeLookInThePast(), PageRequest.of(0, appConfig.getDatabasePageSize()));
-    }
-
     protected void executeTransition(final TransferringAssetStatus fromStatus,
                                      final TransferringAssetStatus intermediateStatus,
                                      final Predicate<MALAssetOperation> predicate) {
         try {
+            malPriorities.loadPriorities();
+
             final TaskExecutorWrapper taskExecutorWrapper = getTaskExecutorWrapper();
             final List<Integer> orderedPriorities = malPriorities.getOrderedPriorities();
             for (final Integer priority : orderedPriorities) {
