@@ -48,7 +48,7 @@ public class AssetEntity extends AbstractEntity {
     @Expose()
     private MALAssetType assetType;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "bm_asset_id", referencedColumnName = "id", nullable = false)
     @Expose(serialize = false, deserialize = false)
     @JsonIgnore
