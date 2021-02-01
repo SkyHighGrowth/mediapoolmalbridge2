@@ -2,6 +2,7 @@ package com.brandmaker.mediapoolmalbridge.service.mal.assets.transformer;
 
 import com.brandmaker.mediapoolmalbridge.clients.mal.asset.client.model.MALGetAsset;
 import com.brandmaker.mediapoolmalbridge.config.AppConfig;
+import com.brandmaker.mediapoolmalbridge.persistence.entity.bridge.StructuresEntity;
 import com.brandmaker.mediapoolmalbridge.persistence.entity.enums.StructureType;
 import com.brandmaker.mediapoolmalbridge.service.StructuresService;
 import com.brandmaker.mediapoolmalbridge.service.brandmaker.theme.themeid.model.BMThemePathToId;
@@ -49,29 +50,45 @@ public class MALToBMTransformer {
         themeDto.setName("Implementation/Pictures");
         uploadMetadataArgument.getAssociations().add(themeDto);
 
-        String assetType = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getAssetTypeId(), StructureType.ASSETTYPE).getStructureName();
-        setAssociation(uploadMetadataArgument, "Asset Types/", assetType, StringUtils.isNotBlank(assetType));
+        StructuresEntity assetTypeStructure = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getAssetTypeId(), StructureType.ASSETTYPE);
+        if (assetTypeStructure != null && assetTypeStructure.getStructureName() != null) {
+            setAssociation(uploadMetadataArgument, "Asset Types/", assetTypeStructure.getStructureName(), true);
+        }
 
-        String brandId = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getBrandId(), StructureType.BRAND).getStructureName();
-        setAssociation(uploadMetadataArgument, "Brands/", brandId, StringUtils.isNotEmpty(brandId));
+        StructuresEntity brandsStructure = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getBrandId(), StructureType.BRAND);
+        if (brandsStructure != null && brandsStructure.getStructureName() != null) {
+            setAssociation(uploadMetadataArgument, "Brands/", brandsStructure.getStructureName(), true);
+        }
 
-        String collectionId = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getCollectionId(), StructureType.COLLECTION).getStructureName();
-        setAssociation(uploadMetadataArgument, "Collections/", collectionId, StringUtils.isNotEmpty(collectionId));
-
-        String destinationId = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getDestionationId(), StructureType.DESTINATION).getStructureName();
-        if (StringUtils.isNotEmpty(destinationId)) {
+        StructuresEntity collectionStructure = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getCollectionId(), StructureType.COLLECTION);
+        String collectionId = null;
+        if (collectionStructure != null && collectionStructure.getStructureName() != null) {
+            collectionId = collectionStructure.getStructureName();
+            setAssociation(uploadMetadataArgument, "Collections/", collectionId, true);
+        }
+        StructuresEntity destinationsStructure = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getDestionationId(), StructureType.DESTINATION);
+        String destinationId = null;
+        if (destinationsStructure != null && destinationsStructure.getStructureName() != null) {
+            destinationId = destinationsStructure.getStructureName();
             bmThemePathToId.addThemePath("Destinations/" + destinationId);
             setAssociation(uploadMetadataArgument, "Destinations/", destinationId, true);
         }
 
-        String subjectId = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getSubjectId(), StructureType.SUBJECT).getStructureName();
-        setAssociation(uploadMetadataArgument, "Subjects/", subjectId, StringUtils.isNotEmpty(subjectId));
+        StructuresEntity subjectsStructure = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getSubjectId(), StructureType.SUBJECT);
+        String subjectId = null;
+        if (subjectsStructure != null && subjectsStructure.getStructureName() != null) {
+            subjectId = subjectsStructure.getStructureName();
+            setAssociation(uploadMetadataArgument, "Subjects/", subjectId, true);
+        }
 
-        String colorId = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getColorId(), StructureType.COLOR).getStructureName();
-        if (StringUtils.isNotEmpty(colorId)) {
+        StructuresEntity colorsStructure = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getSubjectId(), StructureType.COLOR);
+        String colorId = null;
+        if (colorsStructure != null && colorsStructure.getStructureName() != null) {
+            colorId = colorsStructure.getStructureName();
             setAssociation(uploadMetadataArgument, "Colors/", colorId, true);
             setFreeFieldValue(uploadMetadataArgument.getFreeField10(), "MAL_" + colorId);
         }
+
 
         // If asset theme is not set, fail safe value is set
         if (StringUtils.isEmpty(collectionId) && StringUtils.isEmpty(destinationId)
