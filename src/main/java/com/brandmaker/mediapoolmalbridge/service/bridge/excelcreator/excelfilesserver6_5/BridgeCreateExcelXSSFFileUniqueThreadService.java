@@ -630,7 +630,11 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
 
             colIndex++;
 
-            row.createCell(colIndex++).setCellValue("MULTI_OBJECT_AFFILIATE_STRUCTURE");
+            if (malPropertyVariant.isBrandStructure()) {
+                row.createCell(colIndex++).setCellValue("NON_AFFILIATE_STRUCTURE");
+            } else {
+                row.createCell(colIndex++).setCellValue("MULTI_OBJECT_AFFILIATE_STRUCTURE");
+            }
 
             String structureNameRadiobutton = malPropertyVariant.getStructureNameRadiobutton();
             row.createCell(colIndex++).setCellValue(structureNameRadiobutton != null ? structureNameRadiobutton : "");
