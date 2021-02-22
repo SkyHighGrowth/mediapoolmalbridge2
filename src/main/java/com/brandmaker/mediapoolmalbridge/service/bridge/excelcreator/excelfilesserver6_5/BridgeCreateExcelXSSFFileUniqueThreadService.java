@@ -345,6 +345,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         int colIndex = 0;
 
         name = name.replace("\"", "");
+        name = name.replace("\t", " ");
         name = name.trim();
         if (StringUtils.isNotBlank(malAssetId)) {
             row.createCell(colIndex++).setCellValue(subName);
