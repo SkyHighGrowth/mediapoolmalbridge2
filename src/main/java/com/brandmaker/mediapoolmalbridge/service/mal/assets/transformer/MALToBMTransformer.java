@@ -81,7 +81,7 @@ public class MALToBMTransformer {
             setAssociation(uploadMetadataArgument, "Subjects/", subjectId, true);
         }
 
-        StructuresEntity colorsStructure = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getSubjectId(), StructureType.COLOR);
+        StructuresEntity colorsStructure = structuresService.getStructureByStructureIdAndStructureType(malGetAsset.getColorId(), StructureType.COLOR);
         String colorId = null;
         if (colorsStructure != null && colorsStructure.getStructureName() != null) {
             colorId = colorsStructure.getStructureName();

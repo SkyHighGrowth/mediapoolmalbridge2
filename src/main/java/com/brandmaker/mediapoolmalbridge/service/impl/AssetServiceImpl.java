@@ -25,8 +25,8 @@ public class AssetServiceImpl implements AssetService {
     public static final String ASSETS_ON_BOARDED = "Assets on boarded";
     public static final String TOTAL_ASSETS = "Total assets";
     public static final String ASSETS_WITH_ERROR = "Assets with error";
-    public static final String ASSETS_COMPLETED = "Assets completed";
-    public static final String OTHER_STATUSES = "Assets with status Get BM ID/Invalid";
+    public static final String ASSETS_COMPLETED = "Completed assets";
+    public static final String INVALID_ASSETS = "Invalid assets";
 
     private final AssetRepository assetRepository;
 
@@ -46,6 +46,7 @@ public class AssetServiceImpl implements AssetService {
         mapCurrentStatus.put(METADATA_TRANSFER, 0L);
         mapCurrentStatus.put(ASSETS_WITH_ERROR, 0L);
         mapCurrentStatus.put(ASSETS_COMPLETED, 0L);
+        mapCurrentStatus.put(INVALID_ASSETS, 0L);
         mapCurrentStatus.put(TOTAL_ASSETS, 0L);
         if (dateFrom != null) {
             LocalDateTime dateTimeFrom = dateFrom.atStartOfDay();
@@ -83,7 +84,8 @@ public class AssetServiceImpl implements AssetService {
         if (status.toString().startsWith(ASSET)) {
             Long entryValue = map.get(ASSETS_ON_BOARDED);
             map.put(ASSETS_ON_BOARDED, value + entryValue);
-        } else if (status.toString().startsWith(FILE)) {
+        } else if (status.toString().startsWith(FILE) || status.equals(TransferringAssetStatus.GET_BM_ASSET_ID)
+                || status.equals(TransferringAssetStatus.GETTING_BM_ASSET_ID)) {
             Long entryValue = map.get(FILE_TRANSFER);
             map.put(FILE_TRANSFER, value + entryValue);
         } else if (status.toString().startsWith(METADATA)) {
@@ -93,10 +95,8 @@ public class AssetServiceImpl implements AssetService {
             map.put(ASSETS_WITH_ERROR, value);
         } else if (status.equals(TransferringAssetStatus.DONE)) {
             map.put(ASSETS_COMPLETED, value);
-        } else if (!(status.equals(TransferringAssetStatus.GET_BM_ASSET_ID)
-                || status.equals(TransferringAssetStatus.GETTING_BM_ASSET_ID)
-                || status.equals(TransferringAssetStatus.INVALID))) {
-            map.put(OTHER_STATUSES, map.get(OTHER_STATUSES) != null ? 0L : map.get(OTHER_STATUSES) + value);
+        } else if (status.equals(TransferringAssetStatus.INVALID)) {
+            map.put(INVALID_ASSETS, value);
         }
         Long totalValue = map.get(TOTAL_ASSETS);
         map.put(TOTAL_ASSETS, value + totalValue);
