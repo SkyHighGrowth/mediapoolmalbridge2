@@ -149,7 +149,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
         }
 
         String fileName = "DataStructures_BRAND_IMAGES.xlsx";
-        createFile(fileName, malPropertyBrandPairSet, true, colorsMap);
+        createFile(fileName, malPropertyBrandPairSet, false, colorsMap);
     }
 
     private HashMap<String, List<BMAsset>> getColorsMap() {
