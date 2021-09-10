@@ -155,6 +155,7 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
     private HashMap<String, List<BMAsset>> getColorsMap() {
         HashMap<String, List<BMAsset>> map = new HashMap<>();
         for (PropertyVariantFields propertyVariantField : PropertyVariantFields.values()) {
+            try {
             if (!propertyVariantField.getColorId().equals("")) {
                 String colorId = propertyVariantField.getColorId();
                 String colorName = structuresService.getStructureByStructureIdAndStructureType(colorId, StructureType.COLOR).getStructureName();
@@ -166,7 +167,10 @@ public class BridgeCreateExcelXSSFFileUniqueThreadService extends AbstractBridge
                     map.put(colorId, null);
                 }
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+    }
         return map;
     }
 
