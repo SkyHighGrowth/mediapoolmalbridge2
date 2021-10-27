@@ -16,7 +16,7 @@ public class RestConfig {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private static final int READ_TIME_OUT_MS = 30000;
+    private static final int READ_TIME_OUT_MS = 60000;
 
     private static final int CONNECTION_REQUEST_TIME_OUT = 50000;
 
