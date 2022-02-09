@@ -31,9 +31,9 @@ public class RestConfig {
 
     private static final int MAX_CONN_PER_ROUTE = 100;
 
-    private static final int MAX_RETRY_INTERVAL = 1000 * 60 * 1;
+    private static final int MAX_RETRY_INTERVAL = 1000 * 60 * 30;
 
-    private static final int MAX_RETRIES = 2;
+    private static final int MAX_RETRIES = 3;
 
 
     @Bean
@@ -79,7 +79,7 @@ public class RestConfig {
 		}
 
 		public SalRetryStrategy() {
-			this(5, 1000 * 60 * 3);
+			this(3, 1000 * 60 * 5);
 		}
 
 		@Override
