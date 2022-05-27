@@ -2,8 +2,10 @@ package com.brandmaker.mediapoolmalbridge.config;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.RedirectStrategy;
 import org.apache.http.client.ServiceUnavailableRetryStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.Args;
 import org.slf4j.Logger;
@@ -31,7 +33,7 @@ public class RestConfig {
 
     private static final int MAX_CONN_PER_ROUTE = 100;
 
-    private static final int MAX_RETRY_INTERVAL = 1000 * 60 * 30;
+    private static final int MAX_RETRY_INTERVAL = 1000 * 5;
 
     private static final int MAX_RETRIES = 3;
 
@@ -43,6 +45,7 @@ public class RestConfig {
                         .setMaxConnTotal(MAX_CONN_TOTAL)
                         .setMaxConnPerRoute(MAX_CONN_PER_ROUTE)
                         .setServiceUnavailableRetryStrategy(new SalRetryStrategy(MAX_RETRIES, MAX_RETRY_INTERVAL))
+                        .setRedirectStrategy(new LaxRedirectStrategy())
                         .build());
         clientHttpRequestFactory.setReadTimeout(READ_TIME_OUT_MS);
         clientHttpRequestFactory.setConnectionRequestTimeout(CONNECTION_REQUEST_TIME_OUT);
@@ -57,6 +60,7 @@ public class RestConfig {
                         .setMaxConnTotal(MAX_CONN_TOTAL)
                         .setMaxConnPerRoute(MAX_CONN_PER_ROUTE)
                         .setServiceUnavailableRetryStrategy(new SalRetryStrategy(MAX_RETRIES, MAX_RETRY_INTERVAL))
+                        .setRedirectStrategy(new LaxRedirectStrategy())
                         .build());
         clientHttpRequestFactory.setReadTimeout(READ_TIME_OUT_MS);
         clientHttpRequestFactory.setConnectionRequestTimeout(CONNECTION_REQUEST_TIME_OUT);
@@ -79,7 +83,7 @@ public class RestConfig {
 		}
 
 		public SalRetryStrategy() {
-			this(3, 1000 * 60 * 5);
+			this(3, 1000 * 5);
 		}
 
 		@Override

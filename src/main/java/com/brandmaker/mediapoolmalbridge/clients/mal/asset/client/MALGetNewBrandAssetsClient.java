@@ -28,6 +28,8 @@ public class MALGetNewBrandAssetsClient extends MALSingleResponseClient<MALGetNe
      */
     public RestResponse<MALGetNewAssetsResponse> download(final MALGetNewBrandAssetsRequest request) {
         final MultiValueMap<String, String> params = request.transformToGetParams();
+        logger.info("MALGetNewBrandAssetsClient URL: " + URL_SEGMENT);
+        logger.info("MALGetNewBrandAssetsClient params: " + params.toString());
         return exchange(URL_SEGMENT, null, HttpMethod.GET, params);
     }
 }

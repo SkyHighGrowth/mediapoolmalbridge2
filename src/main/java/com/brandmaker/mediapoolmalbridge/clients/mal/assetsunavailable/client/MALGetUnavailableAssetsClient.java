@@ -22,6 +22,8 @@ public class MALGetUnavailableAssetsClient extends MALSingleResponseClient<MALGe
 
     public RestResponse<MALGetUnavailableAssetsResponse> download(final MALGetUnavailableAssetsRequest request) {
         final MultiValueMap<String, String> params = request.transformToGetParams();
+        logger.info("MALGetUnavailableAssetsClient URL: " + URL_SEGMENT);
+        logger.info("MALGetUnavailableAssetsClient params: " + params.toString());
         return exchange(URL_SEGMENT, null, HttpMethod.GET, params);
     }
 }

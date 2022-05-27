@@ -4,6 +4,9 @@ import com.brandmaker.mediapoolmalbridge.clients.mal.download.client.model.MALDo
 import com.brandmaker.mediapoolmalbridge.config.AppConfig;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,12 +19,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URI;
 
 /**
  * Client that downloads files from MAL server
  */
 @Component
 public class MALDownloadAssetClient {
+
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private static final Gson GSON = new Gson();
 
@@ -41,8 +47,17 @@ public class MALDownloadAssetClient {
      * @param fileName - file name where file is going to be downloaded
      * @return - {@link MALDownloadAssetResponse}
      */
-    public MALDownloadAssetResponse download(final String url, final String fileName) {
+    public MALDownloadAssetResponse download(String url, final String fileName) {
         final MALDownloadAssetResponse response = new MALDownloadAssetResponse();
+		if (url != null && !url.isEmpty()) {
+			if (url.startsWith("http:")) {
+				logger.info("URL BEFORE:   " + url);
+				url = url.replace("http:", "https:");
+				logger.info("URL AFTER: " + url);
+			} else {
+				logger.info("URL OK: " + url);
+			}
+		}
         restTemplate.execute(url, HttpMethod.GET,
                 clientHttpRequest -> clientHttpRequest.getHeaders().set("Accept-Encoding", "gzip"),
                 clientHttpResponse -> {
